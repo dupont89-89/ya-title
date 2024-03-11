@@ -70,7 +70,7 @@ export default function ApiSendYaSearch() {
         value={query}
         onChange={handleChange}
       />
-      <button onClick={handleClick}>Отправить запрос</button>
+      <button onClick={handleClick}>Создать</button>
       {/* Вывод заголовков */}
       <ul>
         {titleValues.map((title, index) => (
