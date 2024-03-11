@@ -4,7 +4,9 @@ import ApiSendYaSearch from "./api-ya-search/ApiSendYaSearch";
 function App() {
   return (
     <div className="App">
-      <ApiSendYaSearch />
+      <div className="blockOsn">
+        <ApiSendYaSearch />
+      </div>
     </div>
   );
 }
