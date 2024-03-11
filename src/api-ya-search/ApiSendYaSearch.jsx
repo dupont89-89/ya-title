@@ -17,13 +17,7 @@ export default function ApiSendYaSearch() {
     try {
       const response = await axios.post(
         "http://localhost:5000/api", // Используйте путь к вашему серверу Express
-        xmlData,
-        {
-          headers: {
-            "Content-Type": "application/xml", // Указываем, что это XML-данные
-            Authorization: "AQVN0qCGDXIufvoikxRcR0ImZiaPAldgTfDJjf-f",
-          },
-        }
+        xmlData
       );
       console.log("Ответ от сервера:", response.data);
       // здесь вы можете обновить состояние вашего компонента,
