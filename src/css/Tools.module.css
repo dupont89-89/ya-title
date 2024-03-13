@@ -1,0 +1,14 @@
+.sectionTools,
+.resultSearhTitle,
+.textBottomTools {
+    background-color: #3a1148eb;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: left;
+    color: #fff;
+}
+
+.resultSearhTitle,
+.textBottomTools {
+    margin-top: 20px;
+}
