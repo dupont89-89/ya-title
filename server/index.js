@@ -5,10 +5,11 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const apiKey = process.env.REACT_APP_API_KEY;
 const yaCatalog = process.env.REACT_APP_YANDEX_CATALOG;
+const URL_FRONTEND = process.env.REACT_APP_URL_FRONTEND;
 
 // Middleware для разрешения CORS
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000"); // Разрешаем запросы с localhost:3000
+  res.setHeader("Access-Control-Allow-Origin", `${URL_FRONTEND}`); // Разрешаем запросы с localhost:3000
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET, POST, OPTIONS, PUT, PATCH, DELETE"

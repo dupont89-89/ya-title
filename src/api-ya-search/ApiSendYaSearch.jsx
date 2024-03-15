@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import axios from "axios";
 import s from "./Form.module.css";
 import t from "./../css/Tools.module.css";
+import config from "./../config";
+
+const serverUrl = `${config.REACT_APP_SERVER_URL}:${config.REACT_APP_PORT}`;
 
 export default function ApiSendYaSearch() {
   const [query, setQuery] = useState(""); // Состояние для хранения значения ввода
@@ -23,7 +26,7 @@ export default function ApiSendYaSearch() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api", // Используйте путь к вашему серверу Express
+        `${serverUrl}/api`, // Используйте путь к вашему серверу Express
         xmlData
       );
       console.log("Ответ от сервера:", response.data);
