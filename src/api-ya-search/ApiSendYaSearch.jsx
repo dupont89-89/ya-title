@@ -3,6 +3,7 @@ import axios from "axios";
 import s from "./Form.module.css";
 import t from "./../css/Tools.module.css";
 import config from "./../config";
+import RegionSelectSearch from "../app-function/RegionSelectSearch";
 
 const serverUrl = `${config.REACT_APP_SERVER_URL}:${config.REACT_APP_PORT}`;
 
@@ -11,6 +12,7 @@ export default function ApiSendYaSearch() {
   const [titleValues, setTitleValues] = useState([]); // Состояние для хранения значений заголовков
   const [repeatWords, setRepeatWords] = useState([]); // Состояние для хранения повторяющихся слов
   const [resultString, setResultString] = useState(""); // Состояние для хранения строки с первыми 8 словами
+  const [selectedCity, setSelectedCity] = useState("213");
 
   const handleClick = async () => {
     const xmlData = `<?xml version="1.0" encoding="utf-8"?>
@@ -25,9 +27,11 @@ export default function ApiSendYaSearch() {
           </request>`;
 
     try {
+      debugger;
       const response = await axios.post(
-        `${serverUrl}/api`, // Используйте путь к вашему серверу Express
-        xmlData
+        `${serverUrl}/api`, // Добавляем selectedCity как параметр запроса
+        xmlData,
+        { params: { selectedCity: selectedCity } }
       );
       console.log("Ответ от сервера:", response.data);
       const xmlResponse = response.data;
@@ -100,7 +104,7 @@ export default function ApiSendYaSearch() {
       });
 
       // Выбираем только первые 8 слов без цифр и символа ':'
-      const topWords = wordsWithoutDigits.slice(0, 8);
+      const topWords = wordsWithoutDigits.slice(0, 10);
       setResultString(topWords);
 
       setTitleValues(newTitleValues); // Обновляем состояние с заголовками
@@ -131,11 +135,34 @@ export default function ApiSendYaSearch() {
     setQuery(event.target.value); // Обновляем значение состояния при изменении ввода
   };
 
+  const filterUniqueWords = (words) => {
+    const seen = {}; // Объект для отслеживания уже встреченных первых 5 букв
+    const uniqueWords = [];
+
+    words.forEach((word) => {
+      const firstFive = word.slice(0, 5).toLowerCase(); // Получаем первые 5 букв и приводим к нижнему регистру
+      if (!seen[firstFive]) {
+        // Если таких первых 5 букв еще не было
+        seen[firstFive] = true; // Отмечаем, что эти буквы встретились
+        uniqueWords.push(word); // Добавляем слово в список уникальных
+      }
+    });
+
+    return uniqueWords;
+  };
+
+  const handleCitySelect = (selectedOption) => {
+    setSelectedCity(selectedOption.value);
+  };
+
   return (
     <>
       <section className={t.sectionTools}>
         <div className={s.title}>
           <h1>Создай правильный Title</h1>
+        </div>
+        <div className={s.selectRegion}>
+          <RegionSelectSearch onSelect={handleCitySelect} />
         </div>
         <div className={s.blockForm}>
           <label htmlFor="key-get">Впиши ключевой запрос</label>
@@ -154,7 +181,7 @@ export default function ApiSendYaSearch() {
         <div className={s.finalTitle}>
           {resultString && resultString.length > 0 && (
             <p>
-              {resultString
+              {filterUniqueWords(resultString)
                 .map((word, index) =>
                   index === 0
                     ? word.charAt(0).toUpperCase() + word.slice(1)
