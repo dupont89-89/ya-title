@@ -19,10 +19,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
-
 const { createProxyMiddleware } = require("http-proxy-middleware");
 
 app.use(
@@ -30,16 +26,19 @@ app.use(
   createProxyMiddleware({
     target: "https://yandex.ru",
     changeOrigin: true,
-    pathRewrite: {
-      "^/api": `/search/xml?folderid=${yaCatalog}&filter=moderate&lr=213&l10n=ru`,
+    pathRewrite: (path, req) => {
+      const selectedCity = req.query.selectedCity || "213";
+      console.log(selectedCity);
+      return `/search/xml?folderid=${yaCatalog}&filter=moderate&lr=${selectedCity}&l10n=ru`;
     },
-    onProxyReq(proxyReq, req, res) {
-      // Добавьте логирование для просмотра адреса запроса и установленных заголовков
+    onProxyReq(proxyReq, reqProxy, res) {
       console.log("Request URL:", proxyReq.path);
       console.log("Request Headers:", proxyReq._headers);
-
-      // Добавьте любые заголовки, которые могут потребоваться для аутентификации
       proxyReq.setHeader("Authorization", `Api-Key ${apiKey}`);
     },
   })
 );
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
