@@ -39,7 +39,8 @@
 }
 
 .blockOsn {
-  height: 100vh;
+  min-height: 100vh;
+  background-attachment: fixed;
   background-image: url(./img/background/7116017_3561864.jpg);
   padding: 45px;
   background-position: top;
