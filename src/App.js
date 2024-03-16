@@ -1,6 +1,6 @@
 import "./App.css";
-import ToolSidebar from "./Sidebar/ToolSidebar";
-import ApiSendYaSearch from "./api-ya-search/ApiSendYaSearch";
+import ToolsSidebar from "./Sidebar/ToolSidebar";
+import ToolsContent from "./ToolsContent/ToolsContent";
 import { Route, Routes } from "react-router-dom";
 
 function App() {
@@ -9,11 +9,11 @@ function App() {
       <div className="blockOsn">
         <div className="sectionGridSK">
           <aside>
-            <ToolSidebar />
+            <ToolsSidebar />
           </aside>
           <article>
             <Routes>
-              <Route path="/" element={<ApiSendYaSearch />} />
+              <Route path="/" element={<ToolsContent />} />
             </Routes>
           </article>
         </div>
