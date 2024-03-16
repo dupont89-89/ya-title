@@ -10,6 +10,7 @@ import RepeatWords from "./RepeatWords";
 import TextBottom from "./TextBottom";
 import InputKey from "./InputKey";
 import { Link } from "react-router-dom";
+import ToolsSidebar from "../Sidebar/ToolSidebar";
 
 const serverUrl = `${config.REACT_APP_SERVER_URL}:${config.REACT_APP_PORT}`;
 
@@ -22,6 +23,7 @@ export default function ApiSendYaSearch() {
   const [isLoading, setIsLoading] = useState(false); // Состояние для указания на процесс загрузки
   const [topFriLink, setResultWordsLink] = useState(null);
   const [copySuccess, setCopySuccess] = useState(false);
+  const [urlPage, setUrlPage] = useState(null);
 
   const handleClick = async () => {
     setIsLoading(true); // Устанавливаем состояние загрузки в true при отправке запроса
@@ -48,6 +50,7 @@ export default function ApiSendYaSearch() {
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(xmlResponse, "text/xml");
       const titles = xmlDoc.getElementsByTagName("title");
+      const url = xmlDoc.getElementsByTagName("url");
       const newTitleValues = [];
       const wordsCount = {};
 
@@ -122,6 +125,7 @@ export default function ApiSendYaSearch() {
       setResultWordsLink(topWordsLink);
       setTitleValues(newTitleValues); // Обновляем состояние с заголовками
       setRepeatWords(sortedWords); // Обновляем состояние с повторяющимися словами
+      setUrlPage(url);
     } catch (error) {
       console.error("Ошибка при отправке данных:", error);
     } finally {
@@ -184,63 +188,70 @@ export default function ApiSendYaSearch() {
   };
 
   return (
-    <section className={t.sectionTools}>
-      <div className={s.title}>
-        <h1>Создай правильный Title</h1>
-      </div>
-      <RegionSelectSearch onSelect={handleCitySelect} />
-      <InputKey
-        handleChange={handleChange}
-        query={query}
-        handleClick={handleClick}
-      />
-
-      {isLoading ? ( // Показываем "ЗАГРУЗКА" во время загрузки
-        <Loading />
-      ) : (
-        // Показываем результат, если загрузка завершена
-        resultString &&
-        resultString.length > 0 && (
-          <div className={s.wrapperBoxTitle}>
-            <span className={s.faviconTitle}></span>
-            <div className={s.boxTitle}>
-              <h2>
-                {filterUniqueWords(resultString)
-                  .map((word, index) =>
-                    index === 0
-                      ? word.charAt(0).toUpperCase() + word.slice(1)
-                      : word
-                  )
-                  .join(" ")}
-              </h2>
-              <span className={s.linkTopKey}>
-                ptahini.ru›search/
-                {filterUniqueWords(topFriLink)
-                  .map((word, index) =>
-                    index === 0
-                      ? word.charAt(0).toUpperCase() + word.slice(1)
-                      : word
-                  )
-                  .join(" ")}
-              </span>
-              <p>
-                Это лучший тайтл для твоего SEO продвижения сайта. Приведи его к
-                читаемому виду. Добавь его в соответсвующий раздел мета-тегов в
-                своей CMS.
-              </p>
-              <Link className={s.btnCopyTitle} onClick={copyTextOnClick}>
-                Копировать Title
-              </Link>
-              {copySuccess && (
-                <span className={s.copyMessage}>Title скопирован!</span>
-              )}
-            </div>
+    <div>
+      <div className={t.sectionGridSK}>
+        <aside>
+          <ToolsSidebar />
+        </aside>
+        <section className={t.sectionTools}>
+          <div className={s.title}>
+            <h1>Создай правильный Title</h1>
           </div>
-        )
-      )}
-      <TitleValues titleValues={titleValues} />
+          <RegionSelectSearch onSelect={handleCitySelect} />
+          <InputKey
+            handleChange={handleChange}
+            query={query}
+            handleClick={handleClick}
+          />
+          {isLoading ? ( // Показываем "ЗАГРУЗКА" во время загрузки
+            <Loading />
+          ) : (
+            // Показываем результат, если загрузка завершена
+            resultString &&
+            resultString.length > 0 && (
+              <div className={s.wrapperBoxTitle}>
+                <span className={s.faviconTitle}></span>
+                <div className={s.boxTitle}>
+                  <h2>
+                    {filterUniqueWords(resultString)
+                      .map((word, index) =>
+                        index === 0
+                          ? word.charAt(0).toUpperCase() + word.slice(1)
+                          : word
+                      )
+                      .join(" ")}
+                  </h2>
+                  <span className={s.linkTopKey}>
+                    ptahini.ru›search/
+                    {filterUniqueWords(topFriLink)
+                      .map((word, index) =>
+                        index === 0
+                          ? word.charAt(0).toUpperCase() + word.slice(1)
+                          : word
+                      )
+                      .join(" ")}
+                  </span>
+                  <p>
+                    Это лучший тайтл для твоего SEO продвижения сайта. Приведи
+                    его к читаемому виду. Добавь его в соответсвующий раздел
+                    мета-тегов в своей CMS.
+                  </p>
+                  <Link className={s.btnCopyTitle} onClick={copyTextOnClick}>
+                    Копировать Title
+                  </Link>
+                  {copySuccess && (
+                    <span className={s.copyMessage}>Title скопирован!</span>
+                  )}
+                </div>
+              </div>
+            )
+          )}
+        </section>
+      </div>
+
+      <TitleValues urlPage={urlPage} titleValues={titleValues} />
       <RepeatWords repeatWords={repeatWords} />
       <TextBottom />
-    </section>
+    </div>
   );
 }
