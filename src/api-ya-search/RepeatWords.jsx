@@ -6,13 +6,15 @@ export default function RepeatWords({ repeatWords }) {
     <div>
       {/* Вывод повторяющихся слов */}
       {repeatWords ? (
-        <div className={t.resultSearhTitle}>
-          <h2>Повторяющиеся слова:</h2>
-          <ul>
-            {repeatWords.map(([word, count], index) => (
-              <li key={index}>{`${word}: ${count}`}</li>
-            ))}
-          </ul>
+        <div className={t.wordSerhBlock}>
+          <div className={t.resultSearhWord}>
+            <h2>Повторяющиеся слова:</h2>
+            <ul>
+              {repeatWords.map(([word, count], index) => (
+                <li key={index}>{`${word}: ${count}`}</li>
+              ))}
+            </ul>
+          </div>
         </div>
       ) : null}
     </div>
