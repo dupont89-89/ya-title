@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import Select from "react-select";
 import s from "./Function.module.css";
+import t from "./../api-ya-search/Form.module.css";
+
+const labelStyle = {
+  fontSize: "21px",
+  margin: "21px 0",
+  display: "block",
+};
 
 const options = [
   { value: 20, label: "Архангельск" },
@@ -81,13 +88,17 @@ const RegionSelectSearch = ({ onSelect }) => {
 
   return (
     <div>
-      <h2>Регион продвижения:</h2>
-      <Select
-        className={s.selectRegion}
-        value={selectedOption}
-        onChange={handleChange}
-        options={options}
-      />
+      <label style={labelStyle} htmlFor="region">
+        Регион продвижения:
+      </label>
+      <div className={t.selectRegion}>
+        <Select
+          className={s.selectRegion}
+          value={selectedOption}
+          onChange={handleChange}
+          options={options}
+        />
+      </div>
     </div>
   );
 };

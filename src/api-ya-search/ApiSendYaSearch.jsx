@@ -4,17 +4,28 @@ import s from "./Form.module.css";
 import t from "./../css/Tools.module.css";
 import config from "./../config";
 import RegionSelectSearch from "../app-function/RegionSelectSearch";
+import Loading from "../app-function/Loading";
+import TitleValues from "./TitleValues";
+import RepeatWords from "./RepeatWords";
+import TextBottom from "./TextBottom";
+import InputKey from "./InputKey";
+import { Link } from "react-router-dom";
 
 const serverUrl = `${config.REACT_APP_SERVER_URL}:${config.REACT_APP_PORT}`;
 
 export default function ApiSendYaSearch() {
   const [query, setQuery] = useState(""); // Состояние для хранения значения ввода
-  const [titleValues, setTitleValues] = useState([]); // Состояние для хранения значений заголовков
-  const [repeatWords, setRepeatWords] = useState([]); // Состояние для хранения повторяющихся слов
+  const [titleValues, setTitleValues] = useState(null); // Состояние для хранения значений заголовков
+  const [repeatWords, setRepeatWords] = useState(null); // Состояние для хранения повторяющихся слов
   const [resultString, setResultString] = useState(""); // Состояние для хранения строки с первыми 8 словами
   const [selectedCity, setSelectedCity] = useState("213");
+  const [isLoading, setIsLoading] = useState(false); // Состояние для указания на процесс загрузки
+  const [topFriLink, setResultWordsLink] = useState(null);
+  const [copySuccess, setCopySuccess] = useState(false);
 
   const handleClick = async () => {
+    setIsLoading(true); // Устанавливаем состояние загрузки в true при отправке запроса
+
     const xmlData = `<?xml version="1.0" encoding="utf-8"?>
           <request>
           <query>${query}</query>
@@ -27,7 +38,6 @@ export default function ApiSendYaSearch() {
           </request>`;
 
     try {
-      debugger;
       const response = await axios.post(
         `${serverUrl}/api`, // Добавляем selectedCity как параметр запроса
         xmlData,
@@ -46,7 +56,7 @@ export default function ApiSendYaSearch() {
         let title = getTextContentWithTags(titles[i]); // Используем рекурсивный обход DOM
         title = title.replace(/\.{3}$/, ""); // Удаление символов '...'
         title = title.replace(/[|()'"/]/g, ""); // Удаление символов '|', '—', '–' и ','
-        title = title.replace(/[—,-]/g, " "); // Удаление символов '|', '—', '–' и ','
+        title = title.replace(/[—\u2013,-]/g, " "); // Удаление символов '|', '—', '–' и ','
         newTitleValues.push(title);
 
         const commonPrepositions = [
@@ -68,17 +78,19 @@ export default function ApiSendYaSearch() {
           // Добавьте сюда другие предлоги, которые вы хотите исключить
         ];
 
-        const words = title.split(" ");
+        const titleWithoutPunctuation = title.replace(/[.,!?'"`]/g, ""); // Удаление знаков препинания
+        const normalizedTitle = titleWithoutPunctuation.replace(
+          /\bцен[ые]?\b/gi,
+          "цена"
+        ); // Замена "цены" и "цене" на "цена"
+        const words = normalizedTitle.split(/\s+/); // Разделение строки на слова
+
         words.forEach((word) => {
-          const normalizedWord = word
-            .trim()
-            .toLowerCase()
-            .replace(/[.,!?'"`]/g, ""); // Нормализуем слово
+          const normalizedWord = word.trim().toLowerCase();
           if (
             normalizedWord !== "" &&
             !commonPrepositions.includes(normalizedWord)
           ) {
-            // Проверяем, что слово не пустое и не является предлогом
             if (wordsCount[normalizedWord]) {
               wordsCount[normalizedWord]++;
             } else {
@@ -105,12 +117,15 @@ export default function ApiSendYaSearch() {
 
       // Выбираем только первые 8 слов без цифр и символа ':'
       const topWords = wordsWithoutDigits.slice(0, 10);
+      const topWordsLink = wordsWithoutDigits.slice(0, 3);
       setResultString(topWords);
-
+      setResultWordsLink(topWordsLink);
       setTitleValues(newTitleValues); // Обновляем состояние с заголовками
       setRepeatWords(sortedWords); // Обновляем состояние с повторяющимися словами
     } catch (error) {
       console.error("Ошибка при отправке данных:", error);
+    } finally {
+      setIsLoading(false); // Устанавливаем состояние загрузки в false после получения ответа
     }
   };
 
@@ -155,71 +170,77 @@ export default function ApiSendYaSearch() {
     setSelectedCity(selectedOption.value);
   };
 
+  const copyTextOnClick = () => {
+    const h2Text = filterUniqueWords(resultString)
+      .map((word, index) =>
+        index === 0 ? word.charAt(0).toUpperCase() + word.slice(1) : word
+      )
+      .join(" ");
+    navigator.clipboard.writeText(h2Text);
+    setCopySuccess(true);
+    setTimeout(() => {
+      setCopySuccess(false);
+    }, 3000); // 3 секунды для автоматического скрытия сообщения
+  };
+
   return (
-    <>
-      <section className={t.sectionTools}>
-        <div className={s.title}>
-          <h1>Создай правильный Title</h1>
-        </div>
-        <div className={s.selectRegion}>
-          <RegionSelectSearch onSelect={handleCitySelect} />
-        </div>
-        <div className={s.blockForm}>
-          <label htmlFor="key-get">Впиши ключевой запрос</label>
-          <div className={s.inputBlockForm}>
-            <input
-              placeholder="купить птичье молоко оптом"
-              type="text"
-              name="key-get"
-              id="key-get"
-              value={query}
-              onChange={handleChange}
-            />
-            <button onClick={handleClick}>Создать тайтл</button>
+    <section className={t.sectionTools}>
+      <div className={s.title}>
+        <h1>Создай правильный Title</h1>
+      </div>
+      <RegionSelectSearch onSelect={handleCitySelect} />
+      <InputKey
+        handleChange={handleChange}
+        query={query}
+        handleClick={handleClick}
+      />
+
+      {isLoading ? ( // Показываем "ЗАГРУЗКА" во время загрузки
+        <Loading />
+      ) : (
+        // Показываем результат, если загрузка завершена
+        resultString &&
+        resultString.length > 0 && (
+          <div className={s.wrapperBoxTitle}>
+            <span className={s.faviconTitle}></span>
+            <div className={s.boxTitle}>
+              <h2>
+                {filterUniqueWords(resultString)
+                  .map((word, index) =>
+                    index === 0
+                      ? word.charAt(0).toUpperCase() + word.slice(1)
+                      : word
+                  )
+                  .join(" ")}
+              </h2>
+              <span className={s.linkTopKey}>
+                ptahini.ru›search/
+                {filterUniqueWords(topFriLink)
+                  .map((word, index) =>
+                    index === 0
+                      ? word.charAt(0).toUpperCase() + word.slice(1)
+                      : word
+                  )
+                  .join(" ")}
+              </span>
+              <p>
+                Это лучший тайтл для твоего SEO продвижения сайта. Приведи его к
+                читаемому виду. Добавь его в соответсвующий раздел мета-тегов в
+                своей CMS.
+              </p>
+              <Link className={s.btnCopyTitle} onClick={copyTextOnClick}>
+                Копировать Title
+              </Link>
+              {copySuccess && (
+                <span className={s.copyMessage}>Title скопирован!</span>
+              )}
+            </div>
           </div>
-        </div>
-        <div className={s.finalTitle}>
-          {resultString && resultString.length > 0 && (
-            <p>
-              {filterUniqueWords(resultString)
-                .map((word, index) =>
-                  index === 0
-                    ? word.charAt(0).toUpperCase() + word.slice(1)
-                    : word
-                )
-                .join(" ")}
-            </p>
-          )}
-        </div>
-      </section>
-      {/* Вывод заголовков */}
-      <div className={t.resultSearhTitle}>
-        <ul>
-          {titleValues.map((title, index) => (
-            <li key={index}>{title}</li>
-          ))}
-        </ul>
-      </div>
-      {/* Вывод повторяющихся слов */}
-      <div className={t.resultSearhTitle}>
-        <h2>Повторяющиеся слова:</h2>
-        <ul>
-          {repeatWords.map(([word, count], index) => (
-            <li key={index}>{`${word}: ${count}`}</li>
-          ))}
-        </ul>
-      </div>
-      <div className={t.textBottomTools}>
-        <p>
-          <b>Ptahini</b> разработал{" "}
-          <strong>инструмент для создания “правильного тайтла”</strong>, который
-          помогает SEO-специалистам <strong>автоматически</strong> составлять
-          заголовки Title <strong>на основе поисковой выдачи</strong>. Этот
-          инструмент подбирает самые релевантные, связанные и тематические LSI
-          слова и фразы, что позволяет создать заголовок, максимально
-          соответствующий поисковым запросам пользователей.
-        </p>
-      </div>
-    </>
+        )
+      )}
+      <TitleValues titleValues={titleValues} />
+      <RepeatWords repeatWords={repeatWords} />
+      <TextBottom />
+    </section>
   );
 }
