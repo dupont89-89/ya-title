@@ -1,6 +1,6 @@
 const config = {
-  REACT_APP_PORT: "5000",
-  REACT_APP_SERVER_URL: "http://localhost",
+  REACT_APP_PORT: "8080",
+  REACT_APP_SERVER_URL: "https://tools.ptahini.ru",
 };
 
 export default config;

@@ -45,7 +45,6 @@ export default function ApiSendYaSearch() {
         xmlData,
         { params: { selectedCity: selectedCity } }
       );
-      console.log("Ответ от сервера:", response.data);
       const xmlResponse = response.data;
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(xmlResponse, "text/xml");

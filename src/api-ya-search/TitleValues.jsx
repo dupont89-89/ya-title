@@ -6,6 +6,10 @@ export default function TitleValues({ titleValues, urlPage }) {
     ? Array.from(urlPage, (url) => url.textContent)
     : [];
 
+  const titleValuesDownloads = titleValues
+    ? titleValues.map((title) => title)
+    : [];
+
   // Функция для формирования содержимого файла для скачивания
   const generateDownloadFile = () => {
     const textToDownload = urlPageArray.join("\n");
@@ -13,7 +17,14 @@ export default function TitleValues({ titleValues, urlPage }) {
     return URL.createObjectURL(blob);
   };
 
+  const generateDownloadFileTitle = () => {
+    const textToDownload = titleValuesDownloads.join("\n");
+    const blob = new Blob([textToDownload], { type: "text/plain" });
+    return URL.createObjectURL(blob);
+  };
+
   const downloadUrl = generateDownloadFile(); // Генерируем URL для скачивания файла
+  const downloadTitle = generateDownloadFileTitle(); // Генерируем URL для скачивания файла
 
   return (
     <div>
@@ -26,6 +37,13 @@ export default function TitleValues({ titleValues, urlPage }) {
                 <li key={index}>{title}</li>
               ))}
             </ul>
+            <a
+              className={t.downloadLink}
+              href={downloadTitle}
+              download="title.txt"
+            >
+              Скачать
+            </a>
           </div>
           <div className={t.urlBlock}>
             <h2>Адреса страниц</h2>
@@ -40,7 +58,11 @@ export default function TitleValues({ titleValues, urlPage }) {
                 ))}
               </ul>
               {/* Ссылка для скачивания файла */}
-              <a href={downloadUrl} download="urls.txt">
+              <a
+                className={t.downloadLink}
+                href={downloadUrl}
+                download="urls.txt"
+              >
                 Скачать
               </a>
             </div>
