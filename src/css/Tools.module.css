@@ -16,8 +16,9 @@
     margin-top: 20px;
 }
 
-.resultSearhWord {
+.resultSearhWord ul {
     columns: 3;
+    padding: 30px;
 }
 
 .resultSearhTitle {
@@ -106,4 +107,29 @@
 .sectionGridSK aside nav ul {
     list-style: none;
     padding-left: 0;
+}
+
+.wrapperWord {
+    border-radius: 16px;
+    background-color: #fff;
+    box-shadow: 0 4px 12px 0#0d234308;
+}
+
+a.downloadLink {
+    display: inline;
+    margin-right: 10px;
+    padding: 4px 7px;
+    background-color: #381a6d;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 3px;
+}
+
+a.downloadLink:hover {
+    background-color: #1e0d3a;
+    transition: 0.3s;
+}
+
+.sectionBlockWord {
+    margin-top: 20px;
 }
