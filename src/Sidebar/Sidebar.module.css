@@ -19,3 +19,53 @@
     margin-left: 10px;
     border-radius: 3px;
 }
+
+/* Стили для десктопа */
+@media (min-width: 769px) {
+    .sidebar.desktop {
+        /* Ваши стили для сайдбара на десктопе */
+        display: block;
+    }
+
+    .sidebar.mobile {
+        display: none;
+    }
+}
+
+/* Стили для мобильных устройств */
+@media (max-width: 768px) {
+    .sidebar.desktop {
+        display: none;
+    }
+
+    .blockIconClose {
+        padding: 15px;
+    }
+
+    .sidebar.mobile {
+        /* Ваши стили для сайдбара на мобильных устройствах */
+        display: block;
+    }
+
+    .mobileHeader {
+        display: grid;
+        grid-template-columns: 1fr 60px;
+        grid-gap: 15px;
+        align-items: center;
+    }
+
+    .mobileCloseMenu {
+        display: grid;
+        grid-template-columns: 1fr 60px;
+        grid-gap: 15px;
+        align-items: start;
+    }
+
+    .sidebar {
+        transition: transform 1.8s ease;
+    }
+
+    .open {
+        transform: translateX(0);
+    }
+}

@@ -110,3 +110,15 @@
     margin-left: 15px;
     display: inline;
 }
+
+/* Стили для мобильных устройств */
+@media screen and (max-width: 768px) {
+    .inputBlockForm input {
+        width: 100%;
+    }
+
+    .blockForm button {
+        margin-top: 30px;
+        margin-left: 0px;
+    }
+}

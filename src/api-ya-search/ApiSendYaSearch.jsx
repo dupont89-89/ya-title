@@ -2,17 +2,16 @@ import React, { useState } from "react";
 import axios from "axios";
 import s from "./Form.module.css";
 import t from "./../css/Tools.module.css";
-import config from "./../config";
+import config from "../config.prod";
 import RegionSelectSearch from "../app-function/RegionSelectSearch";
 import Loading from "../app-function/Loading";
 import TitleValues from "./TitleValues";
 import RepeatWords from "./RepeatWords";
 import TextBottom from "./TextBottom";
 import InputKey from "./InputKey";
-import { Link } from "react-router-dom";
 import ToolsSidebar from "../Sidebar/ToolSidebar";
 
-const serverUrl = `${config.REACT_APP_SERVER_URL}:${config.REACT_APP_PORT}`;
+const serverUrl = `${config.REACT_APP_SERVER_URL}`;
 
 export default function ApiSendYaSearch() {
   const [query, setQuery] = useState(""); // Состояние для хранения значения ввода
@@ -235,9 +234,9 @@ export default function ApiSendYaSearch() {
                     его к читаемому виду. Добавь его в соответсвующий раздел
                     мета-тегов в своей CMS.
                   </p>
-                  <Link className={s.btnCopyTitle} onClick={copyTextOnClick}>
+                  <button className={s.btnCopyTitle} onClick={copyTextOnClick}>
                     Копировать Title
-                  </Link>
+                  </button>
                   {copySuccess && (
                     <span className={s.copyMessage}>Title скопирован!</span>
                   )}
