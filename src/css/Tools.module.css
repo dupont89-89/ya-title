@@ -133,3 +133,32 @@ a.downloadLink:hover {
 .sectionBlockWord {
     margin-top: 20px;
 }
+
+/* Стили для мобильных устройств */
+@media screen and (max-width: 768px) {
+    .sectionGridSK {
+        display: grid;
+        grid-template-columns: 1fr;
+        /* Один столбец на мобильных устройствах */
+        grid-gap: 10px;
+        /* Уменьшаем промежуток между элементами */
+    }
+
+    .resultSearhTitle {
+        display: block;
+    }
+
+    .resultSearhWord ul {
+        columns: 1;
+        padding: 30px;
+    }
+
+    a.downloadLink {
+        display: inline-block;
+        margin-bottom: 10px;
+    }
+
+    .resultSearhTitle a {
+        width: 100%;
+    }
+}
