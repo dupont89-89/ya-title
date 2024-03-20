@@ -32,7 +32,7 @@ export default function TitleValues({ titleValues, urlPage }) {
         <div className={t.resultSearhTitle}>
           <div className={t.urlBlock}>
             <h2>Собранные Title из ТОП выдачи</h2>
-            <ul>
+            <ul className={t.titleBorderBottom}>
               {titleValues.map((title, index) => (
                 <li key={index}>{title}</li>
               ))}

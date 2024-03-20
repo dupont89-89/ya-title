@@ -2,6 +2,7 @@ import "./App.css";
 import Test from "./Test/Test";
 import ToolsContent from "./ToolsContent/ToolsContent";
 import { Route, Routes } from "react-router-dom";
+import Footer from "./footer/Footer";
 
 function App() {
   return (
@@ -13,6 +14,9 @@ function App() {
             <Route path="/" element={<ToolsContent />} />
           </Routes>
         </article>
+        <footer>
+          <Footer />
+        </footer>
       </div>
     </div>
   );
