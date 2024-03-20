@@ -61,6 +61,12 @@
     color: #000000;
 }
 
+.titleBorderBottom li {
+    border-bottom: 1px solid;
+    margin: 5px 0;
+    display: inline-block;
+}
+
 .resultSearhWord .listBlockWord {
     padding: 12px 16px;
     border-radius: 16px;
@@ -132,6 +138,26 @@ a.downloadLink:hover {
 
 .sectionBlockWord {
     margin-top: 20px;
+}
+
+.normalButton {
+    padding: 3px 9px;
+    border: none;
+    background-color: #c5a8825c;
+    color: #313030;
+    cursor: pointer;
+    margin: 2px 0;
+    border-radius: 2px;
+}
+
+.selectedButton {
+    padding: 3px 9px;
+    border: none;
+    background-color: #e4ab0f;
+    color: #000;
+    cursor: pointer;
+    margin: 2px 0;
+    border-radius: 2px;
 }
 
 /* Стили для мобильных устройств */

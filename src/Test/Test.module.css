@@ -1,9 +1,7 @@
 .textInfo {
-    display: grid;
-    grid-template-columns: 1fr 160px;
-    grid-gap: 20px;
-    padding: 5px 15px;
     background-color: #f8b576;
+    padding: 2px 45px;
+    text-align: center;
 }
 
 .textInfo a {

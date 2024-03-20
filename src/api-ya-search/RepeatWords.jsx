@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import t from "../css/Tools.module.css";
 
 export default function RepeatWords({ repeatWords }) {
-  if (!repeatWords) return null; // Проверяем, не является ли repeatWords null
+  const [textWords, setAddWordsState] = useState([]);
+  if (!repeatWords) return null;
 
   const wordsWithCount = repeatWords.filter(
     ([word, count]) => count !== undefined
@@ -11,9 +12,7 @@ export default function RepeatWords({ repeatWords }) {
 
   const generateDownloadFile = (wordsArray) => {
     const textToDownload = wordsArray
-      .map(([word, count]) => {
-        return count !== undefined ? `${word},${count}` : word;
-      })
+      .map(([word, count]) => (count !== undefined ? `${word},${count}` : word))
       .join("\n");
     const blob = new Blob([textToDownload], { type: "text/csv" });
     return URL.createObjectURL(blob);
@@ -25,9 +24,25 @@ export default function RepeatWords({ repeatWords }) {
     return URL.createObjectURL(blob);
   };
 
+  const generateDownloadFileWordSelected = (textWords) => {
+    const textToDownload = textWords.join("\n");
+    const blob = new Blob([textToDownload], { type: "text/txt" });
+    return URL.createObjectURL(blob);
+  };
+
+  const downloadUrlSelectedWords = generateDownloadFileWordSelected(textWords);
   const downloadUrlWithCount = generateDownloadFile(wordsWithCount);
   const downloadUrlWithoutCount =
     generateDownloadFileWithoutCount(wordsWithoutCount);
+
+  const handleClick = (textWord) => {
+    setAddWordsState((prevState) => [...prevState, textWord]); // Добавление нового значения к предыдущему состоянию
+    console.log(textWord);
+  };
+
+  const isWordSelected = (word) => {
+    return textWords.includes(word);
+  };
 
   return (
     <div className={t.sectionBlockWord}>
@@ -38,7 +53,14 @@ export default function RepeatWords({ repeatWords }) {
             <ul>
               {repeatWords.map(([word, count], index) => (
                 <li key={index}>
-                  {count !== undefined ? `${word}: ${count}` : word}
+                  <button
+                    onClick={() => handleClick(word)}
+                    className={
+                      isWordSelected(word) ? t.selectedButton : t.normalButton
+                    }
+                  >
+                    {count !== undefined ? `${word}: ${count}` : word}
+                  </button>
                 </li>
               ))}
             </ul>
@@ -57,6 +79,15 @@ export default function RepeatWords({ repeatWords }) {
           >
             Скачать (без количества)
           </a>
+          {textWords.length > 0 && (
+            <a
+              className={t.downloadLink}
+              href={downloadUrlSelectedWords}
+              download="selected-word.txt"
+            >
+              Скачать выбранные
+            </a>
+          )}
         </div>
       </div>
     </div>
