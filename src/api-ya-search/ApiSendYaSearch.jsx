@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import axios from "axios";
 import s from "./Form.module.css";
 import t from "./../css/Tools.module.css";
-import config from "../config.prod";
 import RegionSelectSearch from "../app-function/RegionSelectSearch";
 import Loading from "../app-function/Loading";
 import TitleValues from "./TitleValues";
@@ -10,6 +9,14 @@ import RepeatWords from "./RepeatWords";
 import TextBottom from "./TextBottom";
 import InputKey from "./InputKey";
 import ToolsSidebar from "../Sidebar/ToolSidebar";
+
+let config;
+
+if (process.env.NODE_ENV === "development") {
+  config = require("../config.dev");
+} else {
+  config = require("../config.prod");
+}
 
 const serverUrl = `${config.REACT_APP_SERVER_URL}`;
 
@@ -40,11 +47,12 @@ export default function ApiSendYaSearch() {
 
     try {
       const response = await axios.post(
-        `${serverUrl}/api`, // Добавляем selectedCity как параметр запроса
+        `${serverUrl}/api/get-title`, // Добавляем selectedCity как параметр запроса
         xmlData,
         { params: { selectedCity: selectedCity } }
       );
       const xmlResponse = response.data;
+      debugger;
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(xmlResponse, "text/xml");
       const titles = xmlDoc.getElementsByTagName("title");
