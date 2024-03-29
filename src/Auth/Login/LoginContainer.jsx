@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import Login from "./Login";
 import {
   setDataUser,
   setAuthSuccess,
 } from "./../../redux/user-reducer/user-reducer";
+import { getUser } from "../../Api/api-user-login";
 
 function LoginContainer(props) {
   return (
@@ -14,6 +15,8 @@ function LoginContainer(props) {
         setAuthSuccess={props.setAuthSuccess}
         setDataUser={props.setDataUser}
         isAuthenticated={props.isAuthenticated}
+        closeButton={props.closeButton}
+        close={props.close}
       />
     </div>
   );
@@ -28,6 +31,7 @@ let mapStateToProps = (state) => {
 const mapDispatchToProps = {
   setDataUser,
   setAuthSuccess,
+  getUser,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer);

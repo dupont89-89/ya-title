@@ -1,4 +1,5 @@
 import axios from "axios";
+import { setDataUser } from "../redux/user-reducer/user-reducer";
 
 let config;
 
@@ -29,4 +30,19 @@ export const loginUser = async (data) => {
   } catch (error) {
     throw error;
   }
+};
+
+export const getUser = (userId) => {
+  return async (dispatch) => {
+    try {
+      const response = await instance.get(`/user/get-user?userId=${userId}`);
+      const userData = response.data.userData;
+      // Dispatch the setDataUser action to update the user data in the Redux store
+      dispatch(setDataUser(userData));
+      return response.data;
+    } catch (error) {
+      // Handle errors here, e.g., dispatch an error action
+      console.error("Error fetching user data:", error);
+    }
+  };
 };
