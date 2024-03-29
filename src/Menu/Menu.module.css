@@ -1,0 +1,73 @@
+/* Позволяет сохранять подменю видимым при наведении на него */
+.menuAuth:hover {
+    display: block;
+}
+
+.menuAuthDivider {
+    /* примерные отступы, можно настроить по вашему усмотрению */
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 0;
+    /* цвет и стиль линии */
+}
+
+.btnMenuClose {
+    background: #2b5afd;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    display: block;
+    font-size: 15px;
+    padding: 7px 0;
+    color: #fff;
+}
+
+.btnMenuAuth:hover {
+    background: #FFC107;
+}
+
+.blockUserAvatar:hover .menuAuth {
+    display: block;
+    /* отображаем блок menuAuth при наведении на родителя */
+}
+
+.menuAuthBlock {
+    font-size: 15px;
+    position: relative;
+    z-index: 6;
+}
+
+.menuAuthBlock ul {
+    padding: 0px;
+    margin: 0;
+    list-style-type: none;
+}
+
+.menuAuthBlock h3 {
+    margin: 0;
+    font-size: 15px;
+    padding: 7px;
+    text-align: left;
+    color: brown;
+}
+
+.padding {
+    padding: 5px 10px;
+}
+
+.emailLogin {
+    display: inline-block;
+}
+
+.gridMenuText {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 5px;
+    justify-content: space-between;
+}
+
+a.btnMenuAuth,
+.linkProfileHeader {
+    color: #000;
+    display: block;
+}

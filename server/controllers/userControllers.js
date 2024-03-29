@@ -35,3 +35,27 @@ exports.signUpUserController = async (req, res) => {
     res.status(500).send({ message: "Internal Server Error" });
   }
 };
+
+exports.dataUserController = async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.query.userId });
+    if (user) {
+      // User found, send the user data in the response
+      const userData = {
+        userId: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        avatar: user.avatar,
+      };
+      res.status(200).json({ userData }); // Assuming you want to send the user data as JSON
+    } else {
+      // User not found, send a 404 Not Found response
+      res.status(404).json({ message: "User not found" });
+    }
+  } catch (error) {
+    // Handle any errors that occur during the query
+    console.error("Error retrieving user:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};

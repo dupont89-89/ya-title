@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import styles from "./styles.module.css";
 import { signUpUser } from "../../Api/api-user-login";
+import ptahiniLogo from "./../../img/logo/PTAHINI-nav.png";
 
-const Signup = () => {
+const Signup = (props) => {
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
@@ -11,7 +11,6 @@ const Signup = () => {
     password: "",
   });
   const [error, setError] = useState("");
-  const navigate = useNavigate();
 
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
@@ -39,7 +38,6 @@ const Signup = () => {
         firstName: trimmedFirstName,
         lastName: trimmedLastName,
       });
-      navigate("/login");
       console.log(res.message);
     } catch (error) {
       setError(error.message);
@@ -49,21 +47,17 @@ const Signup = () => {
   return (
     <div>
       <div className={styles.signup_container}>
+        {props.closeButton}
         <div className={styles.signup_form_container}>
-          <div className={styles.left}>
-            <h1>Welcome Back</h1>
-            <Link to="/login">
-              <button type="button" className={styles.white_btn}>
-                Sing in
-              </button>
-            </Link>
-          </div>
           <div className={styles.right}>
+            <div className={styles.ptahiniLogo}>
+              <img src={ptahiniLogo} alt="ptahini" />
+            </div>
             <form className={styles.form_container} onSubmit={handleSubmit}>
-              <h1>Create Account</h1>
+              <h1>Регистрация аккаунта</h1>
               <input
                 type="text"
-                placeholder="First Name"
+                placeholder="Имя"
                 name="firstName"
                 onChange={handleChange}
                 value={data.firstName}
@@ -72,7 +66,7 @@ const Signup = () => {
               />
               <input
                 type="text"
-                placeholder="Last Name"
+                placeholder="Фамилия"
                 name="lastName"
                 onChange={handleChange}
                 value={data.lastName}
@@ -90,7 +84,7 @@ const Signup = () => {
               />
               <input
                 type="password"
-                placeholder="Password"
+                placeholder="Пароль"
                 name="password"
                 onChange={handleChange}
                 value={data.password}
@@ -99,7 +93,7 @@ const Signup = () => {
               />
               {error && <div className={styles.error_msg}>{error}</div>}
               <button type="submit" className={styles.green_btn}>
-                Sing Up
+                Создать пользователя
               </button>
             </form>
           </div>

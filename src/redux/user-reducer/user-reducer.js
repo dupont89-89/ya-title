@@ -1,17 +1,12 @@
+import avatarNoDataUser from "./../../img/icon/fox.png";
+
 const ACTION_USER_DATA = "ACTION_USER_DATA";
-const ACTION_ALL_USER_DATA = "ACTION_ALL_USER_DATA";
 const SET_AUTH_SUCCESS = "SET_AUTH_SUCCESS";
 const LOGOUT = "LOGOUT";
-const UPDATE_USER_ONLINE_STATUS = "UPDATE_USER_ONLINE_STATUS";
 
 export const setDataUser = (dataUser) => ({
   type: ACTION_USER_DATA,
   dataUser: { ...dataUser }, // Глубокое копирование dataUser
-});
-
-export const setAllDataUser = (allUser) => ({
-  type: ACTION_ALL_USER_DATA,
-  allUser: [...allUser], // Глубокое копирование массива allUser
 });
 
 export const setAuthSuccess = () => ({
@@ -20,11 +15,6 @@ export const setAuthSuccess = () => ({
 
 export const logout = () => ({
   type: LOGOUT,
-});
-
-export const updateUserOnlineStatus = (userId, isOnline) => ({
-  type: UPDATE_USER_ONLINE_STATUS,
-  payload: { userId, isOnline },
 });
 
 export const logoutUserThunkCreator = () => {
@@ -40,9 +30,15 @@ const initialState = {
   dataUser: {
     firstName: "Привет",
     lastName: "Гость",
-    vip: false,
+    avatar: avatarNoDataUser,
+    money: 0,
+    lvt: 0,
+    lvtPresent: 0,
+    notifications: 0,
+    referal: {
+      quantity: 0,
+    },
   },
-  allUser: [],
   isAuthenticated: false,
 };
 
@@ -51,7 +47,10 @@ const userReducer = (state = initialState, action) => {
     case ACTION_USER_DATA:
       return {
         ...state,
-        dataUser: { ...action.dataUser }, // Глубокое копирование action.dataUser
+        dataUser: {
+          ...state.dataUser, // сохраняем текущие значения dataUser
+          ...action.dataUser, // обновляем значения из action.dataUser
+        },
       };
     case SET_AUTH_SUCCESS:
       return {

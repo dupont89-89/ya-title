@@ -1,0 +1,32 @@
+.blockUserAvatar img {
+    width: 45px;
+}
+
+.blockUserAvatar {
+    position: relative;
+    /* добавляем позиционирование */
+}
+
+.blockUserAvatar .linkAvatarHeader {
+    display: block;
+}
+
+.blockUserAvatar:hover .menuAuth {
+    display: block;
+    /* отображаем блок menuAuth при наведении на родителя */
+}
+
+.menuAuth {
+    display: none;
+    /* начинаем с скрытия блока */
+    position: absolute;
+    /* добавляем абсолютное позиционирование */
+    top: 100%;
+    /* позиционируем блок под ссылкой */
+    left: 0;
+    /* выравниваем блок слева */
+    width: 220px;
+    background-color: #fff;
+    border-radius: 5px;
+    z-index: 1;
+}
