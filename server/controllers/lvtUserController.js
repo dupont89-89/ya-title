@@ -12,13 +12,24 @@ exports.spendLvtUserController = async (req, res) => {
       return res.status(404).send({ message: "User not found" });
     }
 
-    // Проверяем, что у пользователя есть достаточно LVT для списания
-    if (user.lvt < 1) {
-      return res.status(400).send({ message: "Insufficient LVT balance" });
+    const amountToSpend = 1; // Количество LVT для списания
+
+    // Проверяем, есть ли у пользователя достаточно LVT для списания
+    if (user.totalLvt < amountToSpend) {
+      return res.status(400).send({ message: "Недостаточно баланса Lvt" });
     }
 
-    // Вычитаем 1 из lvt пользователя
-    user.lvt -= 1;
+    // Если у пользователя есть достаточно бонусных LVT (bonusDayLvt),
+    // списываем из них указанное количество
+    if (user.bonusDayLvt >= amountToSpend) {
+      user.bonusDayLvt -= amountToSpend;
+    } else {
+      // Если бонусных LVT недостаточно, вычитаем из них все, что есть,
+      // а затем оставшееся количество списываем из основных LVT (lvt)
+      const remainingFromBonus = user.bonusDayLvt;
+      user.bonusDayLvt = 0;
+      user.lvt -= amountToSpend - remainingFromBonus;
+    }
 
     // Сохраняем обновленного пользователя
     await user.save();

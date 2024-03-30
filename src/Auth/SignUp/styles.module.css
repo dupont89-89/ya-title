@@ -2,6 +2,10 @@
     background-color: #FFC107;
     border-radius: 10px;
     padding: 20px;
+    min-height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .form_container {
@@ -103,6 +107,7 @@
     right: 0;
     padding: 10px;
     position: absolute;
+    top: 0;
 }
 
 .closeBtnPopup button {

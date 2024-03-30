@@ -39,7 +39,6 @@ export const getUser = (userId) => {
       const userData = response.data.userData;
       // Dispatch the setDataUser action to update the user data in the Redux store
       dispatch(setDataUser(userData));
-      debugger;
       return response.data;
     } catch (error) {
       // Handle errors here, e.g., dispatch an error action

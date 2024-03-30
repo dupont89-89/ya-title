@@ -13,19 +13,25 @@ const validateUser = (data) => {
 exports.authUserController = async (req, res) => {
   try {
     const { error } = validateUser(req.body);
-    if (error)
+    if (error) {
+      console.log("Validation error:", error); // Добавленный console.log для отладки
       return res.status(400).send({ message: error.details[0].message });
+    }
 
     const user = await User.findOne({ email: req.body.email });
-    if (!user)
+    if (!user) {
+      console.log("User not found"); // Добавленный console.log для отладки
       return res.status(401).send({ message: "Invalid Email or Password" });
+    }
 
     const validPassword = await bcrypt.compare(
       req.body.password,
       user.password
     );
-    if (!validPassword)
+    if (!validPassword) {
+      console.log("Invalid password"); // Добавленный console.log для отладки
       return res.status(401).send({ message: "Invalid Email or Password" });
+    }
 
     const token = user.generateAuthToken();
 
@@ -42,6 +48,7 @@ exports.authUserController = async (req, res) => {
       message: "logged in successfully",
     });
   } catch (error) {
+    console.error("Error in authUserController:", error); // Добавленный console.error для отладки
     res.status(500).send({ message: "Internal Server Error" });
   }
 };
