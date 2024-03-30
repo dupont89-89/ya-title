@@ -1,8 +1,8 @@
 import React from "react";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
-import Signup from "./SignUp";
 import s from "./styles.module.css";
+import SignUpContainer from "./SignUpContainer";
 
 export default function ModalSignUp(props) {
   return (
@@ -14,7 +14,8 @@ export default function ModalSignUp(props) {
     >
       {(close) => (
         <div>
-          <Signup
+          <SignUpContainer
+            close={close}
             closeButton={
               <div className={s.closeBtnPopup}>
                 <button onClick={() => close()}>✖</button>

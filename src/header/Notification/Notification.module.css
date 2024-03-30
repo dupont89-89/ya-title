@@ -1,0 +1,76 @@
+.notificationMessage ul {
+    padding-left: 0;
+    list-style-type: none;
+}
+
+.notificationMessage ul li p {
+    margin: 0;
+}
+
+.notificationMessage ul li {
+    margin: 10px 0;
+    padding: 7px 5px;
+    background-color: #f7f7f7;
+    border-radius: 5px;
+    -webkit-box-shadow: 0px 0px 8px -4px rgba(34, 60, 80, 0.4);
+    -moz-box-shadow: 0px 0px 8px -4px rgba(34, 60, 80, 0.4);
+    box-shadow: 0px 0px 8px -4px rgba(34, 60, 80, 0.4);
+}
+
+.notificationMessage {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 10px;
+    position: absolute;
+    right: 0;
+    top: 40px;
+    height: 150px;
+    overflow-x: auto;
+    border: 2px solid #FF9800;
+}
+
+:root {
+    --scrollbarBg: #2b5afd;
+    --scrollbarThumb: rgba(255, 255, 255, 0.8);
+    --scrollbarWidth: 12px;
+    --scrollbarBorder: 3px solid var(--scrollbarBg);
+    --scrollbarBorderRadius: calc(var(--scrollbarWidth) / 2);
+}
+
+.notificationMessage {
+    scrollbar-width: var(--scrollbarWidth);
+    scrollbar-color: var(--scrollbarThumb) var(--scrollbarBg);
+}
+
+.notificationMessage::-webkit-scrollbar {
+    width: var(--scrollbarWidth);
+}
+
+.notificationMessage::-webkit-scrollbar-track {
+    background: var(--scrollbarBg);
+    border-radius: var(--scrollbarBorderRadius);
+}
+
+.notificationMessage::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbarThumb);
+    border-radius: var(--scrollbarBorderRadius);
+    border: var(--scrollbarBorder);
+}
+
+.messageGridNotification {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-gap: 5px;
+    align-items: center;
+}
+
+.notificationMessage h3 {
+    margin: 0;
+    color: brown;
+}
+
+.btnMessage {
+    border: none;
+    background: none;
+    cursor: pointer;
+}

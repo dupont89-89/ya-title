@@ -3,7 +3,7 @@ import s from "./Header.module.css";
 import Lvt from "./Balance/Lvt/Lvt";
 import Money from "./Balance/Money/Money";
 import AvatarContainer from "./Avatar/AvatarContainer";
-import Notification from "./Notification/Notification";
+import NotificationContainer from "./Notification/NotificationContainer";
 
 export default function Header(props) {
   return (
@@ -16,7 +16,7 @@ export default function Header(props) {
           lvtPresent={props.lvtPresent}
         />
         <Money money={props.money} />
-        <Notification notifications={props.notifications} />
+        <NotificationContainer />
       </div>
     </header>
   );

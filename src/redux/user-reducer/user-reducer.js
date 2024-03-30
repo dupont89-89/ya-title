@@ -3,6 +3,7 @@ import avatarNoDataUser from "./../../img/icon/fox.png";
 const ACTION_USER_DATA = "ACTION_USER_DATA";
 const SET_AUTH_SUCCESS = "SET_AUTH_SUCCESS";
 const LOGOUT = "LOGOUT";
+const ACTION_SET_NOTIFICATIONS = "ACTION_SET_NOTIFICATIONS";
 
 export const setDataUser = (dataUser) => ({
   type: ACTION_USER_DATA,
@@ -15,6 +16,11 @@ export const setAuthSuccess = () => ({
 
 export const logout = () => ({
   type: LOGOUT,
+});
+
+export const setNotifications = (notifications) => ({
+  type: ACTION_SET_NOTIFICATIONS,
+  notifications: notifications,
 });
 
 export const logoutUserThunkCreator = () => {
@@ -38,7 +44,7 @@ const initialState = {
       lvtPresentReferal: 0,
       lvtPresentRegistration: 0,
     },
-    notifications: 0,
+    notifications: [],
     referal: {
       quantity: 0,
     },
@@ -54,6 +60,14 @@ const userReducer = (state = initialState, action) => {
         dataUser: {
           ...state.dataUser, // сохраняем текущие значения dataUser
           ...action.dataUser, // обновляем значения из action.dataUser
+        },
+      };
+    case ACTION_SET_NOTIFICATIONS:
+      return {
+        ...state,
+        dataUser: {
+          ...state.dataUser,
+          notifications: action.notifications, // Обновляем только уведомления
         },
       };
     case SET_AUTH_SUCCESS:
