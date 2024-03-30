@@ -3,11 +3,11 @@ import Test from "./Test/Test";
 import ToolsContent from "./ToolsContent/ToolsContent";
 import { Route, Routes } from "react-router-dom";
 import Footer from "./footer/Footer";
-import Header from "./header/Header";
 import { setAuthSuccess } from "./redux/user-reducer/user-reducer";
 import { connect } from "react-redux";
 import { getUser } from "./Api/api-user-login";
 import { useEffect, useState } from "react";
+import HeaderContainer from "./header/HeaderContainer";
 
 function App({ setAuthSuccess, getUser, isAuthenticated }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -41,7 +41,7 @@ function App({ setAuthSuccess, getUser, isAuthenticated }) {
     <div className="App">
       <Test />
       <div className="blockOsn">
-        <Header />
+        <HeaderContainer />
         <article>
           <Routes>
             <Route path="/" element={<ToolsContent />} />

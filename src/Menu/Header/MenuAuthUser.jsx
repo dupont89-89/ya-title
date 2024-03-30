@@ -22,7 +22,15 @@ export default function MenuAuthUser(props) {
           <li>
             <div className={`${s.gridMenuText} ${s.padding}`}>
               <span>Лимиты</span>
-              <span className={s.menuLvtBalans}>{props.lvt} Lvt</span>
+              <span className={s.menuLvtBalans}>
+                {props.lvt + props.bonusDayLvt} Lvt
+              </span>
+            </div>
+          </li>
+          <li>
+            <div className={`${s.gridMenuText} ${s.padding}`}>
+              <span>Баланс</span>
+              <span className={s.menuLvtBalans}>{props.money} Р</span>
             </div>
           </li>
 

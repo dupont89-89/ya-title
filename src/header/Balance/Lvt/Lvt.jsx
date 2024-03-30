@@ -1,7 +1,7 @@
 import React from "react";
 import s from "./../../Header.module.css";
 
-export default function Lvt() {
+export default function Lvt(props) {
   const gridBlock = {
     display: "grid",
     gridTemplateColumns: "1fr auto",
@@ -23,7 +23,8 @@ export default function Lvt() {
   return (
     <div style={block}>
       <div style={gridBlock}>
-        <span>0</span> <span className={s.iconMenuLvt}>Lvt</span>
+        <span>{props.bonusDayLvt + props.lvt}</span>{" "}
+        <span className={s.iconMenuLvt}>Lvt</span>
       </div>
     </div>
   );

@@ -20,7 +20,7 @@ if (process.env.NODE_ENV === "development") {
 
 const serverUrl = `${config.REACT_APP_SERVER_URL}`;
 
-export default function ApiSendYaSearch() {
+export default function ApiSendYaSearch(props) {
   const [query, setQuery] = useState(""); // Состояние для хранения значения ввода
   const [titleValues, setTitleValues] = useState(null); // Состояние для хранения значений заголовков
   const [repeatWords, setRepeatWords] = useState(null); // Состояние для хранения повторяющихся слов
@@ -52,7 +52,6 @@ export default function ApiSendYaSearch() {
         { params: { selectedCity: selectedCity } }
       );
       const xmlResponse = response.data;
-      debugger;
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(xmlResponse, "text/xml");
       const titles = xmlDoc.getElementsByTagName("title");
@@ -136,6 +135,7 @@ export default function ApiSendYaSearch() {
       console.error("Ошибка при отправке данных:", error);
     } finally {
       setIsLoading(false); // Устанавливаем состояние загрузки в false после получения ответа
+      props.spendLvtOneTitle(props.userId);
     }
   };
 

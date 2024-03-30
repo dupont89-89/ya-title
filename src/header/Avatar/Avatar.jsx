@@ -25,6 +25,8 @@ export default function Avatar(props) {
             lvt={props.lvt}
             email={props.email}
             onLogout={props.handleLogout}
+            money={props.money}
+            bonusDayLvt={props.bonusDayLvt}
           />
         </div>
       ) : (

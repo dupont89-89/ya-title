@@ -37,12 +37,10 @@ exports.authUserController = async (req, res) => {
     };
 
     // Отправьте объект userData вместе с токеном в ответе
-    res
-      .status(200)
-      .send({
-        data: { token, user: userData },
-        message: "logged in successfully",
-      });
+    res.status(200).send({
+      data: { token, user: userData },
+      message: "logged in successfully",
+    });
   } catch (error) {
     res.status(500).send({ message: "Internal Server Error" });
   }

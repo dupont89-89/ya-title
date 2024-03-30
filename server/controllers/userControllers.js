@@ -5,7 +5,6 @@ const { validateUser } = require("../utils/validation");
 exports.signUpUserController = async (req, res) => {
   try {
     console.log("Request body:", req.body);
-    debugger;
 
     // Валидация данных пользователя
     const { error } = validateUser(req.body);
@@ -14,9 +13,9 @@ exports.signUpUserController = async (req, res) => {
       return res.status(400).send({ message: error.details[0].message });
     }
 
-    const user = await User.findOne({ email: req.body.email });
-    if (user) {
-      console.log("User already exists:", user);
+    const userExists = await User.findOne({ email: req.body.email });
+    if (userExists) {
+      console.log("User already exists:", userExists);
       return res
         .status(409)
         .send({ message: "User with given email already exists" });
@@ -27,8 +26,16 @@ exports.signUpUserController = async (req, res) => {
 
     console.log("Hashed password:", hashPassword);
 
-    // Создание нового пользователя
-    await new User({ ...req.body, password: hashPassword }).save();
+    // Создание нового пользователя с начислением 20 в поле lvtPresent
+    await User.create({
+      ...req.body,
+      password: hashPassword,
+      lvtPresent: {
+        lvtPresentRegistration: 20,
+      },
+      lvt: 20,
+    });
+
     res.status(201).send({ message: "User created successfully" });
   } catch (error) {
     console.error("Error in signUpUserController:", error);
@@ -47,6 +54,12 @@ exports.dataUserController = async (req, res) => {
         lastName: user.lastName,
         email: user.email,
         avatar: user.avatar,
+        bonusDayLvt: user.bonusDayLvt,
+        lvt: user.lvt,
+        lvtPresent: user.lvtPresent,
+        money: user.money,
+        notifications: user.money,
+        referalQuantity: user.referal.quantity,
       };
       res.status(200).json({ userData }); // Assuming you want to send the user data as JSON
     } else {
