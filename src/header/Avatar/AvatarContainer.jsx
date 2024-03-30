@@ -18,10 +18,12 @@ function AvatarContainer(props) {
       avatar={props.avatar}
       email={props.email}
       lvt={props.lvt}
-      lvtPresent={props.lvtPresent}
+      lvtPresent={props.lvtPresentRegistration + props.lvtPresentReferal}
       referalQuantity={props.referalQuantity}
       notifications={props.notifications}
+      money={props.money}
       handleLogout={handleLogout}
+      bonusDayLvt={props.bonusDayLvt}
     />
   );
 }
@@ -32,9 +34,13 @@ const mapStateToProps = (state) => {
     email: state.user.dataUser.email,
     isAuthenticated: state.user.isAuthenticated,
     lvt: state.user.dataUser.lvt,
-    lvtPresent: state.user.dataUser.lvtPresent,
+    lvtPresentReferal: state.user.dataUser.lvtPresent.lvtPresentReferal,
+    lvtPresentRegistration:
+      state.user.dataUser.lvtPresent.lvtPresentRegistration,
     referalQuantity: state.user.dataUser.referal.quantity,
     notifications: state.user.dataUser.notifications,
+    money: state.user.dataUser.money,
+    bonusDayLvt: state.user.dataUser.bonusDayLvt,
   };
 };
 const mapDispatchToProps = {

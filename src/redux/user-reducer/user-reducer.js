@@ -33,7 +33,11 @@ const initialState = {
     avatar: avatarNoDataUser,
     money: 0,
     lvt: 0,
-    lvtPresent: 0,
+    bonusDayLvt: 0,
+    lvtPresent: {
+      lvtPresentReferal: 0,
+      lvtPresentRegistration: 0,
+    },
     notifications: 0,
     referal: {
       quantity: 0,

@@ -1,10 +1,10 @@
 import React from "react";
-import ApiSendYaSearch from "../api-ya-search/ApiSendYaSearch";
+import ApiSendYaSearchContainer from "../api-ya-search/ApiSendYaSearchContainer";
 
 export default function ToolsContent() {
   return (
     <div>
-      <ApiSendYaSearch />
+      <ApiSendYaSearchContainer />
     </div>
   );
 }
