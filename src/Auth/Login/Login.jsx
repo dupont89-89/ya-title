@@ -27,6 +27,7 @@ const Login = (props) => {
       localStorage.setItem("userId", JSON.stringify(userId));
       props.getUser(userId);
       props.setAuthSuccess();
+      props.close();
     } catch (error) {
       if (
         error.response &&
@@ -37,7 +38,6 @@ const Login = (props) => {
       }
     } finally {
       setLoading(false);
-      props.close();
     }
   };
 

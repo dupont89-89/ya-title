@@ -24,6 +24,8 @@ function AvatarContainer(props) {
       money={props.money}
       handleLogout={handleLogout}
       bonusDayLvt={props.bonusDayLvt}
+      firstName={props.firstName}
+      lastName={props.lastName}
     />
   );
 }
@@ -41,6 +43,8 @@ const mapStateToProps = (state) => {
     notifications: state.user.dataUser.notifications,
     money: state.user.dataUser.money,
     bonusDayLvt: state.user.dataUser.bonusDayLvt,
+    firstName: state.user.dataUser.firstName,
+    lastName: state.user.dataUser.lastName,
   };
 };
 const mapDispatchToProps = {

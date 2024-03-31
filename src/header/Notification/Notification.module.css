@@ -20,11 +20,14 @@
 .notificationMessage {
     background-color: #fff;
     border-radius: 10px;
-    padding: 10px;
+    padding-top: 10px;
+    padding-bottom: 30px;
+    padding-left: 10px;
+    padding-right: 10px;
     position: absolute;
     right: 0;
     top: 40px;
-    height: 150px;
+    height: 180px;
     overflow-x: auto;
     border: 2px solid #FF9800;
 }
@@ -73,4 +76,24 @@
     border: none;
     background: none;
     cursor: pointer;
+}
+
+.btnClearMessage {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background-color: #2b5afd;
+    color: #f7f7f7;
+    cursor: pointer;
+}
+
+.noMessageNotification {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+}
+
+.noMessageNotification p {
+    text-align: center;
+    margin-top: 15px;
 }

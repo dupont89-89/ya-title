@@ -9,16 +9,28 @@ import MenuAuthUser from "../../Menu/Header/MenuAuthUser";
 export default function Avatar(props) {
   return (
     <div className={s.blockUserAvatar}>
-      <Link className={s.linkAvatarHeader} to="#user">
+      <Link
+        title={`${props.firstName} ${props.lastName}`}
+        className={s.linkAvatarHeader}
+        to="#user"
+      >
         {props.isAuthenticated ? (
           <img src={props.avatar} alt="Аватарка пользователя без фото" />
         ) : (
-          <img src={avatarNoUser} alt="Аватарка пользователя без регистрации" />
+          <div className={s.blockNoAuthHeader}>
+            <img
+              src={avatarNoUser}
+              alt="Аватарка пользователя без регистрации"
+            />
+            <span className={s.textAuthHeader}>Войти/Создать аккаунт</span>
+          </div>
         )}
       </Link>
       {props.isAuthenticated ? (
         <div className={s.menuAuth}>
           <MenuAuthUser
+            firstName={props.firstName}
+            lastName={props.lastName}
             notifications={props.notifications}
             referalQuantity={props.referalQuantity}
             lvtPresent={props.lvtPresent}

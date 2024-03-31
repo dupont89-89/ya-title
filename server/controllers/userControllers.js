@@ -16,30 +16,32 @@ exports.signUpUserController = async (req, res) => {
     const userExists = await User.findOne({ email: req.body.email });
     if (userExists) {
       console.log("User already exists:", userExists);
-      return res
-        .status(409)
-        .send({ message: "User with given email already exists" });
+      return res.status(409).send({
+        message:
+          "Пользователь с указанным адресом электронной почты уже существует",
+      });
     }
 
     const salt = await bcrypt.genSalt(Number(process.env.SALT));
     const hashPassword = await bcrypt.hash(req.body.password, salt);
 
     console.log("Hashed password:", hashPassword);
-
+    const bonusLvt = 20;
     // Создание нового пользователя с начислением 20 в поле lvtPresent
     await User.create({
       ...req.body,
       password: hashPassword,
       lvtPresent: {
-        lvtPresentRegistration: 20,
+        lvtPresentRegistration: bonusLvt,
       },
-      lvt: 20,
+      notifications: `Вам начислено ${bonusLvt} Lvt за регистрацию`,
+      lvt: bonusLvt,
     });
 
-    res.status(201).send({ message: "User created successfully" });
+    res.status(201).send({ message: "Пользователь успешно создан" });
   } catch (error) {
-    console.error("Error in signUpUserController:", error);
-    res.status(500).send({ message: "Internal Server Error" });
+    console.error("Ошибка в signUpUserController:", error);
+    res.status(500).send({ message: "Внутренняя ошибка сервера" });
   }
 };
 
@@ -68,7 +70,7 @@ exports.dataUserController = async (req, res) => {
     }
   } catch (error) {
     // Handle any errors that occur during the query
-    console.error("Error retrieving user:", error);
-    res.status(500).json({ message: "Internal Server Error" });
+    console.error("Ошибка при извлечении пользователя:", error);
+    res.status(500).json({ message: "Внутренней ошибки сервера" });
   }
 };

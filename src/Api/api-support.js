@@ -1,8 +1,5 @@
 import axios from "axios";
-import {
-  setDataUser,
-  setNotifications,
-} from "../redux/user-reducer/user-reducer";
+import { setNotifications } from "../redux/user-reducer/user-reducer";
 
 let config;
 
@@ -25,6 +22,22 @@ export const getNotificationMessage = (userId) => {
       const notifications = response.data.notifications;
       // Dispatch the setNotifications action to update only the notifications in the Redux store
       dispatch(setNotifications(notifications)); // Assuming you have setNotifications action creator
+      return response.data;
+    } catch (error) {
+      // Handle errors here, e.g., dispatch an error action
+      console.error("Error fetching user data:", error);
+    }
+  };
+};
+
+export const clearNotificationMessage = (userId) => {
+  return async (dispatch) => {
+    try {
+      const response = await instance.get(
+        `/user/clear-message-support?userId=${userId}`
+      );
+      // Dispatch the setNotifications action to update only the notifications in the Redux store
+      dispatch(getNotificationMessage(userId)); // Assuming you have setNotifications action creator
       return response.data;
     } catch (error) {
       // Handle errors here, e.g., dispatch an error action

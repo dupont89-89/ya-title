@@ -21,7 +21,7 @@ exports.authUserController = async (req, res) => {
     const user = await User.findOne({ email: req.body.email });
     if (!user) {
       console.log("User not found"); // Добавленный console.log для отладки
-      return res.status(401).send({ message: "Invalid Email or Password" });
+      return res.status(401).send({ message: "Пользователь не найден" });
     }
 
     const validPassword = await bcrypt.compare(
@@ -30,7 +30,7 @@ exports.authUserController = async (req, res) => {
     );
     if (!validPassword) {
       console.log("Invalid password"); // Добавленный console.log для отладки
-      return res.status(401).send({ message: "Invalid Email or Password" });
+      return res.status(401).send({ message: "Ошибка в пароле" });
     }
 
     const token = user.generateAuthToken();
@@ -45,10 +45,10 @@ exports.authUserController = async (req, res) => {
     // Отправьте объект userData вместе с токеном в ответе
     res.status(200).send({
       data: { token, user: userData },
-      message: "logged in successfully",
+      message: "Успешно вошли в систему Ptahini",
     });
   } catch (error) {
     console.error("Error in authUserController:", error); // Добавленный console.error для отладки
-    res.status(500).send({ message: "Internal Server Error" });
+    res.status(500).send({ message: "Внутренняя ошибка сервера" });
   }
 };
