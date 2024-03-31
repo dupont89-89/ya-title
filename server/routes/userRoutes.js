@@ -14,5 +14,9 @@ router.get(
   "/get-message-support",
   supportMessageContoller.supportMessageContoller
 );
+router.get(
+  "/clear-message-support",
+  supportMessageContoller.clearSupportMessageContoller
+);
 
 module.exports = router;

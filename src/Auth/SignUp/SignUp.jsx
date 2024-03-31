@@ -51,11 +51,18 @@ const Signup = (props) => {
       localStorage.setItem("userId", JSON.stringify(userId));
       props.getUser(userId);
       props.setAuthSuccess();
+      props.close();
     } catch (error) {
-      setError(error.message);
+      if (
+        error.response &&
+        error.response.status >= 400 &&
+        error.response.status <= 500
+      ) {
+        setError(error.response.data.message);
+      }
+      // setError(error.message);
     } finally {
       setLoading(false); // Устанавливаем loading в false после завершения асинхронных операций
-      props.close();
     }
   };
 

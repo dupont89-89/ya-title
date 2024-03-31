@@ -9,6 +9,8 @@ import RepeatWords from "./RepeatWords";
 import TextBottom from "./TextBottom";
 import InputKey from "./InputKey";
 import ToolsSidebar from "../Sidebar/ToolSidebar";
+import MessageNoAuth from "../Auth/MessageNoAuth/MessageNoAuth";
+import ModalNoLvt from "../Modal/ModalNoLvt";
 
 let config;
 
@@ -29,10 +31,18 @@ export default function ApiSendYaSearch(props) {
   const [isLoading, setIsLoading] = useState(false); // Состояние для указания на процесс загрузки
   const [topFriLink, setResultWordsLink] = useState(null);
   const [copySuccess, setCopySuccess] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [urlPage, setUrlPage] = useState(null);
 
   const handleClick = async () => {
     setIsLoading(true); // Устанавливаем состояние загрузки в true при отправке запроса
+
+    if (props.lvt === 0) {
+      console.log("Баланс равен 0");
+      setIsLoading(false); // Если баланс равен 0, не отправляем запрос и завершаем выполнение функции
+      setShowModal(true); // Устанавливаем showModal в true, чтобы показать модальное окно
+      return; // Возвращаемся из функции
+    }
 
     const xmlData = `<?xml version="1.0" encoding="utf-8"?>
           <request>
@@ -200,6 +210,15 @@ export default function ApiSendYaSearch(props) {
           <ToolsSidebar />
         </aside>
         <section className={t.sectionTools}>
+          <div>
+            {/* Ваш JSX код здесь */}
+            {showModal && (
+              <ModalNoLvt
+                isAuthenticated={props.isAuthenticated}
+                onClose={() => setShowModal(false)}
+              />
+            )}
+          </div>
           <div className={s.title}>
             <h1>Создай правильный Title</h1>
           </div>
@@ -209,6 +228,7 @@ export default function ApiSendYaSearch(props) {
             query={query}
             handleClick={handleClick}
           />
+          {!props.isAuthenticated ? <MessageNoAuth /> : null}
           {isLoading ? ( // Показываем "ЗАГРУЗКА" во время загрузки
             <Loading />
           ) : (

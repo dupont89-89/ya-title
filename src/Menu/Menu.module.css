@@ -55,14 +55,6 @@
     padding: 5px 10px;
 }
 
-.emailLogin {
-    display: inline-block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 200px;
-}
-
 .gridMenuText {
     display: grid;
     grid-template-columns: auto auto;
@@ -74,4 +66,12 @@ a.btnMenuAuth,
 .linkProfileHeader {
     color: #000;
     display: block;
+}
+
+.emailLogin span {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
 }

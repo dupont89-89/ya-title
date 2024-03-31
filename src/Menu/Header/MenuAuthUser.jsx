@@ -3,15 +3,29 @@ import { Link } from "react-router-dom";
 import s from "./../Menu.module.css";
 
 export default function MenuAuthUser(props) {
+  const notificationCount = props.notifications.length;
+
+  const numberNotifications = {
+    background: notificationCount === 0 ? "#4CAF50" : "rgb(204 28 28)",
+    borderRadius: "50%",
+    color: "#fff",
+    width: "18px",
+    height: "18px",
+    textAlign: "center",
+    lineHeight: "17px",
+    fontSize: "14px",
+  };
+
   return (
     <div className={s.menuAuthBlock}>
       <nav>
         <h3>Управление аккаунтом</h3>
         <ul>
           <li>
-            <span className={`${s.emailLogin} ${s.padding}`}>
-              {props.email}
-            </span>
+            <div className={`${s.emailLogin} ${s.padding}`}>
+              <span>{`${props.firstName} ${props.lastName}`}</span>
+              <span>{props.email}</span>
+            </div>
           </li>
           <hr className={s.menuAuthDivider} />
           <li>
@@ -49,7 +63,7 @@ export default function MenuAuthUser(props) {
           <li>
             <div className={`${s.gridMenuText} ${s.padding}`}>
               <span>Уведомления</span>
-              <span className={s.menuLvtBalans}>{props.notifications}</span>
+              <span style={numberNotifications}>{notificationCount}</span>
             </div>
           </li>
           <li>

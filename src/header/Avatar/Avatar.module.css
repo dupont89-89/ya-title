@@ -34,3 +34,16 @@
 .menuAuth hr {
     margin: 0;
 }
+
+.blockNoAuthHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.blockNoAuthHeader span {
+    color: black;
+    display: block;
+    margin-left: 15px;
+}

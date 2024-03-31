@@ -1,0 +1,47 @@
+.modalNoLvt {
+    background-color: orange;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.contentModalNoLvt {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+.contentModalNoLvt p {
+    font-size: 18px;
+}
+
+.closeBtnPopup {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.closeBtnPopup button {
+    background-color: orange;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.linkAddBalance {
+    background-color: #2b5afd;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    padding: 5px 10px;
+    font-size: 15px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.contentModalNoLvt {
+    text-align: center;
+}

@@ -36,7 +36,7 @@ export default function Notification(props) {
 
   const numberNotifications = {
     display: "inline-block",
-    background: "rgb(204 28 28)",
+    background: props.notificationCount === 0 ? "#4CAF50" : "rgb(204 28 28)",
     borderRadius: "50%",
     color: "#fff",
     position: "absolute",
@@ -56,10 +56,16 @@ export default function Notification(props) {
     <div ref={notificationRef}>
       <button className={s.btnMessage} onClick={handleClick}>
         <div style={notificationsHeader}>
-          <span style={numberNotifications}>{props.notifications}</span>
+          <span style={numberNotifications}>{props.notificationCount}</span>
         </div>
       </button>
-      {show && <NotificationMessage />}
+      {show && (
+        <NotificationMessage
+          userId={props.userId}
+          clearNotificationMessage={props.clearNotificationMessage}
+          notifications={props.notifications}
+        />
+      )}
     </div>
   );
 }

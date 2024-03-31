@@ -10,13 +10,17 @@ export default function Header(props) {
     <header>
       <div className={s.headerContainerGrid}>
         <AvatarContainer />
-        <Lvt
-          lvt={props.lvt}
-          bonusDayLvt={props.bonusDayLvt}
-          lvtPresent={props.lvtPresent}
-        />
-        <Money money={props.money} />
-        <NotificationContainer />
+        {props.isAuthenticated ? (
+          <>
+            <Lvt
+              lvt={props.lvt}
+              bonusDayLvt={props.bonusDayLvt}
+              lvtPresent={props.lvtPresent}
+            />
+            <Money money={props.money} />
+            <NotificationContainer />
+          </>
+        ) : null}
       </div>
     </header>
   );

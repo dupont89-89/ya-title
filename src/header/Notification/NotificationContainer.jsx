@@ -1,23 +1,43 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Notification from "./Notification";
-import { getNotificationMessage } from "../../Api/api-support";
+import {
+  clearNotificationMessage,
+  getNotificationMessage,
+} from "../../Api/api-support";
 import { connect } from "react-redux";
 
 function NotificationContainer(props) {
-  props.getNotificationMessage(props.userId);
+  useEffect(() => {
+    if (props.userId) {
+      props.getNotificationMessage(props.userId);
+    }
+  }, [props.notifications, props.userId]);
 
-  return <Notification notifications={props.notifications} />;
+  const notificationCount = props.notifications.length;
+
+  return (
+    <div>
+      <Notification
+        notificationCount={notificationCount}
+        notifications={props.notifications}
+        clearNotificationMessage={props.clearNotificationMessage}
+        userId={props.userId}
+      />
+    </div>
+  );
 }
 
-let mapStateToProps = (state) => {
+const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.user.isAuthenticated,
     userId: state.user.dataUser.userId,
     notifications: state.user.dataUser.notifications,
   };
 };
+
 const mapDispatchToProps = {
   getNotificationMessage,
+  clearNotificationMessage,
 };
 
 export default connect(

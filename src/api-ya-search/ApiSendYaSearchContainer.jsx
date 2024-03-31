@@ -8,6 +8,8 @@ function ApiSendYaSearchContainer(props) {
     <ApiSendYaSearch
       userId={props.userId}
       spendLvtOneTitle={props.spendLvtOneTitle}
+      isAuthenticated={props.isAuthenticated}
+      lvt={props.lvt}
     />
   );
 }
@@ -15,6 +17,8 @@ function ApiSendYaSearchContainer(props) {
 let mapStateToProps = (state) => {
   return {
     userId: state.user.dataUser.userId,
+    isAuthenticated: state.user.isAuthenticated,
+    lvt: state.user.dataUser.lvt,
   };
 };
 
