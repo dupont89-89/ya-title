@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Notification from "./Notification";
 import {
   clearNotificationMessage,
@@ -7,19 +7,28 @@ import {
 import { connect } from "react-redux";
 
 function NotificationContainer(props) {
+  const [notifications, setNotifications] = useState(props.notifications);
+
+  useEffect(() => {
+    // Обновляем локальное состояние уведомлений при каждом изменении в props.notifications
+    setNotifications(props.notifications);
+    console.log(props.notifications);
+  }, [props.notifications]);
+
   useEffect(() => {
     if (props.userId) {
       props.getNotificationMessage(props.userId);
+      console.log(props.userId);
     }
-  }, [props.notifications, props.userId]);
+  }, [props.userId]);
 
-  const notificationCount = props.notifications.length;
+  const notificationCount = notifications.length;
 
   return (
     <div>
       <Notification
         notificationCount={notificationCount}
-        notifications={props.notifications}
+        notifications={notifications}
         clearNotificationMessage={props.clearNotificationMessage}
         userId={props.userId}
       />

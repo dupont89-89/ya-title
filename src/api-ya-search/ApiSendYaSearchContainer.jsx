@@ -10,6 +10,7 @@ function ApiSendYaSearchContainer(props) {
       spendLvtOneTitle={props.spendLvtOneTitle}
       isAuthenticated={props.isAuthenticated}
       lvt={props.lvt}
+      totalLvt={props.totalLvt}
     />
   );
 }
@@ -19,6 +20,7 @@ let mapStateToProps = (state) => {
     userId: state.user.dataUser.userId,
     isAuthenticated: state.user.isAuthenticated,
     lvt: state.user.dataUser.lvt,
+    totalLvt: state.user.dataUser.totalLvt,
   };
 };
 

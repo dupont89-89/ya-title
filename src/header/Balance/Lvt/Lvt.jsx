@@ -23,8 +23,7 @@ export default function Lvt(props) {
   return (
     <div style={block}>
       <div style={gridBlock}>
-        <span>{props.bonusDayLvt + props.lvt}</span>{" "}
-        <span className={s.iconMenuLvt}>Lvt</span>
+        <span>{props.totalLvt}</span> <span className={s.iconMenuLvt}>Lvt</span>
       </div>
     </div>
   );

@@ -34,11 +34,12 @@ export const logoutUserThunkCreator = () => {
 
 const initialState = {
   dataUser: {
-    firstName: "Привет",
-    lastName: "Гость",
+    firstName: "Авторизованный",
+    lastName: "User",
     avatar: avatarNoDataUser,
     money: 0,
     lvt: 0,
+    totalLvt: 0,
     bonusDayLvt: 0,
     lvtPresent: {
       lvtPresentReferal: 0,

@@ -11,6 +11,8 @@ export default function ModalSignUp(props) {
       trigger={<button className={s.btnSignUp}> {props.nameBtnPopup} </button>}
       modal
       nested
+      open={props.isOpen}
+      onClose={props.closePopup}
     >
       {(close) => (
         <div>

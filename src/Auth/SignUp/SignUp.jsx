@@ -7,8 +7,8 @@ import Loading from "../../app-function/Loading";
 
 const Signup = (props) => {
   const [data, setData] = useState({
-    firstName: "",
-    lastName: "",
+    // firstName: "",
+    // lastName: "",
     email: "",
     password: "",
   });
@@ -23,22 +23,22 @@ const Signup = (props) => {
     e.preventDefault();
     setLoading(true); // Устанавливаем loading в true сразу после нажатия кнопки
 
-    const trimmedFirstName = data.firstName.trim();
-    const trimmedLastName = data.lastName.trim();
+    // const trimmedFirstName = data.firstName.trim();
+    // const trimmedLastName = data.lastName.trim();
 
-    if (trimmedFirstName === "" || trimmedLastName === "") {
-      setError(
-        "First Name and Last Name cannot be empty or contain leading/trailing spaces."
-      );
-      setLoading(false); // Устанавливаем loading в false в случае ошибки
-      return;
-    }
+    // if (trimmedFirstName === "" || trimmedLastName === "") {
+    //   setError(
+    //     "First Name and Last Name cannot be empty or contain leading/trailing spaces."
+    //   );
+    //   setLoading(false); // Устанавливаем loading в false в случае ошибки
+    //   return;
+    // }
 
     try {
       await signUpUser({
         ...data,
-        firstName: trimmedFirstName,
-        lastName: trimmedLastName,
+        // firstName: trimmedFirstName,
+        // lastName: trimmedLastName,
       });
 
       const dataAuth = { email: data.email, password: data.password };
@@ -80,7 +80,7 @@ const Signup = (props) => {
             ) : (
               <form className={styles.form_container} onSubmit={handleSubmit}>
                 <h1>Регистрация аккаунта</h1>
-                <input
+                {/* <input
                   type="text"
                   placeholder="Имя"
                   name="firstName"
@@ -97,7 +97,7 @@ const Signup = (props) => {
                   value={data.lastName}
                   required
                   className={styles.input}
-                />
+                /> */}
                 <input
                   type="email"
                   placeholder="Email"
