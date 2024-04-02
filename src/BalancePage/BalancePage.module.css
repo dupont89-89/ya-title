@@ -1,0 +1,47 @@
+.blockPresentInfo {
+    background-color: antiquewhite;
+    padding: 7px;
+    margin: 9px;
+    border-radius: 10px;
+}
+
+.blockPresentInfo h3 {
+    text-align: center;
+    margin: 5px 0;
+}
+
+.sectionToolsPayGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 30px;
+}
+
+.iconPayGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-gap: 5px;
+}
+
+.iconPayGrid img {
+    width: 65px;
+}
+
+.titlePayInfo p {
+    text-transform: uppercase;
+}
+
+.itemPayInfo::before {
+    content: "";
+    background: url(./../img/icon/icon-checked-1709977.png);
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
+    background-size: 20px;
+    margin-right: 10px;
+}
+
+.itemPayInfo {
+    display: flex;
+    font-size: 13px;
+}
