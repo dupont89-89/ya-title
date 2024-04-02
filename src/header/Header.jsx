@@ -16,6 +16,7 @@ export default function Header(props) {
               lvt={props.lvt}
               bonusDayLvt={props.bonusDayLvt}
               lvtPresent={props.lvtPresent}
+              totalLvt={props.totalLvt}
             />
             <Money money={props.money} />
             <NotificationContainer />

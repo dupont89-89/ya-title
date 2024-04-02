@@ -3,14 +3,26 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const userRoutes = require("./routes/userRoutes");
+const cron = require("node-cron");
+const { updateBonusLvt } = require("./utils/updateBonusLvt");
 const app = express();
+const http = require("http");
 const PORT = process.env.PORT || 5000;
 const apiKey = process.env.REACT_APP_API_KEY;
 const yaCatalog = process.env.REACT_APP_YANDEX_CATALOG;
 const URL_FRONTEND = process.env.REACT_APP_URL_FRONTEND;
 const MONGO_URI = process.env.MONGO_URI;
+const socketIo = require("socket.io");
 
 app.use(express.json());
+const server = http.createServer(app);
+const io = socketIo(server, {
+  cors: {
+    origin: URL_FRONTEND,
+    methods: ["GET", "POST"],
+    credentials: true,
+  },
+});
 
 mongoose
   .connect(MONGO_URI)
@@ -56,6 +68,20 @@ app.use(
 //Маршруты
 app.use("/api/user", userRoutes);
 
-app.listen(PORT, () => {
+// Прослушивание соединений
+io.on("connection", (socket) => {
+  console.log("A client connected");
+
+  socket.on("disconnect", () => {
+    console.log("Client disconnected");
+  });
+});
+
+// Запускаем ежедневную задачу в 00:00 по Москве
+cron.schedule("0 9 * * *", () => {
+  updateBonusLvt(io); // Передаем экземпляр socket.io в функцию updateBonusLvt
+});
+
+server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

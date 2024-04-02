@@ -30,6 +30,7 @@
     height: 180px;
     overflow-x: auto;
     border: 2px solid #FF9800;
+    z-index: 1;
 }
 
 :root {

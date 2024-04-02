@@ -2,11 +2,10 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const Joi = require("joi");
 const passwordComplexity = require("joi-password-complexity");
-const cron = require("node-cron");
 
 const userSchema = new mongoose.Schema({
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
+  firstName: { type: String },
+  lastName: { type: String },
   email: { type: String, required: true },
   password: { type: String, required: true },
   avatar: { type: String },
@@ -51,27 +50,27 @@ const validate = (data) => {
   return schema.validate(data);
 };
 
-// Запускаем ежедневную задачу в 00:00 по Москве
-cron.schedule("0 9 * * *", async () => {
-  try {
-    // Обновляем все записи пользователей, обнуляя bonusDayLvt и добавляя новое уведомление в массив
-    const bonusLvt = 3;
-    await User.updateMany(
-      {},
-      {
-        $set: { bonusDayLvt: bonusLvt },
-        $push: {
-          notifications: `Вам начислено ${bonusLvt} Lvt ежедневный`,
-        },
-      }
-    );
-    console.log("Ежедневное начисление бонусов выполнено.");
-  } catch (error) {
-    console.error(
-      "Ошибка при выполнении ежедневного начисления бонусов:",
-      error
-    );
-  }
-});
+// // Запускаем ежедневную задачу в 00:00 по Москве
+// cron.schedule("0 9 * * *", async () => {
+//   try {
+//     // Обновляем все записи пользователей, обнуляя bonusDayLvt и добавляя новое уведомление в массив
+//     const bonusLvt = 3;
+//     await User.updateMany(
+//       {},
+//       {
+//         $set: { bonusDayLvt: bonusLvt },
+//         $push: {
+//           notifications: `Вам начислено ${bonusLvt} Lvt ежедневный`,
+//         },
+//       }
+//     );
+//     console.log("Ежедневное начисление бонусов выполнено.");
+//   } catch (error) {
+//     console.error(
+//       "Ошибка при выполнении ежедневного начисления бонусов:",
+//       error
+//     );
+//   }
+// });
 
 module.exports = { User, validate };

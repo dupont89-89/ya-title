@@ -11,6 +11,7 @@ function HeaderContainer(props) {
       lvtPresent={props.lvtPresentRegistration + props.lvtPresentReferal}
       notifications={props.notifications}
       isAuthenticated={props.isAuthenticated}
+      totalLvt={props.totalLvt}
     />
   );
 }
@@ -25,6 +26,7 @@ let mapStateToProps = (state) => {
       state.user.dataUser.lvtPresent.lvtPresentRegistration,
     notifications: state.user.dataUser.notifications,
     isAuthenticated: state.user.isAuthenticated,
+    totalLvt: state.user.dataUser.totalLvt,
   };
 };
 

@@ -37,7 +37,7 @@ export default function ApiSendYaSearch(props) {
   const handleClick = async () => {
     setIsLoading(true); // Устанавливаем состояние загрузки в true при отправке запроса
 
-    if (props.lvt === 0) {
+    if (props.totalLvt === 0) {
       console.log("Баланс равен 0");
       setIsLoading(false); // Если баланс равен 0, не отправляем запрос и завершаем выполнение функции
       setShowModal(true); // Устанавливаем showModal в true, чтобы показать модальное окно

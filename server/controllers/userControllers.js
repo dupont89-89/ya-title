@@ -59,8 +59,9 @@ exports.dataUserController = async (req, res) => {
         bonusDayLvt: user.bonusDayLvt,
         lvt: user.lvt,
         lvtPresent: user.lvtPresent,
+        totalLvt: user.totalLvt,
         money: user.money,
-        notifications: user.money,
+        notifications: user.notifications,
         referalQuantity: user.referal.quantity,
       };
       res.status(200).json({ userData }); // Assuming you want to send the user data as JSON
