@@ -3,10 +3,10 @@
     border-radius: 10px;
 }
 
-.left {
+/* .left {
     height: 350px;
     padding: 70px;
-}
+} */
 
 .form_container {
     display: flex;
@@ -14,13 +14,13 @@
     align-items: center;
 }
 
-.form_container h1 {
+/* .form_container h1 {
     font-size: 40px;
     margin-top: 0;
     text-align: center;
-}
+} */
 
-.input {
+/* .input {
     outline: none;
     border: none;
     width: 370px;
@@ -29,7 +29,7 @@
     background-color: #edf5f3;
     margin: 5px 0;
     font-size: 14px;
-}
+} */
 
 .error_msg {
     width: 370px;
@@ -60,8 +60,7 @@
     align-self: center;
 }
 
-.white_btn,
-.green_btn {
+.white_btn {
     border: none;
     outline: none;
     padding: 10px 0;
@@ -72,11 +71,11 @@
     cursor: pointer;
 }
 
-.green_btn {
+/* .green_btn {
     background-color: #03A9F4;
     color: white;
     margin: 10px;
-}
+} */
 
 .btnSignSoc {
     width: 200px;

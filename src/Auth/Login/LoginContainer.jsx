@@ -17,6 +17,14 @@ function LoginContainer(props) {
         isAuthenticated={props.isAuthenticated}
         closeButton={props.closeButton}
         close={props.close}
+        inputWidth="370px"
+        blockFormHeight="350px"
+        blockFormPadding="70px"
+        fontSizeTitle="40px"
+        inputPadding="15px"
+        inputRadius="10px"
+        btnFormMargin="10px"
+        btnFormWidth="200px"
       />
     </div>
   );
