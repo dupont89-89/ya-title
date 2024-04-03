@@ -13,6 +13,8 @@ export default function ModalLogin(props) {
       }
       modal
       nested
+      open={props.isOpen}
+      onClose={props.closePopup}
     >
       {(close) => (
         <div>

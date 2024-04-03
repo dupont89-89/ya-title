@@ -2,25 +2,26 @@ import React, { useState } from "react";
 import ModalSignUp from "../../Auth/SignUp/ModalSignUp";
 import { Link } from "react-router-dom";
 
-export default function BalancePageLinkReg() {
+export default function BalancePageLinkReg(props) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const link = {
-    color: "#000",
+    color: props.color,
   };
 
   const openPopup = () => {
     setIsPopupOpen(true);
   };
   return (
-    <div>
+    <>
       <Link style={link} onClick={openPopup}>
-        Регистрация
+        {props.linkRehName}
       </Link>
       <ModalSignUp
         isOpen={isPopupOpen}
         closePopup={() => setIsPopupOpen(false)}
+        display="none"
       />
-    </div>
+    </>
   );
 }

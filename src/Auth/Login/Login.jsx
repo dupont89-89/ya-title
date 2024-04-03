@@ -3,6 +3,7 @@ import styles from "./styles.module.css";
 import { loginUser } from "../../Api/api-user-login";
 import ptahiniLogo from "./../../img/logo/PTAHINI-nav.png";
 import Loading from "../../app-function/Loading";
+import { Link } from "react-router-dom";
 
 const Login = (props) => {
   const [data, setData] = useState({ email: "", password: "" });
@@ -21,8 +22,6 @@ const Login = (props) => {
   };
 
   const blockForm = {
-    // height: 350px,
-    // padding: 70px,
     height: props.blockFormHeight,
     padding: props.blockFormPadding,
   };
@@ -45,18 +44,6 @@ const Login = (props) => {
     fontWeight: "500",
     fontSize: "20px",
     cursor: "pointer",
-    // background-color: #03A9F4;
-    // color: white;
-    // margin: 10px 9px;
-    // width: 232px;
-    // border: none;
-    // outline: none;
-    // padding: 10px 0;
-    // border-radius: 8px;
-    // width: 200px;
-    // font-weight: 500;
-    // font-size: 20px;
-    // cursor: pointer;
   };
 
   const handleChange = ({ currentTarget: input }) => {
@@ -97,7 +84,9 @@ const Login = (props) => {
       <div className={styles.login_form_container}>
         <div style={blockForm}>
           <div className={styles.ptahiniLogo}>
-            <img src={ptahiniLogo} alt="ptahini" />
+            <Link to="/">
+              <img src={ptahiniLogo} alt="ptahini" />
+            </Link>
           </div>
           {loading ? (
             <Loading />
