@@ -11,7 +11,7 @@ export default function BalancePage() {
   return (
     <div>
       <div className={t.sectionGridSK}>
-        <aside>
+        <aside className={s.sidebarBalance}>
           <Login
             inputPadding="7px 5px"
             inputRadius="3px"
@@ -19,7 +19,9 @@ export default function BalancePage() {
             fontSizeTitle="22px"
             btnFormMargin="10px 9px"
             btnFormWidth="232px"
-            registration={<BalancePageLinkReg />}
+            registration={
+              <BalancePageLinkReg linkRehName="Регистрация" color="#000" />
+            }
             presentInfo={<PresentInfo />}
           />
         </aside>

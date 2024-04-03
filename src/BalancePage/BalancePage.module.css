@@ -45,3 +45,63 @@
     display: flex;
     font-size: 13px;
 }
+
+.inputPayUserSum {
+    margin-left: 10px;
+    width: 120px;
+    height: 25px;
+    font-size: 23px;
+    padding-left: 5px;
+    border-radius: 5px;
+}
+
+.textInputPayUserSum {
+    font-size: 15px;
+}
+
+.blockPayUserSum {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: auto auto auto 1fr;
+    grid-gap: 5px;
+    align-items: center;
+}
+
+.bottomPayUserSum {
+    display: grid;
+    grid-template-columns: 165px 1fr;
+    grid-gap: 10px;
+    text-align: center;
+    color: black;
+    margin-top: 30px;
+}
+
+.textMinSumBlock {
+    display: block;
+}
+
+.minSumBlock {
+    background-color: rgb(255, 255, 255);
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.iconMinSbp img {
+    width: 50px;
+    margin-top: 10px;
+}
+
+.blockTextMinSumBlock {
+    margin-top: 15px;
+}
+
+.btnPay {
+    cursor: pointer;
+    border: none;
+    font-size: 22px;
+    background-color: orange;
+    color: black;
+    margin-left: 10px;
+    padding: 3px 10px;
+    border-radius: 5px;
+}

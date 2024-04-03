@@ -45,7 +45,7 @@ export default function Avatar(props) {
         <div className={s.menuAuth}>
           <ModalLogin nameBtnPopupLogin={"Войти в свой профиль"} />
           <hr className={s.menuAuthDivider} />
-          <ModalSignUp nameBtnPopup={"Создать пользователя"} />
+          <ModalSignUp display="block" nameBtnPopup={"Создать пользователя"} />
         </div>
       )}
     </div>
