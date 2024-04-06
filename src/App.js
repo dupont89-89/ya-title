@@ -5,6 +5,7 @@ import { setAuthSuccess } from "./redux/user-reducer/user-reducer";
 import { connect } from "react-redux";
 import { getUser } from "./Api/api-user-login";
 import { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
 import HeaderContainer from "./header/HeaderContainer";
 import ToolsContentContainer from "./ToolsContent/ToolsContentContainer";
 import BalancePageContainer from "./BalancePage/BalancePageContainer";
@@ -12,6 +13,12 @@ import Loading from "./app-function/Loading";
 import LogoPtahini from "./img/logo/PTAHINI-nav.png";
 import io from "socket.io-client";
 import { getNotificationMessage } from "./Api/api-support";
+import AdminContainer from "./Admin/AdminContainer";
+import AdminUserContainer from "./Admin/AdminUser/AdminUserContainer";
+import AdminPanelContainer from "./header/AdminPanel/AdminPanelContainer";
+import ProfileUserContainer from "./ProfileUser/ProfileUserContainer";
+import Login from "./Auth/Login/Login";
+import BalancePageLinkReg from "./BalancePage/BalanceParts/BalancePageLinkReg";
 
 let config;
 
@@ -28,6 +35,7 @@ function App({
   getUser,
   isAuthenticated,
   getNotificationMessage,
+  role,
 }) {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -77,13 +85,54 @@ function App({
 
   return (
     <div className="App">
-      {/* <Test /> */}
+      {role === "admin" && <AdminPanelContainer />}
       <div className="blockOsn">
         <HeaderContainer />
         <article>
           <Routes>
             <Route path="/" element={<ToolsContentContainer />} />
             <Route path="/balance" element={<BalancePageContainer />} />
+            <Route
+              path="/login"
+              element={
+                <Login
+                  inputWidth="370px"
+                  blockFormHeight="350px"
+                  blockFormPadding="70px"
+                  fontSizeTitle="40px"
+                  inputPadding="15px"
+                  inputRadius="10px"
+                  btnFormMargin="10px"
+                  btnFormWidth="200px"
+                  registration={
+                    <BalancePageLinkReg
+                      linkRehName="Регистрация"
+                      color="#000"
+                    />
+                  }
+                />
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                isAuthenticated ? (
+                  <ProfileUserContainer />
+                ) : (
+                  <Navigate to="/login" />
+                )
+              }
+            />
+            {role === "admin" && (
+              <>
+                <Route path="/admin" exact element={<AdminContainer />} />
+                <Route
+                  path="/admin/user"
+                  exact
+                  element={<AdminUserContainer />}
+                />
+              </>
+            )}
           </Routes>
         </article>
         <footer>
@@ -103,6 +152,7 @@ const mapDispatchToProps = {
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.user.isAuthenticated,
+    role: state.user.dataUser.role,
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(App);

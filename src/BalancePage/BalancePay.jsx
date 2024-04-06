@@ -13,13 +13,19 @@ const iconPay = [mir, visa, sbp, master, ya];
 
 export default function BalancePay(props) {
   const [sumMoney, setSumMoney] = useState(""); // Состояние для хранения значения ввода
+  const [errorMessage, setErrorMessage] = useState(""); // Состояние для хранения сообщения об ошибке
 
   const handleClick = async () => {
-    console.log(`Отправил  ${sumMoney}`);
+    if (sumMoney === "") {
+      setErrorMessage("Вы не ввели сумму пополнения");
+      return; // Завершаем функцию, чтобы не отправлять запрос
+    }
+    console.log(`Отправил ${sumMoney}`);
   };
 
   const handleChange = (event) => {
     setSumMoney(event.target.value); // Обновляем значение состояния при изменении ввода
+    setErrorMessage(""); // Очищаем сообщение об ошибке при вводе
   };
 
   return (
@@ -43,6 +49,7 @@ export default function BalancePay(props) {
           Комиссия зависит от ставки за перевод - Вашего банка
         </p>
       </div>
+      {errorMessage && <p className={s.errorNullSum}>{errorMessage}</p>}
       <div className={s.blockPayUserSum}>
         <span className={s.textInputPayUserSum}>Произвольная сумма</span>
         <input

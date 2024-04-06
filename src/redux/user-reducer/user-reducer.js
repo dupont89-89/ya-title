@@ -36,8 +36,10 @@ const initialState = {
   dataUser: {
     firstName: "Авторизованный",
     lastName: "User",
+    role: "user",
     avatar: avatarNoDataUser,
     money: 0,
+    moneyHistory: 0,
     lvt: 0,
     totalLvt: 0,
     bonusDayLvt: 0,

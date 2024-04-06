@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const userRoutes = require("./routes/userRoutes");
+const adminRoutes = require("./routes/adminRoutes");
 const cron = require("node-cron");
 const { updateBonusLvt } = require("./utils/updateBonusLvt");
 const app = express();
@@ -67,6 +68,7 @@ app.use(
 
 //Маршруты
 app.use("/api/user", userRoutes);
+app.use("/api/admin", adminRoutes);
 
 // Прослушивание соединений
 io.on("connection", (socket) => {

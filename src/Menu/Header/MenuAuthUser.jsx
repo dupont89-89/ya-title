@@ -29,7 +29,10 @@ export default function MenuAuthUser(props) {
           </li>
           <hr className={s.menuAuthDivider} />
           <li>
-            <Link className={`${s.linkProfileHeader} ${s.padding}`}>
+            <Link
+              to="profile/"
+              className={`${s.linkProfileHeader} ${s.padding}`}
+            >
               <span>Профиль/Управление</span>
             </Link>
           </li>

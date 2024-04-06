@@ -105,3 +105,11 @@
     padding: 3px 10px;
     border-radius: 5px;
 }
+
+.errorNullSum {
+    color: brown;
+    padding: 5px 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    font-weight: 500;
+}

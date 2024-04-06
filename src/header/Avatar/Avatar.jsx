@@ -10,7 +10,11 @@ export default function Avatar(props) {
   return (
     <div className={s.blockUserAvatar}>
       <Link
-        title={`${props.firstName} ${props.lastName}`}
+        title={
+          props.isAuthenticated
+            ? `${props.firstName} ${props.lastName}`
+            : "Не авторизован"
+        }
         className={s.linkAvatarHeader}
         to="#user"
       >
