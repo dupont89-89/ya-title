@@ -15,7 +15,9 @@ const userSchema = new mongoose.Schema({
     lvtPresentRegistration: { type: Number, default: 0 },
     lvtPresentReferal: { type: Number, default: 0 },
   },
+  role: { type: String, default: "user" },
   money: { type: Number, default: 0 },
+  moneyHistory: { type: Number, default: 0 },
   notifications: { type: [String], default: [] },
   referal: {
     quantity: { type: Number, default: 0 },
@@ -49,28 +51,5 @@ const validate = (data) => {
   });
   return schema.validate(data);
 };
-
-// // Запускаем ежедневную задачу в 00:00 по Москве
-// cron.schedule("0 9 * * *", async () => {
-//   try {
-//     // Обновляем все записи пользователей, обнуляя bonusDayLvt и добавляя новое уведомление в массив
-//     const bonusLvt = 3;
-//     await User.updateMany(
-//       {},
-//       {
-//         $set: { bonusDayLvt: bonusLvt },
-//         $push: {
-//           notifications: `Вам начислено ${bonusLvt} Lvt ежедневный`,
-//         },
-//       }
-//     );
-//     console.log("Ежедневное начисление бонусов выполнено.");
-//   } catch (error) {
-//     console.error(
-//       "Ошибка при выполнении ежедневного начисления бонусов:",
-//       error
-//     );
-//   }
-// });
 
 module.exports = { User, validate };

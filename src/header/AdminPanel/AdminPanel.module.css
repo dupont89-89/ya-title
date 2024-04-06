@@ -1,0 +1,18 @@
+.blockAdmin {
+    background-color: #000000;
+    padding: 10px 20px;
+}
+
+.blockAdminLink {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 185px));
+    grid-gap: 15px;
+    justify-items: start;
+    justify-content: start;
+}
+
+.blockAdminLink a {
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 400;
+}
