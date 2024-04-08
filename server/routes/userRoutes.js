@@ -4,11 +4,13 @@ const authController = require("../controllers/authController");
 const lvtUserController = require("../controllers/lvtUserController");
 const supportMessageContoller = require("../controllers/supportMessageContoller");
 const adminUserControllers = require("../controllers/adminUserControllers");
+const editUserControllers = require("../controllers/editUserControllers");
 
 const router = express.Router();
 
 router.post("/signup", userController.signUpUserController);
 router.post("/auth", authController.authUserController);
+router.post("/load-avatar", editUserControllers.uploadAvatarUserController);
 router.get("/get-user", userController.dataUserController);
 router.get("/spend-lvt-one-title", lvtUserController.spendLvtUserController);
 router.get(

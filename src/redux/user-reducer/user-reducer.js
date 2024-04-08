@@ -4,6 +4,7 @@ const ACTION_USER_DATA = "ACTION_USER_DATA";
 const SET_AUTH_SUCCESS = "SET_AUTH_SUCCESS";
 const LOGOUT = "LOGOUT";
 const ACTION_SET_NOTIFICATIONS = "ACTION_SET_NOTIFICATIONS";
+const ACTION_SET_AVATAR = "ACTION_SET_AVATAR";
 
 export const setDataUser = (dataUser) => ({
   type: ACTION_USER_DATA,
@@ -21,6 +22,11 @@ export const logout = () => ({
 export const setNotifications = (notifications) => ({
   type: ACTION_SET_NOTIFICATIONS,
   notifications: notifications,
+});
+
+export const setAvatarUser = (avatar) => ({
+  type: ACTION_SET_AVATAR,
+  avatar: avatar,
 });
 
 export const logoutUserThunkCreator = () => {

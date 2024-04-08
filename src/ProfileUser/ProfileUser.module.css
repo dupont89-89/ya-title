@@ -4,3 +4,81 @@
     min-height: 100vh;
     padding: 15px;
 }
+
+.blockLinkReferal,
+.profileBlockUser,
+.profileBlockBalance {
+    background-color: aliceblue;
+    border-radius: 10px;
+    display: block;
+    margin: 30px 0;
+    padding: 10px 20px;
+}
+
+.gridBlockReferal {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    grid-gap: 30px;
+    align-items: center;
+    justify-content: start;
+}
+
+.numberReferal,
+.numberBalance {
+    font-size: 28px;
+    margin-left: 10px;
+}
+
+.textNumberReferal,
+.textNumberBalance {
+    display: flex;
+    align-items: center;
+    font-size: 17px;
+    display: flex;
+}
+
+.nameUserBlock {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    justify-items: start;
+    justify-content: start;
+}
+
+.nameUserBlock span {
+    font-size: 18px;
+}
+
+.avatarUser {
+    display: grid;
+    grid-template-rows: auto;
+    grid-gap: 10px;
+    margin-bottom: 40px;
+    justify-items: start;
+}
+
+.linkBtnProfileBalance {
+    margin: 20px 0;
+    display: inline-block;
+}
+
+.linkBtnProfileBalance a {
+    padding: 10px 15px;
+    background-color: #2196F3;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.linkBtnProfileBalance a:hover {
+    background-color: #006bc2;
+}
+
+.btnLoadingAvatar {
+    padding: 5px 10px;
+    background-color: #2196F3;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+}
