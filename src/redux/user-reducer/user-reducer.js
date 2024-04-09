@@ -1,5 +1,3 @@
-import avatarNoDataUser from "./../../img/icon/fox.png";
-
 const ACTION_USER_DATA = "ACTION_USER_DATA";
 const SET_AUTH_SUCCESS = "SET_AUTH_SUCCESS";
 const LOGOUT = "LOGOUT";
@@ -43,7 +41,7 @@ const initialState = {
     firstName: "Авторизованный",
     lastName: "User",
     role: "user",
-    avatar: avatarNoDataUser,
+    avatar: "/uploads/dev-image/no-avatar.png",
     money: 0,
     moneyHistory: 0,
     lvt: 0,

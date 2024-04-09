@@ -47,7 +47,10 @@ export default function Referal(props) {
           </span>
         </div>
         <div>
-          <p>Партнерская ссылка: {referralLink}</p>
+          <p>
+            Партнерская ссылка:
+            <br /> {referralLink}
+          </p>
           <button style={btnStyle} onClick={copyToClipboard}>
             {copied ? "Скопировано!" : "Скопировать"}
           </button>

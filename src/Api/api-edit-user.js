@@ -33,3 +33,18 @@ export const loadAvatarUser = (formData, userId) => {
     }
   };
 };
+
+export const editUserData = (userId, firstName, lastName) => {
+  return async (dispatch) => {
+    try {
+      const response = await instance.get(
+        `/user/user-edit-data?userId=${userId}&firstName=${firstName}&lastName=${lastName}`
+      );
+      dispatch(getUser(userId));
+      return response.data;
+    } catch (error) {
+      // Handle errors here, e.g., dispatch an error action
+      console.error("Error fetching user data:", error);
+    }
+  };
+};
