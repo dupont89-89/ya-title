@@ -16,6 +16,31 @@
     grid-gap: 30px;
 }
 
+.payLvtBlockLabel {
+    display: block;
+    margin-bottom: 10px;
+    background-color: #efefef;
+    color: #000;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.payLvtBlockLabelCheced {
+    display: block;
+    margin-bottom: 10px;
+    background-color: #FFC107;
+    color: #000;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.sectionToolsPayGrid input {
+    float: left;
+    margin-right: 10px;
+}
+
 .iconPayGrid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
@@ -112,4 +137,43 @@
     background-color: #fff;
     border-radius: 5px;
     font-weight: 500;
+}
+
+.labelGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 10px;
+}
+
+.payLvtBlock {
+    background-color: #fff;
+    padding: 10px;
+}
+
+input[type='radio']:after {
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: #d1d3d1;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid white;
+}
+
+input[type='radio']:checked:after {
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: #ffa500;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid white;
 }

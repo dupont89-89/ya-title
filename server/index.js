@@ -2,6 +2,7 @@ require("dotenv").config();
 
 const express = require("express");
 const mongoose = require("mongoose");
+const path = require("path");
 const userRoutes = require("./routes/userRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const cron = require("node-cron");
@@ -69,6 +70,9 @@ app.use(
 //Маршруты
 app.use("/api/user", userRoutes);
 app.use("/api/admin", adminRoutes);
+
+//Обслуживание статических файлов
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Прослушивание соединений
 io.on("connection", (socket) => {

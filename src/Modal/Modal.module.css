@@ -46,3 +46,22 @@
 .contentModalNoLvt {
     text-align: center;
 }
+
+.universalModalEditBtn {
+    background-color: #f5b24d;
+}
+
+.universalModalEditBtn:hover {
+    background-color: #eb930f;
+}
+
+.closeBtn {
+    float: right;
+    cursor: pointer;
+    background-color: #197ed4;
+    border: none;
+    width: 22px;
+    height: 22px;
+    color: #fff;
+    border-radius: 3px;
+}

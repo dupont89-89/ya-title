@@ -26,5 +26,6 @@ router.get(
   "/admin-edit-user-status",
   adminUserControllers.adminEditStatusUserController
 );
+router.get("/user-edit-data", editUserControllers.editDataUserController);
 
 module.exports = router;

@@ -1,10 +1,17 @@
-import React, { useState } from "react";
 import avatarNoUser from "./../../img/icon/anonymous.png";
 import { Link } from "react-router-dom";
 import s from "./Avatar.module.css";
 import ModalLogin from "../../Auth/Login/ModalLogin";
 import ModalSignUp from "../../Auth/SignUp/ModalSignUp";
 import MenuAuthUser from "../../Menu/Header/MenuAuthUser";
+
+let config;
+
+if (process.env.NODE_ENV === "development") {
+  config = require("./../../config.dev");
+} else {
+  config = require("./../../config.prod");
+}
 
 export default function Avatar(props) {
   return (
@@ -19,7 +26,10 @@ export default function Avatar(props) {
         to="#user"
       >
         {props.isAuthenticated ? (
-          <img src={props.avatar} alt="Аватарка пользователя без фото" />
+          <img
+            src={`${config.REACT_APP_SERVER_URL}${props.avatar}`}
+            alt="Аватарка пользователя"
+          />
         ) : (
           <div className={s.blockNoAuthHeader}>
             <img

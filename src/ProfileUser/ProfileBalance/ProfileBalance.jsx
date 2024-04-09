@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 export default function ProfileBalance(props) {
   return (
     <div className={s.profileBlockBalance}>
+      <h2>Доступные средства</h2>
       <div>
         <span className={s.textNumberBalance}>
           Баланс денег:{" "}

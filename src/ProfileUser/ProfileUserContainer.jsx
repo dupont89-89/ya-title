@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import ProfileUser from "./ProfileUser";
-import { loadAvatarUser } from "../Api/api-edit-user";
+import { editUserData, loadAvatarUser } from "../Api/api-edit-user";
 
 function ProfileUserContainer(props) {
   return (
@@ -18,6 +18,7 @@ function ProfileUserContainer(props) {
       moneyHistory={props.moneyHistory}
       userId={props.userId}
       loadAvatarUser={props.loadAvatarUser}
+      editUserData={props.editUserData}
     />
   );
 }
@@ -40,6 +41,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   loadAvatarUser,
+  editUserData,
 };
 
 export default connect(
