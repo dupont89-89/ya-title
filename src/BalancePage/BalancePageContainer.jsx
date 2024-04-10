@@ -3,11 +3,13 @@ import BalancePage from "./BalancePage";
 import { connect } from "react-redux";
 
 function BalancePageContainer(props) {
-  return <BalancePage />;
+  return <BalancePage money={props.money} />;
 }
 
 const mapStateToProps = (state) => {
-  return {};
+  return {
+    money: state.user.dataUser.money,
+  };
 };
 const mapDispatchToProps = {};
 

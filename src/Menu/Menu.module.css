@@ -75,3 +75,8 @@ a.btnMenuAuth,
     text-overflow: ellipsis;
     max-width: 200px;
 }
+
+.linkMenuToBalance a {
+    color: #2e60f6;
+    font-size: 14px;
+}

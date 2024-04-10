@@ -29,16 +29,23 @@ export default function MenuAuthUser(props) {
           </li>
           <hr className={s.menuAuthDivider} />
           <li>
-            <Link
-              to="profile/"
-              className={`${s.linkProfileHeader} ${s.padding}`}
-            >
-              <span>Профиль/Управление</span>
-            </Link>
+            <div className={`${s.gridMenuText} ${s.padding}`}>
+              <span>
+                Профиль {" / "}
+                <span className={s.linkMenuToBalance}>
+                  <Link to="/profile/">Управление</Link>
+                </span>
+              </span>
+            </div>
           </li>
           <li>
             <div className={`${s.gridMenuText} ${s.padding}`}>
-              <span>Лимиты</span>
+              <span>
+                Лимиты{" / "}
+                <span className={s.linkMenuToBalance}>
+                  <Link to="/balance/">Купить</Link>
+                </span>
+              </span>
               <span className={s.menuLvtBalans}>
                 {props.lvt + props.bonusDayLvt} Lvt
               </span>
@@ -46,7 +53,12 @@ export default function MenuAuthUser(props) {
           </li>
           <li>
             <div className={`${s.gridMenuText} ${s.padding}`}>
-              <span>Баланс</span>
+              <span>
+                Баланс{" / "}
+                <span className={s.linkMenuToBalance}>
+                  <Link to="/balance/">Пополнить</Link>
+                </span>
+              </span>
               <span className={s.menuLvtBalans}>{props.money} Р</span>
             </div>
           </li>

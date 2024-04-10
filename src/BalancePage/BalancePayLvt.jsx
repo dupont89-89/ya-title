@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import s from "./BalancePage.module.css";
+import iconPodarok from "./../img/icon/icon-giftbox.png";
 
-export default function BalancePayLvt() {
+export default function BalancePayLvt(props) {
   const [selectedValue, setSelectedValue] = useState("4990");
   const [selectedLvt, setSelectedLvt] = useState(null);
+  const [selectedLvtBonus, setSelectedLvtBonus] = useState("600 lvt в подарок");
+  const [selectedLvtText, setSelectedLvtText] = useState("1000 lvt");
 
   const options = [
     {
@@ -45,7 +48,8 @@ export default function BalancePayLvt() {
     {
       id: "5",
       value: "1990",
-      lvt: "300",
+      lvt: "360",
+      lvtBonus: "60 lvt в подарок",
       text: "300 lvt",
       textSale: "+ 20%",
       price1: "5.53 р.",
@@ -54,7 +58,8 @@ export default function BalancePayLvt() {
     {
       id: "6",
       value: "2990",
-      lvt: "500",
+      lvt: "700",
+      lvtBonus: "200 lvt в подарок",
       text: "500 lvt",
       textSale: "+ 40%",
       price1: "4.27 р.",
@@ -63,7 +68,8 @@ export default function BalancePayLvt() {
     {
       id: "7",
       value: "4990",
-      lvt: "1000",
+      lvtBonus: "600 lvt в подарок",
+      lvt: "1600",
       text: "1000 lvt",
       textSale: "+ 60%",
       price1: "3.12 р.",
@@ -72,7 +78,8 @@ export default function BalancePayLvt() {
     {
       id: "8",
       value: "9990",
-      lvt: "3000",
+      lvt: "6000",
+      lvtBonus: "3 000 lvt в подарок",
       text: "3000 lvt",
       textSale: "+ 100%",
       price1: "1.67 р.",
@@ -81,7 +88,8 @@ export default function BalancePayLvt() {
     {
       id: "9",
       value: "19990",
-      lvt: "7000",
+      lvt: "17500",
+      lvtBonus: "10 500 lvt в подарок",
       text: "7000 lvt",
       textSale: "+ 150%",
       price1: "1.14 р.",
@@ -90,58 +98,98 @@ export default function BalancePayLvt() {
     {
       id: "10",
       value: "29990",
-      lvt: "30000",
+      lvt: "90000",
+      lvtBonus: "60 000 lvt в подарок",
       text: "30000 lvt",
       textSale: "+ 200%",
       price1: "0.33 р.",
       price2: "29 990 руб",
     },
   ];
-
-  const styleLabel = {
-    display: "block",
-    marginBottom: "10px",
-    backgroundColor: "#efefef",
-    color: "#000",
-    padding: "5px",
-    borderRadius: "5px",
-    cursor: "pointer",
-  };
-  const handleInputChange = (event, lvt) => {
+  const handleInputChange = (event, lvt, lvtBonus, text) => {
     setSelectedValue(event.target.value);
     setSelectedLvt(lvt);
+    setSelectedLvtBonus(lvtBonus);
+    setSelectedLvtText(text);
   };
+
+  const addBalanse = parseInt(selectedValue - props.money);
 
   return (
     <div className={s.payLvtBlock}>
-      {options.map((option) => (
-        <React.Fragment key={option.id}>
-          <label
-            className={
-              selectedValue === option.value
-                ? s.payLvtBlockLabelCheced
-                : s.payLvtBlockLabel
-            }
-            htmlFor={option.id}
-          >
-            <input
-              id={option.id}
-              type="radio"
-              name="lvt"
-              lvt={option.lvt}
-              value={option.value}
-              checked={selectedValue === option.value}
-              onChange={(event) => handleInputChange(event, option.lvt)}
-            />
-            <div className={s.labelGrid}>
-              <span>{option.text}</span>
-              <span>{option.textSale}</span>
-              <span>{option.price1}</span>
-              <span>{option.price2}</span>
-            </div>
-          </label>
-        </React.Fragment>
-      ))}
+      <div className={s.inputLvtPay}>
+        {options.map((option) => (
+          <React.Fragment key={option.id}>
+            <label
+              className={
+                selectedValue === option.value
+                  ? s.payLvtBlockLabelCheced
+                  : s.payLvtBlockLabel
+              }
+              htmlFor={option.id}
+            >
+              <input
+                id={option.id}
+                type="radio"
+                name="lvt"
+                text={option.text}
+                lvt={option.lvt}
+                value={option.value}
+                checked={selectedValue === option.value}
+                onChange={(event) =>
+                  handleInputChange(
+                    event,
+                    option.lvt,
+                    option.lvtBonus,
+                    option.text
+                  )
+                }
+              />
+              <div className={s.labelGrid}>
+                <span>{option.text}</span>
+                <span>{option.textSale}</span>
+                <span>{option.price1}</span>
+                <span>{option.price2}</span>
+              </div>
+            </label>
+          </React.Fragment>
+        ))}
+      </div>
+      <div className={s.sumInputBlock}>
+        <div className={s.sumInput}>
+          <div className={s.rowSumInput}>
+            <span className={s.rowSumInputFlex}>
+              Вы выбрали: {selectedLvtText} запросов
+            </span>
+          </div>
+          <div className={s.rowSumInput}>
+            <span className={s.rowSumInputFlex}>
+              К оплате: {selectedValue} рублей
+              {addBalanse > 0 ? (
+                <span className={s.noSumBalanse}>
+                  Пополните баланс на {addBalanse} руб
+                </span>
+              ) : null}
+            </span>
+          </div>
+          <div className={s.rowSumInput}>
+            <span className={s.rowSumInputFlex}>
+              Вы получите:
+              {selectedLvtText}
+              {selectedLvtBonus ? (
+                <React.Fragment>
+                  {" + "}
+                  <span className={s.bonusWeight}>{selectedLvtBonus}</span>
+                  <img width="16" src={iconPodarok} alt="" />
+                </React.Fragment>
+              ) : null}
+            </span>
+          </div>
+        </div>
+        <div className={s.btnAddLvtBalance}>
+          <button>Купить Lvt запросы</button>
+        </div>
+      </div>
     </div>
   );
 }
