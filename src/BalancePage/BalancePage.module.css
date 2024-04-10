@@ -73,7 +73,8 @@
 
 .inputPayUserSum {
     margin-left: 10px;
-    width: 120px;
+    width: 85px;
+    text-align: center;
     height: 25px;
     font-size: 23px;
     padding-left: 5px;
@@ -176,4 +177,46 @@ input[type='radio']:checked:after {
     display: inline-block;
     visibility: visible;
     border: 2px solid white;
+}
+
+.sumInputBlock {
+    color: #000;
+    /* display: grid;
+    grid-template-columns: 1fr auto;
+    grid-gap: 10px; */
+}
+
+.bonusWeight {
+    font-weight: 600;
+}
+
+.rowSumInput {
+    margin-bottom: 5px;
+}
+
+.rowSumInputFlex {
+    display: flex;
+    align-items: center;
+}
+
+.rowSumInputFlex img {
+    margin-left: 5px;
+}
+
+.btnAddLvtBalance button {
+    margin-top: 10px;
+    background-color: #FFC107;
+    font-weight: 600;
+}
+
+.btnAddLvtBalance button:hover {
+    background-color: #efb402;
+}
+
+.noSumBalanse {
+    margin-left: 20px;
+    background-color: #F44336;
+    padding: 3px;
+    border-radius: 2px;
+    color: #fff;
 }

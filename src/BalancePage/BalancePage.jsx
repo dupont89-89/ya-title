@@ -7,7 +7,7 @@ import PresentInfo from "./BalanceParts/PresentInfo";
 import BalancePay from "./BalancePay";
 import BalancePayLvt from "./BalancePayLvt";
 
-export default function BalancePage() {
+export default function BalancePage(props) {
   return (
     <div>
       <div className={t.sectionGridSK}>
@@ -27,7 +27,7 @@ export default function BalancePage() {
         </aside>
         <section className={t.sectionTools}>
           <div className={s.sectionToolsPayGrid}>
-            <BalancePayLvt />
+            <BalancePayLvt money={props.money} />
             <BalancePay />
           </div>
         </section>

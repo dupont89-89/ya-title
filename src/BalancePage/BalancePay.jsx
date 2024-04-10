@@ -55,6 +55,7 @@ export default function BalancePay(props) {
         <input
           name="money-input"
           id="money-input"
+          placeholder="5000"
           value={sumMoney}
           onChange={handleChange}
           className={s.inputPayUserSum}
@@ -62,7 +63,7 @@ export default function BalancePay(props) {
         />{" "}
         <span className={s.textInputPayUserSum}>РУБ</span>
         <button onClick={handleClick} className={s.btnPay}>
-          Оплатить
+          Пополнить
         </button>
       </div>
       <div className={s.bottomPayUserSum}>

@@ -160,6 +160,16 @@ a.downloadLink:hover {
     border-radius: 2px;
 }
 
+.tarifLvt {
+    display: inline-block;
+    background-color: #f5b24d;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #000;
+    padding: 3px 6px;
+    margin-top: 15px;
+}
+
 /* Стили для мобильных устройств */
 @media screen and (max-width: 768px) {
     .sectionGridSK {

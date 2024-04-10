@@ -1,7 +1,7 @@
 import React from "react";
 import s from "./../../Header.module.css";
 
-export default function Money() {
+export default function Money(props) {
   const gridBlock = {
     display: "grid",
     gridTemplateColumns: "1fr auto",
@@ -22,7 +22,7 @@ export default function Money() {
   return (
     <div style={block}>
       <div style={gridBlock}>
-        <span>0</span> <span className={s.iconMenuLvt}>Р</span>
+        <span>{props.money}</span> <span className={s.iconMenuLvt}>Р</span>
       </div>
     </div>
   );

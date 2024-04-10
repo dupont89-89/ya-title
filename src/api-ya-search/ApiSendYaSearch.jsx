@@ -221,6 +221,9 @@ export default function ApiSendYaSearch(props) {
           </div>
           <div className={s.title}>
             <h1>Создай правильный Title</h1>
+            {props.isAuthenticated && (
+              <span className={t.tarifLvt}>Будет списано: 1 lvt</span>
+            )}
           </div>
           <RegionSelectSearch onSelect={handleCitySelect} />
           <InputKey
