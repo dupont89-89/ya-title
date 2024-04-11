@@ -40,3 +40,34 @@
 .userDataTdBlock {
     display: block;
 }
+
+.inputAddLvtBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.inputAddLvtBlock label {
+    display: block;
+    text-align: center;
+}
+
+.inputAddLvtBlock label,
+.inputAddLvtBlock input {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.btnAddBalanceLvt button {
+    background-color: #8BC34A;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.infoTextServer {
+    font-size: 16px;
+    color: #ad153b;
+}

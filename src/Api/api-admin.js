@@ -1,5 +1,6 @@
 import axios from "axios";
 import { setAdminDataUser } from "../redux/admin-reducer/admin-reducer";
+import { getUser } from "./api-user-login";
 
 let config;
 
@@ -33,6 +34,21 @@ export const editAdminUserStatus = (userId, role) => {
         `/admin-edit-user-status?userId=${userId}&role=${role}`
       );
       dispatch(getAdminUserData());
+      return response.data;
+    } catch (error) {
+      // Handle errors here, e.g., dispatch an error action
+      console.error("Error fetching user data:", error);
+    }
+  };
+};
+export const addLvtAdminUser = (userId, lvt) => {
+  return async (dispatch) => {
+    try {
+      const response = await instance.get(
+        `/admin-add-lvt-user?userId=${userId}&lvt=${lvt}`
+      );
+      dispatch(getAdminUserData());
+      dispatch(getUser(userId));
       return response.data;
     } catch (error) {
       // Handle errors here, e.g., dispatch an error action

@@ -11,6 +11,7 @@ import InputKey from "./InputKey";
 import ToolsSidebar from "../Sidebar/ToolSidebar";
 import MessageNoAuth from "../Auth/MessageNoAuth/MessageNoAuth";
 import ModalNoLvt from "../Modal/ModalNoLvt";
+import findDuplicateWords from "./PovtorWords/PovtorWords";
 
 let config;
 
@@ -96,11 +97,11 @@ export default function ApiSendYaSearch(props) {
           // Добавьте сюда другие предлоги, которые вы хотите исключить
         ];
 
-        const titleWithoutPunctuation = title.replace(/[.,!?'"`]/g, ""); // Удаление знаков препинания
-        const normalizedTitle = titleWithoutPunctuation.replace(
-          /\bцен[ые]?\b/gi,
-          "цена"
-        ); // Замена "цены" и "цене" на "цена"
+        const normalizedTitle = title.replace(/[.,!?'"`]/g, ""); // Удаление знаков препинания
+        // const normalizedTitle = titleWithoutPunctuation.replace(
+        //   /\bцен[ые]?\b/gi,
+        //   "цена"
+        // ); // Замена "цены" и "цене" на "цена"
         const words = normalizedTitle.split(/\s+/); // Разделение строки на слова
 
         words.forEach((word) => {
@@ -133,8 +134,39 @@ export default function ApiSendYaSearch(props) {
         return word.replace(/\d/g, "");
       });
 
-      // Выбираем только первые 8 слов без цифр и символа ':'
-      const topWords = wordsWithoutDigits.slice(0, 10);
+      const wordsWithoutDigitsString = wordsWithoutDigits.join(" ");
+      const numberArray = findDuplicateWords(wordsWithoutDigitsString, 70);
+
+      // Создаем массив из строки слов
+      let wordsArray = wordsWithoutDigitsString.split(" ");
+      console.log(numberArray);
+      console.log(wordsArray);
+      // Проверяем, что numberArray действительно объект
+      if (typeof numberArray === "object") {
+        const { duplicatesChains } = numberArray;
+        if (Array.isArray(duplicatesChains)) {
+          duplicatesChains.forEach((indexes) => {
+            // Если в цепочке дубликатов есть слова, оставляем только первое слово
+            if (indexes.length > 0) {
+              const firstIndex = indexes[0];
+              for (let i = 1; i < indexes.length; i++) {
+                // Помечаем остальные слова как пустые
+                wordsArray[indexes[i]] = "";
+              }
+            }
+          });
+        }
+      }
+
+      // Фильтруем массив, оставляя только непустые слова
+      wordsArray = wordsArray.filter((word) => word !== "");
+
+      // Объединяем оставшиеся слова обратно в строку
+      const newWordsString = wordsArray.join(" ");
+      console.log(newWordsString);
+
+      // Выбираем только первые 10 слов без цифр и символа ':'
+      const topWords = wordsArray.slice(0, 10);
       const topWordsLink = wordsWithoutDigits.slice(0, 3);
       setResultString(topWords);
       setResultWordsLink(topWordsLink);
@@ -175,7 +207,7 @@ export default function ApiSendYaSearch(props) {
     const uniqueWords = [];
 
     words.forEach((word) => {
-      const firstFive = word.slice(0, 5).toLowerCase(); // Получаем первые 5 букв и приводим к нижнему регистру
+      const firstFive = word.slice(0, 9).toLowerCase(); // Получаем первые 5 букв и приводим к нижнему регистру
       if (!seen[firstFive]) {
         // Если таких первых 5 букв еще не было
         seen[firstFive] = true; // Отмечаем, что эти буквы встретились
