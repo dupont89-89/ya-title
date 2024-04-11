@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import s from "./../Admin.module.css";
+import UniversalModal from "../../Modal/UniversalModal";
+import AdminFormAddLvtUser from "../Parts/Form/AdminFormAddLvtUser";
 
 export default function AdminUser(props) {
   useEffect(() => {
@@ -24,6 +26,7 @@ export default function AdminUser(props) {
             <th>Статус</th>
             {/* Добавьте остальные поля, которые вы хотите отобразить */}
           </tr>
+
           {props.dataUser &&
             props.dataUser.map((user, index) => (
               <tr className={s.tableTrUser} key={index}>
@@ -38,6 +41,17 @@ export default function AdminUser(props) {
                   </span>
                   <span className={s.userDataTdBlock}>
                     Бонусы за рефералов: {user.lvtPresent.lvtPresentReferal}
+                  </span>
+                  <span>
+                    <UniversalModal
+                      content={
+                        <AdminFormAddLvtUser
+                          addLvtAdminUser={props.addLvtAdminUser}
+                          userId={user.userId}
+                        />
+                      }
+                      nameBtnPopup="Добавить Lvt"
+                    />
                   </span>
                 </td>
                 <td>

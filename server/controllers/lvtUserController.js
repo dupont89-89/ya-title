@@ -40,3 +40,34 @@ exports.spendLvtUserController = async (req, res) => {
     return res.status(500).send({ message: "Internal Server Error" });
   }
 };
+
+exports.adminAddLvtUserController = async (req, res) => {
+  try {
+    const userId = req.query.userId;
+    const lvt = req.query.lvt;
+
+    // Находим пользователя по ID и обновляем его данные
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: userId },
+      {
+        $inc: {
+          lvt: Number(lvt),
+        },
+        $push: { notifications: `Вам начислено ${lvt} Lvt от администрации` },
+      }, // Используем $inc для прибавления к существующему значению
+      { new: true } // Устанавливаем опцию new в true, чтобы получить обновленный объект пользователя
+    );
+
+    if (updatedUser) {
+      // Если пользователь успешно обновлен, отправляем обновленные данные в ответе
+      res.status(200).json(`Успешно зачисленно ${lvt} на баланс`);
+    } else {
+      // Если пользователь не найден, отправляем ответ с ошибкой 404 Not Found
+      res.status(404).json({ message: "User not found" });
+    }
+  } catch (error) {
+    // Обрабатываем любые ошибки, возникающие во время запроса
+    console.error("Ошибка при добавлении Lvt пользователю:", error);
+    res.status(500).json({ message: "Внутренняя ошибка сервера" });
+  }
+};
