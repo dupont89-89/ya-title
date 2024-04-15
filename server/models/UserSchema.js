@@ -18,7 +18,18 @@ const userSchema = new mongoose.Schema({
   role: { type: String, default: "user" },
   money: { type: Number, default: 0 },
   moneyHistory: { type: Number, default: 0 },
-  notifications: { type: [String], default: [] },
+  notifications: [
+    {
+      message: { type: String },
+      dateAdded: { type: Date, default: Date.now },
+    },
+  ],
+  notificationsHistory: [
+    {
+      message: { type: String },
+      dateAdded: { type: Date, default: Date.now },
+    },
+  ],
   referal: {
     quantity: { type: Number, default: 0 },
   },

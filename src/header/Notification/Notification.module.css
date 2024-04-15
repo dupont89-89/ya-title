@@ -97,3 +97,27 @@
     text-align: center;
     margin-top: 15px;
 }
+
+.NotificationPageBlock {
+    background-color: #ffffff;
+    border-radius: 10px;
+    min-height: 100vh;
+    padding: 15px;
+}
+
+.blockMessageNotifPage {
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #f7f7f7;
+    display: inline-block;
+}
+
+.textMessage {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.dateNotifications {
+    display: block;
+    color: #1c7a23;
+}

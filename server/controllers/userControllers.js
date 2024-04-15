@@ -35,6 +35,7 @@ exports.signUpUserController = async (req, res) => {
         lvtPresentRegistration: bonusLvt,
       },
       notifications: `Вам начислено ${bonusLvt} Lvt за регистрацию`,
+      notificationsHistory: `Вам начислено ${bonusLvt} Lvt за регистрацию`,
       lvt: bonusLvt,
     });
 
@@ -63,6 +64,7 @@ exports.dataUserController = async (req, res) => {
         money: user.money,
         moneyHistory: user.moneyHistory,
         notifications: user.notifications,
+        notificationsHistory: user.notificationsHistory,
         referalQuantity: user.referal.quantity,
         role: user.role,
       };
