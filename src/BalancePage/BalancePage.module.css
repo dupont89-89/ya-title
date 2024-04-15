@@ -3,6 +3,8 @@
     padding: 7px;
     margin: 9px;
     border-radius: 10px;
+    position: absolute;
+    bottom: 0;
 }
 
 .blockPresentInfo h3 {
@@ -14,6 +16,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 30px;
+    align-items: start;
 }
 
 .payLvtBlockLabel {
@@ -100,6 +103,7 @@
     text-align: center;
     color: black;
     margin-top: 30px;
+    align-items: start;
 }
 
 .textMinSumBlock {
@@ -125,11 +129,12 @@
     cursor: pointer;
     border: none;
     font-size: 22px;
-    background-color: orange;
+    background-color: #FFC107;
     color: black;
     margin-left: 10px;
     padding: 3px 10px;
     border-radius: 5px;
+    width: 150px;
 }
 
 .errorNullSum {
@@ -219,4 +224,50 @@ input[type='radio']:checked:after {
     padding: 3px;
     border-radius: 2px;
     color: #fff;
+}
+
+.linkPayKonf a {
+    color: #fff;
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+
+.linkPayKonf {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    align-items: flex-start;
+    margin-top: 30px;
+}
+
+.textPayUserInfo {
+    padding: 4px 5px;
+    font-size: 13px;
+    text-align: left;
+    border-radius: 8px;
+    margin-bottom: 5px;
+}
+
+.textPayUserInfoOne {
+    background-color: #fff;
+}
+
+.textPayUserInfoTwo {
+    background-color: #ffffff;
+}
+
+.textPayUserInfo p {
+    margin: 5px;
+}
+
+.blockPayGridHeight {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: stretch;
+    height: 100%;
+}
+
+.sidebarBalance {
+    position: relative;
 }

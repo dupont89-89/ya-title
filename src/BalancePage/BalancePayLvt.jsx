@@ -167,7 +167,8 @@ export default function BalancePayLvt(props) {
               К оплате: {selectedValue} рублей
               {addBalanse > 0 ? (
                 <span className={s.noSumBalanse}>
-                  Пополните баланс на {addBalanse} руб
+                  Пополните баланс на
+                  <br /> {addBalanse} руб
                 </span>
               ) : null}
             </span>

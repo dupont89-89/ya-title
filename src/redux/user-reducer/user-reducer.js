@@ -51,7 +51,8 @@ const initialState = {
       lvtPresentReferal: 0,
       lvtPresentRegistration: 0,
     },
-    notifications: [],
+    notifications: {},
+    notificationsHistory: {},
     referal: {
       quantity: 0,
     },

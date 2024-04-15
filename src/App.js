@@ -19,6 +19,7 @@ import AdminPanelContainer from "./header/AdminPanel/AdminPanelContainer";
 import ProfileUserContainer from "./ProfileUser/ProfileUserContainer";
 import Login from "./Auth/Login/Login";
 import BalancePageLinkReg from "./BalancePage/BalanceParts/BalancePageLinkReg";
+import NotificationPageContainer from "./header/Notification/NotificationPageContainer";
 
 let config;
 
@@ -92,6 +93,10 @@ function App({
           <Routes>
             <Route path="/" element={<ToolsContentContainer />} />
             <Route path="/balance" element={<BalancePageContainer />} />
+            <Route
+              path="/history-message"
+              element={<NotificationPageContainer />}
+            />
             <Route
               path="/login"
               element={

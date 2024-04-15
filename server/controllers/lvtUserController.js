@@ -1,5 +1,11 @@
 const { User } = require("../models/UserSchema");
 
+// Получаем текущую дату и время
+const currentDate = new Date();
+
+// Форматируем дату в нужный формат (можно выбрать другой формат, если нужно)
+const formattedDate = currentDate.toISOString();
+
 exports.spendLvtUserController = async (req, res) => {
   try {
     const userId = req.query.userId;
@@ -46,6 +52,12 @@ exports.adminAddLvtUserController = async (req, res) => {
     const userId = req.query.userId;
     const lvt = req.query.lvt;
 
+    // Получаем текущую дату и время
+    const currentDate = new Date();
+
+    // Форматируем дату в нужный формат (можно выбрать другой формат, если нужно)
+    const formattedDate = currentDate.toISOString();
+
     // Находим пользователя по ID и обновляем его данные
     const updatedUser = await User.findOneAndUpdate(
       { _id: userId },
@@ -53,8 +65,17 @@ exports.adminAddLvtUserController = async (req, res) => {
         $inc: {
           lvt: Number(lvt),
         },
-        $push: { notifications: `Вам начислено ${lvt} Lvt от администрации` },
-      }, // Используем $inc для прибавления к существующему значению
+        $push: {
+          notifications: {
+            message: `Вам начислено ${lvt} Lvt от администрации`,
+            dateAdded: formattedDate, // Добавляем дату добавления уведомления
+          },
+          notificationsHistory: {
+            message: `Вам начислено ${lvt} Lvt от администрации`,
+            dateAdded: formattedDate, // Добавляем дату добавления уведомления
+          },
+        }, // Используем $inc для прибавления к существующему значению
+      },
       { new: true } // Устанавливаем опцию new в true, чтобы получить обновленный объект пользователя
     );
 
@@ -63,7 +84,7 @@ exports.adminAddLvtUserController = async (req, res) => {
       res.status(200).json(`Успешно зачисленно ${lvt} на баланс`);
     } else {
       // Если пользователь не найден, отправляем ответ с ошибкой 404 Not Found
-      res.status(404).json({ message: "User not found" });
+      res.status(404).json({ message: "Пользователь не найден" });
     }
   } catch (error) {
     // Обрабатываем любые ошибки, возникающие во время запроса

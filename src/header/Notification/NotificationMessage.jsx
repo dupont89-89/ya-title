@@ -14,21 +14,37 @@ export default function NotificationMessage(props) {
     props.clearNotificationMessage(props.userId);
   };
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleString("ru-RU", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+    });
+  };
+
   return (
     <div className={s.notificationMessage}>
       <h3>Оповещения пользователя</h3>
       {notifications.length > 0 ? (
         <div>
-          {notifications.map((message, index) => (
-            <ul key={index}>
-              <li>
+          <ul>
+            {notifications.map((notification) => (
+              <li key={notification._id}>
                 <div className={s.messageGridNotification}>
-                  <FontAwesomeIcon color="#1e811d" icon={faBell} />
-                  <p>{message}</p>
+                  <p>
+                    <span className={s.dateNotifications}>
+                      <FontAwesomeIcon color="#1e811d" icon={faBell} />
+                      {formatDate(notification.dateAdded)}
+                    </span>{" "}
+                    {notification.message}
+                  </p>
                 </div>
               </li>
-            </ul>
-          ))}
+            ))}
+          </ul>
           <button
             onClick={handleClearNotifications}
             className={s.btnClearMessage}

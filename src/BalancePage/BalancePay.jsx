@@ -8,6 +8,7 @@ import ya from "./../img/logo/pay-ya.png";
 import s from "././BalancePage.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsUp } from "@fortawesome/free-regular-svg-icons";
+import { Link } from "react-router-dom";
 
 const iconPay = [mir, visa, sbp, master, ya];
 
@@ -29,7 +30,7 @@ export default function BalancePay(props) {
   };
 
   return (
-    <div>
+    <div className={s.blockPayGridHeight}>
       <div>
         <p>Платёжные системы для пополнения аккаунта Ptahini</p>
       </div>
@@ -77,7 +78,20 @@ export default function BalancePay(props) {
             <img src={sbpLogo} alt="Оплата СПБ минимально 10 руб" />
           </div>
         </div>
-        <div>2 блок</div>
+        <div>
+          <div className={`${s.textPayUserInfo} ${s.textPayUserInfoOne}`}>
+            <p>
+              1) Пополняйте личный кабинет на нужную сумму удобным способом.
+            </p>
+          </div>
+          <div className={`${s.textPayUserInfo} ${s.textPayUserInfoTwo}`}>
+            <p>2) Выбирайте нужное кол-во Lvt на доступную сумму.</p>
+          </div>
+          <div className={s.linkPayKonf}>
+            <Link>*Политика конфиденциальности</Link>
+            <Link>*Договор офёрты</Link>
+          </div>
+        </div>
       </div>
     </div>
   );
