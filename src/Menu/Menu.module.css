@@ -80,3 +80,21 @@ a.btnMenuAuth,
     color: #2e60f6;
     font-size: 14px;
 }
+
+.linkMenuTools {
+    font-size: 23px;
+    color: #000;
+    border-bottom: 2px solid;
+}
+
+.linkMenuTools:hover {
+    color: #ffffff;
+}
+
+.mainMenuNav a {
+    text-decoration: none;
+}
+
+.mainMenuNav ol {
+    font-size: 22px;
+}
