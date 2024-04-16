@@ -1,13 +1,13 @@
 .headerContainerGrid {
     display: grid;
-    grid-template-columns: auto auto auto 1fr;
+    grid-template-columns: auto auto auto 1fr auto;
     justify-content: start;
     grid-gap: 15px;
     margin-bottom: 10px;
     position: relative;
     align-content: center;
     align-items: center;
-    justify-items: end;
+    justify-items: start;
     margin: auto;
 }
 

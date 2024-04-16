@@ -4,6 +4,7 @@ import Lvt from "./Balance/Lvt/Lvt";
 import Money from "./Balance/Money/Money";
 import AvatarContainer from "./Avatar/AvatarContainer";
 import NotificationContainer from "./Notification/NotificationContainer";
+import MainMenuHeader from "../Menu/Header/MainMenuHeader";
 
 export default function Header(props) {
   return (
@@ -19,6 +20,7 @@ export default function Header(props) {
               totalLvt={props.totalLvt}
             />
             <Money money={props.money} />
+            <MainMenuHeader />
             <NotificationContainer />
           </>
         ) : null}
