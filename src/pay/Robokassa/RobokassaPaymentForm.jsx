@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import md5 from "crypto-js/md5";
 import axios from "axios";
 
 const RobokassaPaymentForm = () => {
@@ -10,22 +9,15 @@ const RobokassaPaymentForm = () => {
   );
 
   const handlePayment = async () => {
-    const merchant_login = "demo";
-    const password_1 = "password_1";
-
-    // Выполняем запрос к API Robokassa
     try {
       const response = await axios.post(
-        "https://auth.robokassa.ru/Merchant/Index.aspx",
+        "http://localhost:8080/api/pay/user-sum",
         {
-          MerchantLogin: merchant_login,
-          DefaultSum: paymentAmount,
-          InvoiceID: invoiceId,
-          Description: description,
-          SignatureValue: md5(`${merchant_login}::${invoiceId}:${password_1}`),
+          paymentAmount: paymentAmount,
+          invoiceId: invoiceId,
+          description: description,
         }
       );
-
       // Обрабатываем ответ
       console.log(response.data);
     } catch (error) {
