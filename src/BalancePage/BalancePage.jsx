@@ -6,6 +6,7 @@ import BalancePageLinkReg from "./BalanceParts/BalancePageLinkReg";
 import PresentInfo from "./BalanceParts/PresentInfo";
 import BalancePay from "./BalancePay";
 import BalancePayLvt from "./BalancePayLvt";
+import RobokassaPaymentForm from "../pay/Robokassa/RobokassaPaymentForm";
 
 export default function BalancePage(props) {
   return (
@@ -32,7 +33,9 @@ export default function BalancePage(props) {
           </div>
         </section>
       </div>
-      <p>Текстовый контент</p>
+      <p>
+        <RobokassaPaymentForm />
+      </p>
     </div>
   );
 }

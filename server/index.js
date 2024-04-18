@@ -5,6 +5,8 @@ const mongoose = require("mongoose");
 const path = require("path");
 const userRoutes = require("./routes/userRoutes");
 const adminRoutes = require("./routes/adminRoutes");
+const payRoutes = require("./routes/payRoutes");
+
 const cron = require("node-cron");
 const { updateBonusLvt } = require("./utils/updateBonusLvt");
 const app = express();
@@ -70,6 +72,7 @@ app.use(
 //Маршруты
 app.use("/api/user", userRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/pay", payRoutes);
 
 //Обслуживание статических файлов
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
