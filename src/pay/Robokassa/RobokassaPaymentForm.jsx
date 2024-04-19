@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 const md5 = require("md5");
 
 let config;
@@ -11,9 +10,26 @@ if (process.env.NODE_ENV === "development") {
 }
 
 const RobokassaPaymentForm = (props) => {
+  const [errorMessage, setErrorMessage] = useState(""); // Состояние для хранения сообщения об ошибке
   const [paymentAmount, setPaymentAmount] = useState("5000"); // начальная сумма платежа
   const [invoiceId, setInvoiceId] = useState(0); // ID счета
   const [description, setDescription] = useState("Пополнение баланса");
+
+  const handleClick = async () => {
+    if (paymentAmount === "") {
+      setErrorMessage("Вы не ввели сумму пополнения");
+      return; // Завершаем функцию, чтобы не отправлять запрос
+    }
+    const url = `https://auth.robokassa.ru/Merchant/Index.aspx?MerchantLogin=${merchant_login}&OutSum=${paymentAmount}&InvoiceID=${invoiceId}&Description=${description}&SignatureValue=${signatureValue}&IsTest=${IsTest}`;
+
+    window.open(url, "_blank"); // Открывает ссылку в новой вкладке
+    console.log(`Отправил ${paymentAmount}`);
+  };
+
+  const handleChange = (event) => {
+    setPaymentAmount(event.target.value); // Обновляем значение состояния при изменении ввода
+    setErrorMessage(""); // Очищаем сообщение об ошибке при вводе
+  };
 
   useEffect(() => {
     const randomInvoiceId = Math.floor(Math.random() * 1000000);
@@ -48,6 +64,14 @@ const RobokassaPaymentForm = (props) => {
     textAlign: "center",
   };
 
+  const errorNullSum = {
+    color: "brown",
+    padding: "5px 10px",
+    backgroundColor: "#fff",
+    borderRadius: "5px",
+    fontWeight: "500",
+  };
+
   const merchant_login = config.ROBOKASSA_SHOP_NAME;
   const password_1 = config.ROBOKASSA_PASSWORD_1;
   const IsTest = config.ROBOKASSA_TEST;
@@ -61,7 +85,7 @@ const RobokassaPaymentForm = (props) => {
       <span style={textInput}>Произвольная сумма</span>
       <input
         value={paymentAmount}
-        onChange={(e) => setPaymentAmount(e.target.value)}
+        onChange={handleChange}
         name="money-input"
         id="money-input"
         placeholder="5000"
@@ -69,12 +93,10 @@ const RobokassaPaymentForm = (props) => {
         type="number"
       />
       <span style={textInput}>РУБ</span>
-      <Link
-        style={btnPay}
-        to={`https://auth.robokassa.ru/Merchant/Index.aspx?MerchantLogin=${merchant_login}&OutSum=${paymentAmount}&InvoiceID=${invoiceId}&Description=${description}&SignatureValue=${signatureValue}&IsTest=${IsTest}`}
-      >
+      {errorMessage && <p style={errorNullSum}>{errorMessage}</p>}
+      <button onClick={handleClick} style={btnPay}>
         Пополнить
-      </Link>
+      </button>
     </>
   );
 };

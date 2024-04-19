@@ -10,26 +10,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsUp } from "@fortawesome/free-regular-svg-icons";
 import { Link } from "react-router-dom";
 import RobokassaPaymentForm from "../pay/Robokassa/RobokassaPaymentForm";
+import UniversalModal from "../Modal/UniversalModal";
+import Oferta from "../parts/Oferta";
+import Politika from "../parts/Politika";
 
 const iconPay = [mir, visa, sbp, master, ya];
 
 export default function BalancePay(props) {
-  const [sumMoney, setSumMoney] = useState(""); // Состояние для хранения значения ввода
-  const [errorMessage, setErrorMessage] = useState(""); // Состояние для хранения сообщения об ошибке
-
-  const handleClick = async () => {
-    if (sumMoney === "") {
-      setErrorMessage("Вы не ввели сумму пополнения");
-      return; // Завершаем функцию, чтобы не отправлять запрос
-    }
-    console.log(`Отправил ${sumMoney}`);
-  };
-
-  const handleChange = (event) => {
-    setSumMoney(event.target.value); // Обновляем значение состояния при изменении ввода
-    setErrorMessage(""); // Очищаем сообщение об ошибке при вводе
-  };
-
   return (
     <div className={s.blockPayGridHeight}>
       <div>
@@ -51,7 +38,6 @@ export default function BalancePay(props) {
           Комиссия зависит от ставки за перевод - Вашего банка
         </p>
       </div>
-      {errorMessage && <p className={s.errorNullSum}>{errorMessage}</p>}
       <div className={s.blockPayUserSum}>
         <RobokassaPaymentForm email={props.email} userId={props.userId} />
       </div>
@@ -76,8 +62,32 @@ export default function BalancePay(props) {
             <p>2) Выбирайте нужное кол-во Lvt на доступную сумму.</p>
           </div>
           <div className={s.linkPayKonf}>
-            <Link>*Политика конфиденциальности</Link>
-            <Link>*Договор офёрты</Link>
+            <span className={s.linkModal}>
+              <UniversalModal
+                nameBtnPopup="*Политика конфиденциальности"
+                content={<Politika />}
+                height="90vh"
+                backgroundBtn="#f5b24d00"
+                colorBtn="#fff"
+                borderBottom="1px solid"
+                paddingBtn="0"
+                fontSizeBtn="13px"
+                width="80%"
+              />
+            </span>
+            <span className={s.linkModal}>
+              <UniversalModal
+                nameBtnPopup="*Договор офёрты"
+                content={<Oferta />}
+                height="90vh"
+                backgroundBtn="#f5b24d00"
+                colorBtn="#fff"
+                borderBottom="1px solid"
+                paddingBtn="0"
+                fontSizeBtn="13px"
+                width="80%"
+              />
+            </span>
           </div>
         </div>
       </div>

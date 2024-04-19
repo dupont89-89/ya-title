@@ -1,36 +1,22 @@
-const axios = require("axios");
-const md5 = require("md5");
-const fs = require("fs");
-const dotenv = require("dotenv");
-
-// Определение пути к файлу .env в зависимости от режима работы
-const envFilePath = fs.existsSync(".env.local") ? ".env.local" : ".env";
-const envContent = fs.readFileSync(envFilePath);
-const parsedEnv = dotenv.parse(envContent);
-
-// Перезаписываем значения переменных окружения
-Object.assign(process.env, parsedEnv);
+const { User } = require("../models/UserSchema");
 
 exports.payRobokassaController = async (req, res) => {
-  const merchant_login = process.env.ROBOKASSA_SHOP_NAME;
-  const password_1 = process.env.ROBOKASSA_PASSWORD_1;
-  const IsTest = process.env.ROBOKASSA_TEST;
-  const { paymentAmount, invoiceId, description } = req.body;
-
-  const signatureValue = md5(
-    `${merchant_login}:${paymentAmount}:${invoiceId}:${password_1}`
-  );
-
   try {
-    const response = await axios.get(
-      `https://auth.robokassa.ru/Merchant/Index.aspx?MerchantLogin=${merchant_login}&OutSum=${paymentAmount}&InvoiceID=${invoiceId}&Description=${description}&SignatureValue=${signatureValue}&IsTest=${IsTest}`
-    );
+    const paymentAmount = req.query.paymentAmount;
+    const invoiceId = req.query.lvt;
 
-    // Пересылаем ответ Robokassa обратно клиенту
-    res.json(response.data);
-    console.log(response.data);
+    // Получаем текущую дату и время
+
+    if (invoiceId) {
+      // Если пользователь успешно обновлен, отправляем обновленные данные в ответе
+      res.status(200).json(`Успешно зачисленно ${paymentAmount} на баланс`);
+    } else {
+      // Если пользователь не найден, отправляем ответ с ошибкой 404 Not Found
+      res.status(404).json({ message: "Пользователь не найден" });
+    }
   } catch (error) {
-    // Отправляем обратно ошибку клиенту
-    res.status(500).json({ error: "Ошибка при выполнении платежа" });
+    // Обрабатываем любые ошибки, возникающие во время запроса
+    console.error("Ошибка при добавлении Lvt пользователю:", error);
+    res.status(500).json({ message: "Внутренняя ошибка сервера" });
   }
 };

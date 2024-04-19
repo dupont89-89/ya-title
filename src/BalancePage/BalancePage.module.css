@@ -111,14 +111,6 @@
     margin-top: 15px;
 }
 
-.errorNullSum {
-    color: brown;
-    padding: 5px 10px;
-    background-color: #fff;
-    border-radius: 5px;
-    font-weight: 500;
-}
-
 .labelGrid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -244,4 +236,13 @@ input[type='radio']:checked:after {
 
 .sidebarBalance {
     position: relative;
+}
+
+.linkModal {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.linkModal button:hover {
+    color: #ebba1b !important;
 }
