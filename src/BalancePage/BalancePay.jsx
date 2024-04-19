@@ -9,6 +9,7 @@ import s from "././BalancePage.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsUp } from "@fortawesome/free-regular-svg-icons";
 import { Link } from "react-router-dom";
+import RobokassaPaymentForm from "../pay/Robokassa/RobokassaPaymentForm";
 
 const iconPay = [mir, visa, sbp, master, ya];
 
@@ -52,20 +53,7 @@ export default function BalancePay(props) {
       </div>
       {errorMessage && <p className={s.errorNullSum}>{errorMessage}</p>}
       <div className={s.blockPayUserSum}>
-        <span className={s.textInputPayUserSum}>Произвольная сумма</span>
-        <input
-          name="money-input"
-          id="money-input"
-          placeholder="5000"
-          value={sumMoney}
-          onChange={handleChange}
-          className={s.inputPayUserSum}
-          type="number"
-        />{" "}
-        <span className={s.textInputPayUserSum}>РУБ</span>
-        <button onClick={handleClick} className={s.btnPay}>
-          Пополнить
-        </button>
+        <RobokassaPaymentForm email={props.email} userId={props.userId} />
       </div>
       <div className={s.bottomPayUserSum}>
         <div className={s.minSumBlock}>
