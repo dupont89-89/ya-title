@@ -5,6 +5,7 @@ const config = {
   debug: true,
   ROBOKASSA_PASSWORD_1: "JaA4qkHaB6rCa6tq9Q7G",
   ROBOKASSA_SHOP_NAME: "ptahini",
+  ROBOKASSA_TEST: "1",
 };
 
 module.exports = config;

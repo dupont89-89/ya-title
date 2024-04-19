@@ -6,9 +6,14 @@ import BalancePageLinkReg from "./BalanceParts/BalancePageLinkReg";
 import PresentInfo from "./BalanceParts/PresentInfo";
 import BalancePay from "./BalancePay";
 import BalancePayLvt from "./BalancePayLvt";
-import RobokassaPaymentForm from "../pay/Robokassa/RobokassaPaymentForm";
 
 export default function BalancePage(props) {
+  const text = {
+    backgroundColor: "#3a1148eb",
+    padding: "15px",
+    borderRadius: "10px",
+    color: "#fff",
+  };
   return (
     <div>
       <div className={t.sectionGridSK}>
@@ -29,12 +34,14 @@ export default function BalancePage(props) {
         <section className={t.sectionTools}>
           <div className={s.sectionToolsPayGrid}>
             <BalancePayLvt money={props.money} />
-            <BalancePay />
+            <BalancePay email={props.email} userId={props.userId} />
           </div>
         </section>
       </div>
-      <p>
-        <RobokassaPaymentForm />
+      <p style={text}>
+        Выбирайте выгодную покупку Lvt и пополняйте баланс на нужную сумму.
+        Деньги зачисляются моментально и вы сразу же сможете обменять их на Lvt
+        и использовать инструменты.
       </p>
     </div>
   );

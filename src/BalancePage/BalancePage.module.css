@@ -74,20 +74,6 @@
     font-size: 13px;
 }
 
-.inputPayUserSum {
-    margin-left: 10px;
-    width: 85px;
-    text-align: center;
-    height: 25px;
-    font-size: 23px;
-    padding-left: 5px;
-    border-radius: 5px;
-}
-
-.textInputPayUserSum {
-    font-size: 15px;
-}
-
 .blockPayUserSum {
     margin-top: 30px;
     display: grid;
@@ -123,18 +109,6 @@
 
 .blockTextMinSumBlock {
     margin-top: 15px;
-}
-
-.btnPay {
-    cursor: pointer;
-    border: none;
-    font-size: 22px;
-    background-color: #FFC107;
-    color: black;
-    margin-left: 10px;
-    padding: 3px 10px;
-    border-radius: 5px;
-    width: 150px;
 }
 
 .errorNullSum {
