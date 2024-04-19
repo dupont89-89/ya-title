@@ -1,5 +1,6 @@
 import React from "react";
 import s from "./../../Header.module.css";
+import { Link } from "react-router-dom";
 
 export default function Lvt(props) {
   const gridBlock = {
@@ -10,6 +11,8 @@ export default function Lvt(props) {
     alignItems: "center",
     cursor: "pointer",
     minWidth: "65px",
+    color: "#fff",
+    textDecoration: "none",
   };
   const block = {
     padding: "3px",
@@ -22,9 +25,9 @@ export default function Lvt(props) {
 
   return (
     <div style={block}>
-      <div style={gridBlock}>
+      <Link style={gridBlock}>
         <span>{props.totalLvt}</span> <span className={s.iconMenuLvt}>Lvt</span>
-      </div>
+      </Link>
     </div>
   );
 }
