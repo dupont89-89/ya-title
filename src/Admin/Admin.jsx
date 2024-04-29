@@ -16,7 +16,8 @@ export default function Admin(props) {
         </div>
       </div>
       <div className={s.blockAdminPage}>
-        <h2>Проверка Тест</h2>
+        <h2>Тестирование</h2>
+        <Link to="test/">Перейти</Link>
       </div>
     </div>
   );

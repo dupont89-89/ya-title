@@ -20,6 +20,7 @@ import ProfileUserContainer from "./ProfileUser/ProfileUserContainer";
 import Login from "./Auth/Login/Login";
 import BalancePageLinkReg from "./BalancePage/BalanceParts/BalancePageLinkReg";
 import NotificationPageContainer from "./header/Notification/NotificationPageContainer";
+import TestPay from "./Admin/Test/TestPay";
 
 let config;
 
@@ -136,6 +137,7 @@ function App({
                   exact
                   element={<AdminUserContainer />}
                 />
+                <Route path="/admin/test" exact element={<TestPay />} />
               </>
             )}
           </Routes>

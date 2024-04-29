@@ -3,6 +3,6 @@ const payControllers = require("../controllers/payControllers");
 
 const router = express.Router();
 
-router.post("/user-sum", payControllers.payRobokassaController);
+router.get("/success-payment-score", payControllers.payRobokassaController);
 
 module.exports = router;

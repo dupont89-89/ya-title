@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { addPayScore } from "../../Api/api-pay";
 const md5 = require("md5");
 
 let config;
@@ -20,7 +21,7 @@ const RobokassaPaymentForm = (props) => {
       return; // Завершаем функцию, чтобы не отправлять запрос
     }
     const url = `https://auth.robokassa.ru/Merchant/Index.aspx?MerchantLogin=${merchant_login}&OutSum=${paymentAmount}&InvoiceID=${invoiceId}&Description=${description}&SignatureValue=${signatureValue}&IsTest=${IsTest}`;
-
+    addPayScore(paymentAmount, invoiceId, props.userId);
     window.open(url, "_blank"); // Открывает ссылку в новой вкладке
     console.log(`Отправил ${paymentAmount}`);
   };
