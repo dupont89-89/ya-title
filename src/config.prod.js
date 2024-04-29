@@ -6,6 +6,7 @@ const config = {
   ROBOKASSA_PASSWORD_1: "Bp36u77DAFRXAIWCxt7Q",
   ROBOKASSA_SHOP_NAME: "ptahini",
   ROBOKASSA_TEST: "0",
+  ROBOKASSA_PASSWORD_2: "fK8D87zgc02EWYQieASj",
 };
 
 module.exports = config;
