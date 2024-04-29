@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import s from "./BalancePage.module.css";
 import t from "./../css/Tools.module.css";
 import Login from "../Auth/Login/Login";
@@ -8,12 +8,20 @@ import BalancePay from "./BalancePay";
 import BalancePayLvt from "./BalancePayLvt";
 
 export default function BalancePage(props) {
+  const [addBalance, setAddBalance] = useState(0); // Изначальное значение 0
+
   const text = {
     backgroundColor: "#3a1148eb",
     padding: "15px",
     borderRadius: "10px",
     color: "#fff",
   };
+
+  // Функция обратного вызова для передачи addBalance из BalancePayLvt
+  const handleAddBalance = (addBalance) => {
+    setAddBalance(addBalance);
+  };
+
   return (
     <div>
       <div className={t.sectionGridSK}>
@@ -33,8 +41,15 @@ export default function BalancePage(props) {
         </aside>
         <section className={t.sectionTools}>
           <div className={s.sectionToolsPayGrid}>
-            <BalancePayLvt money={props.money} />
-            <BalancePay email={props.email} userId={props.userId} />
+            <BalancePayLvt
+              onAddBalance={handleAddBalance}
+              money={props.money}
+            />
+            <BalancePay
+              addBalance={addBalance}
+              email={props.email}
+              userId={props.userId}
+            />
           </div>
         </section>
       </div>

@@ -5,7 +5,7 @@ export default function InputKey({ handleChange, query, handleClick }) {
   return (
     <div>
       <div className={s.blockForm}>
-        <label htmlFor="key-get">Ключевой запрос</label>
+        <label htmlFor="key-get">Введите ключевой запрос</label>
         <div className={s.inputBlockForm}>
           <input
             placeholder="купить птичье молоко оптом"
@@ -15,7 +15,7 @@ export default function InputKey({ handleChange, query, handleClick }) {
             value={query}
             onChange={handleChange}
           />
-          <button onClick={handleClick}>Создать тайтл</button>
+          {query ? <button onClick={handleClick}>Создать тайтл</button> : null}
         </div>
       </div>
     </div>
