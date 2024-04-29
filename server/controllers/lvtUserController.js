@@ -1,11 +1,5 @@
 const { User } = require("../models/UserSchema");
 
-// Получаем текущую дату и время
-const currentDate = new Date();
-
-// Форматируем дату в нужный формат (можно выбрать другой формат, если нужно)
-const formattedDate = currentDate.toISOString();
-
 exports.spendLvtUserController = async (req, res) => {
   try {
     const userId = req.query.userId;
