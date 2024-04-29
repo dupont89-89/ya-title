@@ -39,7 +39,11 @@ export default function BalancePay(props) {
         </p>
       </div>
       <div className={s.blockPayUserSum}>
-        <RobokassaPaymentForm email={props.email} userId={props.userId} />
+        <RobokassaPaymentForm
+          addBalance={props.addBalance}
+          email={props.email}
+          userId={props.userId}
+        />
       </div>
       <div className={s.bottomPayUserSum}>
         <div className={s.minSumBlock}>

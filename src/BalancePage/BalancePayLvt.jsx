@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import s from "./BalancePage.module.css";
 import iconPodarok from "./../img/icon/icon-giftbox.png";
 
@@ -113,7 +113,18 @@ export default function BalancePayLvt(props) {
     setSelectedLvtText(text);
   };
 
-  const addBalanse = parseInt(selectedValue - props.money);
+  const addBalanse = parseInt(selectedValue) - parseInt(props.money);
+
+  useEffect(() => {
+    handleAddBalance(addBalanse);
+    console.log("addBalance изменен:", addBalanse);
+  }, [addBalanse]);
+
+  // Функция обратного вызова для передачи addBalance
+  const handleAddBalance = (addBalance) => {
+    props.onAddBalance(addBalance);
+    console.log("Вызвана функция handleAddBalance с параметром:", addBalance);
+  };
 
   return (
     <div className={s.payLvtBlock}>
@@ -164,7 +175,7 @@ export default function BalancePayLvt(props) {
           </div>
           <div className={s.rowSumInput}>
             <span className={s.rowSumInputFlex}>
-              К оплате: {selectedValue} рублей
+              К списанию с баланса: {selectedValue} рублей
               {addBalanse > 0 ? (
                 <span className={s.noSumBalanse}>
                   Не хватает {addBalanse} руб
@@ -187,7 +198,13 @@ export default function BalancePayLvt(props) {
           </div>
         </div>
         <div className={s.btnAddLvtBalance}>
-          <button>Купить Lvt запросы</button>
+          {addBalanse > 0 ? (
+            <span className={s.noSumBalanseBtn}>
+              Пополните баланс на недостающею сумму
+            </span>
+          ) : (
+            <button>Обменять на Lvt</button>
+          )}
         </div>
       </div>
     </div>

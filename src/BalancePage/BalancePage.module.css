@@ -246,3 +246,11 @@ input[type='radio']:checked:after {
 .linkModal button:hover {
     color: #ebba1b !important;
 }
+
+.noSumBalanseBtn {
+    background-color: green;
+    color: #fff;
+    padding: 4px;
+    display: inline-block;
+    margin-top: 5px;
+}

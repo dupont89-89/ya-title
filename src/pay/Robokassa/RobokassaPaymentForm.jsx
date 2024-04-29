@@ -11,10 +11,9 @@ if (process.env.NODE_ENV === "development") {
 
 const RobokassaPaymentForm = (props) => {
   const [errorMessage, setErrorMessage] = useState(""); // Состояние для хранения сообщения об ошибке
-  const [paymentAmount, setPaymentAmount] = useState("5000"); // начальная сумма платежа
+  const [paymentAmount, setPaymentAmount] = useState(5000); // начальная сумма платежа
   const [invoiceId, setInvoiceId] = useState(0); // ID счета
   const [description, setDescription] = useState("Пополнение баланса");
-
   const handleClick = async () => {
     if (paymentAmount === "") {
       setErrorMessage("Вы не ввели сумму пополнения");
@@ -34,10 +33,11 @@ const RobokassaPaymentForm = (props) => {
   useEffect(() => {
     const randomInvoiceId = Math.floor(Math.random() * 1000000);
     setInvoiceId(randomInvoiceId);
+    setPaymentAmount(props.addBalance);
     setDescription(
       `Пополнение баланса пользователя ${props.email}, по счёту ${randomInvoiceId}`
     );
-  }, [props.email]); // добавлен props.userId в массив зависимостей// Пустой массив зависимостей означает, что эффект будет запускаться только один раз при монтировании компоненты
+  }, [props.email, props.addBalance]); // добавлен props.userId в массив зависимостей// Пустой массив зависимостей означает, что эффект будет запускаться только один раз при монтировании компоненты
 
   const inputSum = {
     marginLeft: "10px",
@@ -62,6 +62,7 @@ const RobokassaPaymentForm = (props) => {
     borderRadius: "5px",
     textDecoration: "none",
     textAlign: "center",
+    maxWidth: "170px",
   };
 
   const errorNullSum = {
@@ -84,7 +85,7 @@ const RobokassaPaymentForm = (props) => {
     <>
       <span style={textInput}>Произвольная сумма</span>
       <input
-        value={paymentAmount}
+        value={paymentAmount < 0 ? 0 : paymentAmount}
         onChange={handleChange}
         name="money-input"
         id="money-input"
