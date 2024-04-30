@@ -7,6 +7,10 @@
     border: 2px solid #f5b24d;
 }
 
+.messageNoAuthBlock a {
+    text-decoration: underline;
+}
+
 .messageNoAuthBlock button {
     display: none;
 }

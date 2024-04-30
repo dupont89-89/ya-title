@@ -27,3 +27,17 @@ export const spendLvtOneTitle = (userId) => {
     }
   };
 };
+export const addLvtUserBalance = (userId, lvt, money) => {
+  return async (dispatch) => {
+    try {
+      const response = await instance.get(
+        `/user/add-lvt-user?userId=${userId}&lvt=${lvt}&money=${money}`
+      );
+      dispatch(getUser(userId));
+      return response.data;
+    } catch (error) {
+      // Handle errors here, e.g., dispatch an error action
+      console.error("Error fetching user data:", error);
+    }
+  };
+};

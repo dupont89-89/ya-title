@@ -46,11 +46,13 @@ exports.adminAddLvtUserController = async (req, res) => {
     const userId = req.query.userId;
     const lvt = req.query.lvt;
 
-    // Получаем текущую дату и время
     const currentDate = new Date();
 
-    // Форматируем дату в нужный формат (можно выбрать другой формат, если нужно)
-    const formattedDate = currentDate.toISOString();
+    // Применяем смещение к текущей дате и времени
+    const moscowTime = new Date(currentDate.getTime());
+
+    // Форматируем дату и время в строку
+    const formattedDate = moscowTime.toISOString();
 
     // Находим пользователя по ID и обновляем его данные
     const updatedUser = await User.findOneAndUpdate(
@@ -83,6 +85,56 @@ exports.adminAddLvtUserController = async (req, res) => {
   } catch (error) {
     // Обрабатываем любые ошибки, возникающие во время запроса
     console.error("Ошибка при добавлении Lvt пользователю:", error);
+    res.status(500).json({ message: "Внутренняя ошибка сервера" });
+  }
+};
+
+exports.userAddLvtUserController = async (req, res) => {
+  try {
+    const userId = req.query.userId;
+    const lvt = req.query.lvt;
+    const money = req.query.money;
+
+    const currentDate = new Date();
+
+    // Применяем смещение к текущей дате и времени
+    const moscowTime = new Date(currentDate.getTime());
+
+    // Форматируем дату и время в строку
+    const formattedDate = moscowTime.toISOString();
+
+    // Находим пользователя по ID и обновляем его данные
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: userId },
+      {
+        $inc: {
+          lvt: Number(lvt),
+          money: -Number(money),
+        },
+        $addToSet: {
+          notifications: {
+            message: `С вашего баланса списано ${money} рублей и добавлено ${lvt} на баланс`,
+            dateAdded: formattedDate, // Добавляем дату добавления уведомления
+          },
+        },
+      },
+      { new: true } // Устанавливаем опцию new в true, чтобы получить обновленный объект пользователя
+    );
+
+    if (updatedUser) {
+      // Если пользователь успешно обновлен, отправляем обновленные данные в ответе
+      res
+        .status(200)
+        .json(
+          `Успешно списано ${money} рублей с баланса и добавлено ${lvt} на баланс`
+        );
+    } else {
+      // Если пользователь не найден, отправляем ответ с ошибкой 404 Not Found
+      res.status(404).json({ message: "Пользователь не найден" });
+    }
+  } catch (error) {
+    // Обрабатываем любые ошибки, возникающие во время запроса
+    console.error("Ошибка при списании средств у пользователя:", error);
     res.status(500).json({ message: "Внутренняя ошибка сервера" });
   }
 };

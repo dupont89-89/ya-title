@@ -13,6 +13,7 @@ router.post("/auth", authController.authUserController);
 router.post("/load-avatar", editUserControllers.uploadAvatarUserController);
 router.get("/get-user", userController.dataUserController);
 router.get("/spend-lvt-one-title", lvtUserController.spendLvtUserController);
+router.get("/add-lvt-user", lvtUserController.userAddLvtUserController);
 router.get(
   "/get-message-support",
   supportMessageContoller.supportMessageContoller

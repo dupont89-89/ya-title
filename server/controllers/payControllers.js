@@ -12,6 +12,14 @@ exports.payRobokassaController = async (req, res) => {
 
     const signatureValueRobokassa = req.query.SignatureValue;
 
+    const currentDate = new Date();
+
+    // Применяем смещение к текущей дате и времени
+    const moscowTime = new Date(currentDate.getTime());
+
+    // Форматируем дату и время в строку
+    const formattedDate = moscowTime.toISOString();
+
     // Проверяем, есть ли номер счёта
     if (InvId) {
       // Находим запись в базе данных по номеру счёта
@@ -37,9 +45,32 @@ exports.payRobokassaController = async (req, res) => {
         console.log(signatureValue);
 
         if (signatureValue === signatureValueRobokassa) {
-          console.log("Контролльная сумма равна");
+          console.log("Контрольная сумма совпадает");
+
+          // Найти пользователя по userId
           const user = await User.findOne({ _id: userId });
-          console.log(user);
+
+          // Если пользователь найден, обновить его счет
+          if (user) {
+            // Добавить сумму к существующему балансу пользователя
+            user.money += parseFloat(OutSum);
+
+            const notification = {
+              message: `Баланс пополнен на ${OutSum} рублей`,
+              dateAdded: formattedDate,
+            };
+            user.notifications.push(notification);
+
+            // Добавить уведомление в notificationsHistory
+            user.notificationsHistory.push(notification);
+
+            // Сохранить обновленного пользователя
+            await user.save();
+
+            console.log("Сумма успешно добавлена на счет пользователя:", user);
+          } else {
+            console.log("Пользователь не найден в базе данных");
+          }
         }
 
         return res.status(200).json({
