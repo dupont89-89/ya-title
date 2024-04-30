@@ -98,3 +98,23 @@ a.btnMenuAuth,
 .mainMenuNav ol {
     font-size: 22px;
 }
+
+.menuLinkHeader a.link {
+    display: block;
+    border-radius: 20px;
+    font-size: 20px;
+    padding: 5px 15px;
+    margin-left: 20px;
+    background-color: #efefef;
+    color: #000;
+    font-weight: 400;
+}
+
+.menuLinkHeader a.link:hover,
+.menuLinkHeader button:hover {
+    background-color: #dbdada;
+}
+
+.menuLinkHeader {
+    display: inline-flex;
+}

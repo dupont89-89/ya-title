@@ -5,10 +5,15 @@ import ToolsModalMenu from "../../Modal/ToolsModalMenu";
 
 export default function MainMenuHeader(props) {
   return (
-    <ToolsModalMenu
-      nameBtnPopup="Инструменты"
-      content={<MainMenuHeaderModal />}
-    />
+    <div className={s.menuLinkHeader}>
+      <ToolsModalMenu
+        nameBtnPopup="Инструменты"
+        content={<MainMenuHeaderModal />}
+      />
+      <Link className={s.link} to="/balance">
+        Тарифы
+      </Link>
+    </div>
   );
 }
 

@@ -4,7 +4,7 @@ import iconPodarok from "./../img/icon/icon-giftbox.png";
 
 export default function BalancePayLvt(props) {
   const [selectedValue, setSelectedValue] = useState("4990");
-  const [selectedLvt, setSelectedLvt] = useState(null);
+  const [selectedLvt, setSelectedLvt] = useState("1600");
   const [selectedLvtBonus, setSelectedLvtBonus] = useState("600 lvt в подарок");
   const [selectedLvtText, setSelectedLvtText] = useState("1000 lvt");
 
@@ -126,6 +126,24 @@ export default function BalancePayLvt(props) {
     console.log("Вызвана функция handleAddBalance с параметром:", addBalance);
   };
 
+  const userId = props.userId;
+
+  const handleAddLvtBalance = () => {
+    // Проверяем, что userId и selectedLvt определены и не являются null
+    if (userId && selectedLvt !== null && selectedLvt !== undefined) {
+      // Проверяем, что selectedLvt является числовым значением
+      if (!isNaN(selectedLvt)) {
+        // Вызываем функцию addLvtUserBalance
+        props.addLvtUserBalance(userId, selectedLvt, selectedValue);
+        debugger;
+      } else {
+        console.error("Ошибка: selectedLvt не является числовым значением");
+      }
+    } else {
+      console.error("Ошибка: userId или selectedLvt не определены");
+    }
+  };
+
   return (
     <div className={s.payLvtBlock}>
       <div className={s.inputLvtPay}>
@@ -203,7 +221,7 @@ export default function BalancePayLvt(props) {
               Пополните баланс на недостающею сумму
             </span>
           ) : (
-            <button>Обменять на Lvt</button>
+            <button onClick={handleAddLvtBalance}>Обменять на Lvt</button>
           )}
         </div>
       </div>

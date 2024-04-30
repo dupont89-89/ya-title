@@ -86,11 +86,11 @@ const RobokassaPaymentForm = (props) => {
     <>
       <span style={textInput}>Произвольная сумма</span>
       <input
-        value={paymentAmount < 0 ? 0 : paymentAmount}
+        value={paymentAmount < 0 ? "" : paymentAmount}
         onChange={handleChange}
         name="money-input"
         id="money-input"
-        placeholder="5000"
+        placeholder=""
         style={inputSum}
         type="number"
       />
