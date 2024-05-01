@@ -9,70 +9,58 @@ const password_2 = process.env.ROBOKASSA_PASSWORD_2;
 exports.payRobokassaController = async (req, res) => {
   try {
     const InvId = req.query.InvId; // Номер счёта
-
     const signatureValueRobokassa = req.query.SignatureValue;
-
     const currentDate = new Date();
-
     // Применяем смещение к текущей дате и времени
     const moscowTime = new Date(currentDate.getTime());
-
     // Форматируем дату и время в строку
     const formattedDate = moscowTime.toISOString();
-
     // Проверяем, есть ли номер счёта
     if (InvId) {
       // Находим запись в базе данных по номеру счёта
       const score = await Pay.findOne({ InvId: InvId });
-
       // Если запись найдена, отправляем данные обратно
       if (score) {
         const { OutSum, userId, createdAt, InvId } = score; // Получаем нужные значения из найденной записи
-        console.log(score);
-
-        // const signatureValue = md5(
-        //   `${merchant_login}:${OutSum}:${InvId}:${password_2}`
-        // );
         // Преобразуем OutSum в строку и передаем в signatureValue
         const OutSumString = OutSum.toString();
-
         // Здесь используйте OutSumString вместо 1390 в md5
         const signatureValue = md5(
           `${merchant_login}:${OutSumString}:${InvId}:${password_2}`
         );
-
-        console.log(signatureValueRobokassa);
-        console.log(signatureValue);
-
         if (signatureValue === signatureValueRobokassa) {
-          console.log("Контрольная сумма совпадает");
-
           // Найти пользователя по userId
           const user = await User.findOne({ _id: userId });
-
           // Если пользователь найден, обновить его счет
           if (user) {
             // Добавить сумму к существующему балансу пользователя
             user.money += parseFloat(OutSum);
-
+            user.moneyHistory += parseFloat(OutSum);
+            const commissionRate = 0.15; // 15% реферальная выплата
+            const commission = Math.floor(parseFloat(OutSum) * commissionRate);
+            const referalPayUserId = user.referalPay.userId;
+            const userPayRef = await User.findOne({ _id: referalPayUserId });
+            userPayRef.money += parseFloat(commission);
+            userPayRef.moneyHistory += parseFloat(commission);
             const notification = {
-              message: `Баланс пополнен на ${OutSum} рублей`,
+              message: `Баланс пополнен на ${OutSum} рублей.`,
               dateAdded: formattedDate,
             };
+            const notificationRef = {
+              message: `Бонус за реферала. Баланс пополнен на ${commission} рублей.`,
+              dateAdded: formattedDate,
+            };
+            // Добавить уведомление
+            userPayRef.notifications.push(notificationRef);
+            userPayRef.notificationsHistory.push(notificationRef);
             user.notifications.push(notification);
-
-            // Добавить уведомление в notificationsHistory
             user.notificationsHistory.push(notification);
 
             // Сохранить обновленного пользователя
-            await user.save();
-
-            console.log("Сумма успешно добавлена на счет пользователя:", user);
+            await Promise.all([user.save(), userPayRef.save()]);
           } else {
-            console.log("Пользователь не найден в базе данных");
           }
         }
-
         return res.status(200).json({
           OutSum,
           userId,
@@ -100,20 +88,11 @@ exports.payScoreRobokassaController = async (req, res) => {
     const OutSum = req.query.OutSum; // Сумма счёта
     const InvId = req.query.InvId; // Номер счёта
     const userId = req.query.userId; // Id пользователя
-
-    // Получаем текущую дату и время
     const currentDate = new Date();
-
-    // Вычисляем смещение часового пояса (MSK)
-    const timeZoneOffset = 3 * 60; // MSK - UTC+3
-    const offsetInMilliseconds = timeZoneOffset * 60 * 1000;
-
     // Применяем смещение к текущей дате и времени
-    const moscowTime = new Date(currentDate.getTime() + offsetInMilliseconds);
-
+    const moscowTime = new Date(currentDate.getTime());
     // Форматируем дату и время в строку
     const formattedDate = moscowTime.toISOString();
-
     // Проверяем, есть ли все значения
     if (OutSum && InvId && userId) {
       // Создаем новую запись в базе данных
@@ -123,10 +102,8 @@ exports.payScoreRobokassaController = async (req, res) => {
         userId: userId,
         createdAt: formattedDate, // Добавляем дату и время создания
       });
-
       // Сохраняем новую запись в базе данных
       await newPay.save();
-
       // Если запись успешно сохранена, отправляем ответ с успехом
       res
         .status(200)

@@ -147,6 +147,12 @@ export default function BalancePayLvt(props) {
   return (
     <div className={s.payLvtBlock}>
       <div className={s.inputLvtPay}>
+        <div className={`${s.labelGrid} ${s.labelGridTitle}`}>
+          <span className={s.textTitleTable}>Кол-во Lvt</span>
+          <span className={s.textTitleTable}>Бонусы</span>
+          <span className={s.textTitleTable}>Цена 1 Lvt</span>
+          <span className={s.textTitleTable}>Сумма</span>
+        </div>
         {options.map((option) => (
           <React.Fragment key={option.id}>
             <label

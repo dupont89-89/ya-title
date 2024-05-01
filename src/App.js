@@ -21,6 +21,7 @@ import Login from "./Auth/Login/Login";
 import BalancePageLinkReg from "./BalancePage/BalanceParts/BalancePageLinkReg";
 import NotificationPageContainer from "./header/Notification/NotificationPageContainer";
 import TestPay from "./Admin/Test/TestPay";
+import TrackingReferalUrl from "./Auth/Referal/TrackingReferalUrl";
 
 let config;
 
@@ -87,6 +88,7 @@ function App({
 
   return (
     <div className="App">
+      {isAuthenticated ? null : <TrackingReferalUrl />}
       {role === "admin" && <AdminPanelContainer />}
       <div className="blockOsn">
         <HeaderContainer />

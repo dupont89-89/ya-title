@@ -112,7 +112,7 @@ export default function ProfileUser(props) {
       <Referal
         referalQuantity={props.referalQuantity}
         lvtPresentReferal={props.lvtPresentReferal}
-        email={props.email}
+        userId={props.userId}
       />
     </div>
   );

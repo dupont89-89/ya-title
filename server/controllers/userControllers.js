@@ -34,8 +34,16 @@ exports.signUpUserController = async (req, res) => {
       lvtPresent: {
         lvtPresentRegistration: bonusLvt,
       },
-      notifications: `Вам начислено ${bonusLvt} Lvt за регистрацию`,
-      notificationsHistory: `Вам начислено ${bonusLvt} Lvt за регистрацию`,
+      notifications: [
+        {
+          message: `Вам начислено ${bonusLvt} Lvt за регистрацию`,
+        },
+      ],
+      notificationsHistory: [
+        {
+          message: `Вам начислено ${bonusLvt} Lvt за регистрацию`,
+        },
+      ],
       lvt: bonusLvt,
     });
 
