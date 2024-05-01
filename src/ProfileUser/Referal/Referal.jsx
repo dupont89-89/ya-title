@@ -22,7 +22,7 @@ export default function Referal(props) {
   }
 
   const urlFront = config.REACT_APP_FRONT_URL;
-  const referralLink = `${urlFront}/?ref=${props.email}`;
+  const referralLink = `${urlFront}/?ref=${props.userId}`;
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(referralLink);
@@ -42,8 +42,10 @@ export default function Referal(props) {
         </div>
         <div>
           <span className={s.textNumberReferal}>
-            Получено Lvt за рефералов{" "}
-            <span className={s.numberReferal}>{props.lvtPresentReferal}</span>
+            Получено за рефералов{" "}
+            <span className={s.numberReferal}>
+              {props.lvtPresentReferal} руб
+            </span>
           </span>
         </div>
         <div>

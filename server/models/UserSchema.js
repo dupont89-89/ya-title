@@ -30,8 +30,15 @@ const userSchema = new mongoose.Schema({
       dateAdded: { type: Date, default: Date.now },
     },
   ],
-  referal: {
-    quantity: { type: Number, default: 0 },
+  referal: [
+    {
+      userId: { type: String }, // Идентификатор приглашенного пользователя
+      dateAdded: { type: Date, default: Date.now }, // Дата добавления
+    },
+  ],
+  referalPay: {
+    userId: { type: String }, // Идентификатор приглашенного пользователя
+    dateAdded: { type: Date }, // Дата добавления
   },
 });
 

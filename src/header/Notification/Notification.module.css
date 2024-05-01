@@ -66,6 +66,7 @@
     grid-template-columns: auto 1fr;
     grid-gap: 5px;
     align-items: center;
+    max-width: 360px;
 }
 
 .notificationMessage h3 {

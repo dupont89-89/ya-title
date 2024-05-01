@@ -23,7 +23,9 @@ export default function Header(props) {
             <MainMenuHeader />
             <NotificationContainer />
           </>
-        ) : null}
+        ) : (
+          <MainMenuHeader />
+        )}
       </div>
     </header>
   );

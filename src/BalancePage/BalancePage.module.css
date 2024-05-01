@@ -254,3 +254,13 @@ input[type='radio']:checked:after {
     display: inline-block;
     margin-top: 5px;
 }
+
+.textTitleTable {
+    color: #530387;
+    font-weight: 600;
+    text-align: center;
+}
+
+.labelGridTitle {
+    margin-bottom: 5px;
+}
