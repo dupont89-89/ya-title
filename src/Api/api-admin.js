@@ -56,3 +56,15 @@ export const addLvtAdminUser = (userId, lvt) => {
     }
   };
 };
+
+export const sendMail = async (mail) => {
+  debugger;
+  try {
+    const response = await instance.post(`/send-email`, mail);
+    return response.data;
+  } catch (error) {
+    // Обработка ошибок здесь
+    console.error("Error fetching user data:", error);
+    throw error; // Пробросить ошибку для обработки в вызывающем коде
+  }
+};

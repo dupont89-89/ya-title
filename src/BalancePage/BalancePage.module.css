@@ -264,3 +264,79 @@ input[type='radio']:checked:after {
 .labelGridTitle {
     margin-bottom: 5px;
 }
+
+.blockAside {
+    background-color: #fff;
+    border-radius: 10px;
+    height: 100%;
+    padding: 10px;
+}
+
+.avatar img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.avatar {
+    position: relative;
+    background-image: linear-gradient(90deg, red, blue);
+    background-origin: border-box;
+    border: 2px solid transparent;
+    border-radius: 50%;
+    box-shadow: inset 0 100vw #fff;
+    height: 50px;
+    object-fit: cover;
+    width: 50px;
+    text-align: center;
+}
+
+.gridTopTitle {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-gap: 10px;
+    align-items: center;
+}
+
+.userName,
+.mail {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 170px;
+}
+
+.money {
+    background-color: #FFC107;
+    padding: 8px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.money span {
+    background-color: #ffffff;
+    display: block;
+    float: right;
+    padding: 2px;
+    border-radius: 3px;
+}
+
+.referal {
+    display: block;
+}
+
+.referalBlock {
+    background-color: #44164c;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.referalBlock h3 {
+    margin: 0;
+}
+
+.referalBlock a {
+    color: #fff;
+}

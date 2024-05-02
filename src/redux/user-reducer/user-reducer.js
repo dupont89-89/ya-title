@@ -38,8 +38,8 @@ export const logoutUserThunkCreator = () => {
 
 const initialState = {
   dataUser: {
-    firstName: "Авторизованный",
-    lastName: "User",
+    firstName: "Ты",
+    lastName: "Аноним",
     role: "user",
     avatar: "/uploads/dev-image/no-avatar.png",
     money: 0,
@@ -53,9 +53,8 @@ const initialState = {
     },
     notifications: {},
     notificationsHistory: {},
-    referal: {
-      quantity: 0,
-    },
+    referal: [],
+    referalPay: {},
   },
   isAuthenticated: false,
 };
