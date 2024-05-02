@@ -28,7 +28,15 @@ export default function BalancePage(props) {
       <div className={t.sectionGridSK}>
         <aside className={s.sidebarBalance}>
           {props.isAuthenticated ? (
-            <BalanceAsideActiveUser />
+            <BalanceAsideActiveUser
+              email={props.email}
+              money={props.money}
+              firstName={props.firstName}
+              lastName={props.lastName}
+              avatar={props.avatar}
+              totalLvt={props.totalLvt}
+              referal={props.referal}
+            />
           ) : (
             <Login
               inputPadding="7px 5px"

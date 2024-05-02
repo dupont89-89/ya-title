@@ -43,7 +43,7 @@ export default function MenuAuthUser(props) {
               <span>
                 Лимиты{" / "}
                 <span className={s.linkMenuToBalance}>
-                  <Link to="/balance/">Купить</Link>
+                  <Link to="/balance/">Обменять</Link>
                 </span>
               </span>
               <span className={s.menuLvtBalans}>
@@ -65,12 +65,7 @@ export default function MenuAuthUser(props) {
 
           <li>
             <div className={`${s.gridMenuText} ${s.padding}`}>
-              <span>
-                Подарки{" / "}
-                <span className={s.linkMenuToBalance}>
-                  <Link to="/history-message/">История</Link>
-                </span>
-              </span>
+              <span>Подарки</span>
               <span className={s.menuLvtBalans}>{props.lvtPresent} Lvt</span>
             </div>
           </li>
@@ -82,7 +77,12 @@ export default function MenuAuthUser(props) {
           </li>
           <li>
             <div className={`${s.gridMenuText} ${s.padding}`}>
-              <span>Уведомления</span>
+              <span>
+                Уведомления {" / "}
+                <span className={s.linkMenuToBalance}>
+                  <Link to="/history-message/">История</Link>
+                </span>
+              </span>
               <span style={numberNotifications}>{notificationCount}</span>
             </div>
           </li>
