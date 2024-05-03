@@ -6,7 +6,7 @@ import { editUserData, loadAvatarUser } from "../Api/api-edit-user";
 function ProfileUserContainer(props) {
   return (
     <ProfileUser
-      referalQuantity={props.referalQuantity}
+      referal={props.referal}
       lvtPresentReferal={props.lvtPresentReferal}
       email={props.email}
       avatar={props.avatar}
@@ -27,7 +27,7 @@ const mapStateToProps = (state) => {
   return {
     email: state.user.dataUser.email,
     lvtPresentReferal: state.user.dataUser.lvtPresent.lvtPresentReferal,
-    referalQuantity: state.user.dataUser.referalQuantity,
+    referal: state.user.dataUser.referal,
     avatar: state.user.dataUser.avatar,
     firstName: state.user.dataUser.firstName,
     lastName: state.user.dataUser.lastName,

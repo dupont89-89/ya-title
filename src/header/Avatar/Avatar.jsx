@@ -48,7 +48,7 @@ export default function Avatar(props) {
               firstName={props.firstName}
               lastName={props.lastName}
               notifications={props.notifications}
-              referalQuantity={props.referalQuantity}
+              referal={props.referal}
               lvtPresent={props.lvtPresent}
               lvt={props.lvt}
               email={props.email}

@@ -4,6 +4,7 @@ import s from "./../Menu.module.css";
 
 export default function MenuAuthUser(props) {
   const notificationCount = props.notifications.length;
+  const referalQuantity = props.referal.length;
 
   const numberNotifications = {
     background: notificationCount === 0 ? "#4CAF50" : "rgb(204 28 28)",
@@ -71,8 +72,13 @@ export default function MenuAuthUser(props) {
           </li>
           <li>
             <div className={`${s.gridMenuText} ${s.padding}`}>
-              <span>Рефералы</span>
-              <span className={s.menuLvtBalans}>{props.referalQuantity}</span>
+              <span>
+                Рефералы {" / "}
+                <span className={s.linkMenuToBalance}>
+                  <Link to="/referal/">Подробности</Link>
+                </span>
+              </span>
+              <span className={s.menuLvtBalans}>{referalQuantity}</span>
             </div>
           </li>
           <li>

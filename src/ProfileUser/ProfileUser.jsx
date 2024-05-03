@@ -110,7 +110,7 @@ export default function ProfileUser(props) {
         moneyHistory={props.moneyHistory}
       />
       <Referal
-        referalQuantity={props.referalQuantity}
+        referal={props.referal}
         lvtPresentReferal={props.lvtPresentReferal}
         userId={props.userId}
       />

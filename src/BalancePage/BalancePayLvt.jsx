@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import s from "./BalancePage.module.css";
 import iconPodarok from "./../img/icon/icon-giftbox.png";
+import WhatLvt from "./BalanceParts/WhatLvt";
 
 export default function BalancePayLvt(props) {
   const [selectedValue, setSelectedValue] = useState("4990");
   const [selectedLvt, setSelectedLvt] = useState("1600");
   const [selectedLvtBonus, setSelectedLvtBonus] = useState("600 lvt в подарок");
   const [selectedLvtText, setSelectedLvtText] = useState("1000 lvt");
+  const [selectedFaq, setSelectedFaq] = useState(true);
 
   const options = [
     {
@@ -113,6 +115,18 @@ export default function BalancePayLvt(props) {
     setSelectedLvtText(text);
   };
 
+  const btnLvtFaq = {
+    backgroundColor: "#2196F3",
+    color: "#fff",
+    border: selectedFaq ? null : "1px solid #000",
+  };
+
+  const btnLvtPay = {
+    backgroundColor: "#c32e2e",
+    color: "#fff",
+    border: selectedFaq ? "1px solid #000" : null,
+  };
+
   const addBalanse = parseInt(selectedValue) - parseInt(props.money);
 
   useEffect(() => {
@@ -146,91 +160,107 @@ export default function BalancePayLvt(props) {
 
   return (
     <div className={s.payLvtBlock}>
-      <div className={s.inputLvtPay}>
-        <div className={`${s.labelGrid} ${s.labelGridTitle}`}>
-          <span className={s.textTitleTable}>Кол-во Lvt</span>
-          <span className={s.textTitleTable}>Бонусы</span>
-          <span className={s.textTitleTable}>Цена 1 Lvt</span>
-          <span className={s.textTitleTable}>Сумма</span>
-        </div>
-        {options.map((option) => (
-          <React.Fragment key={option.id}>
-            <label
-              className={
-                selectedValue === option.value
-                  ? s.payLvtBlockLabelCheced
-                  : s.payLvtBlockLabel
-              }
-              htmlFor={option.id}
-            >
-              <input
-                id={option.id}
-                type="radio"
-                name="lvt"
-                text={option.text}
-                lvt={option.lvt}
-                value={option.value}
-                checked={selectedValue === option.value}
-                onChange={(event) =>
-                  handleInputChange(
-                    event,
-                    option.lvt,
-                    option.lvtBonus,
-                    option.text
-                  )
-                }
-              />
-              <div className={s.labelGrid}>
-                <span>{option.text}</span>
-                <span>{option.textSale}</span>
-                <span>{option.price1}</span>
-                <span>{option.price2}</span>
-              </div>
-            </label>
-          </React.Fragment>
-        ))}
+      <div className={s.btnFaq}>
+        <button style={btnLvtPay} onClick={() => setSelectedFaq(true)}>
+          Тарифы / Пополнение
+        </button>
+        <button style={btnLvtFaq} onClick={() => setSelectedFaq(false)}>
+          Что такое Lvt?
+        </button>
       </div>
-      <div className={s.sumInputBlock}>
-        <div className={s.sumInput}>
-          <div className={s.rowSumInput}>
-            <span className={s.rowSumInputFlex}>
-              Вы выбрали: {selectedLvtText} запросов
-            </span>
+      {selectedFaq ? (
+        <div>
+          <div className={s.inputLvtPay}>
+            <div className={`${s.labelGrid} ${s.labelGridTitle}`}>
+              <span className={s.textTitleTable}>Кол-во Lvt</span>
+              <span className={s.textTitleTable}>Бонусы</span>
+              <span className={s.textTitleTable}>Цена 1 Lvt</span>
+              <span className={s.textTitleTable}>Сумма</span>
+            </div>
+            {options.map((option) => (
+              <React.Fragment key={option.id}>
+                <label
+                  className={
+                    selectedValue === option.value
+                      ? s.payLvtBlockLabelCheced
+                      : s.payLvtBlockLabel
+                  }
+                  htmlFor={option.id}
+                >
+                  <input
+                    id={option.id}
+                    type="radio"
+                    name="lvt"
+                    text={option.text}
+                    lvt={option.lvt}
+                    value={option.value}
+                    checked={selectedValue === option.value}
+                    onChange={(event) =>
+                      handleInputChange(
+                        event,
+                        option.lvt,
+                        option.lvtBonus,
+                        option.text
+                      )
+                    }
+                  />
+                  <div className={s.labelGrid}>
+                    <span>{option.text}</span>
+                    <span>{option.textSale}</span>
+                    <span>{option.price1}</span>
+                    <span>{option.price2}</span>
+                  </div>
+                </label>
+              </React.Fragment>
+            ))}
           </div>
-          <div className={s.rowSumInput}>
-            <span className={s.rowSumInputFlex}>
-              К списанию с баланса: {selectedValue} рублей
-              {addBalanse > 0 ? (
-                <span className={s.noSumBalanse}>
-                  Не хватает {addBalanse} руб
+          <div className={s.sumInputBlock}>
+            <div className={s.sumInput}>
+              <div className={s.rowSumInput}>
+                <span className={s.rowSumInputFlex}>
+                  Вы выбрали: {selectedLvtText} запросов
                 </span>
-              ) : null}
-            </span>
-          </div>
-          <div className={s.rowSumInput}>
-            <span className={s.rowSumInputFlex}>
-              Вы получите:
-              {selectedLvtText}
-              {selectedLvtBonus ? (
-                <React.Fragment>
-                  {" + "}
-                  <span className={s.bonusWeight}>{selectedLvtBonus}</span>
-                  <img width="16" src={iconPodarok} alt="" />
-                </React.Fragment>
-              ) : null}
-            </span>
+              </div>
+              <div className={s.rowSumInput}>
+                <span className={s.rowSumInputFlex}>
+                  К списанию с баланса: {selectedValue} рублей
+                  {addBalanse > 0 ? (
+                    <span className={s.noSumBalanse}>
+                      Не хватает {addBalanse} руб
+                    </span>
+                  ) : null}
+                </span>
+              </div>
+              <div className={s.rowSumInput}>
+                <span className={s.rowSumInputFlex}>
+                  Вы получите:
+                  {selectedLvtText}
+                  {selectedLvtBonus ? (
+                    <React.Fragment>
+                      {" + "}
+                      <span className={s.bonusWeight}>{selectedLvtBonus}</span>
+                      <img width="16" src={iconPodarok} alt="" />
+                    </React.Fragment>
+                  ) : null}
+                </span>
+              </div>
+            </div>
+            <div className={s.btnAddLvtBalance}>
+              {addBalanse > 0 ? (
+                <span className={s.noSumBalanseBtn}>
+                  Пополните баланс на недостающею сумму
+                </span>
+              ) : (
+                <button onClick={handleAddLvtBalance}>Обменять на Lvt</button>
+              )}
+            </div>
           </div>
         </div>
-        <div className={s.btnAddLvtBalance}>
-          {addBalanse > 0 ? (
-            <span className={s.noSumBalanseBtn}>
-              Пополните баланс на недостающею сумму
-            </span>
-          ) : (
-            <button onClick={handleAddLvtBalance}>Обменять на Lvt</button>
-          )}
+      ) : (
+        <div>
+          <WhatLvt />
         </div>
-      </div>
+      )}
     </div>
   );
 }

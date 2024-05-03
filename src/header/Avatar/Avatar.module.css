@@ -41,6 +41,7 @@
     background-color: #fff;
     border-radius: 5px;
     z-index: 1;
+    border: 3px solid #2e60f6;
 }
 
 .menuAuth hr {

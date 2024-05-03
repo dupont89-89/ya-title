@@ -56,33 +56,43 @@ export default function BalanceAsideActiveUser(props) {
         </div>
       </div>
       <hr />
-      <div className={s.money}>
-        Баланс денег <span>{props.money} руб</span>
-      </div>
-      <div className={s.money}>
-        Баланс Lvt <span>{props.totalLvt} баллов</span>
-      </div>
-      <div>
-        <hr />
-        <div className={s.referalBlock}>
-          <h3>Реферальная система</h3>
-          <span className={s.referal}>Кол-во рефералов {countReferal}</span>
-          <Link to="#">Подробности программы</Link>
-          <FontAwesomeIcon icon={faCircleQuestion} />
+      <div className={s.twoBlock}>
+        <div className={s.money}>
+          Баланс денег <span>{props.money} руб</span>
+        </div>
+        <div className={s.money}>
+          Баланс Lvt <span>{props.totalLvt} баллов</span>
+        </div>
+        <div>
+          <hr />
+          <div className={s.referalBlock}>
+            <h3>Реферальная система</h3>
+            <span className={s.referal}>Кол-во рефералов {countReferal}</span>
+            <Link to="/referal/">Подробности программы</Link>
+            <FontAwesomeIcon icon={faCircleQuestion} />
+          </div>
         </div>
       </div>
-      <div>
+      <hr />
+      <div className={s.formUser}>
+        <h3>Сделать сервис лучше</h3>
+        <p>
+          Напишите нам, какой функционал поможет Вам лучше решать свои
+          профессиональные задачи
+        </p>
         <form onSubmit={handleEmailSubmit}>
           <textarea
+            className={s.textareaForm}
             value={emailText}
             onChange={(e) => setEmailText(e.target.value)}
             name="emailText"
             id="emailText"
-            cols="30"
             rows="10"
             placeholder="Введите текст письма"
           ></textarea>
-          <button type="submit">Отправить</button>
+          <div className={s.btnForm}>
+            <button type="submit">Отправить</button>
+          </div>
         </form>
       </div>
     </div>

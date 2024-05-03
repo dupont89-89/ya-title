@@ -13,6 +13,8 @@ export default function Referal(props) {
     fontSize: "14px",
   };
 
+  const referalQuantity = props.referal.length;
+
   let config;
 
   if (process.env.NODE_ENV === "development") {
@@ -37,7 +39,7 @@ export default function Referal(props) {
         <div>
           <span className={s.textNumberReferal}>
             Кол-во рефералов{" "}
-            <span className={s.numberReferal}>{props.referalQuantity}</span>
+            <span className={s.numberReferal}>{referalQuantity}</span>
           </span>
         </div>
         <div>
