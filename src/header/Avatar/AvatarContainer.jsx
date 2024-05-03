@@ -19,7 +19,7 @@ function AvatarContainer(props) {
       email={props.email}
       lvt={props.lvt}
       lvtPresent={props.lvtPresentRegistration + props.lvtPresentReferal}
-      referalQuantity={props.referalQuantity}
+      referal={props.referal}
       notifications={props.notifications}
       money={props.money}
       handleLogout={handleLogout}
@@ -39,7 +39,7 @@ const mapStateToProps = (state) => {
     lvtPresentReferal: state.user.dataUser.lvtPresent.lvtPresentReferal,
     lvtPresentRegistration:
       state.user.dataUser.lvtPresent.lvtPresentRegistration,
-    referalQuantity: state.user.dataUser.referal.quantity,
+    referal: state.user.dataUser.referal,
     notifications: state.user.dataUser.notifications,
     money: state.user.dataUser.money,
     bonusDayLvt: state.user.dataUser.bonusDayLvt,

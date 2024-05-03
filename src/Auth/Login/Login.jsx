@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styles from "./styles.module.css";
-import { loginUser } from "../../Api/api-user-login";
 import ptahiniLogo from "./../../img/logo/PTAHINI-nav.png";
 import Loading from "../../app-function/Loading";
 import { Link } from "react-router-dom";
@@ -55,7 +54,7 @@ const Login = (props) => {
     setLoading(true);
 
     try {
-      const res = await loginUser(data);
+      const res = await props.loginUser(data);
       const token = res.data.token;
       const userData = res.data.user;
       const userId = res.data.user.userId;

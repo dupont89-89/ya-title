@@ -5,7 +5,7 @@ import {
   setDataUser,
   setAuthSuccess,
 } from "./../../redux/user-reducer/user-reducer";
-import { getUser } from "../../Api/api-user-login";
+import { getUser, loginUser } from "../../Api/api-user-login";
 
 function LoginContainer(props) {
   return (
@@ -17,6 +17,7 @@ function LoginContainer(props) {
         isAuthenticated={props.isAuthenticated}
         closeButton={props.closeButton}
         close={props.close}
+        loginUser={props.loginUser}
         inputWidth="370px"
         blockFormHeight="350px"
         blockFormPadding="70px"
@@ -40,6 +41,7 @@ const mapDispatchToProps = {
   setDataUser,
   setAuthSuccess,
   getUser,
+  loginUser,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer);

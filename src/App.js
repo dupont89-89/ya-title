@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import Footer from "./footer/Footer";
 import { setAuthSuccess } from "./redux/user-reducer/user-reducer";
 import { connect } from "react-redux";
-import { getUser } from "./Api/api-user-login";
+import { getUser, loginUser } from "./Api/api-user-login";
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import HeaderContainer from "./header/HeaderContainer";
@@ -22,6 +22,7 @@ import BalancePageLinkReg from "./BalancePage/BalanceParts/BalancePageLinkReg";
 import NotificationPageContainer from "./header/Notification/NotificationPageContainer";
 import TestPay from "./Admin/Test/TestPay";
 import TrackingReferalUrl from "./Auth/Referal/TrackingReferalUrl";
+import PageReferalContainer from "./ProfileUser/Referal/PageReferalContainer";
 
 let config;
 
@@ -39,20 +40,23 @@ function App({
   isAuthenticated,
   getNotificationMessage,
   role,
+  loginUser,
 }) {
   const [isLoading, setIsLoading] = useState(true);
 
-  // Создаем соединение с сервером Socket.IO
-  const socket = io(serverUrl);
+  useEffect(() => {
+    // Создаем соединение с сервером Socket.IO
+    const socket = io(serverUrl);
 
-  // Прослушиваем событие "dailyUpdate" от сервера
-  socket.on("dailyUpdate", () => {
-    // Выполняем функцию при получении события "dailyUpdate"
-    console.log("Received daily update from server");
-    // Ваша логика здесь
-    const userId = JSON.parse(localStorage.getItem("userId"));
-    getNotificationMessage(userId);
-  });
+    // Прослушиваем событие "dailyUpdate" от сервера
+    socket.on("dailyUpdate", () => {
+      // Выполняем функцию при получении события "dailyUpdate"
+      console.log("Received daily update from server");
+      // Ваша логика здесь
+      const userId = JSON.parse(localStorage.getItem("userId"));
+      getNotificationMessage(userId);
+    });
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -103,29 +107,45 @@ function App({
             <Route
               path="/login"
               element={
-                <Login
-                  inputWidth="370px"
-                  blockFormHeight="350px"
-                  blockFormPadding="70px"
-                  fontSizeTitle="40px"
-                  inputPadding="15px"
-                  inputRadius="10px"
-                  btnFormMargin="10px"
-                  btnFormWidth="200px"
-                  registration={
-                    <BalancePageLinkReg
-                      linkRehName="Регистрация"
-                      color="#000"
-                    />
-                  }
-                />
+                isAuthenticated ? (
+                  <Navigate to="/" />
+                ) : (
+                  <Login
+                    loginUser={loginUser}
+                    inputWidth="370px"
+                    blockFormHeight="350px"
+                    blockFormPadding="70px"
+                    fontSizeTitle="40px"
+                    inputPadding="15px"
+                    inputRadius="10px"
+                    btnFormMargin="10px"
+                    btnFormWidth="200px"
+                    registration={
+                      <BalancePageLinkReg
+                        linkRehName="Регистрация"
+                        color="#000"
+                      />
+                    }
+                  />
+                )
               }
             />
+
             <Route
               path="/profile"
               element={
                 isAuthenticated ? (
                   <ProfileUserContainer />
+                ) : (
+                  <Navigate to="/login" />
+                )
+              }
+            />
+            <Route
+              path="/referal"
+              element={
+                isAuthenticated ? (
+                  <PageReferalContainer />
                 ) : (
                   <Navigate to="/login" />
                 )
@@ -156,6 +176,7 @@ const mapDispatchToProps = {
   setAuthSuccess,
   getUser,
   getNotificationMessage,
+  loginUser,
 };
 
 const mapStateToProps = (state) => {

@@ -1,5 +1,8 @@
 import axios from "axios";
-import { setDataUser } from "../redux/user-reducer/user-reducer";
+import {
+  setAuthSuccess,
+  setDataUser,
+} from "../redux/user-reducer/user-reducer";
 
 let config;
 
@@ -23,15 +26,6 @@ export const signUpUser = async (userData) => {
   }
 };
 
-export const loginUser = async (data) => {
-  try {
-    const response = await instance.post("user/auth", data);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-};
-
 export const getUser = (userId) => {
   return async (dispatch) => {
     try {
@@ -43,6 +37,20 @@ export const getUser = (userId) => {
     } catch (error) {
       // Handle errors here, e.g., dispatch an error action
       console.error("Error fetching user data:", error);
+    }
+  };
+};
+
+export const loginUser = (data) => {
+  return async (dispatch) => {
+    try {
+      const response = await instance.post("user/auth", data);
+      const userId = response.data.data.user.userId;
+      dispatch(getUser(userId));
+      dispatch(setAuthSuccess());
+      return response.data;
+    } catch (error) {
+      throw error;
     }
   };
 };
