@@ -63,11 +63,8 @@ exports.payRobokassaController = async (req, res) => {
           }
         }
         return res.status(200).json({
-          OutSum,
-          userId,
-          InvId,
-          createdAt,
-          message: `Успешно оплачен счёт на ${OutSum} для пользователя ${userId} по счёту ${InvId}`,
+          message: `Оплата на сумму ${OutSum} успешно произведена.`,
+          redirectUrl: "https://tools.ptahini.ru/balance", // URL страницы успешной оплаты
         });
       } else {
         // Если запись не найдена, возвращаем соответствующее сообщение об ошибке

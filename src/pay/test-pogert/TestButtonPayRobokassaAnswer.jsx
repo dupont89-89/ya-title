@@ -45,8 +45,13 @@ const TestButtonPayRobokassaAnswer = () => {
         return response.json();
       })
       .then((data) => {
-        console.log("Успешный ответ от сервера:", data);
-        // Здесь можно обработать успешный ответ от сервера, если необходимо
+        if (data.redirectUrl) {
+          // Если есть URL для перенаправления, перенаправляем пользователя на этот URL
+          window.location.href = data.redirectUrl;
+        } else {
+          // Если нет URL для перенаправления, выводим сообщение об успешной оплате
+          alert(data.message);
+        }
       })
       .catch((error) => {
         console.error("Ошибка при отправке запроса:", error);

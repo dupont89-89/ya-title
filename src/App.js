@@ -64,10 +64,11 @@ function App({
         setIsLoading(true);
         const userId = JSON.parse(localStorage.getItem("userId"));
         if (userId) {
+          if (isAuthenticated) {
+            await Promise.all([getUser(userId)]);
+            debugger;
+          }
           setAuthSuccess();
-        }
-        if (isAuthenticated) {
-          await Promise.all([getUser(userId)]);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
