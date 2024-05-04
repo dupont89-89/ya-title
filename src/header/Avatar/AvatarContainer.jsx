@@ -11,6 +11,8 @@ function AvatarContainer(props) {
     props.logoutUserThunkCreator();
     // После успешного выхода из аккаунта устанавливаем isAuthenticated в false
   };
+  const present = props.lvtPresentRegistration + props.bonusDayLvt;
+
   return (
     <Avatar
       logoutUserThunkCreator={props.logoutUserThunkCreator}
@@ -18,7 +20,7 @@ function AvatarContainer(props) {
       avatar={props.avatar}
       email={props.email}
       lvt={props.lvt}
-      lvtPresent={props.lvtPresentRegistration + props.lvtPresentReferal}
+      present={present}
       referal={props.referal}
       notifications={props.notifications}
       money={props.money}

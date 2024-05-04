@@ -49,7 +49,7 @@ export default function Avatar(props) {
               lastName={props.lastName}
               notifications={props.notifications}
               referal={props.referal}
-              lvtPresent={props.lvtPresent}
+              present={props.present}
               lvt={props.lvt}
               email={props.email}
               onLogout={props.handleLogout}

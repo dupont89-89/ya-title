@@ -4,6 +4,7 @@ import { signUpUser } from "../../Api/api-user-login";
 import { loginUser } from "../../Api/api-user-login";
 import ptahiniLogo from "./../../img/logo/PTAHINI-nav.png";
 import Loading from "../../app-function/Loading";
+import { sendMail } from "../../Api/api-admin";
 
 const Signup = (props) => {
   const [data, setData] = useState({

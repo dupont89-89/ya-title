@@ -7,7 +7,7 @@ function ProfileUserContainer(props) {
   return (
     <ProfileUser
       referal={props.referal}
-      lvtPresentReferal={props.lvtPresentReferal}
+      moneyPresentReferal={props.moneyPresentReferal}
       email={props.email}
       avatar={props.avatar}
       firstName={props.firstName}
@@ -26,7 +26,7 @@ function ProfileUserContainer(props) {
 const mapStateToProps = (state) => {
   return {
     email: state.user.dataUser.email,
-    lvtPresentReferal: state.user.dataUser.lvtPresent.lvtPresentReferal,
+    moneyPresentReferal: state.user.dataUser.lvtPresent.moneyPresentReferal,
     referal: state.user.dataUser.referal,
     avatar: state.user.dataUser.avatar,
     firstName: state.user.dataUser.firstName,
