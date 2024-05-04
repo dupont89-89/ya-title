@@ -58,7 +58,6 @@ export const addLvtAdminUser = (userId, lvt) => {
 };
 
 export const sendMail = async (mail) => {
-  debugger;
   try {
     const response = await instance.post(`/send-email`, mail);
     return response.data;
