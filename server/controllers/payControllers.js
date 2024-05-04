@@ -42,6 +42,7 @@ exports.payRobokassaController = async (req, res) => {
             const userPayRef = await User.findOne({ _id: referalPayUserId });
             userPayRef.money += parseFloat(commission);
             userPayRef.moneyHistory += parseFloat(commission);
+            userPayRef.lvtPresent.moneyPresentReferal += parseFloat(commission);
             const notification = {
               message: `Баланс пополнен на ${OutSum} рублей.`,
               dateAdded: formattedDate,

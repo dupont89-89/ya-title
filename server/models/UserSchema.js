@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
   lvt: { type: Number, default: 0 },
   lvtPresent: {
     lvtPresentRegistration: { type: Number, default: 0 },
-    lvtPresentReferal: { type: Number, default: 0 },
+    moneyPresentReferal: { type: Number, default: 0 },
   },
   role: { type: String, default: "user" },
   money: { type: Number, default: 0 },

@@ -48,7 +48,7 @@ const initialState = {
     totalLvt: 0,
     bonusDayLvt: 0,
     lvtPresent: {
-      lvtPresentReferal: 0,
+      moneyPresentReferal: 0,
       lvtPresentRegistration: 0,
     },
     notifications: {},

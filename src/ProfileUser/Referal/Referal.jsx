@@ -46,7 +46,7 @@ export default function Referal(props) {
           <span className={s.textNumberReferal}>
             Получено за рефералов{" "}
             <span className={s.numberReferal}>
-              {props.lvtPresentReferal} руб
+              {props.moneyPresentReferal} руб
             </span>
           </span>
         </div>
