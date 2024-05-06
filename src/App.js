@@ -23,6 +23,7 @@ import NotificationPageContainer from "./header/Notification/NotificationPageCon
 import TestPay from "./Admin/Test/TestPay";
 import TrackingReferalUrl from "./Auth/Referal/TrackingReferalUrl";
 import PageReferalContainer from "./ProfileUser/Referal/PageReferalContainer";
+import SuccessPay from "./BalancePage/SuccessPay";
 
 let config;
 
@@ -47,7 +48,7 @@ function App({
   useEffect(() => {
     // Создаем соединение с сервером Socket.IO
     const socket = io(serverUrl);
-
+    console.log("Соединение установленно");
     // Прослушиваем событие "dailyUpdate" от сервера
     socket.on("dailyUpdate", () => {
       // Выполняем функцию при получении события "dailyUpdate"
@@ -66,7 +67,6 @@ function App({
         if (userId) {
           if (isAuthenticated) {
             await Promise.all([getUser(userId)]);
-            debugger;
           }
           setAuthSuccess();
         }
@@ -150,6 +150,12 @@ function App({
                 ) : (
                   <Navigate to="/login" />
                 )
+              }
+            />
+            <Route
+              path="/success-pay"
+              element={
+                isAuthenticated ? <SuccessPay /> : <Navigate to="/login" />
               }
             />
             {role === "admin" && (

@@ -2,9 +2,10 @@ const { Pay } = require("../models/PaySchema");
 const { User } = require("../models/UserSchema");
 const md5 = require("md5");
 require("dotenv").config();
+const logger = require("../utils/logger");
 
 const merchant_login = process.env.ROBOKASSA_SHOP_NAME;
-const password_2 = process.env.ROBOKASSA_PASSWORD_2;
+const password_1 = process.env.ROBOKASSA_PASSWORD_1;
 
 exports.payRobokassaController = async (req, res) => {
   try {
@@ -15,56 +16,95 @@ exports.payRobokassaController = async (req, res) => {
     const moscowTime = new Date(currentDate.getTime());
     // Форматируем дату и время в строку
     const formattedDate = moscowTime.toISOString();
+
+    logger.writeToLog("Incoming request data:");
+    logger.writeToLog(`InvId: ${InvId}`);
+    logger.writeToLog(`Хеш который пришёл: ${signatureValueRobokassa}`);
+    logger.writeToLog(`Пароль: ${password_1}`);
+    logger.writeToLog(`Название магазина: ${merchant_login}`);
+
     // Проверяем, есть ли номер счёта
     if (InvId) {
       // Находим запись в базе данных по номеру счёта
       const score = await Pay.findOne({ InvId: InvId });
       // Если запись найдена, отправляем данные обратно
       if (score) {
-        const { OutSum, userId, createdAt, InvId } = score; // Получаем нужные значения из найденной записи
-        // Преобразуем OutSum в строку и передаем в signatureValue
-        const OutSumString = OutSum.toString();
-        // Здесь используйте OutSumString вместо 1390 в md5
+        logger.writeToLog(`Счёт: ${score}`);
+
+        const { OutSum, userId, InvId } = score; // Получаем нужные значения из найденной записи
+
         const signatureValue = md5(
-          `${merchant_login}:${OutSumString}:${InvId}:${password_2}`
+          `${OutSum.toFixed(2)}:${InvId.toString()}:${password_1}`
         );
+        logger.writeToLog(
+          `Начинаем проверять merchant_login: ${merchant_login}`
+        );
+        logger.writeToLog(`paymentAmount: ${OutSum}`);
+        logger.writeToLog(`invoiceId: ${InvId}`);
+        logger.writeToLog(`password_2: ${password_1}`);
+        logger.writeToLog(`Хеш сформированный: ${signatureValue}`);
+
         if (signatureValue === signatureValueRobokassa) {
+          logger.writeToLog("Хеш совпадает");
+
           // Найти пользователя по userId
           const user = await User.findOne({ _id: userId });
           // Если пользователь найден, обновить его счет
           if (user) {
+            logger.writeToLog(`Найденный пользователь: ${user}`);
             // Добавить сумму к существующему балансу пользователя
             user.money += parseFloat(OutSum);
             user.moneyHistory += parseFloat(OutSum);
-            const commissionRate = 0.15; // 15% реферальная выплата
-            const commission = Math.floor(parseFloat(OutSum) * commissionRate);
-            const referalPayUserId = user.referalPay.userId;
-            const userPayRef = await User.findOne({ _id: referalPayUserId });
-            userPayRef.money += parseFloat(commission);
-            userPayRef.moneyHistory += parseFloat(commission);
-            userPayRef.lvtPresent.moneyPresentReferal += parseFloat(commission);
+
+            // Проверяем, существует ли значение user.referalPay.userId
+            const referalPayUserId = user.referalPay && user.referalPay.userId;
+            logger.writeToLog(`Баланс пользователя обновлен: ${user}`);
             const notification = {
               message: `Баланс пополнен на ${OutSum} рублей.`,
               dateAdded: formattedDate,
             };
-            const notificationRef = {
-              message: `Бонус за реферала. Баланс пополнен на ${commission} рублей.`,
-              dateAdded: formattedDate,
-            };
-            // Добавить уведомление
-            userPayRef.notifications.push(notificationRef);
-            userPayRef.notificationsHistory.push(notificationRef);
+            if (referalPayUserId) {
+              const commissionRate = 0.15; // 15% реферальная выплата
+              const commission = Math.floor(
+                parseFloat(OutSum) * commissionRate
+              );
+              const userPayRef = await User.findOne({ _id: referalPayUserId });
+              // Проверяем, найден ли пользователь-реферал
+              if (userPayRef) {
+                userPayRef.money += parseFloat(commission);
+                userPayRef.moneyHistory += parseFloat(commission);
+                userPayRef.lvtPresent.moneyPresentReferal +=
+                  parseFloat(commission);
+                const notificationRef = {
+                  message: `Бонус за реферала. Баланс пополнен на ${commission} рублей.`,
+                  dateAdded: formattedDate,
+                };
+                // Добавить уведомление пользователю-рефералу
+                userPayRef.notifications.push(notificationRef);
+                userPayRef.notificationsHistory.push(notificationRef);
+                // Сохранить данные пользователя-реферала
+                await userPayRef.save();
+              } else {
+                logger.writeToLog("Пользователь-реферал не найден");
+              }
+            }
+            // Добавить уведомление пользователю
             user.notifications.push(notification);
             user.notificationsHistory.push(notification);
-
-            // Сохранить обновленного пользователя
-            await Promise.all([user.save(), userPayRef.save()]);
+            // Сохранить данные пользователя
+            await user.save();
           } else {
+            logger.writeToLog("Пользователь не найден");
           }
+        } else {
+          logger.writeToLog("Хеш НЕ совпадает");
+          return res
+            .status(400)
+            .json({ message: "Ошибка верификации подписи" });
         }
+
         return res.status(200).json({
           message: `Оплата на сумму ${OutSum} успешно произведена.`,
-          redirectUrl: "https://tools.ptahini.ru/balance", // URL страницы успешной оплаты
         });
       } else {
         // Если запись не найдена, возвращаем соответствующее сообщение об ошибке

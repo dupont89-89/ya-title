@@ -34,13 +34,10 @@ export default function AdminUser(props) {
                 <td>{user.email}</td>
                 <td>
                   <span className={s.userDataTdBlock}>
-                    Всего (куплено + бонусы): {user.totalLvt}
+                    Всего (куплено + бонусы): {user.totalLvt} Lvt
                   </span>
                   <span className={s.userDataTdBlock}>
-                    Без бонусов: {user.lvt}
-                  </span>
-                  <span className={s.userDataTdBlock}>
-                    Бонусы за рефералов: {user.lvtPresent.lvtPresentReferal}
+                    Без бонусов: {user.lvt} Lvt
                   </span>
                   <span>
                     <UniversalModal
@@ -56,13 +53,22 @@ export default function AdminUser(props) {
                 </td>
                 <td>
                   <span className={s.userDataTdBlock}>
-                    Баланс денег: {user.money}{" "}
+                    Баланс: {user.money} руб
                   </span>
                   <span className={s.userDataTdBlock}>
-                    Всего пополнений: {user.moneyHistory}
+                    Всего пополнений: {user.moneyHistory} руб
                   </span>
                 </td>
-                <td>Кол-во рефералов: {user.referalQuantity}</td>
+                <td>
+                  {" "}
+                  <span className={s.userDataTdBlock}>
+                    Бонусы за рефералов: {user.lvtPresent.moneyPresentReferal}{" "}
+                    руб
+                  </span>
+                  <span className={s.userDataTdBlock}>
+                    Кол-во рефералов: {user.referal.length} польз.
+                  </span>
+                </td>
                 <td>
                   <select
                     value={user.role}
