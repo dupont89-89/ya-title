@@ -19,9 +19,14 @@ const RobokassaPaymentForm = (props) => {
   const password_1 = config.ROBOKASSA_PASSWORD_1;
   const IsTest = config.ROBOKASSA_TEST;
 
-  const signatureValue = md5(
-    `${merchant_login}:${paymentAmount.toFixed(2)}:${invoiceId}:${password_1}`
-  );
+  const signatureValue =
+    paymentAmount !== ""
+      ? md5(
+          `${merchant_login}:${parseFloat(paymentAmount).toFixed(
+            2
+          )}:${invoiceId}:${password_1}`
+        )
+      : "";
   const handleClick = async () => {
     if (paymentAmount === "") {
       setErrorMessage("Вы не ввели сумму пополнения");
@@ -37,8 +42,14 @@ const RobokassaPaymentForm = (props) => {
   };
 
   const handleChange = (event) => {
-    setPaymentAmount(event.target.value); // Обновляем значение состояния при изменении ввода
-    setErrorMessage(""); // Очищаем сообщение об ошибке при вводе
+    const amount = event.target.value.trim(); // Убираем начальные и конечные пробелы
+    if (amount === "") {
+      setPaymentAmount(""); // Устанавливаем пустую строку, если введена пустая строка
+    } else {
+      const parsedAmount = parseFloat(amount); // Пробуем преобразовать в число
+      setPaymentAmount(isNaN(parsedAmount) ? "" : parsedAmount); // Обновляем состояние числом или пустой строкой, если преобразование не удалось
+    }
+    setErrorMessage(""); // Очищаем сообщение об ошибке при изменении ввода
   };
 
   useEffect(() => {
