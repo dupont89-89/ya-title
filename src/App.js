@@ -55,6 +55,7 @@ function App({
       console.log("Received daily update from server");
       // Ваша логика здесь
       const userId = JSON.parse(localStorage.getItem("userId"));
+      getUser(userId);
       getNotificationMessage(userId);
     });
   }, []);

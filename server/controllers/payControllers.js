@@ -17,11 +17,11 @@ exports.payRobokassaController = async (req, res) => {
     // Форматируем дату и время в строку
     const formattedDate = moscowTime.toISOString();
 
-    logger.writeToLog("Incoming request data:");
-    logger.writeToLog(`InvId: ${InvId}`);
-    logger.writeToLog(`Хеш который пришёл: ${signatureValueRobokassa}`);
-    logger.writeToLog(`Пароль: ${password_1}`);
-    logger.writeToLog(`Название магазина: ${merchant_login}`);
+    // logger.writeToLog("Incoming request data:");
+    // logger.writeToLog(`InvId: ${InvId}`);
+    // logger.writeToLog(`Хеш который пришёл: ${signatureValueRobokassa}`);
+    // logger.writeToLog(`Пароль: ${password_1}`);
+    // logger.writeToLog(`Название магазина: ${merchant_login}`);
 
     // Проверяем, есть ли номер счёта
     if (InvId) {
@@ -39,10 +39,10 @@ exports.payRobokassaController = async (req, res) => {
         logger.writeToLog(
           `Начинаем проверять merchant_login: ${merchant_login}`
         );
-        logger.writeToLog(`paymentAmount: ${OutSum}`);
-        logger.writeToLog(`invoiceId: ${InvId}`);
-        logger.writeToLog(`password_2: ${password_1}`);
-        logger.writeToLog(`Хеш сформированный: ${signatureValue}`);
+        // logger.writeToLog(`paymentAmount: ${OutSum}`);
+        // logger.writeToLog(`invoiceId: ${InvId}`);
+        // logger.writeToLog(`password_2: ${password_1}`);
+        // logger.writeToLog(`Хеш сформированный: ${signatureValue}`);
 
         if (signatureValue === signatureValueRobokassa) {
           logger.writeToLog("Хеш совпадает");
@@ -51,14 +51,14 @@ exports.payRobokassaController = async (req, res) => {
           const user = await User.findOne({ _id: userId });
           // Если пользователь найден, обновить его счет
           if (user) {
-            logger.writeToLog(`Найденный пользователь: ${user}`);
+            // logger.writeToLog(`Найденный пользователь: ${user}`);
             // Добавить сумму к существующему балансу пользователя
             user.money += parseFloat(OutSum);
             user.moneyHistory += parseFloat(OutSum);
 
             // Проверяем, существует ли значение user.referalPay.userId
             const referalPayUserId = user.referalPay && user.referalPay.userId;
-            logger.writeToLog(`Баланс пользователя обновлен: ${user}`);
+            // logger.writeToLog(`Баланс пользователя обновлен: ${user}`);
             const notification = {
               message: `Баланс пополнен на ${OutSum} рублей.`,
               dateAdded: formattedDate,
@@ -85,7 +85,7 @@ exports.payRobokassaController = async (req, res) => {
                 // Сохранить данные пользователя-реферала
                 await userPayRef.save();
               } else {
-                logger.writeToLog("Пользователь-реферал не найден");
+                // logger.writeToLog("Пользователь-реферал не найден");
               }
             }
             // Добавить уведомление пользователю
@@ -94,10 +94,10 @@ exports.payRobokassaController = async (req, res) => {
             // Сохранить данные пользователя
             await user.save();
           } else {
-            logger.writeToLog("Пользователь не найден");
+            // logger.writeToLog("Пользователь не найден");
           }
         } else {
-          logger.writeToLog("Хеш НЕ совпадает");
+          // logger.writeToLog("Хеш НЕ совпадает");
           return res
             .status(400)
             .json({ message: "Ошибка верификации подписи" });
