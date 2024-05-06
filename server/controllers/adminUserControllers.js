@@ -20,7 +20,7 @@ exports.adminDataUserController = async (req, res) => {
         money: user.money,
         moneyHistory: user.moneyHistory,
         notifications: user.notifications,
-        referalQuantity: user.referal.quantity,
+        referal: user.referal,
         role: user.role,
       }));
 

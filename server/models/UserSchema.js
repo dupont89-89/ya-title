@@ -44,7 +44,7 @@ const userSchema = new mongoose.Schema({
 
 // Создаем виртуальное поле для суммы lvt и bonusDayLvt
 userSchema.virtual("totalLvt").get(function () {
-  return this.lvt + this.bonusDayLvt;
+  return this.lvt + this.bonusDayLvt + this.lvtPresent.lvtPresentRegistration;
 });
 
 // Гарантируем, что виртуальное поле totalLvt включается в результаты toJSON и toObject

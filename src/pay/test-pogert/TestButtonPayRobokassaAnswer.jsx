@@ -34,7 +34,6 @@ const TestButtonPayRobokassaAnswer = () => {
 
     // URL для отправки запроса
     const url = "http://localhost:8080/api/pay/success-payment?" + queryString;
-    debugger;
 
     // Отправка GET запроса
     fetch(url)
@@ -47,7 +46,7 @@ const TestButtonPayRobokassaAnswer = () => {
       .then((data) => {
         if (data.redirectUrl) {
           // Если есть URL для перенаправления, перенаправляем пользователя на этот URL
-          window.location.href = data.redirectUrl;
+          // window.location.href = data.redirectUrl;
         } else {
           // Если нет URL для перенаправления, выводим сообщение об успешной оплате
           alert(data.message);

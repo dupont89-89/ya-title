@@ -15,13 +15,23 @@ const RobokassaPaymentForm = (props) => {
   const [paymentAmount, setPaymentAmount] = useState(5000); // начальная сумма платежа
   const [invoiceId, setInvoiceId] = useState(0); // ID счета
   const [description, setDescription] = useState("Пополнение баланса");
+  const merchant_login = config.ROBOKASSA_SHOP_NAME;
+  const password_1 = config.ROBOKASSA_PASSWORD_1;
+  const IsTest = config.ROBOKASSA_TEST;
+
+  const signatureValue = md5(
+    `${merchant_login}:${paymentAmount.toFixed(2)}:${invoiceId}:${password_1}`
+  );
   const handleClick = async () => {
     if (paymentAmount === "") {
       setErrorMessage("Вы не ввели сумму пополнения");
       return; // Завершаем функцию, чтобы не отправлять запрос
     }
-    const url = `https://auth.robokassa.ru/Merchant/Index.aspx?MerchantLogin=${merchant_login}&OutSum=${paymentAmount}&InvoiceID=${invoiceId}&Description=${description}&SignatureValue=${signatureValue}&IsTest=${IsTest}`;
+    const url = `https://auth.robokassa.ru/Merchant/Index.aspx?MerchantLogin=${merchant_login}&OutSum=${paymentAmount}.00&InvoiceID=${invoiceId}&Description=${description}&SignatureValue=${signatureValue}&IsTest=${IsTest}`;
     addPayScore(paymentAmount, invoiceId, props.userId);
+    console.log(
+      `Создан счёт для ${paymentAmount}, ${invoiceId}, ${props.userId}`
+    );
     window.open(url, "_blank"); // Открывает ссылку в новой вкладке
     console.log(`Отправил ${paymentAmount}`);
   };
@@ -73,14 +83,6 @@ const RobokassaPaymentForm = (props) => {
     borderRadius: "5px",
     fontWeight: "500",
   };
-
-  const merchant_login = config.ROBOKASSA_SHOP_NAME;
-  const password_1 = config.ROBOKASSA_PASSWORD_1;
-  const IsTest = config.ROBOKASSA_TEST;
-
-  const signatureValue = md5(
-    `${merchant_login}:${paymentAmount}:${invoiceId}:${password_1}`
-  );
 
   return (
     <>

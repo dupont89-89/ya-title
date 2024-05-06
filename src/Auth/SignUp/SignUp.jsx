@@ -50,6 +50,7 @@ const Signup = (props) => {
       setData({ ...data, confirmationCode: confirmationCode }); // Сохраняем сгенерированный код в состоянии
     } catch (error) {
       setError("Ошибка при отправке письма");
+      console.error("Ошибка при отправке письма:", error); // Выводим ошибку в консоль
     } finally {
       setLoading(false);
     }
