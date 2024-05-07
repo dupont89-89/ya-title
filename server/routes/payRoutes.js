@@ -8,5 +8,6 @@ router.get(
   payControllers.payScoreRobokassaController
 );
 router.get("/success-payment", payControllers.payRobokassaController);
+router.get("/get-payment-score", payControllers.getScoreController);
 
 module.exports = router;

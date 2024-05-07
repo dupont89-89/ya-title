@@ -416,3 +416,31 @@ input[type='radio']:checked:after {
     grid-gap: 30px;
     margin-bottom: 30px;
 }
+
+.contentModal {
+    background-color: #f5b24d;
+    border-radius: 10px;
+    padding: 50px;
+    text-align: center;
+}
+
+.contentModal p {
+    font-size: 26px;
+}
+
+.contentModal a {
+    font-size: 25px;
+    background-color: #03A9F4;
+    color: #fff;
+    padding: 5px 20px;
+    border-radius: 7px;
+}
+
+.btnLinkSuccess {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.btnLinkSuccess a:hover {
+    background-color: #0a8dc9;
+}

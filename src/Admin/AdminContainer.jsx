@@ -1,10 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
 import Admin from "./Admin";
+import { getAdminUserData } from "../Api/api-admin";
 
 function AdminContainer(props) {
   let countUser = props.dataUser.length;
-  return <Admin countUser={countUser} />;
+  return (
+    <Admin getAdminUserData={props.getAdminUserData} countUser={countUser} />
+  );
 }
 
 const mapStateToProps = (state) => {
@@ -12,6 +15,9 @@ const mapStateToProps = (state) => {
     dataUser: state.adminUser.dataUser,
   };
 };
-const mapDispatchToProps = {};
+
+const mapDispatchToProps = {
+  getAdminUserData,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminContainer);
