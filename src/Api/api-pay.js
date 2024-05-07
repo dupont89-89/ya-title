@@ -12,6 +12,18 @@ const instance = axios.create({
   baseURL: `${config.REACT_APP_SERVER_URL}/api`,
 });
 
+export const getPayScore = async () => {
+  try {
+    const response = await instance.get(`/pay/get-payment-score`);
+    debugger;
+    return response.data;
+  } catch (error) {
+    // Обработка ошибок здесь
+    console.error("Ошибка запроса счетов:", error);
+    throw error; // Пробросить ошибку для обработки в вызывающем коде
+  }
+};
+
 export const addPayScore = async (OutSum, InvId, userId) => {
   try {
     const response = await instance.get(

@@ -29,9 +29,9 @@ exports.payRobokassaController = async (req, res) => {
       const score = await Pay.findOne({ InvId: InvId });
       // Если запись найдена, отправляем данные обратно
       if (score) {
-        logger.writeToLog(`Счёт: ${score}`);
+        // logger.writeToLog(`Счёт: ${score}`);
 
-        const { OutSum, userId, InvId } = score; // Получаем нужные значения из найденной записи
+        const { OutSum, userId, InvId, paymentStatus } = score; // Получаем нужные значения из найденной записи
 
         const signatureValue = md5(
           `${OutSum.toFixed(2)}:${InvId.toString()}:${password_1}`
@@ -46,55 +46,61 @@ exports.payRobokassaController = async (req, res) => {
 
         if (signatureValue === signatureValueRobokassa) {
           logger.writeToLog("Хеш совпадает");
+          if (!paymentStatus) {
+            // Найти пользователя по userId
+            const user = await User.findOne({ _id: userId });
+            // Если пользователь найден, обновить его счет
+            if (user) {
+              // logger.writeToLog(`Найденный пользователь: ${user}`);
+              // Добавить сумму к существующему балансу пользователя
+              user.money += parseFloat(OutSum);
+              user.moneyHistory += parseFloat(OutSum);
 
-          // Найти пользователя по userId
-          const user = await User.findOne({ _id: userId });
-          // Если пользователь найден, обновить его счет
-          if (user) {
-            // logger.writeToLog(`Найденный пользователь: ${user}`);
-            // Добавить сумму к существующему балансу пользователя
-            user.money += parseFloat(OutSum);
-            user.moneyHistory += parseFloat(OutSum);
-
-            // Проверяем, существует ли значение user.referalPay.userId
-            const referalPayUserId = user.referalPay && user.referalPay.userId;
-            // logger.writeToLog(`Баланс пользователя обновлен: ${user}`);
-            const notification = {
-              message: `Баланс пополнен на ${OutSum} рублей.`,
-              dateAdded: formattedDate,
-            };
-            if (referalPayUserId) {
-              const commissionRate = 0.15; // 15% реферальная выплата
-              const commission = Math.floor(
-                parseFloat(OutSum) * commissionRate
-              );
-              const userPayRef = await User.findOne({ _id: referalPayUserId });
-              // Проверяем, найден ли пользователь-реферал
-              if (userPayRef) {
-                userPayRef.money += parseFloat(commission);
-                userPayRef.moneyHistory += parseFloat(commission);
-                userPayRef.lvtPresent.moneyPresentReferal +=
-                  parseFloat(commission);
-                const notificationRef = {
-                  message: `Бонус за реферала. Баланс пополнен на ${commission} рублей.`,
-                  dateAdded: formattedDate,
-                };
-                // Добавить уведомление пользователю-рефералу
-                userPayRef.notifications.push(notificationRef);
-                userPayRef.notificationsHistory.push(notificationRef);
-                // Сохранить данные пользователя-реферала
-                await userPayRef.save();
-              } else {
-                // logger.writeToLog("Пользователь-реферал не найден");
+              // Проверяем, существует ли значение user.referalPay.userId
+              const referalPayUserId =
+                user.referalPay && user.referalPay.userId;
+              // logger.writeToLog(`Баланс пользователя обновлен: ${user}`);
+              const notification = {
+                message: `Баланс пополнен на ${OutSum} рублей.`,
+                dateAdded: formattedDate,
+              };
+              if (referalPayUserId) {
+                const commissionRate = 0.15; // 15% реферальная выплата
+                const commission = Math.floor(
+                  parseFloat(OutSum) * commissionRate
+                );
+                const userPayRef = await User.findOne({
+                  _id: referalPayUserId,
+                });
+                // Проверяем, найден ли пользователь-реферал
+                if (userPayRef) {
+                  userPayRef.money += parseFloat(commission);
+                  userPayRef.moneyHistory += parseFloat(commission);
+                  userPayRef.lvtPresent.moneyPresentReferal +=
+                    parseFloat(commission);
+                  const notificationRef = {
+                    message: `Бонус за реферала. Баланс пополнен на ${commission} рублей.`,
+                    dateAdded: formattedDate,
+                  };
+                  // Добавить уведомление пользователю-рефералу
+                  userPayRef.notifications.push(notificationRef);
+                  userPayRef.notificationsHistory.push(notificationRef);
+                  // Сохранить данные пользователя-реферала
+                  await userPayRef.save();
+                } else {
+                  // logger.writeToLog("Пользователь-реферал не найден");
+                }
               }
+              // Добавить уведомление пользователю
+              user.notifications.push(notification);
+              user.notificationsHistory.push(notification);
+              score.paymentStatus = true;
+              // Сохранить данные пользователя
+              await user.save();
+              await score.save();
             }
-            // Добавить уведомление пользователю
-            user.notifications.push(notification);
-            user.notificationsHistory.push(notification);
-            // Сохранить данные пользователя
-            await user.save();
           } else {
-            // logger.writeToLog("Пользователь не найден");
+            logger.writeToLog("Счёт уже оплачен!");
           }
         } else {
           // logger.writeToLog("Хеш НЕ совпадает");
@@ -139,6 +145,7 @@ exports.payScoreRobokassaController = async (req, res) => {
         InvId: InvId,
         userId: userId,
         createdAt: formattedDate, // Добавляем дату и время создания
+        paymentStatus: false,
       });
       // Сохраняем новую запись в базе данных
       await newPay.save();
@@ -155,6 +162,37 @@ exports.payScoreRobokassaController = async (req, res) => {
   } catch (error) {
     // Обрабатываем любые ошибки, возникающие во время запроса
     console.error("Ошибка при создании счёта:", error);
+    res.status(500).json({ message: "Внутренняя ошибка сервера" });
+  }
+};
+
+exports.getScoreController = async (req, res) => {
+  try {
+    const score = await Pay.find({}); // Найти всех пользователей
+
+    // Проверить, найдены ли пользователи
+    if (score.length > 0) {
+      // Преобразовать данные каждого пользователя в нужный формат
+      const scoreData = score.map((score) => ({
+        OutSum: score.OutSum,
+        InvId: score.InvId,
+        userId: score.userId,
+        createdAt: score.createdAt, // Добавляем поле createdAt
+        paymentStatus: score.paymentStatus, // Статус оплаты
+      }));
+
+      // Отправить данные пользователей в ответе
+      res.status(200).json({
+        score: scoreData,
+        message: "Успешно отправлены счета пользователей",
+      });
+    } else {
+      // Если не все значения переданы, отправляем ответ с ошибкой
+      res.status(400).json({ message: "Вроде как счетов нет" });
+    }
+  } catch (error) {
+    // Обрабатываем любые ошибки, возникающие во время запроса
+    console.error("Ошибка при отправке счетов:", error);
     res.status(500).json({ message: "Внутренняя ошибка сервера" });
   }
 };

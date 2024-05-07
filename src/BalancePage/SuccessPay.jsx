@@ -1,6 +1,10 @@
 import React, { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { successPay } from "../Api/api-pay";
+import s from "./BalancePage.module.css";
+import logo from "./../img/logo/PTAHINI-nav.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 
 export default function SuccessPay() {
   // Получаем объект location, который содержит информацию о текущем URL
@@ -11,6 +15,10 @@ export default function SuccessPay() {
 
   // Создаем объект URLSearchParams, чтобы обработать строку запроса
   const params = new URLSearchParams(queryString);
+
+  const logoStyle = {
+    width: "300px",
+  };
 
   // Извлекаем GET-параметры по их именам
   const OutSum = params.get("OutSum");
@@ -30,12 +38,14 @@ export default function SuccessPay() {
   }, [InvId]);
 
   return (
-    <div>
-      <h2>SuccessPay</h2>
-      <p>Номер счёта: {InvId}</p>
-      <p>Подпись: {Signature}</p>
-      <p>Сумма: {OutSum}</p>
-      <p>Тест: {IsTest}</p>
+    <div className={s.contentModal}>
+      <p>Успешная оплата</p>
+      <FontAwesomeIcon size="5x" color="#4caf50" icon={faCircleCheck} />
+      <p>Сумма пополнения: {OutSum}</p>
+      <img style={logoStyle} src={logo} alt="" />
+      <div className={s.btnLinkSuccess}>
+        <Link to="/balance">В тарифы</Link>
+      </div>
     </div>
   );
 }

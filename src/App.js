@@ -24,6 +24,7 @@ import TestPay from "./Admin/Test/TestPay";
 import TrackingReferalUrl from "./Auth/Referal/TrackingReferalUrl";
 import PageReferalContainer from "./ProfileUser/Referal/PageReferalContainer";
 import SuccessPay from "./BalancePage/SuccessPay";
+import ScoreUserContainer from "./Admin/ScoreUser/ScoreUserContainer";
 
 let config;
 
@@ -94,8 +95,8 @@ function App({
 
   return (
     <div className="App">
-      {isAuthenticated ? null : <TrackingReferalUrl />}
       {role === "admin" && <AdminPanelContainer />}
+      {isAuthenticated ? null : <TrackingReferalUrl />}
       <div className="blockOsn">
         <HeaderContainer />
         <article>
@@ -168,6 +169,11 @@ function App({
                   element={<AdminUserContainer />}
                 />
                 <Route path="/admin/test" exact element={<TestPay />} />
+                <Route
+                  path="/admin/score"
+                  exact
+                  element={<ScoreUserContainer />}
+                />
               </>
             )}
           </Routes>
