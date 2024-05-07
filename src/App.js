@@ -25,6 +25,8 @@ import TrackingReferalUrl from "./Auth/Referal/TrackingReferalUrl";
 import PageReferalContainer from "./ProfileUser/Referal/PageReferalContainer";
 import SuccessPay from "./BalancePage/SuccessPay";
 import ScoreUserContainer from "./Admin/ScoreUser/ScoreUserContainer";
+import MobileHeaderContainer from "./header/MobileHeader/MobileHeaderContainer";
+import MobileMenu from "./Menu/MobileMenu/MobileMenu";
 
 let config;
 
@@ -99,6 +101,7 @@ function App({
       {isAuthenticated ? null : <TrackingReferalUrl />}
       <div className="blockOsn">
         <HeaderContainer />
+        <MobileHeaderContainer />
         <article>
           <Routes>
             <Route path="/" element={<ToolsContentContainer />} />
@@ -182,6 +185,7 @@ function App({
           <Footer />
         </footer>
       </div>
+      <MobileMenu />
     </div>
   );
 }

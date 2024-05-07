@@ -107,9 +107,13 @@ a.btnMenuAuth,
     font-size: 20px;
     padding: 5px 15px;
     margin-left: 20px;
-    background-color: #efefef;
-    color: #000;
+    background-color: #465ab6;
+    color: #ffffff;
     font-weight: 400;
+}
+
+.menuLinkHeader a.link:hover {
+    color: #000000;
 }
 
 .menuLinkHeader a.link:hover,

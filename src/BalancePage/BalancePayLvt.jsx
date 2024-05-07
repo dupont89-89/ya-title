@@ -116,7 +116,7 @@ export default function BalancePayLvt(props) {
   };
 
   const btnLvtFaq = {
-    backgroundColor: "#2196F3",
+    backgroundColor: "rgb(71, 93, 178)",
     color: "#fff",
     border: selectedFaq ? null : "1px solid #000",
   };

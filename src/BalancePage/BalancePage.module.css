@@ -186,7 +186,7 @@ input[type='radio']:checked:after {
 
 .noSumBalanse {
     margin-left: 20px;
-    background-color: #F44336;
+    background-color: rgb(195, 46, 46);
     padding: 3px;
     border-radius: 2px;
     color: #fff;
@@ -364,9 +364,10 @@ input[type='radio']:checked:after {
 
 .formUser {
     padding: 10px;
-    background-color: #9bd3ff;
+    background-color: rgb(70, 90, 182);
     margin: 10px;
     border-radius: 5px;
+    color: #fff;
 }
 
 .formUser button {

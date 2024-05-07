@@ -21,7 +21,7 @@ export default function ProfileBalance(props) {
       </div>
       <div>
         <span className={s.textNumberBalance}>
-          Всего пополнений за всю историю:{" "}
+          Всего пополнений:{" "}
           <span className={s.numberBalance}>{props.moneyHistory} руб</span>
         </span>
       </div>

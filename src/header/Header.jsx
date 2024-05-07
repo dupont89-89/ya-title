@@ -8,7 +8,7 @@ import MainMenuHeader from "../Menu/Header/MainMenuHeader";
 
 export default function Header(props) {
   return (
-    <header>
+    <header className={s.headerDekstop}>
       <div className={s.headerContainerGrid}>
         <AvatarContainer />
         {props.isAuthenticated ? (

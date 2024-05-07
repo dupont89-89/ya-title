@@ -12,6 +12,8 @@ export default function ToolsModalMenu(props) {
     fontSize: "20px",
     padding: "5px 15px",
     marginLeft: "20px",
+    backgroundColor: props.backgroundColor ? props.backgroundColor : null,
+    color: props.color ? props.color : null,
   };
 
   return (
@@ -36,7 +38,8 @@ export default function ToolsModalMenu(props) {
           <button className={s.closeBtn} onClick={() => close()}>
             ✖
           </button>
-          {props.content}
+          {/* Передаем функцию закрытия модального окна в дочерний компонент */}
+          {React.cloneElement(props.content, { handleCloseModal: close })}
         </div>
       )}
     </Popup>

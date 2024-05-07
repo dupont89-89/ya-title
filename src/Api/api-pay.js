@@ -15,7 +15,6 @@ const instance = axios.create({
 export const getPayScore = async () => {
   try {
     const response = await instance.get(`/pay/get-payment-score`);
-    debugger;
     return response.data;
   } catch (error) {
     // Обработка ошибок здесь

@@ -29,3 +29,24 @@ header {
     padding: 5px 10px;
     margin-bottom: 15px;
 }
+
+/* Стили для десктопа */
+@media (min-width: 769px) {
+    .headerMobile {
+        display: none;
+    }
+}
+
+/* Стили для мобильных устройств */
+@media (max-width: 768px) {
+    .headerDekstop {
+        display: none;
+    }
+
+    .headerContainerGridMobile {
+        display: grid;
+        grid-template-columns: auto auto auto auto;
+        align-items: center;
+        justify-content: space-between;
+    }
+}

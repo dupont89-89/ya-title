@@ -50,4 +50,8 @@ footer {
     .footer {
         grid-template-columns: 1fr;
     }
+
+    .linkModal {
+        display: block;
+    }
 }
