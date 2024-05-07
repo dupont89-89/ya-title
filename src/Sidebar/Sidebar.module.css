@@ -78,7 +78,7 @@
 
     .sidebar.mobile {
         /* Ваши стили для сайдбара на мобильных устройствах */
-        display: block;
+        display: inline-block;
     }
 
     .mobileHeader {

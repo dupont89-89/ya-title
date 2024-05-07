@@ -114,7 +114,7 @@
 /* Стили для мобильных устройств */
 @media screen and (max-width: 768px) {
     .inputBlockForm input {
-        width: 100%;
+        width: 270px;
     }
 
     .blockForm button {

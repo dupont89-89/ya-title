@@ -5,7 +5,7 @@
 
 .blockAdminLink {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 185px));
+    grid-template-columns: repeat(auto-fit, minmax(150px, 149px));
     grid-gap: 15px;
     justify-items: start;
     justify-content: start;

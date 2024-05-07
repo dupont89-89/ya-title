@@ -4,6 +4,7 @@ import React, { useState } from "react";
 export default function EditProfileUser(props) {
   const [firstName, setFirstName] = useState(props.firstName);
   const [lastName, setLastName] = useState(props.lastName);
+  const handleCloseModal = props.handleCloseModal;
 
   const handleFirstNameChange = (event) => {
     setFirstName(event.target.value);
@@ -15,6 +16,7 @@ export default function EditProfileUser(props) {
 
   const handleOnClick = () => {
     props.editUserData(props.userId, firstName, lastName);
+    handleCloseModal();
   };
 
   return (

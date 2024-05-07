@@ -9,6 +9,8 @@ export default function MainMenuHeader(props) {
       <ToolsModalMenu
         nameBtnPopup="Инструменты"
         content={<MainMenuHeaderModal />}
+        backgroundColor="#465ab6"
+        color="#fff"
       />
       <Link className={s.link} to="/balance">
         Тарифы
@@ -18,11 +20,19 @@ export default function MainMenuHeader(props) {
 }
 
 function MainMenuHeaderModal(props) {
+  const handleCloseModal = props.handleCloseModal;
+
+  const handleLinkClick = () => {
+    // Закрываем модальное окно при клике на ссылку
+    handleCloseModal();
+  };
+
   return (
     <nav className={s.mainMenuNav}>
       <ol>
         <li>
-          <Link to="/">
+          {/* Добавляем обработчик клика на ссылку */}
+          <Link to="/" onClick={handleLinkClick}>
             <span className={s.linkMenuTools}>Создание тайтла</span>
           </Link>
         </li>

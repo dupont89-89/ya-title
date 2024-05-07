@@ -14,7 +14,7 @@ export default function ToolsSidebar() {
   };
 
   const sidebarStyle = {
-    transform: isOpen ? "translateX(0)" : "translateY(-300px)",
+    transform: isOpen ? "translateX(0)" : "translateY(-900px)",
     transition: isOpen ? "transform 0.3s ease" : "transform 0s ease",
     position: isOpen ? "relative" : "absolute",
   };

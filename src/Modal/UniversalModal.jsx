@@ -41,7 +41,8 @@ export default function UniversalModal(props) {
           <button className={s.closeBtn} onClick={() => close()}>
             ✖
           </button>
-          {props.content}
+          {/* Передаем функцию закрытия модального окна в дочерний компонент */}
+          {React.cloneElement(props.content, { handleCloseModal: close })}
         </div>
       )}
     </Popup>

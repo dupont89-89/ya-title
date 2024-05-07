@@ -24,7 +24,7 @@ export default function Avatar(props) {
               : "Не авторизован"
           }
           className={s.linkAvatarHeader}
-          to="/"
+          to="#"
         >
           {props.isAuthenticated ? (
             <img

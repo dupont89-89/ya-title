@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import s from "./ProfileUser.module.css";
 import Referal from "./Referal/Referal";
 import ProfileBalance from "./ProfileBalance/ProfileBalance";
@@ -17,6 +17,7 @@ if (process.env.NODE_ENV === "development") {
 export default function ProfileUser(props) {
   const [langRole, setLangRole] = useState("");
   const [avatarFile, setAvatarFile] = useState(null);
+  const [modalWidth, setModalWidth] = useState("50%");
 
   useEffect(() => {
     if (props.role) {
@@ -32,13 +33,22 @@ export default function ProfileUser(props) {
     }
   }, [props.role]);
 
+  useLayoutEffect(() => {
+    // Определяем ширину модального окна в зависимости от ширины экрана
+    const width = window.innerWidth;
+    if (width >= 768) {
+      setModalWidth("50%");
+    } else {
+      setModalWidth("80%");
+    }
+  }, []);
+
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setAvatarFile(file);
   };
 
   const handleUpload = () => {
-    // Здесь вы можете отправить файл на сервер
     if (avatarFile) {
       const formData = new FormData();
       formData.append("avatar", avatarFile);
@@ -91,12 +101,14 @@ export default function ProfileUser(props) {
             <div className={s.editBtnPopUp}>
               <UniversalModal
                 nameBtnPopup="Редактировать данные"
+                width={modalWidth}
                 content={
                   <EditProfileUser
                     firstName={props.firstName}
                     lastName={props.lastName}
                     editUserData={props.editUserData}
                     userId={props.userId}
+                    handleCloseModal={props.handleCloseModal}
                   />
                 }
               />

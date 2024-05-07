@@ -22,13 +22,15 @@ export default function ScoreUser(props) {
                 <td>{score.InvId}</td>
                 <td>{score.OutSum}</td>
                 <td>
-                  <span className={s.userDataTdBlock}>{score.createdAt}</span>
+                  <span className={s.userDataTdBlockScore}>
+                    {score.createdAt}
+                  </span>
                 </td>
                 <td>
-                  <span className={s.userDataTdBlock}>{score.userId}</span>
+                  <span className={s.userDataTdBlockScore}>{score.userId}</span>
                 </td>
                 <td>
-                  <span className={s.userDataTdBlock}>
+                  <span className={s.userDataTdBlockScore}>
                     {score.paymentStatus ? (
                       <FontAwesomeIcon
                         size="2x"

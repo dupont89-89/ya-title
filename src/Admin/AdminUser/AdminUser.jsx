@@ -34,10 +34,7 @@ export default function AdminUser(props) {
                 <td>{user.email}</td>
                 <td>
                   <span className={s.userDataTdBlock}>
-                    Всего (куплено + бонусы): {user.totalLvt} Lvt
-                  </span>
-                  <span className={s.userDataTdBlock}>
-                    Без бонусов: {user.lvt} Lvt
+                    Текущий баланс: {user.totalLvt} Lvt
                   </span>
                   <span>
                     <UniversalModal
