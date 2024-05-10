@@ -18,10 +18,12 @@ function LoginContainer(props) {
         closeButton={props.closeButton}
         close={props.close}
         loginUser={props.loginUser}
-        inputWidth="370px"
+        inputWidth={props.inputWidth ? props.inputWidth : "370px"}
         blockFormHeight="350px"
-        blockFormPadding="70px"
-        fontSizeTitle="40px"
+        blockFormPadding={
+          props.blockFormPadding ? props.blockFormPadding : "70px"
+        }
+        fontSizeTitle={props.fontSizeTitle ? props.fontSizeTitle : "40px"}
         inputPadding="15px"
         inputRadius="10px"
         btnFormMargin="10px"

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import s from "./BalancePage.module.css";
 import t from "./../css/Tools.module.css";
 import Login from "../Auth/Login/Login";
@@ -23,9 +23,21 @@ export default function BalancePage(props) {
     setAddBalance(addBalance);
   };
 
+  const [modalWidth, setModalWidth] = useState("50%");
+
+  useLayoutEffect(() => {
+    // Определяем ширину модального окна в зависимости от ширины экрана
+    const width = window.innerWidth;
+    if (width >= 768) {
+      setModalWidth("50%");
+    } else {
+      setModalWidth("80%");
+    }
+  }, []);
+
   return (
     <div>
-      <div className={t.sectionGridSK}>
+      <div className={`${t.sectionGridSK} ${s.sectionGridSK}`}>
         <aside className={s.sidebarBalance}>
           {props.isAuthenticated ? (
             <BalanceAsideActiveUser
@@ -46,13 +58,17 @@ export default function BalancePage(props) {
               btnFormMargin="10px 9px"
               btnFormWidth="232px"
               registration={
-                <BalancePageLinkReg linkRehName="Регистрация" color="#000" />
+                <BalancePageLinkReg
+                  width={modalWidth}
+                  linkRehName="Регистрация"
+                  color="#000"
+                />
               }
               presentInfo={<PresentInfo />}
             />
           )}
         </aside>
-        <section className={t.sectionTools}>
+        <section className={`${t.sectionTools} ${s.sectionTools}`}>
           <div className={s.sectionToolsPayGrid}>
             <BalancePayLvt
               onAddBalance={handleAddBalance}

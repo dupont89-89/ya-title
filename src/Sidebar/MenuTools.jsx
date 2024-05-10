@@ -10,7 +10,7 @@ export default function MenuTools() {
         <ul>
           <li>
             <Link to="/">Создание Title</Link>{" "}
-            <span className={s.versionApp}>v 1.01</span>
+            <span className={s.versionApp}>v 1.02</span>
           </li>
         </ul>
       </nav>

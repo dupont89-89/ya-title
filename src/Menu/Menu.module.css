@@ -124,3 +124,14 @@ a.btnMenuAuth,
 .menuLinkHeader {
     display: inline-flex;
 }
+
+/* Стили для десктопа */
+@media (min-width: 769px) {}
+
+/* Стили для мобильных устройств */
+@media (max-width: 768px) {
+
+    .menuLinkHeader {
+        display: none;
+    }
+}

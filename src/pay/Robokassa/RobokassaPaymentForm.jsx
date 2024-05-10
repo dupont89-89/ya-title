@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { addPayScore } from "../../Api/api-pay";
+import s from "./../../BalancePage/BalancePage.module.css";
 const md5 = require("md5");
 
 let config;
@@ -97,7 +98,9 @@ const RobokassaPaymentForm = (props) => {
 
   return (
     <>
-      <span style={textInput}>Произвольная сумма</span>
+      <span className={s.textSumPro} style={textInput}>
+        Произвольная сумма
+      </span>
       <input
         value={paymentAmount < 0 ? "" : paymentAmount}
         onChange={handleChange}

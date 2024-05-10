@@ -1,6 +1,6 @@
 .headerContainerGrid {
     display: grid;
-    grid-template-columns: auto auto auto 1fr auto;
+    grid-template-columns: auto auto auto auto 1fr auto;
     justify-content: start;
     grid-gap: 15px;
     margin-bottom: 10px;
@@ -43,10 +43,21 @@ header {
         display: none;
     }
 
+    .balanceMobileHeader {
+        display: grid;
+        grid-gap: 5px;
+    }
+
     .headerContainerGridMobile {
         display: grid;
         grid-template-columns: auto auto auto auto;
         align-items: center;
+        justify-content: space-between;
+    }
+
+    .noAuthMobHeader {
+        display: grid;
+        grid-template-columns: auto auto;
         justify-content: space-between;
     }
 }

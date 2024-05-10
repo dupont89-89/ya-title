@@ -4,7 +4,7 @@ import Footer from "./footer/Footer";
 import { setAuthSuccess } from "./redux/user-reducer/user-reducer";
 import { connect } from "react-redux";
 import { getUser, loginUser } from "./Api/api-user-login";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import HeaderContainer from "./header/HeaderContainer";
 import ToolsContentContainer from "./ToolsContent/ToolsContentContainer";
@@ -47,6 +47,26 @@ function App({
   loginUser,
 }) {
   const [isLoading, setIsLoading] = useState(true);
+  const [modalInputWidth, setModalInputWidth] = useState("370px");
+  const [modalBlockFormPadding, setModalBlockFormPadding] = useState("70px");
+  const [modalFontSizeTitle, setModalFontSizeTitle] = useState("40px");
+  const [modalWidth, setModalWidth] = useState("50%");
+
+  useLayoutEffect(() => {
+    // Определяем ширину модального окна в зависимости от ширины экрана
+    const width = window.innerWidth;
+    if (width >= 768) {
+      setModalWidth("50%");
+      setModalInputWidth("370px");
+      setModalBlockFormPadding("70px");
+      setModalFontSizeTitle("40px");
+    } else {
+      setModalWidth("80%");
+      setModalInputWidth("100%");
+      setModalBlockFormPadding("10px");
+      setModalFontSizeTitle("25px");
+    }
+  }, []);
 
   useEffect(() => {
     // Создаем соединение с сервером Socket.IO
@@ -118,10 +138,10 @@ function App({
                 ) : (
                   <Login
                     loginUser={loginUser}
-                    inputWidth="370px"
+                    inputWidth={modalInputWidth}
                     blockFormHeight="350px"
-                    blockFormPadding="70px"
-                    fontSizeTitle="40px"
+                    blockFormPadding={modalBlockFormPadding}
+                    fontSizeTitle={modalFontSizeTitle}
                     inputPadding="15px"
                     inputRadius="10px"
                     btnFormMargin="10px"
@@ -130,6 +150,7 @@ function App({
                       <BalancePageLinkReg
                         linkRehName="Регистрация"
                         color="#000"
+                        width={modalWidth}
                       />
                     }
                   />
