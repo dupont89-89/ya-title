@@ -49,7 +49,7 @@
     padding: 12px 0;
     background-color: white;
     border-radius: 20px;
-    width: 180px;
+    width: 215px;
     font-weight: bold;
     font-size: 14px;
     cursor: pointer;
@@ -119,4 +119,15 @@
 
 .ptahiniLogo img {
     width: 170px;
+}
+
+/* Стили для мобильных устройств */
+@media (max-width: 768px) {
+    .input {
+        width: 100%;
+    }
+
+    .form_container h1 {
+        font-size: 25px;
+    }
 }

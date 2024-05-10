@@ -145,7 +145,7 @@
 }
 
 .menu__list h2 {
-    font-size: 2rem;
+    font-size: 1.7rem;
     border-bottom: 2px solid;
     display: inline-block;
     color: #eab003;
@@ -351,7 +351,7 @@
     outline-offset: 5px;
 }
 
-body {
+/* body {
     display: flex;
     flex-direction: column;
     min-block-size: 100dvh;
@@ -359,7 +359,7 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Open Sans, Ubuntu, Fira Sans, Helvetica Neue, sans-serif;
     background-color: var(--main-mode-color);
     color: var(--accent-mode-color);
-}
+} */
 
 .page {
     max-inline-size: 380px;

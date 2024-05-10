@@ -21,6 +21,7 @@ export default function BalancePageLinkReg(props) {
         isOpen={isPopupOpen}
         closePopup={() => setIsPopupOpen(false)}
         display="none"
+        width={props.width}
       />
     </>
   );

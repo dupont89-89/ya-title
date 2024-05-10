@@ -5,11 +5,16 @@ import Money from "./Balance/Money/Money";
 import AvatarContainer from "./Avatar/AvatarContainer";
 import NotificationContainer from "./Notification/NotificationContainer";
 import MainMenuHeader from "../Menu/Header/MainMenuHeader";
+import { Link } from "react-router-dom";
+import home from "./../img/icon/icons-home-fff.png";
 
 export default function Header(props) {
   return (
     <header className={s.headerDekstop}>
       <div className={s.headerContainerGrid}>
+        <Link to="/" className={s.homeLinkHeader}>
+          <img alt="" src={home} />
+        </Link>
         <AvatarContainer />
         {props.isAuthenticated ? (
           <>

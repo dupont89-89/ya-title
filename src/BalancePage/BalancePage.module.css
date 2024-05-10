@@ -152,9 +152,6 @@ input[type='radio']:checked:after {
 
 .sumInputBlock {
     color: #000;
-    /* display: grid;
-    grid-template-columns: 1fr auto;
-    grid-gap: 10px; */
 }
 
 .bonusWeight {
@@ -444,4 +441,64 @@ input[type='radio']:checked:after {
 
 .btnLinkSuccess a:hover {
     background-color: #0a8dc9;
+}
+
+.textSumProDekstop {
+    display: none;
+}
+
+/* Стили для мобильных устройств */
+@media (max-width: 768px) {
+    .sectionToolsPayGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .btnFaq {
+        grid-template-columns: 1fr;
+        grid-gap: 5px;
+    }
+
+    .iconPayGrid {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .bottomPayUserSum {
+        grid-template-columns: 1fr;
+    }
+
+    .textSumPro {
+        display: none;
+    }
+
+    .textSumProDekstop {
+        display: block;
+        padding: 5px;
+        background-color: white;
+        color: #000;
+        border-radius: 4px;
+    }
+
+    .blockPayUserSum {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .rowSumInputFlex {
+        flex-direction: column;
+    }
+
+    .sumInputBlock {
+        text-align: center;
+    }
+
+    .sectionGridSK aside {
+        order: 1;
+    }
+
+    .sectionGridSK .sectionTools {
+        order: 0;
+    }
+
+    .blockPresentInfo {
+        position: relative;
+    }
 }

@@ -35,7 +35,7 @@ const MobileMenu = () => {
                 to="/balance"
                 className={`${styles.menu__link} ${styles["ra-link"]}`}
               >
-                Пополнение баланса
+                Пополнение баланса / Тарифы
               </Link>
             </li>
             <li className={styles.menu__group}>
@@ -66,7 +66,6 @@ const MobileMenu = () => {
               </Link>
             </li>
           </ul>
-          <hr className={styles.lineMenuMobile} />
           <ul className={`${styles.menu__list} ${styles["ra-list"]}`}>
             <li>
               <h2>Инструменты</h2>

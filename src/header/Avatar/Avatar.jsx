@@ -4,6 +4,7 @@ import s from "./Avatar.module.css";
 import ModalLogin from "../../Auth/Login/ModalLogin";
 import ModalSignUp from "../../Auth/SignUp/ModalSignUp";
 import MenuAuthUser from "../../Menu/Header/MenuAuthUser";
+import { useLayoutEffect, useState } from "react";
 
 let config;
 
@@ -14,6 +15,23 @@ if (process.env.NODE_ENV === "development") {
 }
 
 export default function Avatar(props) {
+  const [modalInputWidth, setModalInputWidth] = useState(null);
+  const [modalBlockFormPadding, setModalBlockFormPadding] = useState(null);
+  const [modalFontSizeTitle, setModalFontSizeTitle] = useState(null);
+
+  useLayoutEffect(() => {
+    // Определяем ширину модального окна в зависимости от ширины экрана
+    const width = window.innerWidth;
+    if (width >= 768) {
+      setModalInputWidth("370px");
+      setModalBlockFormPadding("70px");
+      setModalFontSizeTitle("40px");
+    } else {
+      setModalInputWidth("100%");
+      setModalBlockFormPadding("10px");
+      setModalFontSizeTitle("25px");
+    }
+  }, []);
   return (
     <>
       <div className={s.blockUserAvatar}>
@@ -59,9 +77,17 @@ export default function Avatar(props) {
           </div>
         ) : (
           <div className={s.menuAuth}>
-            <ModalLogin nameBtnPopupLogin={"Войти в свой профиль"} />
+            <ModalLogin
+              inputWidth={modalInputWidth}
+              blockFormPadding={modalBlockFormPadding}
+              fontSizeTitle={modalFontSizeTitle}
+              nameBtnPopupLogin={"Войти в свой профиль"}
+            />
             <hr className={s.menuAuthDivider} />
             <ModalSignUp
+              inputWidth={modalInputWidth}
+              blockFormPadding={modalBlockFormPadding}
+              fontSizeTitle={modalFontSizeTitle}
               display="block"
               nameBtnPopup={"Создать пользователя"}
             />

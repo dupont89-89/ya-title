@@ -24,4 +24,8 @@
   .blockOsn {
     padding: 15px;
   }
+
+  .logoLoading img {
+    width: 100%;
+  }
 }

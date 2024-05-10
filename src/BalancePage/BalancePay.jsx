@@ -38,6 +38,10 @@ export default function BalancePay(props) {
           Комиссия зависит от ставки за перевод - Вашего банка
         </p>
       </div>
+      <span className={s.textSumProDekstop}>
+        Пополняйте баланс на произвольную сумму. Обратите внимание на выгодные
+        тарифы.
+      </span>
       <div className={s.blockPayUserSum}>
         <RobokassaPaymentForm
           addBalance={props.addBalance}
