@@ -35,7 +35,7 @@ exports.authRefAddUser = async (req, res) => {
     addUserToReferrals(user, userNew, refUserId, userId);
 
     const notification = {
-      message: `У вас появился реферал, теперь вы получаете 15% в виде Lvt от его пополнений`,
+      message: `У вас появился реферал, теперь вы получаете 15% на баланс в виде денежного вознагрождения от его пополнений`,
       dateAdded: formattedDate,
     };
     user.notifications.push(notification);
