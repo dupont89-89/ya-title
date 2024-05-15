@@ -3,11 +3,13 @@ import styles from "./styles.module.css";
 import ptahiniLogo from "./../../img/logo/PTAHINI-nav.png";
 import Loading from "../../app-function/Loading";
 import { Link } from "react-router-dom";
+import SendResetPassword from "../ResetPassword/SendResetPassword";
 
 const Login = (props) => {
   const [data, setData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [resetPassword, setResetPassword] = useState(false);
 
   const styleInput = {
     outline: "none",
@@ -43,6 +45,13 @@ const Login = (props) => {
     fontWeight: "500",
     fontSize: "20px",
     cursor: "pointer",
+  };
+
+  const resetLink = {
+    fontSize: "16px",
+    textAlign: "center",
+    display: "block",
+    margin: "20px 0",
   };
 
   const handleChange = ({ currentTarget: input }) => {
@@ -89,6 +98,13 @@ const Login = (props) => {
           </div>
           {loading ? (
             <Loading />
+          ) : resetPassword ? (
+            <>
+              <SendResetPassword inputWidth={props.inputWidth} />
+              <Link style={resetLink} onClick={(e) => setResetPassword(false)}>
+                Вспомнил пароль
+              </Link>
+            </>
           ) : (
             <form className={styles.form_container} onSubmit={handleSubmit}>
               <h1 style={titleForm}>Войдите в свой аккаунт</h1>
@@ -116,6 +132,9 @@ const Login = (props) => {
               </button>
               {props.registration}
               {props.presentInfo}
+              <Link style={resetLink} onClick={(e) => setResetPassword(true)}>
+                Забыли пароль?
+              </Link>
             </form>
           )}
         </div>

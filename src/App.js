@@ -27,6 +27,8 @@ import SuccessPay from "./BalancePage/SuccessPay";
 import ScoreUserContainer from "./Admin/ScoreUser/ScoreUserContainer";
 import MobileHeaderContainer from "./header/MobileHeader/MobileHeaderContainer";
 import MobileMenu from "./Menu/MobileMenu/MobileMenu";
+import ResetPasswordForm from "./Auth/ResetPassword/ResetPasswordForm";
+import NotFound from "./parts/NotFound";
 
 let config;
 
@@ -124,13 +126,16 @@ function App({
         <MobileHeaderContainer />
         <article>
           <Routes>
-            <Route path="/" element={<ToolsContentContainer />} />
-            <Route path="/balance" element={<BalancePageContainer />} />
+            <Route path="*" element={<NotFound />} />
+            <Route exact path="/" element={<ToolsContentContainer />} />
+            <Route exact path="/balance" element={<BalancePageContainer />} />
             <Route
+              exact
               path="/history-message"
               element={<NotificationPageContainer />}
             />
             <Route
+              exact
               path="/login"
               element={
                 isAuthenticated ? (
@@ -159,6 +164,7 @@ function App({
             />
 
             <Route
+              exact
               path="/profile"
               element={
                 isAuthenticated ? (
@@ -169,6 +175,7 @@ function App({
               }
             />
             <Route
+              exact
               path="/referal"
               element={
                 isAuthenticated ? (
@@ -179,6 +186,15 @@ function App({
               }
             />
             <Route
+              exact
+              path="/reset-password/:token"
+              element={
+                !isAuthenticated ? <ResetPasswordForm /> : <Navigate to="/" />
+              }
+            />
+
+            <Route
+              exact
               path="/success-pay"
               element={
                 isAuthenticated ? <SuccessPay /> : <Navigate to="/login" />

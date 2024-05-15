@@ -26,6 +26,17 @@ export const signUpUser = async (userData) => {
   }
 };
 
+export const sendEmailReset = async (email) => {
+  debugger;
+  try {
+    const response = await instance.post("user/reset-password", { email });
+    return response;
+  } catch (error) {
+    console.error("Error during sign up:", error);
+    throw error; // Перебросить ошибку для дальнейшей обработки
+  }
+};
+
 export const getUser = (userId) => {
   return async (dispatch) => {
     try {

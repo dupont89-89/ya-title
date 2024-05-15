@@ -19,7 +19,7 @@ function LoginContainer(props) {
         close={props.close}
         loginUser={props.loginUser}
         inputWidth={props.inputWidth ? props.inputWidth : "370px"}
-        blockFormHeight="350px"
+        blockFormHeight="450px"
         blockFormPadding={
           props.blockFormPadding ? props.blockFormPadding : "70px"
         }

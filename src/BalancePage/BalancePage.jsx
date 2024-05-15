@@ -61,7 +61,8 @@ export default function BalancePage(props) {
                 <BalancePageLinkReg
                   width={modalWidth}
                   linkRehName="Регистрация"
-                  color="#000"
+                  btnFormWidth="232px"
+                  backgroundColor="rgb(34 167 92)"
                 />
               }
               presentInfo={<PresentInfo />}

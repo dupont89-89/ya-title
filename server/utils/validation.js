@@ -10,4 +10,20 @@ const validateUser = (data) => {
   return schema.validate(data);
 };
 
-module.exports = { validateUser };
+const validateUserAuth = (data) => {
+  const schema = Joi.object({
+    email: Joi.string().email().required().label("Email"),
+    password: Joi.string().required().label("Password"),
+  });
+  return schema.validate(data);
+};
+
+const validateResetPassword = (data) => {
+  const schema = Joi.object({
+    email: Joi.string().email().required(),
+  });
+
+  return schema.validate(data);
+};
+
+module.exports = { validateUser, validateResetPassword, validateUserAuth };

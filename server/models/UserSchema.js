@@ -40,6 +40,8 @@ const userSchema = new mongoose.Schema({
     userId: { type: String }, // Идентификатор приглашенного пользователя
     dateAdded: { type: Date }, // Дата добавления
   },
+  resetPasswordToken: { type: String },
+  resetPasswordExpires: { type: Date },
 });
 
 // Создаем виртуальное поле для суммы lvt и bonusDayLvt

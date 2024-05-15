@@ -34,4 +34,12 @@ textarea {
 
 input {
   box-sizing: border-box;
+  border: none;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: none;
 }
