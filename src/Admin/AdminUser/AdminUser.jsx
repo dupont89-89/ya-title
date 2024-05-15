@@ -15,8 +15,8 @@ export default function AdminUser(props) {
 
   return (
     <div className={s.blockPageAdminUser}>
-      <table>
-        <tbody>
+      <table className={s.userDataAdmin}>
+        <thead>
           <tr className={s.tableHead}>
             <th>ID пользователя</th>
             <th>Эл. почта</th>
@@ -26,13 +26,14 @@ export default function AdminUser(props) {
             <th>Статус</th>
             {/* Добавьте остальные поля, которые вы хотите отобразить */}
           </tr>
-
+        </thead>
+        <tbody>
           {props.dataUser &&
             props.dataUser.map((user, index) => (
               <tr className={s.tableTrUser} key={index}>
-                <td>{user.userId}</td>
-                <td>{user.email}</td>
-                <td>
+                <td aria-label="ID пользователя">{user.userId}</td>
+                <td aria-label="Эл. почта">{user.email}</td>
+                <td aria-label="LVT баланс">
                   <span className={s.userDataTdBlock}>
                     Текущий баланс: {user.totalLvt} Lvt
                   </span>
@@ -48,7 +49,7 @@ export default function AdminUser(props) {
                     />
                   </span>
                 </td>
-                <td>
+                <td aria-label="Баланс деньги">
                   <span className={s.userDataTdBlock}>
                     Баланс: {user.money} руб
                   </span>
@@ -56,7 +57,7 @@ export default function AdminUser(props) {
                     Всего пополнений: {user.moneyHistory} руб
                   </span>
                 </td>
-                <td>
+                <td aria-label="Рефералы">
                   {" "}
                   <span className={s.userDataTdBlock}>
                     Бонусы за рефералов: {user.lvtPresent.moneyPresentReferal}{" "}
@@ -66,7 +67,7 @@ export default function AdminUser(props) {
                     Кол-во рефералов: {user.referal.length} польз.
                   </span>
                 </td>
-                <td>
+                <td aria-label="Статус">
                   <select
                     value={user.role}
                     onChange={(e) => {

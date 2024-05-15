@@ -12,6 +12,11 @@ const router = express.Router();
 router.post("/signup", userController.signUpUserController);
 router.get("/signup/ref", refControllers.authRefAddUser);
 router.post("/auth", authController.authUserController);
+router.post("/reset-password", authController.authResetUserPasswordController);
+router.post(
+  "/reset-password/:token",
+  authController.tokenResetUserPasswordController
+);
 router.post("/load-avatar", editUserControllers.uploadAvatarUserController);
 router.get("/get-user", userController.dataUserController);
 router.get("/spend-lvt-one-title", lvtUserController.spendLvtUserController);

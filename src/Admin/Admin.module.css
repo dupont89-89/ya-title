@@ -76,3 +76,46 @@
     text-align: center;
     display: block;
 }
+
+/* Стили для мобильных устройств */
+@media (max-width: 768px) {
+    .adminPage {
+        grid-template-columns: 1fr;
+    }
+
+    table.userDataAdmin {
+        width: 100%;
+        border: 0px;
+        border-collapse: collapse;
+    }
+
+    table.userDataAdmin thead {
+        font-weight: bold;
+    }
+
+    table.userDataAdmin td {
+        padding: 0.6rem 1rem;
+        border-bottom: 1px solid #e8e9eb;
+    }
+
+    table.userDataAdmin thead {
+        display: none;
+    }
+
+    table.userDataAdmin tr {
+        display: block;
+        margin-bottom: 1rem;
+        border-bottom: 2px solid #e8e9eb;
+    }
+
+    table.userDataAdmin td {
+        display: block;
+        text-align: right;
+    }
+
+    table.userDataAdmin td:before {
+        content: attr(aria-label);
+        float: left;
+        font-weight: bold;
+    }
+}

@@ -1,12 +1,21 @@
 import React, { useState } from "react";
 import ModalSignUp from "../../Auth/SignUp/ModalSignUp";
-import { Link } from "react-router-dom";
 
 export default function BalancePageLinkReg(props) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-  const link = {
-    color: props.color,
+  const btnForm = {
+    backgroundColor: props.backgroundColor ? props.backgroundColor : "#03A9F4",
+    color: "white",
+    margin: props.btnFormMargin,
+    width: props.btnFormWidth,
+    border: "none",
+    outline: "none",
+    padding: "10px 0",
+    borderRadius: "8px",
+    fontWeight: "500",
+    fontSize: "20px",
+    cursor: "pointer",
   };
 
   const openPopup = () => {
@@ -14,9 +23,9 @@ export default function BalancePageLinkReg(props) {
   };
   return (
     <>
-      <Link style={link} onClick={openPopup}>
+      <button style={btnForm} onClick={openPopup}>
         {props.linkRehName}
-      </Link>
+      </button>
       <ModalSignUp
         isOpen={isPopupOpen}
         closePopup={() => setIsPopupOpen(false)}
