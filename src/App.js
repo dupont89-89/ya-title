@@ -127,15 +127,13 @@ function App({
         <article>
           <Routes>
             <Route path="*" element={<NotFound />} />
-            <Route exact path="/" element={<ToolsContentContainer />} />
-            <Route exact path="/balance" element={<BalancePageContainer />} />
+            <Route path="/" element={<ToolsContentContainer />} />
+            <Route path="/balance/" element={<BalancePageContainer />} />
             <Route
-              exact
               path="/history-message"
               element={<NotificationPageContainer />}
             />
             <Route
-              exact
               path="/login"
               element={
                 isAuthenticated ? (
@@ -164,7 +162,6 @@ function App({
             />
 
             <Route
-              exact
               path="/profile"
               element={
                 isAuthenticated ? (
@@ -175,7 +172,6 @@ function App({
               }
             />
             <Route
-              exact
               path="/referal"
               element={
                 isAuthenticated ? (
@@ -186,15 +182,13 @@ function App({
               }
             />
             <Route
-              exact
-              path="/reset-password/:token"
+              path="/reset-password/*"
               element={
                 !isAuthenticated ? <ResetPasswordForm /> : <Navigate to="/" />
               }
             />
 
             <Route
-              exact
               path="/success-pay"
               element={
                 isAuthenticated ? <SuccessPay /> : <Navigate to="/login" />
@@ -203,17 +197,9 @@ function App({
             {role === "admin" && (
               <>
                 <Route path="/admin" exact element={<AdminContainer />} />
-                <Route
-                  path="/admin/user"
-                  exact
-                  element={<AdminUserContainer />}
-                />
+                <Route path="/admin/user" element={<AdminUserContainer />} />
                 <Route path="/admin/test" exact element={<TestPay />} />
-                <Route
-                  path="/admin/score"
-                  exact
-                  element={<ScoreUserContainer />}
-                />
+                <Route path="/admin/score" element={<ScoreUserContainer />} />
               </>
             )}
           </Routes>

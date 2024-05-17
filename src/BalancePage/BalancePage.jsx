@@ -81,6 +81,7 @@ export default function BalancePage(props) {
               addBalance={addBalance}
               email={props.email}
               userId={props.userId}
+              isAuthenticated={props.isAuthenticated}
             />
           </div>
         </section>

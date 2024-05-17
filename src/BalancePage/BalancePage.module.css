@@ -75,10 +75,10 @@
 }
 
 .blockPayUserSum {
-    margin-top: 30px;
-    display: grid;
-    grid-template-columns: auto auto auto 1fr;
-    grid-gap: 5px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
     align-items: center;
 }
 
@@ -476,6 +476,7 @@ input[type='radio']:checked:after {
         background-color: white;
         color: #000;
         border-radius: 4px;
+        margin-bottom: 45px;
     }
 
     .blockPayUserSum {
@@ -500,5 +501,13 @@ input[type='radio']:checked:after {
 
     .blockPresentInfo {
         position: relative;
+    }
+
+    .blockPayUserSum {
+        flex-direction: column;
+    }
+
+    .itemPayInfo::before {
+        width: 28px;
     }
 }

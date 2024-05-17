@@ -63,7 +63,6 @@ const RobokassaPaymentForm = (props) => {
   }, [props.email, props.addBalance]); // добавлен props.userId в массив зависимостей// Пустой массив зависимостей означает, что эффект будет запускаться только один раз при монтировании компоненты
 
   const inputSum = {
-    marginLeft: "10px",
     width: "85px",
     textAlign: "center",
     height: "25px",
@@ -73,7 +72,7 @@ const RobokassaPaymentForm = (props) => {
   };
 
   const textInput = {
-    fontSize: "15px",
+    fontSize: "22px",
   };
 
   const btnPay = {
@@ -101,20 +100,28 @@ const RobokassaPaymentForm = (props) => {
       <span className={s.textSumPro} style={textInput}>
         Произвольная сумма
       </span>
-      <input
-        value={paymentAmount < 0 ? "" : paymentAmount}
-        onChange={handleChange}
-        name="money-input"
-        id="money-input"
-        placeholder=""
-        style={inputSum}
-        type="number"
-      />
-      <span style={textInput}>РУБ</span>
-      {errorMessage && <p style={errorNullSum}>{errorMessage}</p>}
-      <button onClick={handleClick} style={btnPay}>
-        Пополнить
-      </button>
+      <div className={s.blockPayUserSum}>
+        <div className={s.inputSum}>
+          <input
+            value={paymentAmount < 0 ? "" : paymentAmount}
+            onChange={handleChange}
+            name="money-input"
+            id="money-input"
+            placeholder=""
+            style={inputSum}
+            type="number"
+          />
+          <span style={textInput}>РУБ</span>
+        </div>
+        {props.isAuthenticated ? (
+          <button onClick={handleClick} style={btnPay}>
+            Пополнить
+          </button>
+        ) : (
+          <p style={btnPay}>Войдите в аккаунт</p>
+        )}
+        {errorMessage && <p style={errorNullSum}>{errorMessage}</p>}
+      </div>
     </>
   );
 };

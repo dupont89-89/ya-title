@@ -1,5 +1,6 @@
 const { mailMessageController } = require("../SMTP/mail");
 const { User, validate } = require("../models/UserSchema");
+const uuid = require("uuid");
 const {
   validateUserAuth,
   validateResetPassword,
@@ -68,16 +69,7 @@ exports.authResetUserPasswordController = async (req, res) => {
       console.log("Validation error:", error.details[0].message); // Выводим сообщение об ошибке валидации в консоль
       return res.status(400).send({ message: error.details[0].message });
     }
-
     const email = req.body.email; // Получаем электронную почту из тела запроса
-    console.log("Email:", email); // Выводим полученную электронную почту в консоль
-
-    // Генерируем токен для сброса пароля
-    const salt = await bcrypt.genSalt(10); // Генерация соли
-    console.log("Salt:", salt); // Выводим соль в консоль
-    const token = await bcrypt.hash(email, salt); // Хеширование данных
-    console.log("Token:", token); // Выводим токен в консоль
-
     // Находим пользователя по email
     const user = await User.findOne({ email });
     console.log("User found:", user); // Выводим найденного пользователя в консоль
@@ -86,18 +78,16 @@ exports.authResetUserPasswordController = async (req, res) => {
         message: "Пользователь с указанным адресом электронной почты не найден",
       });
     }
-
+    const token = uuid.v4();
     // Обновляем токен для сброса пароля у пользователя в базе данных
     user.resetPasswordToken = token;
     user.resetPasswordExpires = Date.now() + 3600000; // Токен будет действителен 1 час
     await user.save();
-    console.log("User updated:", user); // Выводим обновленного пользователя в консоль
-    const encodedToken = encodeURIComponent(token);
     // Вызываем функцию для отправки письма со ссылкой для сброса пароля
     await mailMessageController({
       body: {
         userMail: email, // Используем электронную почту для отправки сообщения
-        resetPasswordToken: encodedToken,
+        resetPasswordToken: token,
       },
     });
     console.log("Email sent"); // Выводим сообщение об успешной отправке письма в консоль
