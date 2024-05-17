@@ -16,6 +16,16 @@ export default function ModalLogin(props) {
       setModalWidth("80%");
     }
   }, []);
+
+  const btn = {
+    backgroundColor: props.btnBackgroundColor
+      ? props.btnBackgroundColor
+      : "none",
+    width: props.btnWidth ? props.btnWidth : null,
+    borderRadius: props.radiusBtn ? props.radiusBtn : null,
+    fontSize: props.sizeFontBtn ? props.sizeFontBtn : null,
+  };
+
   return (
     <Popup
       contentStyle={{
@@ -25,7 +35,10 @@ export default function ModalLogin(props) {
         width: props.width ? props.width : modalWidth,
       }}
       trigger={
-        <button className={s.btnLogin}> {props.nameBtnPopupLogin} </button>
+        <button style={btn} className={s.btnLogin}>
+          {" "}
+          {props.nameBtnPopupLogin}{" "}
+        </button>
       }
       modal
       nested

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import ModalLogin from "../Login/ModalLogin";
 
 let config;
 
@@ -14,55 +15,53 @@ const ResetPasswordForm = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [status, setStatus] = useState(false); // Состояние для отображения успеха
 
-  const block = {
-    minHeight: "77vh",
-    backgroundColor: "rgb(255 227 142)",
-    borderRadius: "10px",
-    display: "flex",
-  };
-
-  const blockTwo = {
-    margin: "auto",
-    width: "500px",
-    backgroundColor: "rgb(242 242 242)",
-    borderRadius: "10px",
-    display: "flex",
-    justifyContent: "center",
-    flexDirection: "column",
-    alignItems: "center",
-    padding: "30px",
-  };
-
-  const title = {
-    textAlign: "center",
-    fontSize: "2rem",
-  };
-
-  const label = {
-    display: "block",
-    fontSize: "1.5rem",
-    textAlign: "center",
-  };
-  const input = {
-    width: "200px",
-    height: "40px",
-    border: "2px solid",
-    textAlign: "center",
-  };
-
-  const blockTre = {
-    display: "flex",
-    justifyContent: "center",
-    flexDirection: "column",
-    alignItems: "center",
-    margin: "15px 0",
-  };
-
-  const btn = {
-    backgroundColor: "#FFC107",
-    fontSize: "1.3rem",
-    padding: "7px 20px",
+  const styles = {
+    block: {
+      minHeight: "77vh",
+      backgroundColor: "rgb(255, 227, 142)",
+      borderRadius: "10px",
+      display: "flex",
+    },
+    blockTwo: {
+      margin: "auto",
+      width: "500px",
+      backgroundColor: "rgb(242, 242, 242)",
+      borderRadius: "10px",
+      display: "flex",
+      justifyContent: "center",
+      flexDirection: "column",
+      alignItems: "center",
+      padding: "30px",
+    },
+    title: {
+      textAlign: "center",
+      fontSize: "2rem",
+    },
+    label: {
+      display: "block",
+      fontSize: "1.5rem",
+      textAlign: "center",
+    },
+    input: {
+      width: "200px",
+      height: "40px",
+      border: "2px solid",
+      textAlign: "center",
+    },
+    blockTre: {
+      display: "flex",
+      justifyContent: "center",
+      flexDirection: "column",
+      alignItems: "center",
+      margin: "15px 0",
+    },
+    btn: {
+      backgroundColor: "#FFC107",
+      fontSize: "1.3rem",
+      padding: "7px 20px",
+    },
   };
 
   const handleResetPassword = async () => {
@@ -79,56 +78,73 @@ const ResetPasswordForm = () => {
       // Отправляем запрос на сброс пароля
       const response = await axios.post(
         `${config.REACT_APP_SERVER_URL}/api/user/reset-password/${token}`,
-        {
-          password,
-        }
+        { password }
       );
 
       // Если запрос выполнен успешно, показываем сообщение об успешном сбросе пароля
       setSuccessMessage(response.data.message);
+      if (response.status === 200) {
+        setStatus(true);
+      }
     } catch (error) {
       // Если произошла ошибка, показываем соответствующее сообщение
-      setErrorMessage(error.response.data.message);
+      const errorMsg = error.response
+        ? error.response.data.message
+        : "Произошла ошибка. Попробуйте снова.";
+      setErrorMessage(errorMsg);
     }
   };
 
   return (
-    <div style={block}>
-      <div style={blockTwo}>
-        <h1 style={title}>Сброс пароля</h1>
+    <div style={styles.block}>
+      <div style={styles.blockTwo}>
+        <h1 style={styles.title}>Сброс пароля</h1>
         {errorMessage && (
           <p style={{ color: "red", fontSize: "20px" }}>{errorMessage}</p>
         )}
         {successMessage && (
-          <p style={{ color: "green", fontSize: "20px" }}>{successMessage}</p>
+          <>
+            <p style={{ color: "green", fontSize: "20px" }}>{successMessage}</p>
+            <ModalLogin
+              btnWidth="186px"
+              btnBackgroundColor="#FFC107"
+              nameBtnPopupLogin="Войти в аккаунт"
+              radiusBtn="5px"
+              sizeFontBtn="18px"
+            />
+          </>
         )}
-        <div style={blockTre}>
-          <label style={label} htmlFor="password_1">
-            Новый пароль
-          </label>
-          <input
-            style={input}
-            id="password_1"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <div style={blockTre}>
-          <label style={label} htmlFor="password_2">
-            Подтвердите пароль
-          </label>
-          <input
-            style={input}
-            id="password_2"
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-        </div>
-        <button style={btn} onClick={handleResetPassword}>
-          Сбросить пароль
-        </button>
+        {!status && (
+          <>
+            <div style={styles.blockTre}>
+              <label style={styles.label} htmlFor="password_1">
+                Новый пароль
+              </label>
+              <input
+                style={styles.input}
+                id="password_1"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            <div style={styles.blockTre}>
+              <label style={styles.label} htmlFor="password_2">
+                Подтвердите пароль
+              </label>
+              <input
+                style={styles.input}
+                id="password_2"
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+            </div>
+            <button style={styles.btn} onClick={handleResetPassword}>
+              Сбросить пароль
+            </button>
+          </>
+        )}
       </div>
     </div>
   );

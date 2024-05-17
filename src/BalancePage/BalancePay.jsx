@@ -42,13 +42,12 @@ export default function BalancePay(props) {
         Пополняйте баланс на произвольную сумму. Обратите внимание на выгодные
         тарифы.
       </span>
-      <div className={s.blockPayUserSum}>
-        <RobokassaPaymentForm
-          addBalance={props.addBalance}
-          email={props.email}
-          userId={props.userId}
-        />
-      </div>
+      <RobokassaPaymentForm
+        addBalance={props.addBalance}
+        email={props.email}
+        userId={props.userId}
+        isAuthenticated={props.isAuthenticated}
+      />
       <div className={s.bottomPayUserSum}>
         <div className={s.minSumBlock}>
           <FontAwesomeIcon size="3x" color="#000" icon={faThumbsUp} />
