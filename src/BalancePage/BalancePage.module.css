@@ -447,6 +447,43 @@ input[type='radio']:checked:after {
     display: none;
 }
 
+.failPay {
+    background-color: #fff;
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 30px;
+    justify-items: center;
+    padding: 50px 90px;
+}
+
+.rightFail {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.rightFail a {
+    display: block;
+    background-color: #e3190a;
+    padding: 10px;
+    font-size: 20px;
+    color: #fff;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.rightFail a:hover {
+    background-color: #b41307;
+}
+
+.textFail {
+    font-size: 25px;
+}
+
 /* Стили для мобильных устройств */
 @media (max-width: 768px) {
     .sectionToolsPayGrid {
@@ -509,5 +546,14 @@ input[type='radio']:checked:after {
 
     .itemPayInfo::before {
         width: 28px;
+    }
+
+    .failPay {
+        grid-template-columns: 1fr;
+        padding: 10px;
+    }
+
+    .failPay img {
+        width: 100%;
     }
 }

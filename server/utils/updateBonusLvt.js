@@ -10,7 +10,7 @@ const updateBonusLvt = async (io) => {
     const User = mongoose.model("user"); // Используем mongoose.model для получения модели пользователя
     const bonusLvt = 3;
     const notification = {
-      message: `Вам начислено ${bonusLvt} Lvt ежедневный.`,
+      message: `Обновлен ежедневный бонус. На баланс востановленно ${bonusLvt} Lvt.`,
       dateAdded: formattedDate,
     };
     await User.updateMany(

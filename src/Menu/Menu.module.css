@@ -101,6 +101,10 @@ a.btnMenuAuth,
     font-size: 22px;
 }
 
+.mainMenuNav ol li {
+    margin: 10px 0;
+}
+
 .menuLinkHeader a.link {
     display: block;
     border-radius: 20px;
