@@ -79,6 +79,15 @@ const MobileMenu = () => {
                 Создание тайтла
               </Link>
             </li>
+            <li className={styles.menu__group}>
+              <Link
+                className={`${styles.menu__link} ${styles["ra-link"]}`}
+                onClick={toggleMenu}
+                to="/commerce-key"
+              >
+                Проверка на коммерциализацию запроса
+              </Link>
+            </li>
           </ul>
         </nav>
         <button

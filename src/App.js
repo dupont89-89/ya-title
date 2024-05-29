@@ -29,6 +29,7 @@ import MobileHeaderContainer from "./header/MobileHeader/MobileHeaderContainer";
 import MobileMenu from "./Menu/MobileMenu/MobileMenu";
 import ResetPasswordForm from "./Auth/ResetPassword/ResetPasswordForm";
 import NotFound from "./parts/NotFound";
+import FailPayment from "./BalancePage/FailPayment";
 
 let config;
 
@@ -128,10 +129,17 @@ function App({
           <Routes>
             <Route path="*" element={<NotFound />} />
             <Route path="/" element={<ToolsContentContainer />} />
+            <Route path="/:tools" element={<ToolsContentContainer />} />
             <Route path="/balance/" element={<BalancePageContainer />} />
             <Route
               path="/history-message"
-              element={<NotificationPageContainer />}
+              element={
+                isAuthenticated ? (
+                  <NotificationPageContainer />
+                ) : (
+                  <Navigate to="/login" />
+                )
+              }
             />
             <Route
               path="/login"
@@ -192,6 +200,12 @@ function App({
               path="/success-pay"
               element={
                 isAuthenticated ? <SuccessPay /> : <Navigate to="/login" />
+              }
+            />
+            <Route
+              path="/fail-payment"
+              element={
+                isAuthenticated ? <FailPayment /> : <Navigate to="/login" />
               }
             />
             {role === "admin" && (

@@ -38,6 +38,13 @@ function MainMenuHeaderModal(props) {
             <span className={s.linkMenuTools}>Создание тайтла</span>
           </Link>
         </li>
+        <li>
+          <Link to="/commerce-key" onClick={handleLinkClick}>
+            <span className={s.linkMenuTools}>
+              Проверка на коммерциализацию запроса
+            </span>
+          </Link>
+        </li>
       </ol>
     </nav>
   );

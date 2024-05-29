@@ -12,6 +12,10 @@ export default function MenuTools() {
             <Link to="/">Создание Title</Link>{" "}
             <span className={s.versionApp}>v 1.02</span>
           </li>
+          <li>
+            <Link to="/">Коммерциализация запроса</Link>{" "}
+            <span className={s.versionApp}>v 1.0</span>
+          </li>
         </ul>
       </nav>
       <nav className={s.documentacionNav}>
