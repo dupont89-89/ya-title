@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import CommerceKeyTools from "./CommerceKeyTools";
 
 function CommerceKeyToolsContainer(props) {
-  return <CommerceKeyTools />;
+  return <CommerceKeyTools toolsSidebar={props.toolsSidebar} />;
 }
 
 let mapStateToProps = (state) => {

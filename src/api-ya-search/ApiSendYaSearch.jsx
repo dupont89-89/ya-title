@@ -92,14 +92,15 @@ export default function ApiSendYaSearch(props) {
           "та",
           "же",
           "у",
+          "о",
+          "как",
+          "все",
+          "что",
+          "это",
           // Добавьте сюда другие предлоги, которые вы хотите исключить
         ];
 
         const normalizedTitle = title.replace(/[.,!?'"`]/g, ""); // Удаление знаков препинания
-        // const normalizedTitle = titleWithoutPunctuation.replace(
-        //   /\bцен[ые]?\b/gi,
-        //   "цена"
-        // ); // Замена "цены" и "цене" на "цена"
         const words = normalizedTitle.split(/\s+/); // Разделение строки на слова
 
         words.forEach((word) => {
@@ -235,73 +236,81 @@ export default function ApiSendYaSearch(props) {
 
   return (
     <>
-      <section className={t.sectionTools}>
-        <div>
-          {/* Ваш JSX код здесь */}
-          {showModal && (
-            <ModalNoLvt
-              isAuthenticated={props.isAuthenticated}
-              onClose={() => setShowModal(false)}
-            />
-          )}
-        </div>
-        <div className={s.title}>
-          <h1>Создай правильный Title</h1>
-          {props.isAuthenticated && (
-            <span className={t.tarifLvt}>Будет списано: 1 lvt</span>
-          )}
-        </div>
-        <RegionSelectSearch onSelect={handleCitySelect} />
-        <InputKey
-          handleChange={handleChange}
-          query={query}
-          handleClick={handleClick}
-        />
-        {!props.isAuthenticated ? <MessageNoAuth /> : null}
-        {isLoading ? ( // Показываем "ЗАГРУЗКА" во время загрузки
-          <Loading />
-        ) : (
-          // Показываем результат, если загрузка завершена
-          resultString &&
-          resultString.length > 0 && (
-            <div className={s.wrapperBoxTitle}>
-              <span className={s.faviconTitle}></span>
-              <div className={s.boxTitle}>
-                <h2>
-                  {filterUniqueWords(resultString)
-                    .map((word, index) =>
-                      index === 0
-                        ? word.charAt(0).toUpperCase() + word.slice(1)
-                        : word
-                    )
-                    .join(" ")}
-                </h2>
-                <span className={s.linkTopKey}>
-                  ptahini.ru›search/
-                  {filterUniqueWords(topFriLink)
-                    .map((word, index) =>
-                      index === 0
-                        ? word.charAt(0).toUpperCase() + word.slice(1)
-                        : word
-                    )
-                    .join(" ")}
-                </span>
-                <p>
-                  Это лучший тайтл для твоего SEO продвижения сайта. Приведи его
-                  к читаемому виду. Добавь его в соответсвующий раздел
-                  мета-тегов в своей CMS.
-                </p>
-                <button className={s.btnCopyTitle} onClick={copyTextOnClick}>
-                  Копировать Title
-                </button>
-                {copySuccess && (
-                  <span className={s.copyMessage}>Title скопирован!</span>
-                )}
-              </div>
+      <div className={t.sectionGridSK}>
+        <aside>{props.toolsSidebar}</aside>
+        <section className={t.sectionTools}>
+          <div className={t.sectionBlockTools}>
+            <div>
+              {/* Ваш JSX код здесь */}
+              {showModal && (
+                <ModalNoLvt
+                  isAuthenticated={props.isAuthenticated}
+                  onClose={() => setShowModal(false)}
+                />
+              )}
             </div>
-          )
-        )}
-      </section>
+            <div className={s.title}>
+              <h1>Создай правильный Title</h1>
+              {props.isAuthenticated && (
+                <span className={t.tarifLvt}>Будет списано: 1 lvt</span>
+              )}
+            </div>
+            <RegionSelectSearch onSelect={handleCitySelect} />
+            <InputKey
+              handleChange={handleChange}
+              query={query}
+              handleClick={handleClick}
+            />
+            {!props.isAuthenticated ? <MessageNoAuth /> : null}
+            {isLoading ? ( // Показываем "ЗАГРУЗКА" во время загрузки
+              <Loading />
+            ) : (
+              // Показываем результат, если загрузка завершена
+              resultString &&
+              resultString.length > 0 && (
+                <div className={s.wrapperBoxTitle}>
+                  <span className={s.faviconTitle}></span>
+                  <div className={s.boxTitle}>
+                    <h2>
+                      {filterUniqueWords(resultString)
+                        .map((word, index) =>
+                          index === 0
+                            ? word.charAt(0).toUpperCase() + word.slice(1)
+                            : word
+                        )
+                        .join(" ")}
+                    </h2>
+                    <span className={s.linkTopKey}>
+                      ptahini.ru›search/
+                      {filterUniqueWords(topFriLink)
+                        .map((word, index) =>
+                          index === 0
+                            ? word.charAt(0).toUpperCase() + word.slice(1)
+                            : word
+                        )
+                        .join(" ")}
+                    </span>
+                    <p>
+                      Это лучший тайтл для твоего SEO продвижения сайта. Приведи
+                      его к читаемому виду. Добавь его в соответсвующий раздел
+                      мета-тегов в своей CMS.
+                    </p>
+                    <button
+                      className={s.btnCopyTitle}
+                      onClick={copyTextOnClick}
+                    >
+                      Копировать Title
+                    </button>
+                    {copySuccess && (
+                      <span className={s.copyMessage}>Title скопирован!</span>
+                    )}
+                  </div>
+                </div>
+              )
+            )}
+          </div>
+        </section>
+      </div>
       <TitleValues urlPage={urlPage} titleValues={titleValues} />
       <RepeatWords repeatWords={repeatWords} />
     </>

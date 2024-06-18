@@ -10,10 +10,10 @@ const cron = require("node-cron");
 const { updateBonusLvt } = require("./utils/updateBonusLvt");
 const http = require("http");
 const socketIo = require("socket.io");
-const { createProxyMiddleware } = require("http-proxy-middleware");
-
+const getTitleRoute = require("./routes/getTitleRoute"); // Импортируем маршрут
 const app = express();
 const server = http.createServer(app);
+const { fetchYandexKey } = require("./tools-key-info/yandex-xml");
 const io = socketIo(server, {
   cors: {
     origin: process.env.REACT_APP_URL_FRONTEND,
@@ -23,8 +23,6 @@ const io = socketIo(server, {
 });
 
 const PORT = process.env.PORT || 5000;
-const apiKey = process.env.REACT_APP_API_KEY;
-const yaCatalog = process.env.REACT_APP_YANDEX_CATALOG;
 const URL_FRONTEND = process.env.REACT_APP_URL_FRONTEND;
 const MONGO_URI = process.env.MONGO_URI;
 
@@ -42,22 +40,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// Прокси для Яндекс запросов
-app.use(
-  "/api/get-title",
-  createProxyMiddleware({
-    target: "https://yandex.ru",
-    changeOrigin: true,
-    pathRewrite: (path, req) => {
-      const selectedCity = req.query.selectedCity || "213";
-      return `/search/xml?folderid=${yaCatalog}&filter=moderate&lr=${selectedCity}&l10n=ru`;
-    },
-    onProxyReq(proxyReq, reqProxy, res) {
-      proxyReq.setHeader("Authorization", `Api-Key ${apiKey}`);
-    },
-  })
-);
-
 // Подключение к MongoDB
 mongoose
   .connect(MONGO_URI)
@@ -69,9 +51,31 @@ mongoose
   });
 
 // Маршруты
+// Маршруты
 app.use("/api/user", userRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/pay", payRoutes);
+app.post("/api/get-title", getTitleRoute);
+app.post("/api/fetch-key", async (req, res) => {
+  console.log("Received request at /api/fetch-key");
+  const { query } = req.body;
+
+  try {
+    const response = await fetchYandexKey(query);
+
+    // Проверяем, что response не пустой массив, а строка или массив с результатами
+    if (typeof response === "string") {
+      res.status(200).json({ result: response });
+    } else if (Array.isArray(response) && response.length > 0) {
+      res.status(200).json({ result: response });
+    } else {
+      res.status(200).json({ result: "Нет данных" });
+    }
+  } catch (error) {
+    console.error("Error in /api/fetch-key:", error);
+    res.status(500).json({ error: "Ошибка при выполнении запроса" });
+  }
+});
 
 // Обслуживание статических файлов из папки uploads
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));

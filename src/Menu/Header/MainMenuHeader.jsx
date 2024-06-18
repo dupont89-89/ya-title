@@ -41,7 +41,7 @@ function MainMenuHeaderModal(props) {
         <li>
           <Link to="/commerce-key" onClick={handleLinkClick}>
             <span className={s.linkMenuTools}>
-              Проверка на коммерциализацию запроса
+              Определение типа ключевого запроса
             </span>
           </Link>
         </li>

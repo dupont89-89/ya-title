@@ -1,7 +1,6 @@
 .versionApp {
     font-weight: 600;
     display: inline-block;
-    margin-left: 10px;
     font-size: 12px;
     color: #fff;
     position: relative;
@@ -11,17 +10,17 @@
     content: 'new';
     background: #158007;
     position: absolute;
-    top: 0;
+    top: -27px;
     line-height: 16px;
     height: 18px;
     width: 31px;
     padding-left: 4px;
-    margin-left: 10px;
+    margin-left: -5px;
     border-radius: 3px;
 }
 
 .documentacioNavTitle {
-    font-size: 15px;
+    font-size: 14px;
 }
 
 .iconDocNav {

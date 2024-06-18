@@ -127,7 +127,6 @@ function App({
         <MobileHeaderContainer />
         <article>
           <Routes>
-            <Route path="*" element={<NotFound />} />
             <Route path="/" element={<ToolsContentContainer />} />
             <Route path="/:tools" element={<ToolsContentContainer />} />
             <Route path="/balance/" element={<BalancePageContainer />} />
@@ -216,6 +215,7 @@ function App({
                 <Route path="/admin/score" element={<ScoreUserContainer />} />
               </>
             )}
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </article>
         <footer>

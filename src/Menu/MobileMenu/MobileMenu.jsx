@@ -85,7 +85,7 @@ const MobileMenu = () => {
                 onClick={toggleMenu}
                 to="/commerce-key"
               >
-                Проверка на коммерциализацию запроса
+                Определение типа ключевого запроса
               </Link>
             </li>
           </ul>

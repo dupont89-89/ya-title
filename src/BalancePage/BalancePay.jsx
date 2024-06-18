@@ -68,35 +68,35 @@ export default function BalancePay(props) {
           <div className={`${s.textPayUserInfo} ${s.textPayUserInfoTwo}`}>
             <p>2) Выбирайте нужное кол-во Lvt на доступную сумму.</p>
           </div>
-          <div className={s.linkPayKonf}>
-            <span className={s.linkModal}>
-              <UniversalModal
-                nameBtnPopup="*Политика конфиденциальности"
-                content={<Politika />}
-                height="90vh"
-                backgroundBtn="#f5b24d00"
-                colorBtn="#fff"
-                borderBottom="1px solid"
-                paddingBtn="0"
-                fontSizeBtn="13px"
-                width="80%"
-              />
-            </span>
-            <span className={s.linkModal}>
-              <UniversalModal
-                nameBtnPopup="*Договор офёрты"
-                content={<Oferta />}
-                height="90vh"
-                backgroundBtn="#f5b24d00"
-                colorBtn="#fff"
-                borderBottom="1px solid"
-                paddingBtn="0"
-                fontSizeBtn="13px"
-                width="80%"
-              />
-            </span>
-          </div>
         </div>
+      </div>
+      <div className={s.linkPayKonf}>
+        <span className={s.linkModal}>
+          <UniversalModal
+            nameBtnPopup="*Политика конфиденциальности"
+            content={<Politika />}
+            height="90vh"
+            backgroundBtn="#f5b24d00"
+            colorBtn="#fff"
+            borderBottom="1px solid"
+            paddingBtn="0"
+            fontSizeBtn="13px"
+            width="80%"
+          />
+        </span>
+        <span className={s.linkModal}>
+          <UniversalModal
+            nameBtnPopup="*Договор офёрты"
+            content={<Oferta />}
+            height="90vh"
+            backgroundBtn="#f5b24d00"
+            colorBtn="#fff"
+            borderBottom="1px solid"
+            paddingBtn="0"
+            fontSizeBtn="13px"
+            width="80%"
+          />
+        </span>
       </div>
     </div>
   );
