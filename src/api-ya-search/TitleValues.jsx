@@ -27,7 +27,7 @@ export default function TitleValues({ titleValues, urlPage }) {
   const downloadTitle = generateDownloadFileTitle(); // Генерируем URL для скачивания файла
 
   return (
-    <div>
+    <>
       {titleValues ? (
         <div className={t.resultSearhTitle}>
           <div className={t.urlBlock}>
@@ -69,6 +69,6 @@ export default function TitleValues({ titleValues, urlPage }) {
           </div>
         </div>
       ) : null}
-    </div>
+    </>
   );
 }

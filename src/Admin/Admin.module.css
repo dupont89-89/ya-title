@@ -77,43 +77,56 @@
     display: block;
 }
 
+.linkAdmin {
+    border-bottom: 1px solid;
+    padding-bottom: 1px;
+    margin-left: 3px;
+}
+
 /* Стили для мобильных устройств */
 @media (max-width: 768px) {
     .adminPage {
         grid-template-columns: 1fr;
     }
 
-    table.userDataAdmin {
+    table.userDataAdmin,
+    table.tableScore {
         width: 100%;
         border: 0px;
         border-collapse: collapse;
     }
 
-    table.userDataAdmin thead {
+    table.userDataAdmin thead,
+    table.tableScore thead {
         font-weight: bold;
     }
 
-    table.userDataAdmin td {
+    table.userDataAdmin td,
+    table.tableScore td {
         padding: 0.6rem 1rem;
         border-bottom: 1px solid #e8e9eb;
     }
 
-    table.userDataAdmin thead {
+    table.userDataAdmin thead,
+    table.tableScore thead {
         display: none;
     }
 
-    table.userDataAdmin tr {
+    table.userDataAdmin tr,
+    table.tableScore tr {
         display: block;
         margin-bottom: 1rem;
         border-bottom: 2px solid #e8e9eb;
     }
 
-    table.userDataAdmin td {
+    table.userDataAdmin td,
+    table.tableScore td {
         display: block;
         text-align: right;
     }
 
-    table.userDataAdmin td:before {
+    table.userDataAdmin td:before,
+    table.tableScore td:before {
         content: attr(aria-label);
         float: left;
         font-weight: bold;

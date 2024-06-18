@@ -6,7 +6,7 @@ import s from "./Sidebar.module.css";
 import iconMenuOpen from "./../img/icon/icon-vertical-menu.png";
 import iconMenuClose from "./../img/icon/icon-vertical-close.png";
 
-export default function ToolsSidebar() {
+export default function ToolsSidebar(props) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -42,7 +42,7 @@ export default function ToolsSidebar() {
             <img style={logoStyle} src={logo} alt="ptahini" />
           </Link>
         </div>
-        <MenuTools />
+        <MenuTools sidebar={props.sidebar} />
       </div>
 
       {/* Для мобильных устройств */}
@@ -51,7 +51,7 @@ export default function ToolsSidebar() {
         style={sidebarStyle}
       >
         <div className={s.mobileCloseMenu}>
-          <MenuTools />
+          <MenuTools sidebar={props.sidebar} />
           {isOpen ? (
             <div className={s.blockIconClose}>
               <img

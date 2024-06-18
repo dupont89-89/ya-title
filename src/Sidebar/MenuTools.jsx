@@ -2,33 +2,34 @@ import React from "react";
 import { Link } from "react-router-dom";
 import s from "./Sidebar.module.css";
 
-export default function MenuTools() {
+export default function MenuTools(props) {
   return (
     <>
       <nav>
         <h2>SEO-инструменты</h2>
         <ul>
           <li>
-            <Link to="/">Создание Title</Link>{" "}
-            <span className={s.versionApp}>v 1.02</span>
+            <Link to="/">Создание Title</Link>
           </li>
           <li>
-            <Link to="/">Коммерциализация запроса</Link>{" "}
-            <span className={s.versionApp}>v 1.0</span>
+            <Link to="/commerce-key">
+              Определение типа ключевого запроса{" "}
+              <span className={s.versionApp}></span>
+            </Link>
           </li>
         </ul>
       </nav>
       <nav className={s.documentacionNav}>
-        <h2 className={s.documentacioNavTitle}>Документация по Title</h2>
+        <h2 className={s.documentacioNavTitle}>{props.sidebar.nameDoc}</h2>
         <ul>
           <li>
             <span className={`${s.iconYandex} ${s.iconDocNav}`}></span>
             <a
               rel="noreferrer"
               target="_blank"
-              href="https://yandex.ru/support/webmaster/search-results/title.html"
+              href={props.sidebar.hrefLinkOne}
             >
-              Справка Яндекса
+              {props.sidebar.nameLinkOne}
             </a>
           </li>
           <li>
