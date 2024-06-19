@@ -6,8 +6,28 @@ export default function CommerceKeyTools(props) {
   const [query, setQuery] = useState(""); // Состояние для хранения значения ввода
   const [result, setResult] = useState(null);
   const [textKey, setText] = useState(null);
+  const [massKey, setMass] = useState(false);
+  const [queryArray, setQueryArray] = useState([]);
   const handleChange = (event) => {
     setQuery(event.target.value); // Обновляем значение состояния при изменении ввода
+  };
+
+  const handleChangeMass = (event) => {
+    const text = event.target.value;
+    const words = text.split("\n"); // Разбиваем текст на слова, используя новую строку
+    setQueryArray(words); // Обновляем состояние с массивом слов
+  };
+  const handleClickMass = () => {
+    setMass((prevMass) => !prevMass);
+    setResult(null);
+  };
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      handleFetchKey();
+    }
+  };
+  const handleClickMassClear = () => {
+    setQueryArray([]);
   };
   const textCommerce =
     "Этот ключевой запрос коммерческий (транзакционный). Вам следует продвигать его на страницах категорий товаров, предложения услуг итд.";
@@ -59,37 +79,87 @@ export default function CommerceKeyTools(props) {
         <div className={s.sectionBlockTools}>
           <div className={s.title}>
             <h1>Определение типа ключевого запроса</h1>
-            <span className={s.tarifLvt}>Бесплатно</span>
+            <span className={s.tarifLvt}>
+              {massKey ? "10 lvt / 100 запросов" : "Бесплатно"}
+            </span>
           </div>
           <div className={s.blockForm}>
-            <label htmlFor="key-get">Введите ключевой запрос</label>
-            <div className={s.inputBlockForm}>
-              <input
-                placeholder="ласточки"
-                type="text"
-                name="key-get"
-                id="key-get"
-                value={query}
-                onChange={handleChange}
-              />
-              {query ? (
-                <button onClick={handleFetchKey}>Проверить запрос</button>
-              ) : null}
-              {result && (
-                <div className={s.resultKeyBlock}>
-                  <h2>Результат:</h2>
-                  <div className={s.resultKeyText}>{result}</div>
-                  <p>{textKey}</p>
+            {!massKey ? (
+              <>
+                <label htmlFor="key-get">Введите ключевой запрос</label>
+                <div className={s.inputBlockForm}>
+                  <input
+                    placeholder="ласточки"
+                    type="text"
+                    name="key-get"
+                    id="key-get"
+                    value={query}
+                    onChange={handleChange}
+                    onKeyDown={handleKeyDown}
+                  />
+                  {result && (
+                    <div className={s.resultKeyBlock}>
+                      <h2>Результат:</h2>
+                      <div className={s.resultKeyText}>{result}</div>
+                      <p>{textKey}</p>
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
+                {query ? (
+                  <button className={s.massStartBtn} onClick={handleFetchKey}>
+                    Запустить проверку
+                  </button>
+                ) : null}
+              </>
+            ) : (
+              <>
+                <label htmlFor="key-get">Каждый запрос с новой строки</label>
+                <div className={s.inputBlockForm}>
+                  <textarea
+                    className={s.textareaCustom}
+                    placeholder={`ласточки\nвороны2\nКолибри3`}
+                    name="key-get"
+                    id="key-get"
+                    value={queryArray.join("\n")}
+                    rows="20"
+                    cols="100"
+                    onChange={handleChangeMass}
+                  />
+                  {result && (
+                    <div className={s.resultKeyBlock}>
+                      <h2>Результат:</h2>
+                      <div className={s.resultKeyText}>{result}</div>
+                      <p>{textKey}</p>
+                    </div>
+                  )}
+                </div>
+                {queryArray &&
+                queryArray.length > 0 &&
+                queryArray[0].trim() !== "" ? (
+                  <div className={s.btnTextAreaMass}>
+                    <button className={s.massStartBtn} onClick={handleFetchKey}>
+                      Запустить проверку
+                    </button>
+                    <button
+                      className={s.massClearBtn}
+                      onClick={handleClickMassClear}
+                    >
+                      Очистить
+                    </button>
+                  </div>
+                ) : null}
+              </>
+            )}
           </div>
           <div className={s.keySum}>
             <p>
-              Если вам требуется проверить много ключей, вы можете
-              воспользоваться массовой проверкой.
+              {massKey
+                ? "Можете воспользоваться бесплатным инструментом. Он работает одинаково качественно, но не доступна массовая проверка ключевых запросов."
+                : "Если вам требуется проверить много ключей, вы можете воспользоваться массовой проверкой."}
             </p>
-            <button>Массовая проверка</button>
+            <button onClick={handleClickMass}>
+              {massKey ? "Вернуться" : "Массовая проверка"}
+            </button>
           </div>
         </div>
       </section>
