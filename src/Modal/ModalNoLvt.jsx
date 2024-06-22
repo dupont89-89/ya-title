@@ -7,7 +7,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFaceFrown } from "@fortawesome/free-regular-svg-icons";
 import ModalSignUp from "./../Auth/SignUp/ModalSignUp";
 
-export default function ModalNoLvt({ onClose, isAuthenticated }) {
+export default function ModalNoLvt({
+  onClose,
+  isAuthenticated,
+  totalLvt,
+  sumLvt,
+}) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const openPopup = () => {
@@ -39,8 +44,8 @@ export default function ModalNoLvt({ onClose, isAuthenticated }) {
             </button>
           </div>
           <div className={s.contentModalNoLvt}>
-            <p>Ваш баланс 0 lvt</p>
-            <p>Требуется 1 lvt</p>
+            <p>Ваш баланс {totalLvt} lvt</p>
+            <p>Не хватает {sumLvt} lvt</p>
             <FontAwesomeIcon size="4x" color="#000" icon={faFaceFrown} />
             {!isAuthenticated ? (
               <div className={s.registrationUserBtn}>

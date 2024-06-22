@@ -704,6 +704,8 @@ const domenInfo = [
   "cyberleninka.ru",
   "studfile.net",
   "kampus.ai",
+  "habr.com",
+  "netology.ru",
 ];
 
 const domenCommerce = [
