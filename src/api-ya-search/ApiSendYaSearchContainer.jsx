@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { spendLvtOneTitle } from "../Api/api-lvt";
 
 function ApiSendYaSearchContainer(props) {
+  const sumLvt = 1;
   return (
     <ApiSendYaSearch
       userId={props.userId}
@@ -12,6 +13,7 @@ function ApiSendYaSearchContainer(props) {
       lvt={props.lvt}
       totalLvt={props.totalLvt}
       toolsSidebar={props.toolsSidebar}
+      sumLvt={sumLvt}
     />
   );
 }

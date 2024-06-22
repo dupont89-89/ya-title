@@ -176,7 +176,7 @@ export default function ApiSendYaSearch(props) {
       console.error("Ошибка при отправке данных:", error);
     } finally {
       setIsLoading(false); // Устанавливаем состояние загрузки в false после получения ответа
-      props.spendLvtOneTitle(props.userId);
+      props.spendLvtOneTitle(props.userId, props.sumLvt);
     }
   };
 
@@ -246,6 +246,8 @@ export default function ApiSendYaSearch(props) {
                 <ModalNoLvt
                   isAuthenticated={props.isAuthenticated}
                   onClose={() => setShowModal(false)}
+                  totalLvt={props.totalLvt}
+                  sumLvt={props.sumLvt}
                 />
               )}
             </div>

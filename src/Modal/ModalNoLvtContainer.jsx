@@ -1,16 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
-import CommerceKeyTools from "./CommerceKeyTools";
+import ModalNoLvt from "./ModalNoLvt";
 
-function CommerceKeyToolsContainer(props) {
-  const tarifKey = 0.1;
+function ModalNoLvtContainer(props) {
   return (
-    <CommerceKeyTools
+    <ModalNoLvt
       userId={props.userId}
       totalLvt={props.totalLvt}
       isAuthenticated={props.isAuthenticated}
-      tarifKey={tarifKey}
-      toolsSidebar={props.toolsSidebar}
+      sumLvt={props.sumLvt}
+      onClose={props.onClose}
     />
   );
 }
@@ -29,4 +28,4 @@ const mapDispatchToProps = {};
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CommerceKeyToolsContainer);
+)(ModalNoLvtContainer);
