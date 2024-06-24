@@ -266,6 +266,14 @@ a.downloadLink:hover {
     padding: 7px;
 }
 
+.keySum button:hover {
+    background-color: #304182;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 600;
+    padding: 7px;
+}
+
 .resultKeyBlock {
     background-color: white;
     color: #000;

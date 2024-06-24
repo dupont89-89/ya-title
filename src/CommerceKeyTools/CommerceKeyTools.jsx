@@ -5,6 +5,7 @@ import iconLoadFile from "./../img/icon/txt-file_9680522.png";
 import iconVopros from "./../img/icon/mark_13709623.png";
 import Loading from "../app-function/Loading";
 import ModalNoLvtContainer from "../Modal/ModalNoLvtContainer";
+import Papa from "papaparse";
 
 export default function CommerceKeyTools(props) {
   const [query, setQuery] = useState(""); // Состояние для хранения значения ввода
@@ -16,6 +17,9 @@ export default function CommerceKeyTools(props) {
   const [isLoading, setIsLoading] = useState(false); // Состояние для указания на процесс загрузки
   const [sumKeyLvt, setSumKeyLvt] = useState();
   const [sumLvt, setSumLvt] = useState();
+  const [csvDownloadLink, setCsvDownloadLink] = useState("");
+
+  const { texts } = props;
 
   const handleChange = (event) => {
     setQuery(event.target.value); // Обновляем значение состояния при изменении ввода
@@ -40,18 +44,6 @@ export default function CommerceKeyTools(props) {
   const handleClickMassClear = () => {
     setQueryArray([]);
   };
-  const textCommerce =
-    "Этот ключевой запрос коммерческий (транзакционный). Вам следует продвигать его на страницах категорий товаров, предложения услуг итд.";
-  const textMedia =
-    "Этот ключевой запрос для мультимедиа контента. Продвигать видео, фото, аудио контент на своей странице или на страницах популярных ресурсов размещая там материалы.";
-  const textNavi =
-    "Это навигационный ключевой запрос. Пользователь ищет конкретный популярный ресурс. Наврятли у вас получится эффективно ипользовать его на своей странице";
-  const textInfo =
-    "Этот ключевой запрос информационный. Пользователь ищет ответы на свои вопросы. Под него нужно писать текстовый контент (статью).";
-  const textInfoCommerc =
-    "По этому ключевому запросу в выдаче находятся страницы информационные и коммерческие. Я бы все таки уточнил ключ (добавить слова: купить, смотреть, как сделать или связанные с запросом), чтобы точно понимать, какая у вас цель при продвижение данного запроса в выдаче.";
-  const textNoKey =
-    "Похоже что это слишком общий запрос и не удалось определить точно, к какому типу он относится. Попробуйте его уточнить, добавить слова. Возможен вариант, что мы просто не смогли определить его по нашей базе.";
 
   const handleFetchKey = async () => {
     try {
@@ -77,24 +69,35 @@ export default function CommerceKeyTools(props) {
 
   useEffect(() => {
     if (result) {
-      if (result.includes("Коммерческий запрос")) {
-        setText(textCommerce);
-      } else if (result.includes("Мультимедиа запрос")) {
-        setText(textMedia);
-      } else if (result.includes("Навигационный запрос")) {
-        setText(textNavi);
-      } else if (result.includes("Информационный запрос")) {
-        setText(textInfo);
-      } else if (result.includes("Смешанная выдача")) {
-        setText(textInfoCommerc);
-      } else if (result === "Общий запрос") {
-        setText(textNoKey);
+      if (Array.isArray(result)) {
+        // Генерация CSV файла из массива объектов
+        const csv = Papa.unparse(result);
+        const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+        setCsvDownloadLink(url);
+
+        setText("Результаты обработки доступны для скачивания в CSV файле.");
+      } else {
+        // Обработка результата как строки
+        if (result.includes("Коммерческий запрос")) {
+          setText(texts.textCommerce);
+        } else if (result.includes("Мультимедиа запрос")) {
+          setText(texts.textMedia);
+        } else if (result.includes("Навигационный запрос")) {
+          setText(texts.textNavi);
+        } else if (result.includes("Информационный запрос")) {
+          setText(texts.textInfo);
+        } else if (result.includes("Смешанная выдача")) {
+          setText(texts.textInfoCommerc);
+        } else if (result === "Общий запрос") {
+          setText(texts.textNoKey);
+        }
       }
     } else {
       // Обработка случая, когда result является null
       setText(
-        "Какая то ошибка при определение запроса. Попробуйте другой ключевой запрос. Если ошибка повторяется, напишите нам пожалуйста."
-      ); // Или любое другое значение по умолчанию
+        "Какая-то ошибка при определении запроса. Попробуйте другой ключевой запрос. Если ошибка повторяется, напишите нам, пожалуйста."
+      );
     }
   }, [result]);
 
@@ -153,7 +156,7 @@ export default function CommerceKeyTools(props) {
                       onChange={handleChange}
                       onKeyDown={handleKeyDown}
                     />
-                    {result && (
+                    {result && !Array.isArray(result) && (
                       <div className={s.resultKeyBlock}>
                         <h2>Результат:</h2>
                         <div className={s.resultKeyText}>{result}</div>
@@ -215,11 +218,21 @@ export default function CommerceKeyTools(props) {
                         </div>
                       </span>
                     </div>
-                    {result && (
+                    {Array.isArray(result) && (
                       <div className={s.resultKeyBlock}>
-                        <h2>Результат:</h2>
-                        <div className={s.resultKeyText}>{result}</div>
-                        <p>{textKey}</p>
+                        <h2>Результаты:</h2>
+                        <ul>
+                          {result.map((item, index) => (
+                            <li key={index}>
+                              Запрос: {item.query} - Результат: {item.result}
+                            </li>
+                          ))}
+                        </ul>
+                        {csvDownloadLink && (
+                          <a href={csvDownloadLink} download="results.csv">
+                            Скачайте результаты в формате CSV
+                          </a>
+                        )}
                       </div>
                     )}
                   </div>
