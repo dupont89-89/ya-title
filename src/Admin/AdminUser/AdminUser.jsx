@@ -39,6 +39,8 @@ export default function AdminUser(props) {
                   </span>
                   <span>
                     <UniversalModal
+                      background="#f7b637"
+                      width="350px"
                       content={
                         <AdminFormAddLvtUser
                           addLvtAdminUser={props.addLvtAdminUser}

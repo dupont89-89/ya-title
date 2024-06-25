@@ -33,6 +33,8 @@ export default function ApiSendYaSearch(props) {
   const [showModal, setShowModal] = useState(false);
   const [urlPage, setUrlPage] = useState(null);
 
+  const sumLvt = 1;
+
   const handleClick = async () => {
     setIsLoading(true); // Устанавливаем состояние загрузки в true при отправке запроса
 
@@ -176,7 +178,7 @@ export default function ApiSendYaSearch(props) {
       console.error("Ошибка при отправке данных:", error);
     } finally {
       setIsLoading(false); // Устанавливаем состояние загрузки в false после получения ответа
-      props.spendLvtOneTitle(props.userId, props.sumLvt);
+      props.spendLvt(props.userId, sumLvt);
     }
   };
 

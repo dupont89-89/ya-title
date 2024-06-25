@@ -1,14 +1,14 @@
 import React from "react";
 import ApiSendYaSearch from "./ApiSendYaSearch";
 import { connect } from "react-redux";
-import { spendLvtOneTitle } from "../Api/api-lvt";
+import { spendLvt } from "../Api/api-lvt";
 
 function ApiSendYaSearchContainer(props) {
   const sumLvt = 1;
   return (
     <ApiSendYaSearch
       userId={props.userId}
-      spendLvtOneTitle={props.spendLvtOneTitle}
+      spendLvt={props.spendLvt}
       isAuthenticated={props.isAuthenticated}
       lvt={props.lvt}
       totalLvt={props.totalLvt}
@@ -28,7 +28,7 @@ let mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  spendLvtOneTitle,
+  spendLvt,
 };
 
 export default connect(

@@ -13,11 +13,11 @@ const instance = axios.create({
   baseURL: `${config.REACT_APP_SERVER_URL}/api`,
 });
 
-export const spendLvtOneTitle = (userId, sumLvt) => {
+export const spendLvt = (userId, sumLvt) => {
   return async (dispatch) => {
     try {
       const response = await instance.get(
-        `/user/spend-lvt-one-title?userId=${userId}&sumLvt=${sumLvt}`
+        `/user/spend-lvt?userId=${userId}&sumLvt=${sumLvt}`
       );
       dispatch(getUser(userId));
       return response.data;

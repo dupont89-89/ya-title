@@ -1,8 +1,11 @@
 const { User } = require("../models/UserSchema");
+const Decimal = require("decimal.js");
 
 exports.spendLvtUserController = async (req, res) => {
   try {
     const userId = req.query.userId;
+    const sumLvt = parseFloat(req.query.sumLvt);
+
     if (!userId) {
       return res.status(400).send({ message: "User ID is required" });
     }
@@ -12,27 +15,44 @@ exports.spendLvtUserController = async (req, res) => {
       return res.status(404).send({ message: "User not found" });
     }
 
-    const amountToSpend = 1; // Количество LVT для списания
+    // Округляем сумму LVT с помощью Decimal.js
+    const amountToSpend = new Decimal(sumLvt).toDecimalPlaces(2);
 
     // Проверяем, есть ли у пользователя достаточно LVT для списания
-    if (user.totalLvt < amountToSpend) {
+    if (user.totalLvt < amountToSpend.toNumber()) {
       return res.status(400).send({ message: "Недостаточно баланса Lvt" });
     }
 
     // Если у пользователя есть достаточно бонусных LVT (bonusDayLvt),
     // списываем из них указанное количество
-    if (user.bonusDayLvt >= amountToSpend) {
-      user.bonusDayLvt -= amountToSpend;
+    if (new Decimal(user.bonusDayLvt).gte(amountToSpend)) {
+      user.bonusDayLvt = new Decimal(user.bonusDayLvt)
+        .minus(amountToSpend)
+        .toNumber();
     } else {
       // Если бонусных LVT недостаточно, вычитаем из них все, что есть,
       // а затем оставшееся количество списываем из основных LVT (lvt)
       const remainingFromBonus = user.bonusDayLvt;
       user.bonusDayLvt = 0;
-      user.lvt -= amountToSpend - remainingFromBonus;
+
+      // Округляем каждое число до двух десятичных знаков вниз перед вычитанием
+      const roundedAmountToSpend = amountToSpend.toDecimalPlaces(2);
+      const roundedRemainingFromBonus = new Decimal(
+        remainingFromBonus
+      ).toDecimalPlaces(2);
+
+      // Вычитаем округленные значения
+      const spendAmount = roundedAmountToSpend.minus(roundedRemainingFromBonus);
+
+      user.lvt = new Decimal(user.lvt).minus(spendAmount).toNumber();
     }
 
     // Сохраняем обновленного пользователя
     await user.save();
+
+    console.log("User after saving:");
+    console.log(`user.lvt: ${user.lvt}`);
+    console.log(`user.bonusDayLvt: ${user.bonusDayLvt}`);
 
     return res.status(200).send({ message: "LVT spent successfully" });
   } catch (error) {
