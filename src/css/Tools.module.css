@@ -277,7 +277,7 @@ a.downloadLink:hover {
 .resultKeyBlock {
     background-color: white;
     color: #000;
-    padding: 15px;
+    width: 100%;
     margin-top: 30px;
     border-radius: 8px;
 }
@@ -352,7 +352,7 @@ a.downloadLink:hover {
 }
 
 .input__fileButton {
-    max-width: 175px;
+    max-width: 220px;
     background: #009688;
     border-radius: 5px;
     color: #fff;
@@ -418,6 +418,51 @@ a.downloadLink:hover {
 .btnIconVopros:hover .tooltip {
     visibility: visible;
     opacity: 1;
+}
+
+.resultMassFile {
+    display: inline-block;
+    padding: 3px 10px;
+    background-color: #FFC107;
+    font-size: 16px;
+    border-radius: 3px;
+    border: 1px solid;
+}
+
+.resultMassFile:hover {
+    background-color: #cf9d06;
+}
+
+.resultKeyBlock ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.blockPad {
+    padding: 15px;
+}
+
+.spendUserFront {
+    display: inline-block;
+    margin-left: 20px;
+    font-size: 16px;
+    background-color: #d14035;
+    padding: 4px 10px;
+    border-radius: 4px;
+}
+
+button.btnNewSendMassKey {
+    margin-top: 10px;
+    background-color: #3F51B5;
+    padding: 5px 9px;
+    font-size: 17px;
+    height: 100%;
+    border-radius: 5px;
+    width: 176px;
+}
+
+button.btnNewSendMassKey:hover {
+    background-color: #2f3b85;
 }
 
 /* Стили для мобильных устройств */

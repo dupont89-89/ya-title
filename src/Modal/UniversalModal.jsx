@@ -21,7 +21,7 @@ export default function UniversalModal(props) {
       contentStyle={{
         padding: "20px",
         border: "1px solid #000",
-        background: "#fff",
+        background: props.background ? props.background : "#fff",
         borderRadius: "15px",
         height: props.height,
         overflow: "auto",
