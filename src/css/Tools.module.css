@@ -438,7 +438,8 @@ a.downloadLink:hover {
     padding-left: 0;
 }
 
-.blockPad {
+.blockPad,
+.paddingBlock {
     padding: 15px;
 }
 
@@ -491,5 +492,35 @@ button.btnNewSendMassKey:hover {
 
     .resultSearhTitle a {
         width: 100%;
+    }
+
+    .inputBlockForm input {
+        width: 100%;
+    }
+
+    .resultKeyText {
+        font-size: 15px;
+    }
+
+    .spendUserFront {
+        margin-left: 0px;
+        margin-top: 10px;
+    }
+
+    .textBottomTools ul {
+        padding-left: 0;
+        list-style-type: none;
+    }
+
+    .textBottomTools ul li {
+        margin-bottom: 15px;
+    }
+
+    .title h1 {
+        font-size: 1.5rem;
+    }
+
+    .blockForm label {
+        font-size: 16px;
     }
 }

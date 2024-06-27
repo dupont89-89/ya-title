@@ -75,6 +75,7 @@ exports.dataUserController = async (req, res) => {
         notificationsHistory: user.notificationsHistory,
         referal: user.referal,
         role: user.role,
+        tools: user.tools,
       };
       res.status(200).json({ userData }); // Assuming you want to send the user data as JSON
     } else {

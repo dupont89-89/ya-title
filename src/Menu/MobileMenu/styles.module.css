@@ -139,7 +139,7 @@
 
 .menu__group {
     padding: .5rem 2rem;
-    font-size: 1.4rem;
+    font-size: 1rem;
     font-weight: 700;
     text-transform: uppercase;
 }
@@ -420,5 +420,9 @@
         position: absolute;
         right: 1rem;
         bottom: 1rem;
+    }
+
+    .menu__group {
+        font-size: 1.4rem;
     }
 }

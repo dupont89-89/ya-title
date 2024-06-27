@@ -4,6 +4,7 @@ import CommerceKeyTools from "./CommerceKeyTools";
 import { getFetchkey } from "../Api/api-tools-search";
 import Papa from "papaparse";
 import { spendLvt } from "../Api/api-lvt";
+import { loadFileUserTools } from "../Api/api-tools";
 
 function CommerceKeyToolsContainer(props) {
   const [query, setQuery] = useState("");
@@ -114,6 +115,13 @@ function CommerceKeyToolsContainer(props) {
         const url = URL.createObjectURL(blob);
         setCsvDownloadLink(url);
 
+        // Создаем объект FormData и добавляем blob файл
+        const formData = new FormData();
+        formData.append("toolFile", blob, "result.csv");
+
+        // Отправляем файл на сервер
+        props.loadFileUserTools(formData, props.userId, "tip-key");
+
         setText("Результаты обработки доступны для скачивания в CSV файле.");
       } else {
         // Обработка результата как одиночного объекта
@@ -203,6 +211,7 @@ let mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   spendLvt,
+  loadFileUserTools,
 };
 
 export default connect(

@@ -30,6 +30,7 @@ import MobileMenu from "./Menu/MobileMenu/MobileMenu";
 import ResetPasswordForm from "./Auth/ResetPassword/ResetPasswordForm";
 import NotFound from "./parts/NotFound";
 import FailPayment from "./BalancePage/FailPayment";
+import CabinetUserContainer from "./CabinetUser/CabinetUserContainer";
 
 let config;
 
@@ -179,6 +180,16 @@ function App({
               }
             />
             <Route
+              path="/cabinet"
+              element={
+                isAuthenticated ? (
+                  <CabinetUserContainer />
+                ) : (
+                  <Navigate to="/login" />
+                )
+              }
+            />
+            <Route
               path="/referal"
               element={
                 isAuthenticated ? (
@@ -215,7 +226,7 @@ function App({
                 <Route path="/admin/score" element={<ScoreUserContainer />} />
               </>
             )}
-            <Route path="*" element={<NotFound />} />
+            {/* <Route path="*" element={<NotFound />} /> */}
           </Routes>
         </article>
         <footer>

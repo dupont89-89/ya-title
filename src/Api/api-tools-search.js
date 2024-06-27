@@ -14,7 +14,7 @@ const instance = axios.create({
 
 export const getFetchkey = async (query) => {
   try {
-    const response = await instance.post("/fetch-key", { query });
+    const response = await instance.post("/tools/fetch-key", { query });
     return response.data;
   } catch (error) {
     // Обработка ошибок здесь

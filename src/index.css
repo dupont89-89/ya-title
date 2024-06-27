@@ -1,3 +1,8 @@
+html,
+body {
+  overflow-x: hidden;
+}
+
 body {
   margin: 0;
   font-family: "Noto Sans", sans-serif;
@@ -8,6 +13,7 @@ body {
     "slnt" 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  position: relative
 }
 
 code {

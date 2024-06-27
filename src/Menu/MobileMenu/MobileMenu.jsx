@@ -50,6 +50,15 @@ const MobileMenu = () => {
             <li className={styles.menu__group}>
               <Link
                 onClick={toggleMenu}
+                to="/cabinet"
+                className={`${styles.menu__link} ${styles["ra-link"]}`}
+              >
+                Кабинет пользователя
+              </Link>
+            </li>
+            <li className={styles.menu__group}>
+              <Link
+                onClick={toggleMenu}
                 to="/referal"
                 className={`${styles.menu__link} ${styles["ra-link"]}`}
               >

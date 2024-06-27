@@ -9,6 +9,13 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
   avatar: { type: String },
+  tools: [
+    {
+      nameTools: { type: String },
+      fileTools: { type: String },
+      dateAdded: { type: Date, default: Date.now },
+    },
+  ],
   bonusDayLvt: { type: Number, default: 0 },
   lvt: { type: Number, default: 0 },
   lvtPresent: {
@@ -46,7 +53,8 @@ const userSchema = new mongoose.Schema({
 
 // Создаем виртуальное поле для суммы lvt и bonusDayLvt
 userSchema.virtual("totalLvt").get(function () {
-  return this.lvt + this.bonusDayLvt;
+  // Сложение чисел с ограничением количества знаков после запятой до 1
+  return Number((this.lvt + this.bonusDayLvt).toFixed(1));
 });
 
 // Гарантируем, что виртуальное поле totalLvt включается в результаты toJSON и toObject

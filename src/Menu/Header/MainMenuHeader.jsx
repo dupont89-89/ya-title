@@ -16,6 +16,9 @@ export default function MainMenuHeader(props) {
         <Link className={s.link} to="/balance">
           Тарифы
         </Link>
+        <Link className={s.link} to="/cabinet">
+          Кабинет пользователя
+        </Link>
       </div>
     </>
   );
