@@ -133,8 +133,11 @@ exports.payScoreRobokassaController = async (req, res) => {
     const InvId = req.query.InvId; // Номер счёта
     const userId = req.query.userId; // Id пользователя
     const currentDate = new Date();
-    // Применяем смещение к текущей дате и времени
-    const moscowTime = new Date(currentDate.getTime());
+
+    // Применяем смещение +5 часов
+    const offset = 5 * 60 * 60 * 1000; // 5 часов в миллисекундах
+    const moscowTime = new Date(currentDate.getTime() + offset);
+
     // Форматируем дату и время в строку
     const formattedDate = moscowTime.toISOString();
     // Проверяем, есть ли все значения

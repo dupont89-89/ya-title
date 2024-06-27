@@ -134,7 +134,7 @@ const fetchYandexKey = async (query) => {
 
         if (matchDomenInfo && matchDomenCommerce) {
           console.log("Совпадение в обоих массивах domenInfo и domenCommerce");
-          return `Смешанная выдача: ${infoPercentage}% информационных, ${commercePercentage}% коммерческих`;
+          return `<span style="display: block;">Смешанная выдача:</span> <span style="display: block;">${infoPercentage}% информационных</span> <span style="display: block;">${commercePercentage}% коммерческих</span>`;
         } else if (matchDomenCommerce) {
           console.log("Совпадение в массиве domenCommerce");
           return "Коммерческий запрос";

@@ -23,7 +23,12 @@ export default function MenuTools(props) {
         <h2 className={s.documentacioNavTitle}>{props.sidebar.nameDoc}</h2>
         <ul>
           <li>
-            <span className={`${s.iconYandex} ${s.iconDocNav}`}></span>
+            <span className={s.icon}>
+              <img
+                src={props.sidebar.iconLinkOne}
+                alt={props.sidebar.nameLinkOne}
+              />
+            </span>
             <a
               rel="noreferrer"
               target="_blank"
@@ -33,33 +38,44 @@ export default function MenuTools(props) {
             </a>
           </li>
           <li>
-            <span className={`${s.iconGoogle} ${s.iconDocNav}`}></span>
+            <span className={s.icon}>
+              <img
+                src={props.sidebar.iconLinkTwo}
+                alt={props.sidebar.nameLinkTwo}
+              />
+            </span>
             <a
               rel="noreferrer"
               target="_blank"
-              href="https://developers.google.cn/search/docs/appearance/title-link?hl=ru"
+              href={props.sidebar.hrefLinkTwo}
             >
-              Справка Google
+              {props.sidebar.nameLinkTwo}
             </a>
           </li>
           <li>
-            <span className={`${s.iconHTML} ${s.iconDocNav}`}></span>
+            <span className={s.icon}>
+              <img
+                src={props.sidebar.iconLinkTri}
+                alt={props.sidebar.nameLinkTri}
+              />
+            </span>
             <a
               rel="noreferrer"
               target="_blank"
-              href="https://html.spec.whatwg.org/multipage/semantics.html#the-title-element"
+              href={props.sidebar.hrefLinkTri}
             >
-              HTML спецификация
+              {props.sidebar.nameLinkTri}
             </a>
           </li>
           <li>
-            <span className={`${s.iconRuTube} ${s.iconDocNav}`}></span>
-            <a
-              rel="noreferrer"
-              target="_blank"
-              href="https://rutube.ru/video/35ef2307b6a22542b6b53217abdbbc6c/?r=wd"
-            >
-              Видео по теме
+            <span className={s.icon}>
+              <img
+                src={props.sidebar.iconLinkFo}
+                alt={props.sidebar.nameLinkFo}
+              />
+            </span>
+            <a rel="noreferrer" target="_blank" href={props.sidebar.hrefLinkFo}>
+              {props.sidebar.nameLinkFo}
             </a>
           </li>
         </ul>

@@ -19,9 +19,14 @@ export default function FormOneKey(props) {
         />
         {result && !Array.isArray(result) && (
           <div className={s.resultKeyBlock}>
-            <h2>Результат:</h2>
-            <div className={s.resultKeyText}>{result}</div>
-            <p>{text}</p>
+            <div className={s.paddingBlock}>
+              <h2>Результат:</h2>
+              <div
+                className={s.resultKeyText}
+                dangerouslySetInnerHTML={{ __html: result }}
+              />
+              <p>{text}</p>
+            </div>
           </div>
         )}
       </div>

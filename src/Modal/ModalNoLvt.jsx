@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import s from "./Modal.module.css";
@@ -15,6 +15,18 @@ export default function ModalNoLvt({
 }) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
+  const [modalWidth, setModalWidth] = useState("50%");
+
+  useLayoutEffect(() => {
+    // Определяем ширину модального окна в зависимости от ширины экрана
+    const width = window.innerWidth;
+    if (width >= 768) {
+      setModalWidth("370px");
+    } else {
+      setModalWidth("80%");
+    }
+  }, []);
+
   const openPopup = () => {
     setIsPopupOpen(true);
   };
@@ -24,7 +36,7 @@ export default function ModalNoLvt({
         padding: "0px",
         border: "none",
         background: "none",
-        width: "370px",
+        width: modalWidth,
       }}
       open={true} // Для отображения попапа сразу, когда он открывается
       onClose={onClose} // Закрываем попап при нажатии на крестик

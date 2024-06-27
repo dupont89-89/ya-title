@@ -1,10 +1,15 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import ApiSendYaSearchContainer from "../api-ya-search/ApiSendYaSearchContainer";
-import t from "./../css/Tools.module.css";
 import ToolsSidebar from "../Sidebar/ToolSidebar";
 import TextBottom from "./TextBottom";
 import CommerceKeyToolsContainer from "../CommerceKeyTools/CommerceKeyToolsContainer";
+import iconGoogle from "./../img/icon/google-icon-nav.png";
+import iconYandex from "./../img/icon/ya-icon.png";
+import iconHTML from "./../img/icon/html-specificaciya-logo.svg";
+import iconRuTube from "./../img/icon/rutube-icon.png";
+import yaDirect from "./../img/icon/ya-direct.png";
+import iconPtahini from "./../img/icon/ptahini-icon.png";
 
 export default function ToolsContent(props) {
   const { tools } = useParams();
@@ -13,31 +18,37 @@ export default function ToolsContent(props) {
     nameLinkOne: "Справка Яндекса",
     hrefLinkOne:
       "https://yandex.ru/support/webmaster/search-results/title.html",
+    iconLinkOne: iconYandex,
     nameLinkTwo: "Справка Google",
     hrefLinkTwo:
       "https://developers.google.cn/search/docs/appearance/title-link?hl=ru",
+    iconLinkTwo: iconGoogle,
     nameLinkTri: "HTML спецификация",
     hrefLinkTri:
       "https://html.spec.whatwg.org/multipage/semantics.html#the-title-element",
+    iconLinkTri: iconHTML,
     nameLinkFo: "Видео по теме",
-    hrefLinkFO:
+    hrefLinkFo:
       "https://rutube.ru/video/35ef2307b6a22542b6b53217abdbbc6c/?r=wd",
+    iconLinkFo: iconRuTube,
   };
 
   const keyCommerceSidebar = {
     nameDoc: "Документация по ключевым запросам",
-    nameLinkOne: "Справка Яндекса по ключам",
+    nameLinkOne: "Справка Яндекса.Директ по ключам",
     hrefLinkOne:
-      "https://yandex.ru/support/webmaster/search-results/title.html",
+      "https://yandex.ru/support/direct/keywords/building-keyword-list.html",
+    iconLinkOne: yaDirect,
     nameLinkTwo: "Справка Google",
-    hrefLinkTwo:
-      "https://developers.google.cn/search/docs/appearance/title-link?hl=ru",
-    nameLinkTri: "HTML спецификация",
+    hrefLinkTwo: "https://support.google.com/google-ads/answer/2453981?hl=RU",
+    iconLinkTwo: iconGoogle,
+    nameLinkTri: "Статья Ptahini",
     hrefLinkTri:
-      "https://html.spec.whatwg.org/multipage/semantics.html#the-title-element",
-    nameLinkFo: "Видео по теме",
-    hrefLinkFO:
-      "https://rutube.ru/video/35ef2307b6a22542b6b53217abdbbc6c/?r=wd",
+      "https://ptahini.ru/seo-prodvizhenie-sajtov/kakie-kljuchevye-zaprosy-byvajut/",
+    iconLinkTri: iconPtahini,
+    nameLinkFo: "Видео инструкция",
+    hrefLinkFo: "https://rutube.ru/video/41b1dac88c6fa9867fd5459ac7e3270e/",
+    iconLinkFo: iconRuTube,
   };
 
   const getTextForPage = (tools) => {

@@ -55,6 +55,7 @@ const initialState = {
     notificationsHistory: {},
     referal: [],
     referalPay: {},
+    tools: [],
   },
   isAuthenticated: false,
 };

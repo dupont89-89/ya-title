@@ -6,6 +6,7 @@ const path = require("path");
 const userRoutes = require("./routes/userRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const payRoutes = require("./routes/payRoutes");
+const toolsRoutes = require("./routes/toolsRoutes");
 const cron = require("node-cron");
 const { updateBonusLvt } = require("./utils/updateBonusLvt");
 const http = require("http");
@@ -55,27 +56,8 @@ mongoose
 app.use("/api/user", userRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/pay", payRoutes);
+app.use("/api/tools", toolsRoutes);
 app.post("/api/get-title", getTitleRoute);
-app.post("/api/fetch-key", async (req, res) => {
-  console.log("Received request at /api/fetch-key");
-  const { query } = req.body;
-
-  try {
-    const response = await fetchYandexKey(query);
-
-    // Проверяем, что response не пустой массив, а строка или массив с результатами
-    if (typeof response === "string") {
-      res.status(200).json({ result: response });
-    } else if (Array.isArray(response) && response.length > 0) {
-      res.status(200).json({ result: response });
-    } else {
-      res.status(200).json({ result: "Нет данных" });
-    }
-  } catch (error) {
-    console.error("Error in /api/fetch-key:", error);
-    res.status(500).json({ error: "Ошибка при выполнении запроса" });
-  }
-});
 
 // Обслуживание статических файлов из папки uploads
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
