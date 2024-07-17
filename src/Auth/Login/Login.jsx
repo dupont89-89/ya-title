@@ -110,7 +110,7 @@ const Login = (props) => {
               <h1 style={titleForm}>Войдите в свой аккаунт</h1>
               <input
                 type="email"
-                placeholder="Email"
+                placeholder="Электронная почта"
                 name="email"
                 onChange={handleChange}
                 value={data.email}
@@ -119,7 +119,7 @@ const Login = (props) => {
               />
               <input
                 type="password"
-                placeholder="Password"
+                placeholder="Пароль"
                 name="password"
                 onChange={handleChange}
                 value={data.password}

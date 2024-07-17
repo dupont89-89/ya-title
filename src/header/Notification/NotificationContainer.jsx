@@ -6,31 +6,34 @@ import {
 } from "../../Api/api-support";
 import { connect } from "react-redux";
 
-function NotificationContainer(props) {
-  const [notifications, setNotifications] = useState(props.notifications);
+function NotificationContainer({
+  notifications,
+  userId,
+  getNotificationMessage,
+  clearNotificationMessage,
+}) {
+  const [localNotifications, setLocalNotifications] = useState(notifications);
 
   useEffect(() => {
-    // Обновляем локальное состояние уведомлений при каждом изменении в props.notifications
-    setNotifications(props.notifications);
-    console.log(props.notifications);
-  }, [props.notifications]);
+    // Обновляем локальное состояние уведомлений при каждом изменении в notifications
+    setLocalNotifications(notifications);
+  }, [notifications]);
 
   useEffect(() => {
-    if (props.userId) {
-      props.getNotificationMessage(props.userId);
-      console.log(props.userId);
+    if (userId) {
+      getNotificationMessage(userId);
     }
-  }, [props.userId]);
+  }, [userId, getNotificationMessage]);
 
-  const notificationCount = notifications.length;
+  const notificationCount = localNotifications.length;
 
   return (
     <div>
       <Notification
         notificationCount={notificationCount}
-        notifications={notifications}
-        clearNotificationMessage={props.clearNotificationMessage}
-        userId={props.userId}
+        notifications={localNotifications}
+        clearNotificationMessage={clearNotificationMessage}
+        userId={userId}
       />
     </div>
   );

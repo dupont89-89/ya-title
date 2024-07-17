@@ -10,8 +10,8 @@ export default function MainMenuHeader(props) {
         <ToolsModalMenu
           nameBtnPopup="Инструменты"
           content={<MainMenuHeaderModal />}
-          backgroundColor="#465ab6"
-          color="#fff"
+          backgroundColor="rgb(255 206 59)"
+          color="rgb(49 49 49)"
         />
         <Link className={s.link} to="/balance">
           Тарифы
@@ -42,9 +42,16 @@ function MainMenuHeaderModal(props) {
           </Link>
         </li>
         <li>
-          <Link to="/commerce-key" onClick={handleLinkClick}>
+          <Link to="/commerce-key/" onClick={handleLinkClick}>
             <span className={s.linkMenuTools}>
               Определение типа ключевого запроса
+            </span>
+          </Link>
+        </li>
+        <li>
+          <Link to="/wordstat/" onClick={handleLinkClick}>
+            <span className={s.linkMenuTools}>
+              Проверка частотности запросов
             </span>
           </Link>
         </li>

@@ -1,5 +1,4 @@
 import React from "react";
-import s from "./Parts.module.css";
 
 export default function Oferta() {
   const oferta = {

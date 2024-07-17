@@ -63,7 +63,6 @@ const infoMarker = [
   "или",
   "неужели",
   "разве",
-  "где",
   "почему",
   "куда",
   "когда",
@@ -660,6 +659,7 @@ const domenInfo = [
   "irecommend.ru",
   "www.kp.ru",
   "ru.wikipedia.org",
+  "probolezny.ru",
   "en.wikipedia.org",
   "club.dns-shop.ru",
   "ru.wiktionary.org",
@@ -714,6 +714,9 @@ const domenInfo = [
   "kampus.ai",
   "habr.com",
   "netology.ru",
+  "www.menshealth.com",
+  "www.woman.ru",
+  "health.mail.ru",
 ];
 
 const domenCommerce = [
@@ -734,7 +737,6 @@ const domenCommerce = [
   "uslugi.yandex.ru",
   "uslugio.com",
   "zoon.ru",
-  "travel.yandex.ru",
   "moscow.petrovich.ru",
   "www.vseinstrumenti.ru",
   "megamarket.ru",

@@ -4,10 +4,11 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLandmark, faUsers } from "@fortawesome/free-solid-svg-icons";
 
-export default function Admin(props) {
+export default function Admin({ getAdminUserData, countUser }) {
   useEffect(() => {
-    props.getAdminUserData();
-  }, []);
+    getAdminUserData();
+  }, [getAdminUserData]);
+
   return (
     <div className={s.adminPage}>
       <div className={s.blockAdminPage}>
@@ -22,7 +23,7 @@ export default function Admin(props) {
       <div className={s.blockAdminPage}>
         <h2>Статистика</h2>
         <div className={s.countUser}>
-          <span>Пользователи всего: </span> {props.countUser}
+          <span>Пользователи всего: </span> {countUser}
         </div>
       </div>
       <div className={s.blockAdminPage}>

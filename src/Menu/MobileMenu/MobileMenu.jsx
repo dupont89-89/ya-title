@@ -41,7 +41,7 @@ const MobileMenu = () => {
             <li className={styles.menu__group}>
               <Link
                 onClick={toggleMenu}
-                to="/profile"
+                to="/profile/"
                 className={`${styles.menu__link} ${styles["ra-link"]}`}
               >
                 Профиль
@@ -50,7 +50,7 @@ const MobileMenu = () => {
             <li className={styles.menu__group}>
               <Link
                 onClick={toggleMenu}
-                to="/cabinet"
+                to="/cabinet/"
                 className={`${styles.menu__link} ${styles["ra-link"]}`}
               >
                 Кабинет пользователя
@@ -59,7 +59,7 @@ const MobileMenu = () => {
             <li className={styles.menu__group}>
               <Link
                 onClick={toggleMenu}
-                to="/referal"
+                to="/referal/"
                 className={`${styles.menu__link} ${styles["ra-link"]}`}
               >
                 Реферальная программа
@@ -68,7 +68,7 @@ const MobileMenu = () => {
             <li className={styles.menu__group}>
               <Link
                 onClick={toggleMenu}
-                to="/history-message"
+                to="/history-message/"
                 className={`${styles.menu__link} ${styles["ra-link"]}`}
               >
                 История оповещений
@@ -92,9 +92,18 @@ const MobileMenu = () => {
               <Link
                 className={`${styles.menu__link} ${styles["ra-link"]}`}
                 onClick={toggleMenu}
-                to="/commerce-key"
+                to="/commerce-key/"
               >
                 Определение типа ключевого запроса
+              </Link>
+            </li>
+            <li className={styles.menu__group}>
+              <Link
+                onClick={toggleMenu}
+                to="/wordstat/"
+                className={`${styles.menu__link} ${styles["ra-link"]}`}
+              >
+                Проверка частотности запросов
               </Link>
             </li>
           </ul>
@@ -103,7 +112,7 @@ const MobileMenu = () => {
           className={`${styles.menu__toggle} ${styles["ra-button"]}`}
           type="button"
           aria-controls="main-menu"
-          onClick={toggleMenu} // Добавьте эту строку
+          onClick={toggleMenu}
         >
           <span
             className={`${styles.menu__hamburger} ${styles["uia-hamburger"]}`}

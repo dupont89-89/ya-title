@@ -1,18 +1,22 @@
+import React, {
+  useEffect,
+  useLayoutEffect,
+  useState,
+  useCallback,
+} from "react";
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
-import Footer from "./footer/Footer";
-import { setAuthSuccess } from "./redux/user-reducer/user-reducer";
+import { Route, Routes, Navigate } from "react-router-dom";
 import { connect } from "react-redux";
-import { getUser, loginUser } from "./Api/api-user-login";
-import { useEffect, useLayoutEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
+import io from "socket.io-client";
+import { setAuthSuccess as setAuthSuccessAction } from "./redux/user-reducer/user-reducer";
+import { getUser as getUserAction, loginUser } from "./Api/api-user-login";
+import { getNotificationMessage as getNotificationMessageAction } from "./Api/api-support";
+import Footer from "./footer/Footer";
 import HeaderContainer from "./header/HeaderContainer";
-import ToolsContentContainer from "./ToolsContent/ToolsContentContainer";
+import ToolsContentContainer from "./ToolsComponent/ToolsContentContainer";
 import BalancePageContainer from "./BalancePage/BalancePageContainer";
 import Loading from "./app-function/Loading";
 import LogoPtahini from "./img/logo/PTAHINI-nav.png";
-import io from "socket.io-client";
-import { getNotificationMessage } from "./Api/api-support";
 import AdminContainer from "./Admin/AdminContainer";
 import AdminUserContainer from "./Admin/AdminUser/AdminUserContainer";
 import AdminPanelContainer from "./header/AdminPanel/AdminPanelContainer";
@@ -72,20 +76,32 @@ function App({
     }
   }, []);
 
+  const memoizedGetUser = useCallback((userId) => getUser(userId), [getUser]);
+  const memoizedSetAuthSuccess = useCallback(
+    () => setAuthSuccess(),
+    [setAuthSuccess]
+  );
+  const memoizedGetNotificationMessage = useCallback(
+    (userId) => getNotificationMessage(userId),
+    [getNotificationMessage]
+  );
+
   useEffect(() => {
     // Создаем соединение с сервером Socket.IO
     const socket = io(serverUrl);
-    console.log("Соединение установленно");
     // Прослушиваем событие "dailyUpdate" от сервера
     socket.on("dailyUpdate", () => {
       // Выполняем функцию при получении события "dailyUpdate"
-      console.log("Received daily update from server");
       // Ваша логика здесь
       const userId = JSON.parse(localStorage.getItem("userId"));
-      getUser(userId);
-      getNotificationMessage(userId);
+      memoizedGetUser(userId);
+      memoizedGetNotificationMessage(userId);
     });
-  }, []);
+
+    return () => {
+      socket.disconnect();
+    };
+  }, [memoizedGetNotificationMessage, memoizedGetUser]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -94,9 +110,9 @@ function App({
         const userId = JSON.parse(localStorage.getItem("userId"));
         if (userId) {
           if (isAuthenticated) {
-            await Promise.all([getUser(userId)]);
+            await memoizedGetUser(userId);
           }
-          setAuthSuccess();
+          memoizedSetAuthSuccess();
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -106,7 +122,7 @@ function App({
     };
 
     fetchData();
-  }, [isAuthenticated]);
+  }, [isAuthenticated, memoizedGetUser, memoizedSetAuthSuccess]);
 
   if (isLoading) {
     return (
@@ -162,6 +178,7 @@ function App({
                         linkRehName="Регистрация"
                         color="#000"
                         width={modalWidth}
+                        widthButton="200px"
                       />
                     }
                   />
@@ -226,7 +243,7 @@ function App({
                 <Route path="/admin/score" element={<ScoreUserContainer />} />
               </>
             )}
-            {/* <Route path="*" element={<NotFound />} /> */}
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </article>
         <footer>
@@ -239,9 +256,9 @@ function App({
 }
 
 const mapDispatchToProps = {
-  setAuthSuccess,
-  getUser,
-  getNotificationMessage,
+  setAuthSuccess: setAuthSuccessAction,
+  getUser: getUserAction,
+  getNotificationMessage: getNotificationMessageAction,
   loginUser,
 };
 
@@ -251,4 +268,5 @@ const mapStateToProps = (state) => {
     role: state.user.dataUser.role,
   };
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(App);

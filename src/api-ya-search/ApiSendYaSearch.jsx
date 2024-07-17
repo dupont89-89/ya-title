@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import s from "./Form.module.css";
 import t from "./../css/Tools.module.css";
-import RegionSelectSearch from "../app-function/RegionSelectSearch";
+import RegionSelectSearch from "../ToolsComponent/PartsComponentTools/RegionSelectSearch";
 import Loading from "../app-function/Loading";
 import TitleValues from "./TitleValues";
 import RepeatWords from "./RepeatWords";
@@ -26,7 +26,7 @@ export default function ApiSendYaSearch(props) {
   const [titleValues, setTitleValues] = useState(null); // Состояние для хранения значений заголовков
   const [repeatWords, setRepeatWords] = useState(null); // Состояние для хранения повторяющихся слов
   const [resultString, setResultString] = useState(""); // Состояние для хранения строки с первыми 8 словами
-  const [selectedCity, setSelectedCity] = useState("213");
+  const [selectedCity, setSelectedCity] = useState(213);
   const [isLoading, setIsLoading] = useState(false); // Состояние для указания на процесс загрузки
   const [topFriLink, setResultWordsLink] = useState(null);
   const [copySuccess, setCopySuccess] = useState(false);
@@ -253,13 +253,21 @@ export default function ApiSendYaSearch(props) {
                 />
               )}
             </div>
-            <div className={s.title}>
-              <h1>Создай правильный Title</h1>
+            <div className={t.title}>
+              <div className={t.titleTools}>
+                <h1>Создай правильный Title</h1>
+              </div>
               {props.isAuthenticated && (
-                <span className={t.tarifLvt}>Будет списано: 1 lvt</span>
+                <div className={t.tarifBlock}>
+                  <span className={t.tarifLvt}>Будет списано: 1 lvt</span>
+                </div>
               )}
             </div>
-            <RegionSelectSearch onSelect={handleCitySelect} />
+            <RegionSelectSearch
+              defaultRegion={selectedCity}
+              onSelect={handleCitySelect}
+              nameLabel="Регион продвижения:"
+            />
             <InputKey
               handleChange={handleChange}
               query={query}
