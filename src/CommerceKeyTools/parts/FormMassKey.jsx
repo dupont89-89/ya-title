@@ -66,41 +66,43 @@ export default function FormMassKey(props) {
               </button>
             </>
           )}
-        <div className={s.fileKey}>
-          <div className={s.input__wrapper}>
-            <input
-              type="file"
-              name="keyFile"
-              id="input__file"
-              accept=".txt" // Указываем что принимаем только .txt файлы
-              onChange={handleFileChange} // Обработчик изменения файла
-              className={`${s.input} ${s.input__file}`}
-              ref={fileInputRef} // Присваиваем реф input файлу
-            />
-            <label htmlFor="input__file" className={s.input__fileButton}>
-              <span className={s.input__fileIconWrapper}>
-                <img
-                  className={s.input__fileIcon}
-                  src={iconLoadFile}
-                  alt="Выбрать файл"
-                  width="25"
-                />
-              </span>
-              <span className={s.input__fileButtonText}>
-                {fileInputRef.current && fileInputRef.current.value
-                  ? "Файл загружен"
-                  : "Загрузить файл"}
-              </span>
-            </label>
-          </div>
-          <span className={s.btnIconVopros}>
-            <img src={iconVopros} alt="" />
-            <div className={s.tooltip}>
-              Формат файла TXT (блокнот).
-              <br /> Каждый ключевой запрос с новой строки.
+        {result && (
+          <div className={s.fileKey}>
+            <div className={s.input__wrapper}>
+              <input
+                type="file"
+                name="keyFile"
+                id="input__file"
+                accept=".txt" // Указываем что принимаем только .txt файлы
+                onChange={handleFileChange} // Обработчик изменения файла
+                className={`${s.input} ${s.input__file}`}
+                ref={fileInputRef} // Присваиваем реф input файлу
+              />
+              <label htmlFor="input__file" className={s.input__fileButton}>
+                <span className={s.input__fileIconWrapper}>
+                  <img
+                    className={s.input__fileIcon}
+                    src={iconLoadFile}
+                    alt="Выбрать файл"
+                    width="25"
+                  />
+                </span>
+                <span className={s.input__fileButtonText}>
+                  {fileInputRef.current && fileInputRef.current.value
+                    ? "Файл загружен"
+                    : "Загрузить файл"}
+                </span>
+              </label>
             </div>
-          </span>
-        </div>
+            <span className={s.btnIconVopros}>
+              <img src={iconVopros} alt="" />
+              <div className={s.tooltip}>
+                Формат файла TXT (блокнот).
+                <br /> Каждый ключевой запрос с новой строки.
+              </div>
+            </span>
+          </div>
+        )}
       </div>
 
       {Array.isArray(result) && (
@@ -117,10 +119,11 @@ export default function FormMassKey(props) {
                       </span>
                     </td>
                     <td>
-                      <span
+                      {/* <span
                         className={s.resultKeyTextMass}
                         dangerouslySetInnerHTML={{ __html: item.result }}
-                      />
+                      /> */}
+                      <span className={s.resultKeyTextMass}>{item.result}</span>
                     </td>
                   </tr>
                 ))}

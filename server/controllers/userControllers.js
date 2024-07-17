@@ -4,18 +4,14 @@ const { validateUser } = require("../utils/validation");
 
 exports.signUpUserController = async (req, res) => {
   try {
-    console.log("Request body:", req.body);
-
     // Валидация данных пользователя
     const { error } = validateUser(req.body);
     if (error) {
-      console.log("Validation error:", error);
       return res.status(400).send({ message: error.details[0].message });
     }
 
     const userExists = await User.findOne({ email: req.body.email });
     if (userExists) {
-      console.log("User already exists:", userExists);
       return res.status(409).send({
         message:
           "Пользователь с указанным адресом электронной почты уже существует",
@@ -24,8 +20,6 @@ exports.signUpUserController = async (req, res) => {
 
     const salt = await bcrypt.genSalt(Number(process.env.SALT));
     const hashPassword = await bcrypt.hash(req.body.password, salt);
-
-    console.log("Hashed password:", hashPassword);
     const bonusLvt = 20;
     // Создание нового пользователя с начислением 20 в поле lvtPresent
     await User.create({
