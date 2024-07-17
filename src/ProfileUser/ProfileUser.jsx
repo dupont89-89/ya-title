@@ -79,13 +79,13 @@ export default function ProfileUser(props) {
               <label htmlFor="input__file" className={s.input__fileButton}>
                 <span className={s.input__fileIconWrapper}>
                   <img
-                    class={s.input__fileIcon}
+                    className={s.input__fileIcon}
                     src={iconLoadAvatar}
                     alt="Выбрать файл"
                     width="25"
                   />
                 </span>
-                <span class={s.input__fileButtonText}>Сменить аватар</span>
+                <span className={s.input__fileButtonText}>Сменить аватар</span>
               </label>
             </div>
             {avatarFile ? (

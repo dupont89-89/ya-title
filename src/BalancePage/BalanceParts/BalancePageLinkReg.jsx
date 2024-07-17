@@ -5,13 +5,13 @@ export default function BalancePageLinkReg(props) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const btnForm = {
-    backgroundColor: props.backgroundColor ? props.backgroundColor : "#03A9F4",
+    backgroundColor: props.backgroundColor ? props.backgroundColor : "#009688",
     color: "white",
     margin: props.btnFormMargin,
-    width: props.btnFormWidth,
+    width: props.btnFormWidth ? props.btnFormWidth : "200px",
     border: "none",
     outline: "none",
-    padding: "10px 0",
+    padding: "10px 20px",
     borderRadius: "8px",
     fontWeight: "500",
     fontSize: "20px",

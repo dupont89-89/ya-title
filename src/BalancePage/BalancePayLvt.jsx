@@ -131,13 +131,11 @@ export default function BalancePayLvt(props) {
 
   useEffect(() => {
     handleAddBalance(addBalanse);
-    console.log("addBalance изменен:", addBalanse);
   }, [addBalanse]);
 
   // Функция обратного вызова для передачи addBalance
   const handleAddBalance = (addBalance) => {
     props.onAddBalance(addBalance);
-    console.log("Вызвана функция handleAddBalance с параметром:", addBalance);
   };
 
   const userId = props.userId;
@@ -149,7 +147,6 @@ export default function BalancePayLvt(props) {
       if (!isNaN(selectedLvt)) {
         // Вызываем функцию addLvtUserBalance
         props.addLvtUserBalance(userId, selectedLvt, selectedValue);
-        debugger;
       } else {
         console.error("Ошибка: selectedLvt не является числовым значением");
       }

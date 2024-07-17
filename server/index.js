@@ -14,7 +14,6 @@ const socketIo = require("socket.io");
 const getTitleRoute = require("./routes/getTitleRoute"); // Импортируем маршрут
 const app = express();
 const server = http.createServer(app);
-const { fetchYandexKey } = require("./tools-key-info/yandex-xml");
 const io = socketIo(server, {
   cors: {
     origin: process.env.REACT_APP_URL_FRONTEND,

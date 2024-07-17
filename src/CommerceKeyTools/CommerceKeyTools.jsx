@@ -25,6 +25,7 @@ export default function CommerceKeyTools(props) {
     massKey,
     setShowModal,
     lvtUserSpend,
+    tools,
   } = props;
 
   return (
@@ -43,15 +44,19 @@ export default function CommerceKeyTools(props) {
             )}
           </div>
           <div className={s.title}>
-            <h1>Определение типа ключевого запроса</h1>
-            <span className={s.tarifLvt}>
-              {massKey ? "10 lvt / 100 запросов" : "Бесплатно"}
-            </span>
-            {queryArray && massKey && (
-              <span className={s.spendUserFront}>
-                К списанию: {lvtUserSpend} Lvt
+            <div className={s.titleTools}>
+              <h1>Определение типа ключевого запроса</h1>
+            </div>
+            <div className={s.tarifBlock}>
+              <span className={s.tarifLvt}>
+                {massKey ? "10 lvt / 100 запросов" : "Бесплатно"}
               </span>
-            )}
+              {queryArray && massKey && (
+                <span className={s.spendUserFront}>
+                  К списанию: {lvtUserSpend} Lvt
+                </span>
+              )}
+            </div>
           </div>
           {isLoading ? ( // Показываем "ЗАГРУЗКА" во время загрузки
             <Loading />
@@ -76,6 +81,7 @@ export default function CommerceKeyTools(props) {
                   handleClickMassClear={handleClickMassClear}
                   handleFileChange={handleFileChange}
                   lvtUserSpend={lvtUserSpend}
+                  tools={tools}
                 />
               )}
             </div>

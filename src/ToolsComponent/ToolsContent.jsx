@@ -10,6 +10,7 @@ import iconHTML from "./../img/icon/html-specificaciya-logo.svg";
 import iconRuTube from "./../img/icon/rutube-icon.png";
 import yaDirect from "./../img/icon/ya-direct.png";
 import iconPtahini from "./../img/icon/ptahini-icon.png";
+import CountWordKeyContainer from "../countWordkey/CountWordKeyContainer";
 
 export default function ToolsContent(props) {
   const { tools } = useParams();
@@ -51,6 +52,23 @@ export default function ToolsContent(props) {
     iconLinkFo: iconRuTube,
   };
 
+  const keyCountWordstatSidebar = {
+    nameDoc: "Документация по частотности запросов",
+    nameLinkOne: "Справка Яндекса.Директ по ключам",
+    hrefLinkOne:
+      "https://yandex.ru/support/direct/keywords/building-keyword-list.html",
+    iconLinkOne: yaDirect,
+    nameLinkTwo: "Справка Google",
+    hrefLinkTwo: "https://support.google.com/google-ads/answer/2453981?hl=RU",
+    iconLinkTwo: iconGoogle,
+    nameLinkTri: "Яндекс Wordstat",
+    hrefLinkTri: "https://wordstat.yandex.ru/",
+    iconLinkTri: iconYandex,
+    nameLinkFo: "Google Trends",
+    hrefLinkFo: "https://trends.google.com/trends?geo=&hl=ru",
+    iconLinkFo: iconGoogle,
+  };
+
   const getTextForPage = (tools) => {
     switch (tools) {
       case "create-title":
@@ -65,6 +83,13 @@ export default function ToolsContent(props) {
             фразы, что позволяет создать заголовок, максимально соответствующий
             поисковым запросам пользователей.
           </p>
+        );
+      case "wordstat":
+        return (
+          <div>
+            <h2>Определение частотности в Wordstat онлайн</h2>
+            <p>Это текст про частотность запросов</p>
+          </div>
         );
       case "commerce-key":
         return (
@@ -148,6 +173,12 @@ export default function ToolsContent(props) {
         return (
           <CommerceKeyToolsContainer
             toolsSidebar={<ToolsSidebar sidebar={keyCommerceSidebar} />}
+          />
+        );
+      case "wordstat":
+        return (
+          <CountWordKeyContainer
+            toolsSidebar={<ToolsSidebar sidebar={keyCountWordstatSidebar} />}
           />
         );
       default:

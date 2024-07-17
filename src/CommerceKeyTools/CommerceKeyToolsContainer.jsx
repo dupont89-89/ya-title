@@ -5,6 +5,7 @@ import { getFetchkey } from "../Api/api-tools-search";
 import Papa from "papaparse";
 import { spendLvt } from "../Api/api-lvt";
 import { loadFileUserTools } from "../Api/api-tools";
+import { TitleComponent } from "../Function/TitleComponent";
 
 function CommerceKeyToolsContainer(props) {
   const [query, setQuery] = useState("");
@@ -171,32 +172,39 @@ function CommerceKeyToolsContainer(props) {
   }, [queryArray, props.totalLvt]);
 
   return (
-    <CommerceKeyTools
-      userId={props.userId}
-      totalLvt={props.totalLvt}
-      isAuthenticated={props.isAuthenticated}
-      tarifKey={tarifKey}
-      toolsSidebar={props.toolsSidebar}
-      handleChange={handleChange}
-      handleChangeMass={handleChangeMass}
-      handleClickMass={handleClickMass}
-      handleKeyDown={handleKeyDown}
-      handleClickMassClear={handleClickMassClear}
-      handleFetchKey={handleFetchKey}
-      setShowModal={setShowModal}
-      query={query}
-      queryArray={queryArray}
-      result={result}
-      isLoading={isLoading}
-      showModal={showModal}
-      text={text}
-      sumKeyLvt={sumKeyLvt}
-      handleFileChange={handleFileChange}
-      sumLvt={sumLvt}
-      csvDownloadLink={csvDownloadLink}
-      massKey={massKey}
-      lvtUserSpend={lvtUserSpend}
-    />
+    <>
+      <TitleComponent
+        description="Определяйте бесплатно тип поискового запроса. Сервис для SEO продвижения сайта. Определяет запросы как: коммерческий, информационный, навигационный, мультимедиа и общий."
+        title="Проверка запросов, определение коммерческий или информационный — seo сервис продвижения сайта"
+      />
+      <CommerceKeyTools
+        userId={props.userId}
+        totalLvt={props.totalLvt}
+        isAuthenticated={props.isAuthenticated}
+        tarifKey={tarifKey}
+        toolsSidebar={props.toolsSidebar}
+        handleChange={handleChange}
+        handleChangeMass={handleChangeMass}
+        handleClickMass={handleClickMass}
+        handleKeyDown={handleKeyDown}
+        handleClickMassClear={handleClickMassClear}
+        handleFetchKey={handleFetchKey}
+        setShowModal={setShowModal}
+        query={query}
+        queryArray={queryArray}
+        result={result}
+        isLoading={isLoading}
+        showModal={showModal}
+        text={text}
+        sumKeyLvt={sumKeyLvt}
+        handleFileChange={handleFileChange}
+        sumLvt={sumLvt}
+        csvDownloadLink={csvDownloadLink}
+        massKey={massKey}
+        lvtUserSpend={lvtUserSpend}
+        tools={props.tools}
+      />
+    </>
   );
 }
 
@@ -206,6 +214,7 @@ let mapStateToProps = (state) => {
     isAuthenticated: state.user.isAuthenticated,
     lvt: state.user.dataUser.lvt,
     totalLvt: state.user.dataUser.totalLvt,
+    tools: state.user.dataUser.tools,
   };
 };
 

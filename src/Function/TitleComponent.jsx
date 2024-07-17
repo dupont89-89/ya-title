@@ -1,11 +1,11 @@
 import React from "react";
-import Helmet from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
-const TitleComponent = ({ title }) => {
-  var defaultTitle = "⚛️ app";
+const TitleComponent = ({ title, description }) => {
   return (
     <Helmet>
-      <title>{title ? title : defaultTitle}</title>
+      <title>{title}</title>
+      <meta name="description" content={description} />
     </Helmet>
   );
 };

@@ -110,7 +110,7 @@
 }
 
 .sectionGridSK aside nav li {
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .sectionGridSK aside nav h2 {
@@ -186,13 +186,12 @@ a.downloadLink:hover {
     font-size: 16px;
     color: #000;
     padding: 3px 6px;
-    margin-top: 15px;
 }
 
 .title h1 {
     font-size: 2rem;
-    color: #fff;
-    font-weight: 400;
+    color: #3b1147;
+    font-weight: 500;
     text-align: left;
     margin: 0px;
 }
@@ -201,9 +200,7 @@ a.downloadLink:hover {
     border: none;
     padding: 5px 15px;
     font-size: 21px;
-    border-radius: 10px;
-    cursor: pointer;
-    height: 45px;
+    border-radius: 5px;
     color: #fff;
 }
 
@@ -226,7 +223,9 @@ a.downloadLink:hover {
 .btnTextAreaMass {
     display: grid;
     grid-gap: 30px;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: auto auto auto;
+    justify-items: start;
+    justify-content: start;
 }
 
 .inputBlockForm input {
@@ -236,11 +235,6 @@ a.downloadLink:hover {
     font-size: 20px;
     text-align: center;
     border: none;
-}
-
-.blockForm label {
-    font-size: 21px;
-    color: #fff;
 }
 
 .blockForm {
@@ -256,6 +250,7 @@ a.downloadLink:hover {
 
 .sectionBlockTools {
     padding: 20px;
+    max-width: 800px;
 }
 
 .keySum button {
@@ -296,12 +291,20 @@ a.downloadLink:hover {
     font-size: 18px;
 }
 
+.resultKeyTextMass {
+    background-color: #f5b24d;
+    padding: 4px 12px;
+    border-radius: 5px;
+    color: #000;
+    display: inline-block;
+    font-size: 15px;
+}
+
 .textareaCustom {
-    min-height: 300px;
+    height: 300px;
     white-space: pre-wrap;
     width: 100%;
-    max-width: 525px;
-    /* Для корректного отображения переносов строк */
+    border-radius: 8px;
 }
 
 .textInput {
@@ -321,8 +324,6 @@ a.downloadLink:hover {
 
 .input__wrapper {
     position: relative;
-    margin: 15px 0;
-    text-align: center;
 }
 
 .input__file {
@@ -352,11 +353,10 @@ a.downloadLink:hover {
 }
 
 .input__fileButton {
-    max-width: 220px;
-    background: #009688;
+    background: #d2d2d2;
     border-radius: 5px;
-    color: #fff;
-    font-size: 14px;
+    color: #414141;
+    font-size: 21px;
     font-weight: 500;
     display: flex;
     align-items: center;
@@ -372,7 +372,10 @@ a.downloadLink:hover {
 }
 
 .btnIconVopros img {
-    width: 45px;
+    width: 24px;
+    position: absolute;
+    top: -36px;
+    left: -8px;
 }
 
 .fileKey {
@@ -383,7 +386,6 @@ a.downloadLink:hover {
 .btnIconVopros {
     display: inline-block;
     cursor: pointer;
-    margin-left: 20px;
 }
 
 .fileKey {
@@ -397,7 +399,6 @@ a.downloadLink:hover {
 .tooltip {
     visibility: hidden;
     width: 310px;
-    /* Установите нужную ширину */
     background-color: #f9f9f9;
     color: #000;
     text-align: center;
@@ -407,9 +408,8 @@ a.downloadLink:hover {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     position: absolute;
     z-index: 1;
-    bottom: 125%;
-    /* Позиционируем подсказку выше элемента */
-    left: 50%;
+    bottom: 40px;
+    left: 0;
     transform: translateX(-50%);
     opacity: 0;
     transition: opacity 0.3s;
@@ -445,9 +445,9 @@ a.downloadLink:hover {
 
 .spendUserFront {
     display: inline-block;
-    margin-left: 20px;
     font-size: 16px;
-    background-color: #d14035;
+    background-color: #f5b24d;
+    color: #000;
     padding: 4px 10px;
     border-radius: 4px;
 }
@@ -464,6 +464,177 @@ button.btnNewSendMassKey {
 
 button.btnNewSendMassKey:hover {
     background-color: #2f3b85;
+}
+
+.resultKeyCount {
+    width: 100%;
+    border: none;
+    margin-bottom: 20px;
+}
+
+.resultKeyCount thead th {
+    font-weight: bold;
+    text-align: left;
+    border: none;
+    padding: 10px 15px;
+    background: #d8d8d8;
+    font-size: 14px;
+}
+
+.resultKeyCount thead tr th:first-child {
+    border-radius: 8px 0 0 8px;
+}
+
+.resultKeyCount thead tr th:last-child {
+    border-radius: 0 8px 8px 0;
+}
+
+.resultKeyCount tbody td {
+    text-align: left;
+    border: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    vertical-align: top;
+}
+
+.resultKeyCount tbody tr:nth-child(even) {
+    background: #f3f3f3;
+}
+
+.resultKeyCount tbody tr td:first-child {
+    border-radius: 8px 0 0 8px;
+}
+
+.resultKeyCount tbody tr td:last-child {
+    border-radius: 0 8px 8px 0;
+}
+
+.historyBlockLink {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.historyBlockLink h2 {
+    color: #000;
+    margin-top: 0;
+}
+
+.historyTableLink {
+    border: 1px solid #eee;
+    table-layout: fixed;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.historyTableLink th {
+    font-weight: bold;
+    padding: 5px;
+    background: #efefef;
+    border: 1px solid #dddddd;
+}
+
+.historyTableLink td {
+    padding: 5px 10px;
+    border: 1px solid #eee;
+    text-align: left;
+}
+
+.historyTableLink tbody tr:nth-child(odd) {
+    background: #fff;
+}
+
+.historyTableLink tbody tr:nth-child(even) {
+    background: #F7F7F7;
+}
+
+.historyTableLink a {
+    font-size: 18px;
+}
+
+.historyTableLink a:hover {
+    text-decoration: underline;
+}
+
+textarea {
+    background-color: #fcfcfd;
+    border: 2px solid #ced3de;
+    width: 100%;
+    padding: 5px 12px;
+    font-size: 20px;
+    color: #002b59;
+    line-height: 1.2;
+    font-weight: normal;
+}
+
+.blockTeaxtArea {
+    width: 100%;
+}
+
+.blockTeaxtArea textarea:focus {
+    outline: none !important;
+    border: 2px solid #101010;
+    box-shadow: 0 0 10px #719ECE;
+}
+
+.labelTextArea {
+    margin-bottom: 10px;
+    display: block;
+}
+
+.textLinkCabinet {
+    color: #000;
+    font-size: 15px;
+}
+
+.textLinkCabinet a {
+    font-weight: 500;
+    text-decoration: underline;
+}
+
+.titleTools {
+    display: inline-block;
+    background-color: #ffffff;
+    padding: 9px;
+    border-radius: 6px;
+}
+
+.tarifBlock {
+    display: grid;
+    grid-gap: 20px;
+    justify-items: start;
+    align-items: center;
+    align-content: center;
+    justify-content: start;
+    margin-top: 20px;
+    grid-template-columns: auto auto auto;
+}
+
+.noLvtText {
+    background-color: #FFC107;
+    display: block;
+    padding: 10px;
+    border-radius: 10px;
+    color: #000;
+    line-height: 25px;
+    font-size: 18px;
+}
+
+.selectRegion {
+    color: #000;
+}
+
+.selectRegion {
+    width: 220px;
+}
+
+.ballDirect {
+    display: inline-block;
+    font-size: 16px;
+    background-color: #f5b24d;
+    color: #000;
+    padding: 4px 10px;
+    border-radius: 4px;
 }
 
 /* Стили для мобильных устройств */

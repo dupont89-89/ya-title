@@ -3,14 +3,19 @@ import s from "./../Admin.module.css";
 import UniversalModal from "../../Modal/UniversalModal";
 import AdminFormAddLvtUser from "../Parts/Form/AdminFormAddLvtUser";
 
-export default function AdminUser(props) {
+export default function AdminUser({
+  getAdminUserData,
+  editAdminUserStatus,
+  addLvtAdminUser,
+  dataUser,
+}) {
   useEffect(() => {
-    props.getAdminUserData();
-  }, []);
+    getAdminUserData();
+  }, [getAdminUserData]);
 
   const onChange = (userId, role) => {
     // Вызываем функцию editAdminUserStatus и передаем ей userId и новый статус
-    props.editAdminUserStatus(userId, role);
+    editAdminUserStatus(userId, role);
   };
 
   return (
@@ -28,8 +33,8 @@ export default function AdminUser(props) {
           </tr>
         </thead>
         <tbody>
-          {props.dataUser &&
-            props.dataUser.map((user, index) => (
+          {dataUser &&
+            dataUser.map((user, index) => (
               <tr className={s.tableTrUser} key={index}>
                 <td aria-label="ID пользователя">{user.userId}</td>
                 <td aria-label="Эл. почта">{user.email}</td>
@@ -43,7 +48,7 @@ export default function AdminUser(props) {
                       width="350px"
                       content={
                         <AdminFormAddLvtUser
-                          addLvtAdminUser={props.addLvtAdminUser}
+                          addLvtAdminUser={addLvtAdminUser}
                           userId={user.userId}
                         />
                       }

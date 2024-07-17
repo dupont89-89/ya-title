@@ -1,33 +1,33 @@
 import React, { useState } from "react";
 import styles from "./styles.module.css";
-import { signUpUser } from "../../Api/api-user-login";
-import { loginUser } from "../../Api/api-user-login";
+import { signUpUser, loginUser } from "../../Api/api-user-login";
 import ptahiniLogo from "./../../img/logo/PTAHINI-nav.png";
 import Loading from "../../app-function/Loading";
 import { sendMail } from "../../Api/api-admin";
 
 const Signup = (props) => {
-  // Функция для генерации четырёхзначного кода
   const generateConfirmationCode = () => {
     const min = 1000;
     const max = 9999;
     return Math.floor(Math.random() * (max - min + 1)) + min;
   };
+
   const [data, setData] = useState({
     email: "",
     password: "",
-    confirmationCode: generateConfirmationCode().toString(), // Используем функцию для генерации кода
+    confirmationCode: generateConfirmationCode().toString(),
   });
-  const [enteredConfirmationCode, setEnteredConfirmationCode] = useState(""); // Состояние для хранения введенного пользователем кода
+
+  const [enteredConfirmationCode, setEnteredConfirmationCode] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [emailSent, setEmailSent] = useState(false); // Состояние для отслеживания отправки письма с кодом
-  const [showConfirmation, setShowConfirmation] = useState(false); // Состояние для отображения поля ввода кода
-  const [confirmationCodeSent, setConfirmationCodeSent] = useState(false); // Состояние для отслеживания отправки кода подтверждения
+  const [emailSent, setEmailSent] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [confirmationCodeSent, setConfirmationCodeSent] = useState(false);
 
   const handleChange = ({ currentTarget: input }) => {
     if (input.name === "confirmationCode") {
-      setEnteredConfirmationCode(input.value); // Обновляем состояние с введенным пользователем кодом
+      setEnteredConfirmationCode(input.value);
     } else {
       setData({ ...data, [input.name]: input.value });
     }
@@ -36,21 +36,20 @@ const Signup = (props) => {
   const handleSendCode = async () => {
     setLoading(true);
     try {
-      // Генерируем код подтверждения и отправляем на почту
       const confirmationCode = generateConfirmationCode().toString();
       const mail = {
         textMail: confirmationCode,
         subjectMail: "Код подтверждения PTAHINI",
         userMail: data.email,
       };
-      await sendMail(mail); // Отправляем письмо с кодом подтверждения
-      setEmailSent(true); // Устанавливаем флаг, что письмо отправлено
-      setShowConfirmation(true); // Показываем поле ввода кода
-      setConfirmationCodeSent(true); // Устанавливаем флаг, что код подтверждения отправлен
-      setData({ ...data, confirmationCode: confirmationCode }); // Сохраняем сгенерированный код в состоянии
+      await sendMail(mail);
+      setEmailSent(true);
+      setShowConfirmation(true);
+      setConfirmationCodeSent(true);
+      setData({ ...data, confirmationCode: confirmationCode });
     } catch (error) {
       setError("Ошибка при отправке письма");
-      console.error("Ошибка при отправке письма:", error); // Выводим ошибку в консоль
+      console.error("Ошибка при отправке письма:", error);
     } finally {
       setLoading(false);
     }
@@ -62,11 +61,7 @@ const Signup = (props) => {
 
     try {
       if (enteredConfirmationCode === data.confirmationCode) {
-        // Код подтверждения совпадает - создаем пользователя
-        await signUpUser({
-          email: data.email,
-          password: data.password,
-        });
+        await signUpUser({ email: data.email, password: data.password });
         const dataAuth = { email: data.email, password: data.password };
         const res = await props.loginUser(dataAuth);
         const token = res.data.token;
@@ -75,7 +70,7 @@ const Signup = (props) => {
         localStorage.setItem("token", token);
         localStorage.setItem("userData", JSON.stringify(userData));
         localStorage.setItem("userId", JSON.stringify(userId));
-        // Получаем значение из локального хранилища
+
         const refUserID = localStorage.getItem("ref");
         if (refUserID) {
           props.addRefUser(refUserID, userId);
@@ -148,12 +143,12 @@ const Signup = (props) => {
                     </button>
                   </>
                 )}
-                {!emailSent && (
+                {!emailSent && data.email && (
                   <button
                     type="button"
                     onClick={(e) => {
-                      e.preventDefault(); // Предотвращаем отправку формы
-                      handleSendCode(); // Вызываем функцию отправки кода
+                      e.preventDefault();
+                      handleSendCode();
                     }}
                     className={styles.green_btn}
                   >

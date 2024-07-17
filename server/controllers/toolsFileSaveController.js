@@ -17,6 +17,12 @@ const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const userId = req.query.userId;
     const tools = req.query.tools;
+
+    // Переместим сюда вычисление даты
+    const currentDate = new Date();
+    const moscowTime = new Date(currentDate.getTime());
+    const formattedDate = moscowTime.toISOString();
+
     const dir = path.join(
       __dirname,
       `../uploads/tools/file-user/${userId}/${tools}/${formattedDate}`
@@ -35,13 +41,6 @@ const storage = multer.diskStorage({
 
 // Опции загрузки
 const upload = multer({ storage: storage }).single("toolFile");
-
-const currentDate = new Date();
-
-const moscowTime = new Date(currentDate.getTime());
-
-// Форматируем дату и время в строку
-const formattedDate = moscowTime.toISOString();
 
 exports.uploadFileToolsUserController = async (req, res) => {
   try {
@@ -66,6 +65,11 @@ exports.uploadFileToolsUserController = async (req, res) => {
       if (!req.file) {
         return res.status(400).send({ message: "File is required" });
       }
+
+      // Переместим сюда вычисление даты
+      const currentDate = new Date();
+      const moscowTime = new Date(currentDate.getTime());
+      const formattedDate = moscowTime.toISOString();
 
       const filePath = `/uploads/tools/file-user/${userId}/${tools}/${formattedDate}/${req.file.filename}`;
 

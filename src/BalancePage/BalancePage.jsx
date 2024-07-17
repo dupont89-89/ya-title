@@ -7,7 +7,6 @@ import PresentInfo from "./BalanceParts/PresentInfo";
 import BalancePay from "./BalancePay";
 import BalancePayLvt from "./BalancePayLvt";
 import BalanceAsideActiveUser from "./BalanceParts/BalanceAsideActiveUser";
-import { TitleComponent } from "../Function/TitleComponent";
 
 export default function BalancePage(props) {
   const [addBalance, setAddBalance] = useState(0); // Изначальное значение 0
@@ -38,7 +37,6 @@ export default function BalancePage(props) {
 
   return (
     <div>
-      <TitleComponent title="Пополнение баланса пользователя, выбор тарифов, обмен Lvt" />
       <div className={`${t.sectionGridSK} ${s.sectionGridSK}`}>
         <aside className={s.sidebarBalance}>
           {props.isAuthenticated ? (

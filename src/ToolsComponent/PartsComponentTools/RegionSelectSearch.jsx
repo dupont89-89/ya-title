@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Select from "react-select";
-import s from "./Function.module.css";
-import t from "./../api-ya-search/Form.module.css";
+import s from "./../../css/Tools.module.css";
 
 const labelStyle = {
   fontSize: "21px",
@@ -72,12 +71,15 @@ const options = [
   { value: 1106, label: "Черкесск" },
   { value: 1106, label: "Черкесск" },
   { value: 16, label: "Ярославль" },
+  { value: 225, label: "Все регионы" },
 
   // Добавьте остальные города и их идентификаторы сюда
 ];
 
-const RegionSelectSearch = ({ onSelect }) => {
-  const defaultOption = options.find((option) => option.value === 213); // Находим объект для региона Черкесск
+const RegionSelectSearch = ({ onSelect, defaultRegion, nameLabel }) => {
+  const defaultOption = options.find(
+    (option) => option.value === defaultRegion
+  );
   const [selectedOption, setSelectedOption] = useState(defaultOption);
 
   const handleChange = (selectedOption) => {
@@ -89,9 +91,9 @@ const RegionSelectSearch = ({ onSelect }) => {
   return (
     <div>
       <label style={labelStyle} htmlFor="region">
-        Регион продвижения:
+        {nameLabel}
       </label>
-      <div className={t.selectRegion}>
+      <div className={s.selectRegion}>
         <Select
           className={s.selectRegion}
           value={selectedOption}

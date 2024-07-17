@@ -35,11 +35,7 @@ const RobokassaPaymentForm = (props) => {
     }
     const url = `https://auth.robokassa.ru/Merchant/Index.aspx?MerchantLogin=${merchant_login}&OutSum=${paymentAmount}.00&InvoiceID=${invoiceId}&Description=${description}&SignatureValue=${signatureValue}&IsTest=${IsTest}`;
     addPayScore(paymentAmount, invoiceId, props.userId);
-    console.log(
-      `Создан счёт для ${paymentAmount}, ${invoiceId}, ${props.userId}`
-    );
     window.open(url, "_blank"); // Открывает ссылку в новой вкладке
-    console.log(`Отправил ${paymentAmount}`);
   };
 
   const handleChange = (event) => {
