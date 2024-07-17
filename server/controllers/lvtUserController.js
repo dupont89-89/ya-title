@@ -50,10 +50,6 @@ exports.spendLvtUserController = async (req, res) => {
     // Сохраняем обновленного пользователя
     await user.save();
 
-    console.log("User after saving:");
-    console.log(`user.lvt: ${user.lvt}`);
-    console.log(`user.bonusDayLvt: ${user.bonusDayLvt}`);
-
     return res.status(200).send({ message: "LVT spent successfully" });
   } catch (error) {
     console.error("Error in spendLvtUserController:", error);
