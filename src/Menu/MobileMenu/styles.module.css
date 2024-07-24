@@ -151,12 +151,31 @@
     color: #eab003;
 }
 
+.menu__toggle__top {
+    position: absolute;
+    z-index: 9999;
+    top: 20px;
+    font-size: 20px;
+    background: #eab003;
+    right: 30px;
+}
+
+.menu__toggle__top {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.menu__toggle__top.btn_activated {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0.3s;
+}
+
 .menu__toggle {
     box-sizing: border-box;
     inline-size: var(--_menu-circle-size);
     block-size: var(--_menu-circle-height);
     flex: none;
-
     position: relative;
     isolation: isolate;
 }
@@ -204,6 +223,10 @@
     will-change: opacity;
     transition-duration: .2s;
     transition-delay: .3s;
+}
+
+.menu_activated .menu__nav {
+    padding-top: 50px;
 }
 
 .menu_activated .menu__toggle::before {
@@ -424,5 +447,9 @@
 
     .menu__group {
         font-size: 1.4rem;
+    }
+
+    .menu_activated .menu__nav {
+        padding-top: 0px;
     }
 }

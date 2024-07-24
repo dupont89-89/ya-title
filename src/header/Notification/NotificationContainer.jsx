@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Notification from "./Notification";
+import s from "./Notification.module.css";
 import {
   clearNotificationMessage,
   getNotificationMessage,
@@ -28,7 +29,7 @@ function NotificationContainer({
   const notificationCount = localNotifications.length;
 
   return (
-    <div>
+    <div className={s.notificationsContainer}>
       <Notification
         notificationCount={notificationCount}
         notifications={localNotifications}

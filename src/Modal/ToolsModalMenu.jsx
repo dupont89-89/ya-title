@@ -9,11 +9,12 @@ export default function ToolsModalMenu(props) {
     border: "none",
     cursor: "pointer",
     borderRadius: "20px",
-    fontSize: "20px",
     padding: "5px 15px",
     marginLeft: "20px",
     backgroundColor: props.backgroundColor ? props.backgroundColor : null,
     color: props.color ? props.color : null,
+    fontSize: props.fontSize ? props.fontSize : "20px",
+    fontWeight: props.fontWeight ? props.fontWeight : "600",
   };
 
   return (

@@ -12,11 +12,13 @@ export default function MainMenuHeader(props) {
           content={<MainMenuHeaderModal />}
           backgroundColor="rgb(255 206 59)"
           color="rgb(49 49 49)"
+          fontSize="17px"
+          fontWeight="500"
         />
-        <Link className={s.link} to="/balance">
+        <Link className={s.link} to="/balance/">
           Тарифы
         </Link>
-        <Link className={s.link} to="/cabinet">
+        <Link className={s.link} to="/cabinet/">
           Кабинет пользователя
         </Link>
       </div>

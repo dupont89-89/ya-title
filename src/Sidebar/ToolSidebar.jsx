@@ -17,6 +17,7 @@ export default function ToolsSidebar(props) {
     transform: isOpen ? "translateX(0)" : "translateY(-900px)",
     transition: isOpen ? "transform 0.3s ease" : "transform 0s ease",
     position: isOpen ? "relative" : "absolute",
+    width: "100%",
   };
 
   const logoStyle = {
@@ -51,7 +52,6 @@ export default function ToolsSidebar(props) {
         style={sidebarStyle}
       >
         <div className={s.mobileCloseMenu}>
-          <MenuTools sidebar={props.sidebar} />
           {isOpen ? (
             <div className={s.blockIconClose}>
               <img
@@ -63,6 +63,7 @@ export default function ToolsSidebar(props) {
               />
             </div>
           ) : null}
+          <MenuTools sidebar={props.sidebar} />
         </div>
       </div>
 
