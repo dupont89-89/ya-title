@@ -107,6 +107,7 @@
     font-size: 14px;
     font-weight: 600;
     transition: 0.6s;
+    display: block;
 }
 
 .sectionGridSK aside nav li {
@@ -647,6 +648,14 @@ textarea {
         /* Уменьшаем промежуток между элементами */
     }
 
+    .sectionGridSK aside nav a {
+        max-width: 245px;
+    }
+
+    .tarifBlock {
+        grid-template-columns: 1fr;
+    }
+
     .resultSearhTitle {
         display: block;
     }
@@ -693,5 +702,12 @@ textarea {
 
     .blockForm label {
         font-size: 16px;
+    }
+}
+
+@media (max-width: 1024px) {
+
+    .sectionGridSK {
+        grid-template-columns: 1fr;
     }
 }

@@ -250,7 +250,7 @@ function App({
           <Footer />
         </footer>
       </div>
-      <MobileMenu />
+      <MobileMenu isAuthenticated={isAuthenticated} />
     </div>
   );
 }

@@ -126,3 +126,14 @@
     display: block;
     color: #1c7a23;
 }
+
+@media (max-width: 1024px) {
+
+    .notificationsContainer {
+        display: flex;
+        justify-content: flex-end;
+        flex-direction: row;
+        width: 100%;
+
+    }
+}

@@ -12,16 +12,10 @@ export default function MenuTools(props) {
             <Link to="/">Создание Title</Link>
           </li>
           <li>
-            <Link to="/commerce-key/">
-              Определение типа ключевого запроса{" "}
-              <span className={s.versionApp}></span>
-            </Link>
+            <Link to="/commerce-key/">Определение типа ключевого запроса</Link>
           </li>
           <li>
-            <Link to="/wordstat/">
-              Проверка частотности запросов{" "}
-              <span className={s.versionApp}></span>
-            </Link>
+            <Link to="/wordstat/">Проверка частотности запросов</Link>
           </li>
         </ul>
       </nav>
