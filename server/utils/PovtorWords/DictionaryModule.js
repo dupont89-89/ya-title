@@ -1,4 +1,4 @@
-export function DictionaryModule(lang) {
+function DictionaryModule(lang) {
   if (lang !== "ru") {
     return null;
   }
@@ -116,3 +116,5 @@ export function DictionaryModule(lang) {
 
   return dict;
 }
+
+module.exports = DictionaryModule;

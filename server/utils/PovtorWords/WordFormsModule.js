@@ -1,5 +1,5 @@
 // Функция для обработки словоформ
-export function wordFormsHandler(dict) {
+function wordFormsHandler(dict) {
   // Вспомогательная функция для получения проблемных корней
   const getUnbreakableRoots = function (word) {
     const unbreakableWordRoots = [];
@@ -141,3 +141,5 @@ export function wordFormsHandler(dict) {
 
   return handler;
 }
+
+module.exports = wordFormsHandler;

@@ -1,5 +1,5 @@
 // Функция для поиска дубликатов
-export function DuplicatesFinderModule(wordFormsHandler) {
+function DuplicatesFinderModule(wordFormsHandler) {
   const wordMatrix = {};
 
   // Преобразует текст в упорядоченный массив слов
@@ -162,3 +162,5 @@ export function DuplicatesFinderModule(wordFormsHandler) {
 
   return wordMatrix;
 }
+
+module.exports = DuplicatesFinderModule;
