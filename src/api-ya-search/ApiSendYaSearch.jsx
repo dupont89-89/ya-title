@@ -27,10 +27,10 @@ export default function ApiSendYaSearch(props) {
   const [resultString, setResultString] = useState("");
   const [selectedCity, setSelectedCity] = useState(213);
   const [isLoading, setIsLoading] = useState(false);
-  const [topFriLink, setResultWordsLink] = useState(null);
+  const [topFriLink, setResultWordsLink] = useState("");
   const [copySuccess, setCopySuccess] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [urlPage, setUrlPage] = useState(null);
+  const [urlPage, setUrlPage] = useState([]);
 
   const sumLvt = 1;
 
@@ -49,10 +49,10 @@ export default function ApiSendYaSearch(props) {
         query,
         selectedCity,
       });
-      const { topWords, topWordsLink, titleValues, repeatWords, urlPage } =
+      const { title, topWordsLink, titleValues, repeatWords, urlPage } =
         response.data;
       debugger;
-      setResultString(topWords);
+      setResultString(title);
       setResultWordsLink(topWordsLink);
       setTitleValues(titleValues);
       setRepeatWords(repeatWords);
@@ -69,32 +69,12 @@ export default function ApiSendYaSearch(props) {
     setQuery(event.target.value);
   };
 
-  const filterUniqueWords = (words) => {
-    const seen = {};
-    const uniqueWords = [];
-
-    words.forEach((word) => {
-      const firstFive = word.slice(0, 9).toLowerCase();
-      if (!seen[firstFive]) {
-        seen[firstFive] = true;
-        uniqueWords.push(word);
-      }
-    });
-
-    return uniqueWords;
-  };
-
   const handleCitySelect = (selectedOption) => {
     setSelectedCity(selectedOption.value);
   };
 
   const copyTextOnClick = () => {
-    const h2Text = filterUniqueWords(resultString)
-      .map((word, index) =>
-        index === 0 ? word.charAt(0).toUpperCase() + word.slice(1) : word
-      )
-      .join(" ");
-    navigator.clipboard.writeText(h2Text);
+    navigator.clipboard.writeText(resultString);
     setCopySuccess(true);
     setTimeout(() => {
       setCopySuccess(false);
@@ -141,29 +121,13 @@ export default function ApiSendYaSearch(props) {
             {isLoading ? (
               <Loading />
             ) : (
-              resultString &&
-              resultString.length > 0 && (
+              resultString && (
                 <div className={s.wrapperBoxTitle}>
                   <span className={s.faviconTitle}></span>
                   <div className={s.boxTitle}>
-                    <h2>
-                      {filterUniqueWords(resultString)
-                        .map((word, index) =>
-                          index === 0
-                            ? word.charAt(0).toUpperCase() + word.slice(1)
-                            : word
-                        )
-                        .join(" ")}
-                    </h2>
+                    <h2>{resultString}</h2>
                     <span className={s.linkTopKey}>
-                      ptahini.ru›search/
-                      {filterUniqueWords(topFriLink)
-                        .map((word, index) =>
-                          index === 0
-                            ? word.charAt(0).toUpperCase() + word.slice(1)
-                            : word
-                        )
-                        .join(" ")}
+                      ptahini.ru›search/{topFriLink}
                     </span>
                     <p>
                       Это лучший тайтл для твоего SEO продвижения сайта. Приведи

@@ -5,6 +5,29 @@ const findDuplicateWords = require("./../utils/PovtorWords/PovtorWords");
 
 const serverUrl = process.env.SERVER_URL;
 
+const filterUniqueWords = (words) => {
+  const seen = {};
+  const uniqueWords = [];
+
+  words.forEach((word) => {
+    const firstFive = word.slice(0, 9).toLowerCase();
+    if (!seen[firstFive]) {
+      seen[firstFive] = true;
+      uniqueWords.push(word);
+    }
+  });
+
+  return uniqueWords;
+};
+
+const capitalizeFirstWord = (words) => {
+  return words
+    .map((word, index) =>
+      index === 0 ? word.charAt(0).toUpperCase() + word.slice(1) : word
+    )
+    .join(" ");
+};
+
 exports.getTitle = async (req, res) => {
   const { query, selectedCity } = req.body;
 
@@ -27,7 +50,7 @@ exports.getTitle = async (req, res) => {
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(xmlResponse, "text/xml");
     const titles = xmlDoc.getElementsByTagName("title");
-    const urls = xmlDoc.getElementsByTagName("url"); // Изменено: url -> urls
+    const urls = xmlDoc.getElementsByTagName("url");
     const newTitleValues = [];
     const wordsCount = {};
 
@@ -102,8 +125,12 @@ exports.getTitle = async (req, res) => {
 
     wordsArray = wordsArray.filter((word) => word !== "");
     const newWordsString = wordsArray.join(" ");
-    const topWords = wordsArray.slice(0, 10);
-    const topWordsLink = wordsWithoutDigits.slice(0, 3);
+    const topWords = filterUniqueWords(wordsArray).slice(0, 10); // Используем filterUniqueWords
+    const topWordsLink = filterUniqueWords(wordsWithoutDigits).slice(0, 3); // Используем filterUniqueWords
+
+    // Преобразуем массив слов в строку с первой заглавной буквой
+    const topWordsString = capitalizeFirstWord(topWords);
+    const topWordsLinkString = capitalizeFirstWord(topWordsLink);
 
     // Обработка urls для исключения циклических ссылок
     const urlArray = [];
@@ -112,11 +139,11 @@ exports.getTitle = async (req, res) => {
     }
 
     res.json({
-      topWords,
-      topWordsLink,
+      title: topWordsString,
+      topWordsLink: topWordsLinkString,
       titleValues: newTitleValues,
       repeatWords: sortedWords,
-      urlPage: urlArray, // Изменено: urls -> urlArray
+      urlPage: urlArray,
     });
   } catch (error) {
     console.error("Ошибка при отправке данных:", error);

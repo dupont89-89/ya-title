@@ -7,11 +7,12 @@ const userRoutes = require("./routes/userRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const payRoutes = require("./routes/payRoutes");
 const toolsRoutes = require("./routes/toolsRoutes");
+const getTitleRoute = require("./routes/getTitleRoute"); // Импортируем маршрут
 const cron = require("node-cron");
 const { updateBonusLvt } = require("./utils/updateBonusLvt");
 const http = require("http");
 const socketIo = require("socket.io");
-const getTitleRoute = require("./routes/getTitleRoute"); // Импортируем маршрут
+
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server, {
@@ -23,20 +24,30 @@ const io = socketIo(server, {
 });
 
 const PORT = process.env.PORT || 5000;
-const URL_FRONTEND = process.env.REACT_APP_URL_FRONTEND;
 const MONGO_URI = process.env.MONGO_URI;
+
+// Получение списка разрешенных доменов из переменных окружения
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(",")
+  : [];
+
+// Вывод разрешенных доменов для отладки
+console.log("Allowed origins:", allowedOrigins);
 
 app.use(express.json());
 
 // Middleware для разрешения CORS
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", URL_FRONTEND); // Разрешаем запросы с URL фронтенда
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+  }
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET, POST, OPTIONS, PUT, PATCH, DELETE"
-  ); // Разрешаем различные HTTP методы
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization"); // Разрешаем различные заголовки
-  res.setHeader("Access-Control-Allow-Credentials", true); // Разрешаем передавать учетные данные (например, куки)
+  );
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.setHeader("Access-Control-Allow-Credentials", true);
   next();
 });
 
@@ -51,12 +62,11 @@ mongoose
   });
 
 // Маршруты
-// Маршруты
 app.use("/api/user", userRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/pay", payRoutes);
 app.use("/api/tools", toolsRoutes);
-app.post("/api/get-title", getTitleRoute);
+app.post("/api/get-title", getTitleRoute); // Убедитесь, что маршрут правильно определен
 
 // Обслуживание статических файлов из папки uploads
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
