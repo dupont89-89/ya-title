@@ -62,6 +62,43 @@
     justify-items: center;
 }
 
+.blockItemApiUser {
+    background-color: #f7f7f7;
+    border-radius: 5px;
+    box-shadow: 0px 0px 8px 0px rgba(34, 60, 80, 0.2);
+    padding: 20px;
+}
+
+.blockApiUser,
+.historyBlockCabinet {
+    margin-top: 50px;
+}
+
+.labelPlagin {
+    display: inline-block;
+    padding: 7px;
+    font-weight: 600;
+    border-radius: 4px;
+    color: #fff;
+}
+
+.labelPlaginActive {
+    background-color: #87c440;
+}
+
+.labelPlaginNoActive {
+    background-color: #F44336;
+}
+
+.domenActive ul {
+    padding-left: 0;
+    list-style: none;
+}
+
+.domenActive {
+    margin-top: 20px;
+}
+
 /* Стили для мобильных устройств */
 @media screen and (max-width: 768px) {
     .sectionContentCabinet {

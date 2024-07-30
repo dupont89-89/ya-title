@@ -49,6 +49,15 @@ const userSchema = new mongoose.Schema({
   },
   resetPasswordToken: { type: String },
   resetPasswordExpires: { type: Date },
+  apiKeys: [
+    {
+      key: { type: String, required: true },
+      domain: { type: String, required: true },
+      isPaid: { type: Boolean, default: false },
+      dateAdded: { type: Date, default: Date.now },
+      expiryDate: { type: Date }, // Дата окончания оплаченного периода
+    },
+  ],
 });
 
 // Создаем виртуальное поле для суммы lvt и bonusDayLvt
