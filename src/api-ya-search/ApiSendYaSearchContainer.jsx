@@ -3,6 +3,7 @@ import ApiSendYaSearch from "./ApiSendYaSearch";
 import { connect } from "react-redux";
 import { spendLvt } from "../Api/api-lvt";
 import { TitleComponent } from "../Function/TitleComponent";
+import { getTitleGpt } from "../Api/api-gpt";
 
 function ApiSendYaSearchContainer(props) {
   const sumLvt = 1;
@@ -20,6 +21,7 @@ function ApiSendYaSearchContainer(props) {
         totalLvt={props.totalLvt}
         toolsSidebar={props.toolsSidebar}
         sumLvt={sumLvt}
+        getTitleGpt={props.getTitleGpt}
       />
     </>
   );
@@ -36,6 +38,7 @@ let mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   spendLvt,
+  getTitleGpt,
 };
 
 export default connect(

@@ -1,6 +1,15 @@
-import React, { useEffect } from "react";
+import * as React from "react";
+import { useEffect, useState } from "react";
+import { DataGrid } from "@mui/x-data-grid";
+import {
+  Box,
+  Button,
+  Modal,
+  MenuItem,
+  FormControl,
+  Select,
+} from "@mui/material";
 import s from "./../Admin.module.css";
-import UniversalModal from "../../Modal/UniversalModal";
 import AdminFormAddLvtUser from "../Parts/Form/AdminFormAddLvtUser";
 
 export default function AdminUser({
@@ -13,85 +22,149 @@ export default function AdminUser({
     getAdminUserData();
   }, [getAdminUserData]);
 
-  const onChange = (userId, role) => {
-    // Вызываем функцию editAdminUserStatus и передаем ей userId и новый статус
-    editAdminUserStatus(userId, role);
+  const [open, setOpen] = React.useState(false);
+  const [selectedUserId, setSelectedUserId] = useState(null);
+
+  const handleOpen = (userId) => {
+    setSelectedUserId(userId);
+    setOpen(true);
   };
 
+  const handleClose = () => {
+    setOpen(false);
+    setSelectedUserId(null);
+  };
+
+  const handleStatusChange = (userId, newRole) => {
+    editAdminUserStatus(userId, newRole);
+  };
+
+  const columns = [
+    { field: "userId", headerName: "ID пользователя", flex: 1 },
+    { field: "email", headerName: "Эл. почта", flex: 1 },
+    {
+      field: "totalLvt",
+      headerName: "Баланс баллов",
+      flex: 1,
+      renderCell: (params) => (
+        <div>
+          <span>{params.value} бал.</span>
+        </div>
+      ),
+    },
+    {
+      field: "addBall",
+      headerName: "Управления баллами",
+      flex: 1,
+      renderCell: (params) => (
+        <Button
+          onClick={() => handleOpen(params.row.userId)}
+          size="small"
+          style={{ marginTop: 8 }}
+        >
+          Добавить баллы
+        </Button>
+      ),
+    },
+    {
+      field: "money",
+      flex: 1,
+      headerName: "Баланс деньги",
+      renderCell: (params) => (
+        <div>
+          <span>{params.value} руб</span>
+        </div>
+      ),
+    },
+    {
+      field: "HistoryMoney",
+      headerName: "Всего пополнений",
+      flex: 1,
+      renderCell: (params) => (
+        <div>
+          <span>{params.row.moneyHistory} руб</span>
+        </div>
+      ),
+    },
+    {
+      field: "referals",
+      headerName: "Рефер. кол-во",
+      flex: 1,
+      renderCell: (params) => (
+        <div>
+          <span>{params.row.referal.length} польз.</span>
+        </div>
+      ),
+    },
+    {
+      field: "referalsHistoryBonus",
+      headerName: "Получ. бонус за рефер",
+      flex: 1,
+      renderCell: (params) => (
+        <div>
+          <span>{params.row.lvtPresent.moneyPresentReferal} руб</span>
+        </div>
+      ),
+    },
+    {
+      field: "role",
+      headerName: "Статус",
+      flex: 1,
+      renderCell: (params) => (
+        <Box>
+          <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+            <Select
+              value={params.value}
+              onChange={(e) =>
+                handleStatusChange(params.row.userId, e.target.value)
+              }
+            >
+              <MenuItem value="admin">Admin</MenuItem>
+              <MenuItem value="user">User</MenuItem>
+              <MenuItem value="moder">Moder</MenuItem>
+              <MenuItem value="partner">Partner</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+      ),
+    },
+  ];
+
+  const rows = dataUser.map((user) => ({
+    id: user.userId, // Важно для уникальной идентификации строки
+    ...user,
+  }));
+
   return (
-    <div className={s.blockPageAdminUser}>
-      <table className={s.userDataAdmin}>
-        <thead>
-          <tr className={s.tableHead}>
-            <th>ID пользователя</th>
-            <th>Эл. почта</th>
-            <th>LVT баланс</th>
-            <th>Баланс деньги</th>
-            <th>Рефералы</th>
-            <th>Статус</th>
-            {/* Добавьте остальные поля, которые вы хотите отобразить */}
-          </tr>
-        </thead>
-        <tbody>
-          {dataUser &&
-            dataUser.map((user, index) => (
-              <tr className={s.tableTrUser} key={index}>
-                <td aria-label="ID пользователя">{user.userId}</td>
-                <td aria-label="Эл. почта">{user.email}</td>
-                <td aria-label="LVT баланс">
-                  <span className={s.userDataTdBlock}>
-                    Текущий баланс: {user.totalLvt} Lvt
-                  </span>
-                  <span>
-                    <UniversalModal
-                      background="#f7b637"
-                      width="350px"
-                      content={
-                        <AdminFormAddLvtUser
-                          addLvtAdminUser={addLvtAdminUser}
-                          userId={user.userId}
-                        />
-                      }
-                      nameBtnPopup="Добавить Lvt"
-                    />
-                  </span>
-                </td>
-                <td aria-label="Баланс деньги">
-                  <span className={s.userDataTdBlock}>
-                    Баланс: {user.money} руб
-                  </span>
-                  <span className={s.userDataTdBlock}>
-                    Всего пополнений: {user.moneyHistory} руб
-                  </span>
-                </td>
-                <td aria-label="Рефералы">
-                  {" "}
-                  <span className={s.userDataTdBlock}>
-                    Бонусы за рефералов: {user.lvtPresent.moneyPresentReferal}{" "}
-                    руб
-                  </span>
-                  <span className={s.userDataTdBlock}>
-                    Кол-во рефералов: {user.referal.length} польз.
-                  </span>
-                </td>
-                <td aria-label="Статус">
-                  <select
-                    value={user.role}
-                    onChange={(e) => {
-                      onChange(user.userId, e.target.value);
-                    }}
-                  >
-                    <option value="admin">Admin</option>
-                    <option value="user">User</option>
-                    <option value="moder">Moder</option>
-                    <option value="partner">Partner</option>
-                  </select>
-                </td>
-                {/* Добавьте остальные поля здесь */}
-              </tr>
-            ))}
-        </tbody>
-      </table>
+    <div
+      className={s.blockPageAdminUser}
+      style={{ height: "100%", width: "100%" }}
+    >
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        initialState={{
+          pagination: {
+            paginationModel: { page: 0, pageSize: 10 },
+          },
+        }}
+        pageSizeOptions={[5, 10, 20, 30, 50]}
+        checkboxSelection
+      />
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        sx={{
+          "& .MuiBackdrop-root": { backgroundColor: "#00000012" },
+        }}
+      >
+        <AdminFormAddLvtUser
+          addLvtAdminUser={addLvtAdminUser}
+          userId={selectedUserId}
+        />
+      </Modal>
     </div>
   );
 }

@@ -6,15 +6,18 @@ import {
   editAdminUserStatus,
   getAdminUserData,
 } from "../../Api/api-admin";
+import { Container } from "@mui/material";
 
 function AdminUserContainer(props) {
   return (
-    <AdminUser
-      dataUser={props.dataUser}
-      getAdminUserData={props.getAdminUserData}
-      editAdminUserStatus={props.editAdminUserStatus}
-      addLvtAdminUser={props.addLvtAdminUser}
-    />
+    <Container maxWidth="xl">
+      <AdminUser
+        dataUser={props.dataUser}
+        getAdminUserData={props.getAdminUserData}
+        editAdminUserStatus={props.editAdminUserStatus}
+        addLvtAdminUser={props.addLvtAdminUser}
+      />
+    </Container>
   );
 }
 

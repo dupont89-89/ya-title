@@ -23,13 +23,6 @@
     margin-left: 5px;
 }
 
-header {
-    background-color: #f7b637;
-    border-radius: 10px;
-    padding: 5px 10px;
-    margin-bottom: 15px;
-}
-
 /* Стили для десктопа */
 @media (min-width: 769px) {
     .headerMobile {

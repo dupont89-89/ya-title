@@ -1,4 +1,4 @@
-.blockOsn {
+/* .blockOsn {
   min-height: 100vh;
   background-attachment: fixed;
   background-image: url(./img/background/7116017_3561864.jpg);
@@ -6,7 +6,7 @@
   background-position: top;
   background-size: cover;
   box-shadow: inset 0 0 0 2000px rgb(255 193 7 / 33%);
-}
+} */
 
 .lodingBlockApp {
   min-height: 100vh;
@@ -19,11 +19,20 @@
   background-color: #FFC107;
 }
 
+footer {
+  margin-top: 40px;
+}
+
+header {
+  margin-bottom: 40px;
+}
+
+article {
+  min-height: 100vh;
+}
+
 /* Стили для мобильных устройств */
 @media screen and (max-width: 768px) {
-  .blockOsn {
-    padding: 15px;
-  }
 
   .logoLoading img {
     width: 100%;

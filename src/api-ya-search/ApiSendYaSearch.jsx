@@ -49,10 +49,17 @@ export default function ApiSendYaSearch(props) {
         query,
         selectedCity,
       });
+
+      // Деструктурируем данные из ответа
       const { title, topWordsLink, titleValues, repeatWords, urlPage } =
         response.data;
-      debugger;
+
+      // Выполняем запрос после получения ответа от сервера
+      // const titleGpt = await props.getTitleGpt(title);
+      // setResultString(titleGpt);
       setResultString(title);
+      debugger;
+      // Устанавливаем полученные данные в состояние
       setResultWordsLink(topWordsLink);
       setTitleValues(titleValues);
       setRepeatWords(repeatWords);
@@ -63,7 +70,7 @@ export default function ApiSendYaSearch(props) {
       setIsLoading(false);
       props.spendLvt(props.userId, sumLvt);
     }
-  };
+  }; // <-- Закрываем handleClick
 
   const handleChange = (event) => {
     setQuery(event.target.value);

@@ -35,6 +35,9 @@ import ResetPasswordForm from "./Auth/ResetPassword/ResetPasswordForm";
 import NotFound from "./parts/NotFound";
 import FailPayment from "./BalancePage/FailPayment";
 import CabinetUserContainer from "./CabinetUser/CabinetUserContainer";
+import { Box, Container } from "@mui/material";
+import MenuToolbar from "./Sidebar/MenuToolbar";
+import HomeContainer from "./Page/Home/HomeContainer";
 
 let config;
 
@@ -139,118 +142,110 @@ function App({
     <div className="App">
       {role === "admin" && <AdminPanelContainer />}
       {isAuthenticated ? null : <TrackingReferalUrl />}
-      <div className="blockOsn">
-        <HeaderContainer />
-        <MobileHeaderContainer />
-        <article>
-          <Routes>
-            <Route path="/" element={<ToolsContentContainer />} />
-            <Route path="/:tools" element={<ToolsContentContainer />} />
-            <Route path="/balance/" element={<BalancePageContainer />} />
-            <Route
-              path="/history-message"
-              element={
-                isAuthenticated ? (
-                  <NotificationPageContainer />
-                ) : (
-                  <Navigate to="/login" />
-                )
-              }
-            />
-            <Route
-              path="/login"
-              element={
-                isAuthenticated ? (
-                  <Navigate to="/" />
-                ) : (
-                  <Login
-                    loginUser={loginUser}
-                    inputWidth={modalInputWidth}
-                    blockFormHeight="350px"
-                    blockFormPadding={modalBlockFormPadding}
-                    fontSizeTitle={modalFontSizeTitle}
-                    inputPadding="15px"
-                    inputRadius="10px"
-                    btnFormMargin="10px"
-                    btnFormWidth="200px"
-                    registration={
-                      <BalancePageLinkReg
-                        linkRehName="Регистрация"
-                        color="#000"
-                        width={modalWidth}
-                        widthButton="200px"
-                      />
-                    }
-                  />
-                )
-              }
-            />
-
-            <Route
-              path="/profile"
-              element={
-                isAuthenticated ? (
-                  <ProfileUserContainer />
-                ) : (
-                  <Navigate to="/login" />
-                )
-              }
-            />
-            <Route
-              path="/cabinet"
-              element={
-                isAuthenticated ? (
-                  <CabinetUserContainer />
-                ) : (
-                  <Navigate to="/login" />
-                )
-              }
-            />
-            <Route
-              path="/referal"
-              element={
-                isAuthenticated ? (
-                  <PageReferalContainer />
-                ) : (
-                  <Navigate to="/login" />
-                )
-              }
-            />
-            <Route
-              path="/reset-password/*"
-              element={
-                !isAuthenticated ? <ResetPasswordForm /> : <Navigate to="/" />
-              }
-            />
-
-            <Route
-              path="/success-pay"
-              element={
-                isAuthenticated ? <SuccessPay /> : <Navigate to="/login" />
-              }
-            />
-            <Route
-              path="/fail-payment"
-              element={
-                isAuthenticated ? <FailPayment /> : <Navigate to="/login" />
-              }
-            />
-            {role === "admin" && (
-              <>
-                <Route path="/admin" exact element={<AdminContainer />} />
-                <Route path="/admin/user" element={<AdminUserContainer />} />
-                <Route path="/admin/test" exact element={<TestPay />} />
-                <Route path="/admin/score" element={<ScoreUserContainer />} />
-              </>
-            )}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </article>
-        <footer>
-          <Footer />
-        </footer>
-      </div>
-      <MobileMenu isAuthenticated={isAuthenticated} />
+      <HeaderContainer />
+      <Box component="article">
+        <Routes>
+          <Route path="/" element={<HomeContainer />} />
+          <Route path="/app/:tools" element={<ToolsContentContainer />} />
+          <Route path="/balance/" element={<BalancePageContainer />} />
+          <Route
+            path="/history-message"
+            element={
+              isAuthenticated ? (
+                <NotificationPageContainer />
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              isAuthenticated ? (
+                <Navigate to="/" />
+              ) : (
+                <Login
+                  loginUser={loginUser}
+                  inputWidth={modalInputWidth}
+                  blockFormHeight="350px"
+                  blockFormPadding={modalBlockFormPadding}
+                  fontSizeTitle={modalFontSizeTitle}
+                  inputPadding="15px"
+                  inputRadius="10px"
+                  btnFormMargin="10px"
+                  btnFormWidth="200px"
+                  registration={
+                    <BalancePageLinkReg
+                      linkRehName="Регистрация"
+                      color="#000"
+                      width={modalWidth}
+                      widthButton="200px"
+                    />
+                  }
+                />
+              )
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              isAuthenticated ? (
+                <ProfileUserContainer />
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
+          />
+          <Route
+            path="/cabinet"
+            element={
+              isAuthenticated ? (
+                <CabinetUserContainer />
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
+          />
+          <Route
+            path="/referal"
+            element={
+              isAuthenticated ? (
+                <PageReferalContainer />
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
+          />
+          <Route
+            path="/reset-password/*"
+            element={
+              !isAuthenticated ? <ResetPasswordForm /> : <Navigate to="/" />
+            }
+          />
+          <Route
+            path="/success-pay"
+            element={
+              isAuthenticated ? <SuccessPay /> : <Navigate to="/login" />
+            }
+          />
+          <Route
+            path="/fail-payment"
+            element={
+              isAuthenticated ? <FailPayment /> : <Navigate to="/login" />
+            }
+          />
+          {role === "admin" && (
+            <>
+              <Route path="/admin" exact element={<AdminContainer />} />
+              <Route path="/admin/user" element={<AdminUserContainer />} />
+              <Route path="/admin/test" exact element={<TestPay />} />
+              <Route path="/admin/score" element={<ScoreUserContainer />} />
+            </>
+          )}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Box>
+      <Footer />
     </div>
   );
 }
