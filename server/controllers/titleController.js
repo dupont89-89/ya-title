@@ -2,6 +2,7 @@ const axios = require("axios");
 const { DOMParser } = require("xmldom");
 require("dotenv").config();
 const findDuplicateWords = require("./../utils/PovtorWords/PovtorWords");
+const { fetchApiGptText } = require("../api-gpt/fetch-api-gpt");
 
 const serverUrl = process.env.SERVER_URL;
 
@@ -132,6 +133,13 @@ exports.getTitle = async (req, res) => {
     const topWordsString = capitalizeFirstWord(topWords);
     const topWordsLinkString = capitalizeFirstWord(topWordsLink);
 
+    //Отправляем запрос к GPT для нормализации Тайтл
+    const textTitle = `Создай из этих слов заголовок Title для поисковых систем: ${topWordsString}`;
+    const gptTitle = await fetchApiGptText(textTitle);
+
+    // const title = gptTitle.choices[0].message.content;
+    const title = gptTitle.choices[0].message.content.replace(/^"|"$/g, "");
+
     // Обработка urls для исключения циклических ссылок
     const urlArray = [];
     for (let i = 0; i < urls.length; i++) {
@@ -139,7 +147,7 @@ exports.getTitle = async (req, res) => {
     }
 
     res.json({
-      title: topWordsString,
+      title: title,
       topWordsLink: topWordsLinkString,
       titleValues: newTitleValues,
       repeatWords: sortedWords,

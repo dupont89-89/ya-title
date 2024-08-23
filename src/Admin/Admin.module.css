@@ -41,14 +41,6 @@
     display: block;
 }
 
-.inputAddLvtBlock {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-}
-
 .inputAddLvtBlock label {
     display: block;
     text-align: center;

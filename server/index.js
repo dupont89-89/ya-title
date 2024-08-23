@@ -7,11 +7,13 @@ const userRoutes = require("./routes/userRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const payRoutes = require("./routes/payRoutes");
 const toolsRoutes = require("./routes/toolsRoutes");
+const gptRoutes = require("./routes/gptRoutes");
 const getTitleRoute = require("./routes/getTitleRoute"); // Импортируем маршрут
 const cron = require("node-cron");
 const { updateBonusLvt } = require("./utils/updateBonusLvt");
 const http = require("http");
 const socketIo = require("socket.io");
+const { fetchApiGptText } = require("./api-gpt/fetch-api-gpt");
 
 const app = express();
 const server = http.createServer(app);
@@ -66,7 +68,8 @@ app.use("/api/user", userRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/pay", payRoutes);
 app.use("/api/tools", toolsRoutes);
-app.post("/api/get-title", getTitleRoute); // Убедитесь, что маршрут правильно определен
+app.post("/api/get-title", getTitleRoute);
+app.use("/api/gpt", gptRoutes);
 
 // Обслуживание статических файлов из папки uploads
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));

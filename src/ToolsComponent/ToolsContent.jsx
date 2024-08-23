@@ -71,7 +71,7 @@ export default function ToolsContent(props) {
 
   const getTextForPage = (tools) => {
     switch (tools) {
-      case "create-title":
+      case "seo-title":
         return (
           <p>
             <b>Ptahini</b> разработал{" "}

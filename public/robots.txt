@@ -1,6 +1,0 @@
-User-agent: *
-Disallow: /login
-Disallow: /history-message
-Disallow: /profile
-Disallow: /referal
-Disallow: /cabinet

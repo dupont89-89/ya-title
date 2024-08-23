@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
-import iconNotifications from "./../../img/icon/icon-envelope.png";
 import NotificationMessage from "./NotificationMessage";
-import s from "./Notification.module.css";
+import Badge from "@mui/material/Badge";
+import MailIcon from "@mui/icons-material/Mail";
+import { Chip, Stack } from "@mui/material";
 
 export default function Notification(props) {
   const [show, setShow] = useState(false);
@@ -24,41 +25,31 @@ export default function Notification(props) {
     };
   }, []);
 
-  const notificationsHeader = {
-    backgroundImage: `url(${iconNotifications})`,
-    backgroundSize: "45px",
-    backgroundRepeat: "no-repeat",
-    width: "45px",
-    height: "45px",
-    display: "block",
-    position: "relative",
-  };
-
-  const numberNotifications = {
-    display: "inline-block",
-    background: props.notificationCount === 0 ? "#4CAF50" : "rgb(204 28 28)",
-    borderRadius: "50%",
-    color: "#fff",
-    position: "absolute",
-    width: "20px",
-    height: "20px",
-    top: "-3px",
-    textAlign: "center",
-    left: "-5px",
-    lineHeight: "20px",
-  };
-
   const handleClick = () => {
     setShow(!show); // Toggle show state
   };
 
   return (
     <div ref={notificationRef}>
-      <button className={s.btnMessage} onClick={handleClick}>
-        <div style={notificationsHeader}>
-          <span style={numberNotifications}>{props.notificationCount}</span>
-        </div>
-      </button>
+      {/* <Badge
+        onClick={handleClick}
+        badgeContent={props.notificationCount}
+        color="error"
+        max={99}
+      >
+        <MailIcon cursor="pointer" fontSize="large" />
+      </Badge> */}
+      <Stack direction="row" spacing={1}>
+        <Badge badgeContent={props.notificationCount} color="error" max={99}>
+          <Chip
+            color="success"
+            icon={<MailIcon cursor="pointer" fontSize="small" />}
+            label={`${props.notificationCount} оповещений`}
+            cursor="pointer"
+            onClick={handleClick}
+          />
+        </Badge>
+      </Stack>
       {show && (
         <NotificationMessage
           userId={props.userId}

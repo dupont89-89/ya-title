@@ -1,13 +1,14 @@
 html,
 body {
   overflow-x: hidden;
+  margin: 0;
 }
 
-body {
+/* body {
   margin: 0;
-  font-family: "Noto Sans", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-optical-sizing: auto;
-  font-weight: 500;
+  font-weight: 400;
   font-style: normal;
   font-variation-settings:
     "slnt" 0;
@@ -19,16 +20,15 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-}
+} */
 
-button {
+/* button {
   border: none;
   padding: 5px;
   border-radius: 4px;
   font-size: 15px;
   cursor: pointer;
-  font-family: "Noto Sans", sans-serif;
-}
+} */
 
 a {
   text-decoration: none;
@@ -51,14 +51,14 @@ button:focus {
   outline: none;
 }
 
-table {
+/* table {
   width: 100%;
   margin-bottom: 20px;
   border: 1px solid #dddddd;
   border-collapse: collapse;
-}
+} */
 
-table th {
+/* table th {
   font-weight: bold;
   padding: 5px;
   background: #efefef;
@@ -68,13 +68,13 @@ table th {
 table td {
   border: 1px solid #dddddd;
   padding: 5px;
-}
+} */
 
-h1,
+/* h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
   margin: 0 0 15px 0;
-}
+} */

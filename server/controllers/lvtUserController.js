@@ -93,7 +93,7 @@ exports.adminAddLvtUserController = async (req, res) => {
 
     if (updatedUser) {
       // Если пользователь успешно обновлен, отправляем обновленные данные в ответе
-      res.status(200).json(`Успешно зачисленно ${lvt} на баланс`);
+      res.status(200).json(`Зачисленно ${lvt} баллов на баланс.`);
     } else {
       // Если пользователь не найден, отправляем ответ с ошибкой 404 Not Found
       res.status(404).json({ message: "Пользователь не найден" });
