@@ -2,6 +2,7 @@ import React from "react";
 import Header from "./Header";
 import { connect } from "react-redux";
 import { logoutUserThunkCreator } from "../redux/user-reducer/user-reducer";
+import HeaderNoAuth from "./HeaderNoAuth";
 
 function HeaderContainer(props) {
   // Функция для выхода из аккаунта
@@ -13,19 +14,25 @@ function HeaderContainer(props) {
   };
 
   return (
-    <Header
-      money={props.money}
-      lvt={props.lvt}
-      bonusDayLvt={props.bonusDayLvt}
-      lvtPresent={props.lvtPresentRegistration + props.lvtPresentReferal}
-      notifications={props.notifications}
-      isAuthenticated={props.isAuthenticated}
-      totalLvt={props.totalLvt}
-      avatar={props.avatar}
-      firstName={props.firstName}
-      lastName={props.lastName}
-      handleLogout={handleLogout}
-    />
+    <>
+      {props.isAuthenticated ? (
+        <Header
+          money={props.money}
+          lvt={props.lvt}
+          bonusDayLvt={props.bonusDayLvt}
+          lvtPresent={props.lvtPresentRegistration + props.lvtPresentReferal}
+          notifications={props.notifications}
+          isAuthenticated={props.isAuthenticated}
+          totalLvt={props.totalLvt}
+          avatar={props.avatar}
+          firstName={props.firstName}
+          lastName={props.lastName}
+          handleLogout={handleLogout}
+        />
+      ) : (
+        <HeaderNoAuth />
+      )}
+    </>
   );
 }
 

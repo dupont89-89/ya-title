@@ -2,49 +2,37 @@ import React, { useState } from "react";
 import styles from "./styles.module.css";
 import ptahiniLogo from "./../../img/logo/PTAHINI-nav.png";
 import Loading from "../../app-function/Loading";
-import { Link } from "react-router-dom";
 import SendResetPassword from "../ResetPassword/SendResetPassword";
+import {
+  Box,
+  Button,
+  Container,
+  FormControl,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  Link,
+  OutlinedInput,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const Login = (props) => {
   const [data, setData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [resetPassword, setResetPassword] = useState(false);
+  const [showPassword, setShowPassword] = React.useState(false);
 
-  const styleInput = {
-    outline: "none",
-    border: "none",
-    width: props.inputWidth,
-    padding: props.inputPadding,
-    borderRadius: props.inputRadius,
-    backgroundColor: "#edf5f3",
-    margin: "5px 0",
-    fontSize: "14px",
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
   };
-
   const blockForm = {
     height: props.blockFormHeight,
     padding: props.blockFormPadding,
-  };
-
-  const titleForm = {
-    fontSize: props.fontSizeTitle,
-    marginTop: "0",
-    textAlign: "center",
-  };
-
-  const btnForm = {
-    backgroundColor: "#03A9F4",
-    color: "white",
-    margin: props.btnFormMargin,
-    width: props.btnFormWidth,
-    border: "none",
-    outline: "none",
-    padding: "10px 0",
-    borderRadius: "8px",
-    fontWeight: "500",
-    fontSize: "20px",
-    cursor: "pointer",
   };
 
   const resetLink = {
@@ -87,7 +75,7 @@ const Login = (props) => {
   };
 
   return (
-    <div className={styles.login_container}>
+    <Container maxWidth="xl">
       {props.closeButton}
       <div className={styles.login_form_container}>
         <div style={blockForm}>
@@ -107,39 +95,73 @@ const Login = (props) => {
             </>
           ) : (
             <form className={styles.form_container} onSubmit={handleSubmit}>
-              <h1 style={titleForm}>Войдите в свой аккаунт</h1>
-              <input
-                type="email"
-                placeholder="Электронная почта"
-                name="email"
-                onChange={handleChange}
-                value={data.email}
-                required
-                style={styleInput}
-              />
-              <input
-                type="password"
-                placeholder="Пароль"
-                name="password"
-                onChange={handleChange}
-                value={data.password}
-                required
-                style={styleInput}
-              />
-              {error && <div className={styles.error_msg}>{error}</div>}
-              <button style={btnForm} type="submit">
-                Войти
-              </button>
-              {props.registration}
-              {props.presentInfo}
-              <Link style={resetLink} onClick={(e) => setResetPassword(true)}>
-                Забыли пароль?
-              </Link>
+              <Box display="flex" gap={3} flexDirection="column">
+                <Typography component="h1" variant="h4">
+                  Войдите в свой аккаунт
+                </Typography>
+                <TextField
+                  type="email"
+                  label="Электронная почта"
+                  name="email"
+                  onChange={handleChange}
+                  value={data.email}
+                  required
+                  variant="outlined"
+                />
+                <FormControl variant="outlined">
+                  <InputLabel htmlFor="outlined-adornment-password">
+                    Пароль
+                  </InputLabel>
+                  <OutlinedInput
+                    value={data.password}
+                    onChange={handleChange}
+                    name="password"
+                    id="outlined-adornment-password"
+                    type={showPassword ? "text" : "password"}
+                    autoComplete="new-password"
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    label="Password"
+                  />
+                </FormControl>
+                {error && <div className={styles.error_msg}>{error}</div>}
+                <Button type="submit" variant="contained">
+                  Войти
+                </Button>
+                {props.presentInfo}
+                <Button onClick={(e) => setResetPassword(true)}>
+                  Забыли пароль?
+                </Button>
+                <Box
+                  display="flex"
+                  gap={1}
+                  alignItems="center"
+                  justifyContent="center"
+                  fontSize={16}
+                >
+                  <Typography fontSize="16px" component="span">
+                    Нет аккаунта?
+                  </Typography>
+                  <Link underline="none" href="/signup/">
+                    Регистрация
+                  </Link>
+                </Box>
+              </Box>
             </form>
           )}
         </div>
       </div>
-    </div>
+    </Container>
   );
 };
 

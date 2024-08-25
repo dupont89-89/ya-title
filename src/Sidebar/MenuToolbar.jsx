@@ -65,7 +65,11 @@ export default function MenuToolbar() {
       >
         Инструменты
       </Button>
-      <Drawer open={open} onClose={toggleDrawer(false)}>
+      <Drawer
+        disableScrollLock={true}
+        open={open}
+        onClose={toggleDrawer(false)}
+      >
         {DrawerList}
       </Drawer>
     </div>

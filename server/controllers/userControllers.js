@@ -20,10 +20,15 @@ exports.signUpUserController = async (req, res) => {
 
     const salt = await bcrypt.genSalt(Number(process.env.SALT));
     const hashPassword = await bcrypt.hash(req.body.password, salt);
-    const bonusLvt = 20;
+    const bonusLvt = 100;
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
     // Создание нового пользователя с начислением 20 в поле lvtPresent
+    console.log(`Имя ${firstName}, Фамилия ${lastName}`);
     await User.create({
       ...req.body,
+      firstName: firstName,
+      lastName: lastName,
       password: hashPassword,
       lvtPresent: {
         lvtPresentRegistration: bonusLvt,

@@ -20,6 +20,9 @@ const theme = createTheme({
     white: {
       main: "#fff",
     },
+    mat: {
+      main: "#21b5ae",
+    },
   },
 });
 const root = ReactDOM.createRoot(document.getElementById("root"));

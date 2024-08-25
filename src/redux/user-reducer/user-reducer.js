@@ -38,10 +38,10 @@ export const logoutUserThunkCreator = () => {
 
 const initialState = {
   dataUser: {
-    firstName: "Ты",
-    lastName: "Аноним",
+    firstName: "Пользователь",
+    lastName: "",
     role: "user",
-    avatar: "/uploads/dev-image/no-avatar.png",
+    avatar: "",
     money: 0,
     moneyHistory: 0,
     lvt: 0,

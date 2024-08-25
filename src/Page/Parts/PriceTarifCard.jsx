@@ -14,42 +14,42 @@ import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 
 const tiers = [
   {
-    title: "Стандарт",
-    price: "1000",
+    title: "Бесплатно",
+    price: "0",
     description: [
-      "500 лимитов",
-      "Цена лимита: 2 рубля",
-      "Докупить лимиты",
-      "Ограниченные инструменты",
+      "100 лимитов при регистрации",
+      "Доступ к инструментам",
+      "Возможность повышения тарифа",
     ],
-    buttonText: "Sign up for free",
+    buttonText: "Попробовать",
     buttonVariant: "outlined",
   },
   {
     title: "PRO",
     subheader: "Рекомендуем",
-    price: "4500",
+    price: "2600",
     description: [
       "3 000 лимитов",
-      "Цена лимита: 1.5 рубля",
-      "Плагин для WordPress",
-      "Priority email support",
-      "Dedicated team",
-      "Best deals",
+      "Цена доп лимита: 1.5 рубля",
+      "Возможность докупки лимитов",
+      "Инструменты без ограничений",
+      "Техническая поддержка",
     ],
-    buttonText: "Start now",
+    buttonText: "Получить доступ",
     buttonVariant: "contained",
   },
   {
     title: "PRO Бизнес +",
-    price: "9800",
+    price: "4900",
     description: [
-      "10 000 лимитов",
-      "Цена лимита: 0,98 рубля",
+      "7 000 лимитов",
+      "Цена доп лимита: 0,98 рубля",
       "Плагин для WordPress",
-      "Phone & email support",
+      "Возможность докупки лимитов",
+      "Инструменты без ограничений",
+      "Техническая поддержка",
     ],
-    buttonText: "Contact us",
+    buttonText: "Выбрать",
     buttonVariant: "outlined",
   },
 ];
@@ -74,14 +74,29 @@ export default function Pricing() {
           textAlign: { sm: "left", md: "center" },
         }}
       >
-        <Typography component="h2" variant="h4" color="text.primary">
-          Pricing
+        <Typography
+          gutterBottom
+          component="h2"
+          variant="h4"
+          color="text.primary"
+        >
+          Выберите подходящую подписку
         </Typography>
         <Typography variant="body1" color="text.secondary">
-          Quickly build an effective pricing table for your potential customers
-          with this layout. <br />
-          It&apos;s built with default Material UI components with little
-          customization.
+          Чтобы правильно подобрать подписку, рекомендуем вам посчитать
+          примерное кол-во обрабатываемых ключевых запросов. Если у вас в работе
+          1 сайт с 300 страницами, вам вполне может хватить и тарифа{" "}
+          <Typography component="span" variant="h6">
+            PRO
+          </Typography>
+          .
+          <Typography component="p">
+            Если у вас 5 проектов в работе то вам скорее всего нужен тариф{" "}
+            <Typography component="span" variant="h6">
+              PRO Бизнес +
+            </Typography>
+            . Но вы можете не беспокоится, всегда можно докупить лимиты.
+          </Typography>
         </Typography>
       </Box>
       <Grid container spacing={3} alignItems="center" justifyContent="center">
@@ -103,7 +118,7 @@ export default function Pricing() {
                 borderColor: tier.title === "PRO" ? "primary.main" : undefined,
                 background:
                   tier.title === "PRO"
-                    ? "linear-gradient(#033363, #021F3B)"
+                    ? "linear-gradient(#2c95ff, #71c0e8)"
                     : "#f9f9f9",
               }}
             >
@@ -174,9 +189,7 @@ export default function Pricing() {
                       sx={{
                         width: 20,
                         color:
-                          tier.title === "PRO"
-                            ? "primary.light"
-                            : "primary.main",
+                          tier.title === "PRO" ? "#CDDC39" : "primary.main",
                       }}
                     />
                     <Typography

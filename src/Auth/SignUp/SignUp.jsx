@@ -4,6 +4,20 @@ import { signUpUser, loginUser } from "../../Api/api-user-login";
 import ptahiniLogo from "./../../img/logo/PTAHINI-nav.png";
 import Loading from "../../app-function/Loading";
 import { sendMail } from "../../Api/api-admin";
+import {
+  Box,
+  Button,
+  Container,
+  FormControl,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  Link,
+  OutlinedInput,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const Signup = (props) => {
   const generateConfirmationCode = () => {
@@ -15,6 +29,8 @@ const Signup = (props) => {
   const [data, setData] = useState({
     email: "",
     password: "",
+    firstName: "",
+    lastName: "",
     confirmationCode: generateConfirmationCode().toString(),
   });
 
@@ -24,6 +40,13 @@ const Signup = (props) => {
   const [emailSent, setEmailSent] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [confirmationCodeSent, setConfirmationCodeSent] = useState(false);
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
   const handleChange = ({ currentTarget: input }) => {
     if (input.name === "confirmationCode") {
@@ -61,7 +84,12 @@ const Signup = (props) => {
 
     try {
       if (enteredConfirmationCode === data.confirmationCode) {
-        await signUpUser({ email: data.email, password: data.password });
+        await signUpUser({
+          email: data.email,
+          password: data.password,
+          firstName: data.firstName,
+          lastName: data.lastName,
+        });
         const dataAuth = { email: data.email, password: data.password };
         const res = await props.loginUser(dataAuth);
         const token = res.data.token;
@@ -93,75 +121,132 @@ const Signup = (props) => {
   };
 
   return (
-    <div>
-      <div className={styles.signup_container}>
-        {props.closeButton}
-        <div className={styles.signup_form_container}>
-          <div className={styles.right}>
-            <div className={styles.ptahiniLogo}>
-              <img src={ptahiniLogo} alt="ptahini" />
-            </div>
-            {loading ? (
-              <Loading />
-            ) : (
-              <form className={styles.form_container}>
-                <h1>Регистрация аккаунта</h1>
-                {!confirmationCodeSent && (
-                  <input
-                    type="email"
-                    placeholder="Введите адрес электронной почты"
-                    name="email"
+    <Container maxWidth="xl">
+      <Box
+        sx={{
+          display: "flex",
+          minHeight: "60vh",
+          alignItems: "center",
+          justifyContent: "center",
+          flexDirection: "column",
+          gap: "30px",
+        }}
+      >
+        <Box width={200} alt="ptahini" src={ptahiniLogo} component="img"></Box>
+        {loading ? (
+          <Loading />
+        ) : (
+          <form>
+            <Box display="flex" gap={3} flexDirection="column" minWidth={350}>
+              <Typography
+                align="center"
+                variant="h4"
+                gutterBottom
+                component="h1"
+              >
+                Регистрация
+              </Typography>
+              {!confirmationCodeSent && (
+                <TextField
+                  type="email"
+                  label="Эл. почта"
+                  name="email"
+                  onChange={handleChange}
+                  value={data.email}
+                  required
+                  variant="outlined"
+                  autoComplete="new-password"
+                />
+              )}
+              {showConfirmation && (
+                <>
+                  <TextField
                     onChange={handleChange}
-                    value={data.email}
-                    required
-                    className={styles.input}
+                    name="firstName"
+                    value={data.firstName}
+                    label="Имя"
+                    type="text"
+                    autoComplete="new-password"
                   />
-                )}
-                {showConfirmation && (
-                  <>
-                    <input
-                      type="password"
-                      placeholder="Код подтверждения на эл. почте"
-                      name="confirmationCode"
-                      onChange={handleChange}
-                      value={enteredConfirmationCode}
-                      required
-                      autoComplete="new-password"
-                      className={styles.input}
-                    />
-                    <input
-                      type="password"
-                      placeholder="Введите пароль для аккаунта"
-                      name="password"
-                      onChange={handleChange}
+                  <TextField
+                    onChange={handleChange}
+                    name="lastName"
+                    value={data.lastName}
+                    label="Фамилия"
+                    type="text"
+                    autoComplete="new-password"
+                  />
+                  <TextField
+                    type="password"
+                    label="Код подтверждения на эл. почте"
+                    name="confirmationCode"
+                    onChange={handleChange}
+                    value={enteredConfirmationCode}
+                    required
+                    autoComplete="new-password"
+                  />
+                  <FormControl variant="outlined">
+                    <InputLabel htmlFor="outlined-adornment-password">
+                      Пароль
+                    </InputLabel>
+                    <OutlinedInput
                       value={data.password}
-                      required
-                      className={styles.input}
+                      onChange={handleChange}
+                      name="password"
+                      id="outlined-adornment-password"
+                      type={showPassword ? "text" : "password"}
+                      autoComplete="new-password"
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                            edge="end"
+                          >
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                      label="Password"
                     />
-                    <button onClick={handleSubmit} className={styles.green_btn}>
-                      Создать пользователя
-                    </button>
-                  </>
-                )}
-                {!emailSent && data.email && (
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleSendCode();
-                    }}
-                    className={styles.green_btn}
-                  >
-                    Отправить код подтверждения на почту
-                  </button>
-                )}
-                {error && <div className={styles.error_msg}>{error}</div>}
-              </form>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
+                  </FormControl>
+                  <Button variant="contained" onClick={handleSubmit}>
+                    Создать пользователя
+                  </Button>
+                </>
+              )}
+              {!emailSent && data.email && (
+                <Button
+                  variant="contained"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleSendCode();
+                  }}
+                >
+                  Подтвердить адрес
+                </Button>
+              )}
+              {error && <div className={styles.error_msg}>{error}</div>}
+              <Box
+                display="flex"
+                gap={1}
+                alignItems="center"
+                justifyContent="center"
+                fontSize={16}
+              >
+                <Typography fontSize="16px" component="span">
+                  Уже есть аккаунт?
+                </Typography>
+                <Link underline="none" href="/login/">
+                  Войти
+                </Link>
+              </Box>
+            </Box>
+          </form>
+        )}
+      </Box>
+    </Container>
   );
 };
 
