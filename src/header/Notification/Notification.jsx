@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import NotificationMessage from "./NotificationMessage";
 import Badge from "@mui/material/Badge";
 import MailIcon from "@mui/icons-material/Mail";
-import { Chip, Stack } from "@mui/material";
+import { IconButton, Stack } from "@mui/material";
 
 export default function Notification(props) {
   const [show, setShow] = useState(false);
@@ -31,24 +31,12 @@ export default function Notification(props) {
 
   return (
     <div ref={notificationRef}>
-      {/* <Badge
-        onClick={handleClick}
-        badgeContent={props.notificationCount}
-        color="error"
-        max={99}
-      >
-        <MailIcon cursor="pointer" fontSize="large" />
-      </Badge> */}
       <Stack direction="row" spacing={1}>
-        <Badge badgeContent={props.notificationCount} color="error" max={99}>
-          <Chip
-            color="success"
-            icon={<MailIcon cursor="pointer" fontSize="small" />}
-            label={`${props.notificationCount} оповещений`}
-            cursor="pointer"
-            onClick={handleClick}
-          />
-        </Badge>
+        <IconButton onClick={handleClick} aria-label="Оповещения пользователя">
+          <Badge badgeContent={props.notificationCount} color="error" max={99}>
+            <MailIcon style={{ color: "#fff" }} fontSize="large" />
+          </Badge>
+        </IconButton>
       </Stack>
       {show && (
         <NotificationMessage

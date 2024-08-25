@@ -3,7 +3,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { CardActionArea, Grid } from "@mui/material";
+import { Box, CardActionArea, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export default function CartToolsBlock() {
@@ -42,31 +42,33 @@ export default function CartToolsBlock() {
   ];
 
   return (
-    <Grid container spacing={3}>
-      {cardsData.map((card, index) => (
-        <Grid item xs={12} md={4} key={index}>
-          <Link to={card.link} style={{ textDecoration: "none" }}>
-            <Card style={flexHeight}>
-              <CardActionArea style={flexHeight}>
-                <CardMedia
-                  component="img"
-                  height="140"
-                  image={card.image}
-                  alt={card.alt}
-                />
-                <CardContent style={{ flexGrow: 1 }}>
-                  <Typography gutterBottom variant="h5" component="div">
-                    {card.title}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {card.description}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          </Link>
-        </Grid>
-      ))}
-    </Grid>
+    <Box>
+      <Grid container spacing={3}>
+        {cardsData.map((card, index) => (
+          <Grid item xs={12} md={4} key={index}>
+            <Link to={card.link} style={{ textDecoration: "none" }}>
+              <Card style={flexHeight}>
+                <CardActionArea style={flexHeight}>
+                  <CardMedia
+                    component="img"
+                    height="140"
+                    image={card.image}
+                    alt={card.alt}
+                  />
+                  <CardContent style={{ flexGrow: 1 }}>
+                    <Typography gutterBottom variant="h5" component="div">
+                      {card.title}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {card.description}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </Link>
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
   );
 }

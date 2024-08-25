@@ -1,10 +1,20 @@
 import React from "react";
 import PriceTarifCard from "../Parts/PriceTarifCard";
-import { Box, Button, Container, Grid, Icon, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  TextField,
+  Typography,
+} from "@mui/material";
 import CartToolsBlock from "../Parts/CartToolsBlock";
 import CheckIcon from "@mui/icons-material/Check";
+import GetTitlePresentation from "../../api-ya-search/GetTitlePresentation";
+import FooterVideo from "../../footer/FooterVideo";
 
 export default function Home(props) {
+  const { isAuthenticated } = props;
   return (
     <Container maxWidth="xl">
       <Box sx={{ marginBottom: "70px" }} component="section">
@@ -64,7 +74,7 @@ export default function Home(props) {
             >
               <Typography variant="h6" component="p">
                 Инструменты Ptahini - это уникально разработаные онлайн
-                инструменты для SEO специалистов, маркетолого и бизнеса.
+                инструменты для SEO специалистов, маркетологов и бизнеса.
               </Typography>
             </Box>
 
@@ -99,7 +109,13 @@ export default function Home(props) {
               />{" "}
               Точные инструменты
             </Typography>
-            <Button variant="contained">Начать пользоваться</Button>
+            <Button
+              href={isAuthenticated ? "/app/" : "/login/"}
+              component="a"
+              variant="contained"
+            >
+              {isAuthenticated ? "В инструменты" : "Начать пользоваться"}
+            </Button>
           </Grid>
           <Grid item xs={12} md={6}>
             <Box component="div">
@@ -115,8 +131,10 @@ export default function Home(props) {
           </Grid>
         </Grid>
       </Box>
+      <GetTitlePresentation />
       <CartToolsBlock />
       <PriceTarifCard />
+      <FooterVideo />
     </Container>
   );
 }

@@ -1,40 +1,3 @@
-// import React from "react";
-// import s from "./Header.module.css";
-// import Lvt from "./Balance/Lvt/Lvt";
-// import Money from "./Balance/Money/Money";
-// import AvatarContainer from "./Avatar/AvatarContainer";
-// import NotificationContainer from "./Notification/NotificationContainer";
-// import MainMenuHeader from "../Menu/Header/MainMenuHeader";
-// import { Link } from "react-router-dom";
-// import home from "./../img/icon/icons-home-fff.png";
-
-// export default function Header(props) {
-//   return (
-//     <header className={s.headerDekstop}>
-//       <div className={s.headerContainerGrid}>
-//         <Link to="/" className={s.homeLinkHeader}>
-//           <img alt="" src={home} />
-//         </Link>
-//         <AvatarContainer />
-//         {props.isAuthenticated ? (
-//           <>
-//             <Lvt
-//               lvt={props.lvt}
-//               bonusDayLvt={props.bonusDayLvt}
-//               lvtPresent={props.lvtPresent}
-//               totalLvt={props.totalLvt}
-//             />
-//             <Money money={props.money} />
-//             <MainMenuHeader />
-//             <NotificationContainer />
-//           </>
-//         ) : (
-//           <MainMenuHeader />
-//         )}
-//       </div>
-//     </header>
-//   );
-// }
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -56,6 +19,7 @@ import CloudIcon from "@mui/icons-material/Cloud";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import MenuToolbar from "../Sidebar/MenuToolbar";
 import AssessmentIcon from "@mui/icons-material/Assessment";
+import { AccountCircle } from "@mui/icons-material";
 
 const pages = [
   {
@@ -220,16 +184,24 @@ function Header(props) {
             <Divider orientation="vertical" flexItem />
             <Stack direction="row" spacing={1}>
               <Chip
-                color="success"
-                icon={<CreditCardIcon ontSize="small" />}
+                sx={{
+                  backgroundColor: (theme) => theme.palette.mat.main, // Используем кастомный цвет
+                  color: "#fff", // Добавим цвет текста, если нужно
+                  fontWeight: "600",
+                }}
+                icon={<CreditCardIcon color="#fff" ontSize="small" />}
                 label={`${money} руб`}
               />
             </Stack>
             <Divider orientation="vertical" flexItem />
             <Stack direction="row" spacing={1}>
               <Chip
-                color="success"
-                icon={<CloudIcon ontSize="small" />}
+                sx={{
+                  backgroundColor: (theme) => theme.palette.mat.main, // Используем кастомный цвет
+                  color: "#fff", // Добавим цвет текста, если нужно
+                  fontWeight: "600",
+                }}
+                icon={<CloudIcon color="#fff" ontSize="small" />}
                 label={`${totalLvt} баллов`}
               />
             </Stack>
@@ -238,11 +210,15 @@ function Header(props) {
             <Divider orientation="vertical" flexItem />
             <Tooltip title="Управление профилем">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar
-                  alt={`${firstName} ${lastName}`}
-                  src={`${config.REACT_APP_SERVER_URL}${avatar}`}
-                  sx={{ bgcolor: blueGrey[50] }}
-                />
+                {avatar ? (
+                  <Avatar
+                    alt={`${firstName} ${lastName}`}
+                    src={`${config.REACT_APP_SERVER_URL}${avatar}`}
+                    sx={{ bgcolor: blueGrey[50] }}
+                  />
+                ) : (
+                  <AccountCircle sx={{ color: "#fff" }} fontSize="large" />
+                )}
               </IconButton>
             </Tooltip>
             <Menu

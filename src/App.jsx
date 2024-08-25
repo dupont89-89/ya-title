@@ -38,6 +38,8 @@ import CabinetUserContainer from "./CabinetUser/CabinetUserContainer";
 import { Box, Container } from "@mui/material";
 import MenuToolbar from "./Sidebar/MenuToolbar";
 import HomeContainer from "./Page/Home/HomeContainer";
+import SignUpContainer from "./Auth/SignUp/SignUpContainer";
+import ToolsList from "./ToolsComponent/ToolsList";
 
 let config;
 
@@ -147,6 +149,7 @@ function App({
         <Routes>
           <Route path="/" element={<HomeContainer />} />
           <Route path="/app/:tools" element={<ToolsContentContainer />} />
+          <Route path="/app/" element={<ToolsList />} />
           <Route path="/balance/" element={<BalancePageContainer />} />
           <Route
             path="/history-message"
@@ -156,6 +159,12 @@ function App({
               ) : (
                 <Navigate to="/login" />
               )
+            }
+          />
+          <Route
+            path="/signup/"
+            element={
+              isAuthenticated ? <Navigate to="/" /> : <SignUpContainer />
             }
           />
           <Route
