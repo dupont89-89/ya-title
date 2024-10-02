@@ -64,3 +64,16 @@ export const loginUser = (data) => {
     }
   };
 };
+
+export const authUserVk = async (code, device_id) => {
+  try {
+    const response = await instance.get(
+      `user/auth/vk?code=${code}&device_id=${device_id}`
+    );
+    debugger;
+    return response.data;
+  } catch (error) {
+    console.error("Ошибка получения данных (code vk):", error);
+    throw error;
+  }
+};

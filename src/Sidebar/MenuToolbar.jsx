@@ -37,6 +37,11 @@ export default function MenuToolbar() {
       link: "/app/wordstat/",
       icon: <CreditCardIcon ontSize="small" />,
     },
+    {
+      name: "Whois проверка домена",
+      link: "/app/whois/",
+      icon: <CreditCardIcon ontSize="small" />,
+    },
   ];
 
   const DrawerList = (

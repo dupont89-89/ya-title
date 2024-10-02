@@ -51,14 +51,14 @@ button:focus {
   outline: none;
 }
 
-/* table {
+table {
   width: 100%;
   margin-bottom: 20px;
   border: 1px solid #dddddd;
   border-collapse: collapse;
-} */
+}
 
-/* table th {
+table th {
   font-weight: bold;
   padding: 5px;
   background: #efefef;
@@ -68,13 +68,4 @@ button:focus {
 table td {
   border: 1px solid #dddddd;
   padding: 5px;
-} */
-
-/* h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin: 0 0 15px 0;
-} */
+}

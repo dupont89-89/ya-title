@@ -17,6 +17,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import SignInVk from "../ServiseAuth/SignInVk";
 
 const Login = (props) => {
   const [data, setData] = useState({ email: "", password: "" });
@@ -114,6 +115,7 @@ const Login = (props) => {
                   </InputLabel>
                   <OutlinedInput
                     value={data.password}
+                    required
                     onChange={handleChange}
                     name="password"
                     id="outlined-adornment-password"
@@ -122,7 +124,7 @@ const Login = (props) => {
                     endAdornment={
                       <InputAdornment position="end">
                         <IconButton
-                          aria-label="toggle password visibility"
+                          aria-label="Переключение видимости пароля"
                           onClick={handleClickShowPassword}
                           onMouseDown={handleMouseDownPassword}
                           edge="end"
@@ -135,9 +137,14 @@ const Login = (props) => {
                   />
                 </FormControl>
                 {error && <div className={styles.error_msg}>{error}</div>}
-                <Button type="submit" variant="contained">
+                <Button
+                  sx={{ height: "43px" }}
+                  type="submit"
+                  variant="contained"
+                >
                   Войти
                 </Button>
+                <SignInVk />
                 {props.presentInfo}
                 <Button onClick={(e) => setResetPassword(true)}>
                   Забыли пароль?

@@ -5,13 +5,15 @@ import ToolsContent from "./ToolsContent";
 function ToolsContentContainer(props) {
   return (
     <div>
-      <ToolsContent />
+      <ToolsContent isAuthenticated={props.isAuthenticated} />
     </div>
   );
 }
 
 const mapStateToProps = (state) => {
-  return {};
+  return {
+    isAuthenticated: state.user.isAuthenticated,
+  };
 };
 const mapDispatchToProps = {};
 

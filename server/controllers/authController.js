@@ -1,5 +1,6 @@
 const { mailMessageController } = require("../SMTP/mail");
-const { User, validate } = require("../models/UserSchema");
+const { User } = require("../models/UserSchema");
+const VKID = require("@vkid/sdk");
 const uuid = require("uuid");
 const {
   validateUserAuth,
@@ -7,14 +8,6 @@ const {
 } = require("../utils/validation");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
-// const Joi = require("joi");
-// const validateUser = (data) => {
-//   const schema = Joi.object({
-//     email: Joi.string().email().required().label("Email"),
-//     password: Joi.string().required().label("Password"),
-//   });
-//   return schema.validate(data);
-// };
 
 exports.authUserController = async (req, res) => {
   try {
@@ -129,6 +122,46 @@ exports.tokenResetUserPasswordController = async (req, res) => {
     return res.status(200).send({ message: "Пароль успешно сброшен." });
   } catch (error) {
     console.error("Ошибка при сбросе пароля:", error);
+    return res.status(500).send({ message: "Внутренняя ошибка сервера." });
+  }
+};
+
+exports.authVKController = async (req, res) => {
+  const code = req.query.code; // Используем req.query для извлечения параметров из URL
+  const device_id = req.query.device_id;
+  const client_id = process.env.CLIENT_ID_VK;
+  console.log(`client_id ${client_id}`);
+  console.log(`Код ${code}`);
+  console.log(`device_id ${device_id}`);
+  try {
+    if (!code || !device_id) {
+      return res
+        .status(400)
+        .send({ message: "Ошибка: отсутствует code или device_id." });
+    }
+
+    // Обмен кода на токен
+    const tokenResponse = await VKID.Auth.exchangeCode(
+      code,
+      device_id,
+      client_id
+    );
+    console.log(`tokenResponse ${tokenResponse}`);
+    if (!tokenResponse || !tokenResponse.accessToken) {
+      return res.status(400).send({ message: "Ошибка обмена кода на токен." });
+    }
+
+    const accessToken = tokenResponse.accessToken;
+
+    // Получение информации о пользователе
+    const userInfo = await VKID.Auth.userInfo(accessToken);
+    console.log(userInfo);
+    return res.status(200).send({
+      message: "Успешно.",
+      user: userInfo,
+    });
+  } catch (error) {
+    console.error("Ошибка:", error);
     return res.status(500).send({ message: "Внутренняя ошибка сервера." });
   }
 };
