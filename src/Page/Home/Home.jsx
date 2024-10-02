@@ -12,6 +12,7 @@ import CartToolsBlock from "../Parts/CartToolsBlock";
 import CheckIcon from "@mui/icons-material/Check";
 import GetTitlePresentation from "../../api-ya-search/GetTitlePresentation";
 import FooterVideo from "../../footer/FooterVideo";
+import AccordionFaq from "../Parts/FaqTools";
 
 export default function Home(props) {
   const { isAuthenticated } = props;
@@ -134,6 +135,7 @@ export default function Home(props) {
       <GetTitlePresentation />
       <CartToolsBlock />
       <PriceTarifCard />
+      <AccordionFaq />
       <FooterVideo />
     </Container>
   );

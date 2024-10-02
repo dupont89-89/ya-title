@@ -19,7 +19,6 @@ function ApiSendYaSearchContainer(props) {
         isAuthenticated={props.isAuthenticated}
         lvt={props.lvt}
         totalLvt={props.totalLvt}
-        toolsSidebar={props.toolsSidebar}
         sumLvt={sumLvt}
         getTitleGpt={props.getTitleGpt}
       />

@@ -1,12 +1,6 @@
 import React, { useState } from "react";
-import Select from "react-select";
-import s from "./../../css/Tools.module.css";
-
-const labelStyle = {
-  fontSize: "21px",
-  margin: "21px 0",
-  display: "block",
-};
+import Select, { components } from "react-select";
+import s from "../ToolsComponent.module.css";
 
 const options = [
   { value: 20, label: "Архангельск" },
@@ -84,24 +78,37 @@ const RegionSelectSearch = ({ onSelect, defaultRegion, nameLabel }) => {
 
   const handleChange = (selectedOption) => {
     setSelectedOption(selectedOption);
-    debugger;
     onSelect(selectedOption); // Передача выбранного значения в родительский компонент
   };
 
+  const customStyles = {
+    container: (base) => ({
+      ...base,
+      height: "100%",
+    }),
+    control: (base) => ({
+      ...base,
+      height: "100%",
+      minHeight: "40px", // Устанавливаем минимальную высоту для лучшего отображения
+    }),
+  };
+
+  const NoOptionsMessage = (props) => {
+    return (
+      <components.NoOptionsMessage {...props}>
+        <span className="custom-css-class">Выберите ближайший город</span>
+      </components.NoOptionsMessage>
+    );
+  };
+
   return (
-    <div>
-      <label style={labelStyle} htmlFor="region">
-        {nameLabel}
-      </label>
-      <div className={s.selectRegion}>
-        <Select
-          className={s.selectRegion}
-          value={selectedOption}
-          onChange={handleChange}
-          options={options}
-        />
-      </div>
-    </div>
+    <Select
+      components={{ NoOptionsMessage }}
+      styles={customStyles}
+      value={selectedOption}
+      onChange={handleChange}
+      options={options}
+    />
   );
 };
 

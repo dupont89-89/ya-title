@@ -1,10 +1,11 @@
 import React from "react";
 import t from "../css/Tools.module.css";
+import { Typography } from "@mui/material";
 
 export default function TextBottom(props) {
   return (
-    <div>
-      <div className={t.textBottomTools}>{props.text}</div>
-    </div>
+    <Typography variant="p" component="p">
+      {props.text}
+    </Typography>
   );
 }

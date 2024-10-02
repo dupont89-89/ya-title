@@ -1,73 +1,73 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import ApiSendYaSearchContainer from "../api-ya-search/ApiSendYaSearchContainer";
-import ToolsSidebar from "../Sidebar/ToolSidebar";
 import TextBottom from "./TextBottom";
 import CommerceKeyToolsContainer from "../CommerceKeyTools/CommerceKeyToolsContainer";
-import iconGoogle from "./../img/icon/google-icon-nav.png";
-import iconYandex from "./../img/icon/ya-icon.png";
-import iconHTML from "./../img/icon/html-specificaciya-logo.svg";
-import iconRuTube from "./../img/icon/rutube-icon.png";
-import yaDirect from "./../img/icon/ya-direct.png";
-import iconPtahini from "./../img/icon/ptahini-icon.png";
 import CountWordKeyContainer from "../countWordkey/CountWordKeyContainer";
+import { Alert, Box, Container, Grid, Link, Typography } from "@mui/material";
+import MessageNoAuth from "../Auth/MessageNoAuth/MessageNoAuth";
+import RatingTools from "./PartsComponentTools/RatingTools";
+import CheckIcon from "@mui/icons-material/Check";
+import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
+import ReviewsTools from "./PartsComponentTools/ReviewsTools";
+import WhoisToolsContainer from "../Whois/WhoisToolsContainer";
 
 export default function ToolsContent(props) {
   const { tools } = useParams();
-  const titleSidebar = {
-    nameDoc: "Документация по тайтл",
-    nameLinkOne: "Справка Яндекса",
-    hrefLinkOne:
-      "https://yandex.ru/support/webmaster/search-results/title.html",
-    iconLinkOne: iconYandex,
-    nameLinkTwo: "Справка Google",
-    hrefLinkTwo:
-      "https://developers.google.cn/search/docs/appearance/title-link?hl=ru",
-    iconLinkTwo: iconGoogle,
-    nameLinkTri: "HTML спецификация",
-    hrefLinkTri:
-      "https://html.spec.whatwg.org/multipage/semantics.html#the-title-element",
-    iconLinkTri: iconHTML,
-    nameLinkFo: "Видео по теме",
-    hrefLinkFo:
-      "https://rutube.ru/video/35ef2307b6a22542b6b53217abdbbc6c/?r=wd",
-    iconLinkFo: iconRuTube,
-  };
+  // const titleSidebar = {
+  //   nameDoc: "Документация по тайтл",
+  //   nameLinkOne: "Справка Яндекса",
+  //   hrefLinkOne:
+  //     "https://yandex.ru/support/webmaster/search-results/title.html",
+  //   iconLinkOne: iconYandex,
+  //   nameLinkTwo: "Справка Google",
+  //   hrefLinkTwo:
+  //     "https://developers.google.cn/search/docs/appearance/title-link?hl=ru",
+  //   iconLinkTwo: iconGoogle,
+  //   nameLinkTri: "HTML спецификация",
+  //   hrefLinkTri:
+  //     "https://html.spec.whatwg.org/multipage/semantics.html#the-title-element",
+  //   iconLinkTri: iconHTML,
+  //   nameLinkFo: "Видео по теме",
+  //   hrefLinkFo:
+  //     "https://rutube.ru/video/35ef2307b6a22542b6b53217abdbbc6c/?r=wd",
+  //   iconLinkFo: iconRuTube,
+  // };
 
-  const keyCommerceSidebar = {
-    nameDoc: "Документация по ключевым запросам",
-    nameLinkOne: "Справка Яндекса.Директ по ключам",
-    hrefLinkOne:
-      "https://yandex.ru/support/direct/keywords/building-keyword-list.html",
-    iconLinkOne: yaDirect,
-    nameLinkTwo: "Справка Google",
-    hrefLinkTwo: "https://support.google.com/google-ads/answer/2453981?hl=RU",
-    iconLinkTwo: iconGoogle,
-    nameLinkTri: "Статья Ptahini",
-    hrefLinkTri:
-      "https://ptahini.ru/seo-prodvizhenie-sajtov/kakie-kljuchevye-zaprosy-byvajut/",
-    iconLinkTri: iconPtahini,
-    nameLinkFo: "Видео инструкция",
-    hrefLinkFo: "https://rutube.ru/video/41b1dac88c6fa9867fd5459ac7e3270e/",
-    iconLinkFo: iconRuTube,
-  };
+  // const keyCommerceSidebar = {
+  //   nameDoc: "Документация по ключевым запросам",
+  //   nameLinkOne: "Справка Яндекса.Директ по ключам",
+  //   hrefLinkOne:
+  //     "https://yandex.ru/support/direct/keywords/building-keyword-list.html",
+  //   iconLinkOne: yaDirect,
+  //   nameLinkTwo: "Справка Google",
+  //   hrefLinkTwo: "https://support.google.com/google-ads/answer/2453981?hl=RU",
+  //   iconLinkTwo: iconGoogle,
+  //   nameLinkTri: "Статья Ptahini",
+  //   hrefLinkTri:
+  //     "https://ptahini.ru/seo-prodvizhenie-sajtov/kakie-kljuchevye-zaprosy-byvajut/",
+  //   iconLinkTri: iconPtahini,
+  //   nameLinkFo: "Видео инструкция",
+  //   hrefLinkFo: "https://rutube.ru/video/41b1dac88c6fa9867fd5459ac7e3270e/",
+  //   iconLinkFo: iconRuTube,
+  // };
 
-  const keyCountWordstatSidebar = {
-    nameDoc: "Документация по частотности запросов",
-    nameLinkOne: "Справка Яндекса.Директ по ключам",
-    hrefLinkOne:
-      "https://yandex.ru/support/direct/keywords/building-keyword-list.html",
-    iconLinkOne: yaDirect,
-    nameLinkTwo: "Справка Google",
-    hrefLinkTwo: "https://support.google.com/google-ads/answer/2453981?hl=RU",
-    iconLinkTwo: iconGoogle,
-    nameLinkTri: "Яндекс Wordstat",
-    hrefLinkTri: "https://wordstat.yandex.ru/",
-    iconLinkTri: iconYandex,
-    nameLinkFo: "Google Trends",
-    hrefLinkFo: "https://trends.google.com/trends?geo=&hl=ru",
-    iconLinkFo: iconGoogle,
-  };
+  // const keyCountWordstatSidebar = {
+  //   nameDoc: "Документация по частотности запросов",
+  //   nameLinkOne: "Справка Яндекса.Директ по ключам",
+  //   hrefLinkOne:
+  //     "https://yandex.ru/support/direct/keywords/building-keyword-list.html",
+  //   iconLinkOne: yaDirect,
+  //   nameLinkTwo: "Справка Google",
+  //   hrefLinkTwo: "https://support.google.com/google-ads/answer/2453981?hl=RU",
+  //   iconLinkTwo: iconGoogle,
+  //   nameLinkTri: "Яндекс Wordstat",
+  //   hrefLinkTri: "https://wordstat.yandex.ru/",
+  //   iconLinkTri: iconYandex,
+  //   nameLinkFo: "Google Trends",
+  //   hrefLinkFo: "https://trends.google.com/trends?geo=&hl=ru",
+  //   iconLinkFo: iconGoogle,
+  // };
 
   const getTextForPage = (tools) => {
     switch (tools) {
@@ -251,36 +251,75 @@ export default function ToolsContent(props) {
   const getToolsPage = (tools) => {
     switch (tools) {
       case "create-title":
-        return (
-          <ApiSendYaSearchContainer
-            toolsSidebar={<ToolsSidebar sidebar={titleSidebar} />}
-          />
-        );
+        return <ApiSendYaSearchContainer />;
       case "commerce-key":
-        return (
-          <CommerceKeyToolsContainer
-            toolsSidebar={<ToolsSidebar sidebar={keyCommerceSidebar} />}
-          />
-        );
+        return <CommerceKeyToolsContainer />;
       case "wordstat":
-        return (
-          <CountWordKeyContainer
-            toolsSidebar={<ToolsSidebar sidebar={keyCountWordstatSidebar} />}
-          />
-        );
+        return <CountWordKeyContainer />;
+      case "whois":
+        return <WhoisToolsContainer />;
       default:
-        return (
-          <ApiSendYaSearchContainer
-            toolsSidebar={<ToolsSidebar sidebar={titleSidebar} />}
-          />
-        );
+        return <ApiSendYaSearchContainer />;
     }
   };
 
   return (
     <>
+      <Container sx={{ marginBottom: 5 }} maxWidth="xl">
+        <Box component="section" sx={{ flexGrow: 1 }}>
+          <Grid
+            sx={{ alignItems: "center", justifyContent: "flex-start" }}
+            container
+            spacing={1}
+          >
+            <Grid item sx={{ display: "flex" }} md={3} xs={6}>
+              <RatingTools />
+            </Grid>
+            <Grid item md={3} xs={6}>
+              <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
+                <Typography>Работает стабильно</Typography>
+              </Alert>
+            </Grid>
+            <Grid item md={3} xs={6}>
+              <Alert
+                action={
+                  <Link href="/video/" color="inherit" size="small">
+                    Смотреть
+                  </Link>
+                }
+                icon={<OndemandVideoIcon fontSize="inherit" />}
+                severity="success"
+              >
+                Видео инструкция
+              </Alert>
+            </Grid>
+            <Grid item md={3} xs={6}>
+              <Alert
+                action={
+                  <Link href="/support/" color="inherit" size="small">
+                    Оставить обращение
+                  </Link>
+                }
+                icon={<OndemandVideoIcon fontSize="inherit" />}
+                severity="success"
+              >
+                Поддержка
+              </Alert>
+            </Grid>
+          </Grid>
+        </Box>
+      </Container>
       {getToolsPage(tools)}
-      <TextBottom text={getTextForPage(tools)} />
+      <Container maxWidth="xl">
+        <Box component="section" sx={{ flexGrow: 1 }}>
+          <Grid container spacing={1}>
+            <Grid item>
+              <TextBottom text={getTextForPage(tools)} />
+            </Grid>
+          </Grid>
+        </Box>
+      </Container>
+      <ReviewsTools />
     </>
   );
 }

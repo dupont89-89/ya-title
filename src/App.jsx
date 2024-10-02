@@ -29,17 +29,15 @@ import TrackingReferalUrl from "./Auth/Referal/TrackingReferalUrl";
 import PageReferalContainer from "./ProfileUser/Referal/PageReferalContainer";
 import SuccessPay from "./BalancePage/SuccessPay";
 import ScoreUserContainer from "./Admin/ScoreUser/ScoreUserContainer";
-import MobileHeaderContainer from "./header/MobileHeader/MobileHeaderContainer";
-import MobileMenu from "./Menu/MobileMenu/MobileMenu";
 import ResetPasswordForm from "./Auth/ResetPassword/ResetPasswordForm";
 import NotFound from "./parts/NotFound";
 import FailPayment from "./BalancePage/FailPayment";
 import CabinetUserContainer from "./CabinetUser/CabinetUserContainer";
-import { Box, Container } from "@mui/material";
-import MenuToolbar from "./Sidebar/MenuToolbar";
+import { Box } from "@mui/material";
 import HomeContainer from "./Page/Home/HomeContainer";
 import SignUpContainer from "./Auth/SignUp/SignUpContainer";
 import ToolsList from "./ToolsComponent/ToolsList";
+import PageAuthVk from "./Auth/ServiseAuth/PageAuthVk";
 
 let config;
 
@@ -166,6 +164,10 @@ function App({
             element={
               isAuthenticated ? <Navigate to="/" /> : <SignUpContainer />
             }
+          />
+          <Route
+            path="/signup/vk/"
+            element={isAuthenticated ? <Navigate to="/" /> : <PageAuthVk />}
           />
           <Route
             path="/login"
