@@ -8,7 +8,6 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
-import Loading from "../app-function/Loading";
 import { Home } from "@mui/icons-material";
 
 let config;

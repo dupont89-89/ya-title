@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -13,15 +13,33 @@ import {
   TableHead,
   TableRow,
   Paper,
+  CircularProgress,
 } from "@mui/material";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
 export default function WhoisTools(props) {
-  const { fetchApiWhois, isAuthenticated } = props;
+  const {
+    fetchApiWhois,
+    isAuthenticated,
+    subscriptionDomenWhois,
+    userId,
+    email,
+    getSubscriptionDomenUser,
+  } = props;
   const [domen, setQuery] = useState("");
   const [dataDomen, setDataDomen] = useState("");
   const [registeredDomen, setregisteredDomen] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [freeData, setFreeData] = useState("");
+  const [parsedData, setParserData] = useState("");
+  const [isLoadingSubscription, setIsLoadingSubscription] = useState(false);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      getSubscriptionDomenUser(userId);
+    }
+  }, []);
 
   const handleChange = (event) => {
     // Убираем префиксы https:// и http://
@@ -29,10 +47,43 @@ export default function WhoisTools(props) {
     setQuery(cleanedDomain);
   };
 
+  const handleClickSubscription = async () => {
+    setIsLoadingSubscription(true);
+    try {
+      // Теперь эта функция возвращает промис напрямую
+      await subscriptionDomenWhois(domen, userId, freeData, email);
+      debugger;
+    } catch (error) {
+      console.error("Ошибка при отправке данных:", error);
+    } finally {
+      debugger;
+      setIsLoadingSubscription(false);
+    }
+  };
+
   const handleClick = async () => {
-    const resultDomen = await fetchApiWhois(domen);
-    setDataDomen(resultDomen);
-    setregisteredDomen(resultDomen.registered);
+    setIsLoading(true);
+
+    try {
+      const resultDomen = await fetchApiWhois(domen);
+      setDataDomen(resultDomen);
+      setregisteredDomen(resultDomen.registered);
+
+      const whoisString = resultDomen.rawdata && resultDomen.rawdata[0];
+      const parsedData = whoisString ? parseWhoisData(whoisString) : [];
+      setParserData(parsedData);
+      // Найдем 'free-date' и обновим состояние
+      const freeDateEntry = parsedData.find(
+        (entry) => entry.key === "Свободно с"
+      );
+      if (freeDateEntry) {
+        setFreeData(freeDateEntry.value);
+      }
+    } catch (error) {
+      console.error("Ошибка при отправке данных:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   // Объект для перевода английских ключей и значений на русский
@@ -80,16 +131,9 @@ export default function WhoisTools(props) {
           .split(", ")
           .map((val) => translationMap[val] || val) // Переводим каждое значение через запятую
           .join(", "); // Собираем обратно строку
-
         return { key: translatedKey, value: translatedValue };
       });
   };
-
-  // Пример строки данных
-  const whoisString = dataDomen.rawdata && dataDomen.rawdata[0];
-
-  // Парсим строку
-  const parsedData = whoisString ? parseWhoisData(whoisString) : [];
 
   return (
     <React.Fragment>
@@ -142,7 +186,11 @@ export default function WhoisTools(props) {
                 }}
                 variant="contained"
               >
-                Проверить
+                {isLoading ? (
+                  <CircularProgress size={20} sx={{ color: "#fff" }} />
+                ) : (
+                  "Проверить"
+                )}
               </Button>
             </Grid>
           </Grid>
@@ -204,14 +252,21 @@ export default function WhoisTools(props) {
                   }}
                 >
                   <Button
-                    disabled={!isAuthenticated}
+                    disabled={!isAuthenticated || isLoadingSubscription}
                     sx={{ mt: 3 }}
                     target="_blank"
                     component="a"
                     variant="contained"
-                    href="https://www.reg.ru/domain/new/?rlink=reflink-19937483"
+                    onClick={handleClickSubscription}
                   >
-                    Подписаться на обновление
+                    {isLoadingSubscription ? (
+                      <span>
+                        Идёт сохранение...{" "}
+                        <CircularProgress size={20} sx={{ color: "#fff" }} />
+                      </span>
+                    ) : (
+                      "Подписаться на обновление"
+                    )}
                   </Button>
                   {!isAuthenticated && (
                     <Button

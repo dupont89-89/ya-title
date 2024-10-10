@@ -1,4 +1,5 @@
 import axios from "axios";
+import { setDomenSubscription } from "../redux/tools-reducer/tools-reducer";
 
 let config;
 
@@ -16,10 +17,38 @@ export const fetchApiWhois = (domen) => {
   return async (dispatch) => {
     try {
       const response = await instance.get(`/tools/whois?domen=${domen}`);
-      debugger;
       return response.data;
     } catch (error) {
       console.error("Ошибка запроса домена Whois на фронтенде:", error);
+    }
+  };
+};
+
+export const subscriptionDomenWhois = (domen, userId, freeData, email) => {
+  return async (dispatch) => {
+    try {
+      const response = await instance.get(
+        `/tools/whois-subscription?domen=${domen}&userId=${userId}&freeData=${freeData}&email=${email}`
+      );
+      return response.data; // Это промис, который вернется в await
+    } catch (error) {
+      console.error("Ошибка запроса домена Whois подписка:", error);
+      throw error; // Не забываем выбросить ошибку, чтобы она попала в catch
+    }
+  };
+};
+
+export const getSubscriptionDomenUser = (userId) => {
+  return async (dispatch) => {
+    try {
+      const response = await instance.get(
+        `/tools/get-domen-subscription?userId=${userId}`
+      );
+      dispatch(setDomenSubscription(response.data.domenData));
+      return response.data; // Это промис, который вернется в await
+    } catch (error) {
+      console.error("Ошибка запроса домена Whois подписка:", error);
+      throw error; // Не забываем выбросить ошибку, чтобы она попала в catch
     }
   };
 };
