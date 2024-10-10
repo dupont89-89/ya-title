@@ -1,5 +1,5 @@
 const ACTION_SET_BALL_DIRECT = "ACTION_SET_BALL_DIRECT";
-const ACTION_SET_DAY = "ACTION_SET_DAY";
+const ACTION_SET_DOMEN_SUBSCRIPTION = "ACTION_SET_DOMEN_SUBSCRIPTION";
 
 // Действия для обновления состояния
 export const setBallDirect = (ball) => ({
@@ -7,18 +7,21 @@ export const setBallDirect = (ball) => ({
   ballDirect: ball,
 });
 
-export const setDay = (day) => ({
-  type: ACTION_SET_DAY,
-  day: day,
+export const setDomenSubscription = (dataDomen) => ({
+  type: ACTION_SET_DOMEN_SUBSCRIPTION,
+  dataDomen: dataDomen,
 });
 
 const initialState = {
   countWordKey: {
     ballDirect: 0,
   },
-  countDay: {
-    day: "Monday",
-  },
+  whoisDomenSubscription: [
+    {
+      domen: "",
+      freeData: "",
+    },
+  ],
 };
 
 const toolsReducer = (state = initialState, action) => {
@@ -31,14 +34,13 @@ const toolsReducer = (state = initialState, action) => {
           ballDirect: action.ballDirect,
         },
       };
-    case ACTION_SET_DAY:
+
+    case ACTION_SET_DOMEN_SUBSCRIPTION:
       return {
         ...state,
-        countDay: {
-          ...state.countDay,
-          day: action.day,
-        },
+        whoisDomenSubscription: [...action.dataDomen], // Заменяем текущие данные новыми
       };
+
     default:
       return state;
   }
