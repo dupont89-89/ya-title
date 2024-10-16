@@ -86,7 +86,7 @@ export default function ApiSendYaSearch(props) {
 
   return (
     <>
-      <Container maxWidth="xl">
+      <Container maxWidth="md">
         <Box sx={{ marginBottom: "70px" }} component="section">
           <Grid
             sx={{ alignItems: "center", justifyContent: "center" }}
@@ -142,26 +142,50 @@ export default function ApiSendYaSearch(props) {
         <Loading />
       ) : (
         resultString && (
-          <div className={s.wrapperBoxTitle}>
-            <span className={s.faviconTitle}></span>
-            <div className={s.boxTitle}>
-              <h2>{resultString}</h2>
-              <span className={s.linkTopKey}>
-                ptahini.ru›search/{topFriLink}
-              </span>
-              <p>
-                Это лучший тайтл для твоего SEO продвижения сайта. Приведи его к
-                читаемому виду. Добавь его в соответствующий раздел мета-тегов в
-                своей CMS.
-              </p>
-              <button className={s.btnCopyTitle} onClick={copyTextOnClick}>
-                Копировать Title
-              </button>
-              {copySuccess && (
-                <span className={s.copyMessage}>Title скопирован!</span>
-              )}
-            </div>
-          </div>
+          <Container maxWidth="md">
+            <Box sx={{ marginBottom: "70px" }} component="section">
+              <Grid
+                sx={{ alignItems: "center", justifyContent: "center" }}
+                container
+                spacing={1}
+              >
+                <Grid
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginBottom: 5,
+                  }}
+                  xs={12}
+                  item
+                >
+                  <div className={s.wrapperBoxTitle}>
+                    <span className={s.faviconTitle}></span>
+                    <div className={s.boxTitle}>
+                      <h2>{resultString}</h2>
+                      <span className={s.linkTopKey}>
+                        ptahini.ru›search/{topFriLink}
+                      </span>
+                      <p>
+                        Это лучший тайтл для твоего SEO продвижения сайта.
+                        Приведи его к читаемому виду. Добавь его в
+                        соответствующий раздел мета-тегов в своей CMS.
+                      </p>
+                      <button
+                        className={s.btnCopyTitle}
+                        onClick={copyTextOnClick}
+                      >
+                        Копировать Title
+                      </button>
+                      {copySuccess && (
+                        <span className={s.copyMessage}>Title скопирован!</span>
+                      )}
+                    </div>
+                  </div>
+                </Grid>
+              </Grid>
+            </Box>
+          </Container>
         )
       )}
       <TitleValues urlPage={urlPage} titleValues={titleValues} />

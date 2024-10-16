@@ -319,7 +319,6 @@ export default function ToolsContent(props) {
           </Grid>
         </Box>
       </Container>
-      <ReviewsTools />
     </>
   );
 }
