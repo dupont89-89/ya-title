@@ -9,6 +9,7 @@ import {
 import axios from "axios";
 import React, { useState } from "react";
 import { Home } from "@mui/icons-material";
+import s from "./Form.module.css";
 
 let config;
 
@@ -44,8 +45,8 @@ export default function GetTitlePresentation() {
   };
 
   return (
-    <Box sx={{ mb: 20 }}>
-      <Grid container spacing={8}>
+    <Box component="section" sx={{ mb: 10 }}>
+      <Grid container spacing={4}>
         <Grid item xs={12}>
           <Typography align="center" variant="h3" component="h2">
             Создавай лучшие Title заголовки
@@ -81,31 +82,26 @@ export default function GetTitlePresentation() {
             </Typography>
           </Grid>
         )}
-        <Grid
-          spacing={2}
-          sx={{ justifyContent: "center", display: "flex" }}
-          item
-          xs={12}
-        >
-          <TextField
-            sx={{ width: "500px" }}
-            id="title"
-            label="Ключевой запрос"
-            variant="outlined"
-            onChange={(e) => setQuery(e.target.value)}
-          />
-          <Button
-            onClick={handleClick}
-            sx={{ width: 200, ml: 2 }}
-            variant="contained"
-            disabled={!query || isLoading}
-          >
-            {isLoading ? (
-              <CircularProgress size={20} sx={{ color: "#fff" }} />
-            ) : (
-              "Создать Title"
-            )}
-          </Button>
+        <Grid spacing={2} item xs={12}>
+          <div className={s.gridInputPresent}>
+            <TextField
+              id="title"
+              label="Ключевой запрос"
+              variant="outlined"
+              onChange={(e) => setQuery(e.target.value)}
+            />
+            <Button
+              onClick={handleClick}
+              variant="contained"
+              disabled={!query || isLoading}
+            >
+              {isLoading ? (
+                <CircularProgress size={20} sx={{ color: "#fff" }} />
+              ) : (
+                "Создать Title"
+              )}
+            </Button>
+          </div>
         </Grid>
         <Grid
           spacing={2}

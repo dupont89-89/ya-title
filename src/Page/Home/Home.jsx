@@ -1,18 +1,22 @@
 import React from "react";
 import PriceTarifCard from "../Parts/PriceTarifCard";
-import {
-  Box,
-  Button,
-  Container,
-  Grid,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import CartToolsBlock from "../Parts/CartToolsBlock";
 import CheckIcon from "@mui/icons-material/Check";
 import GetTitlePresentation from "../../api-ya-search/GetTitlePresentation";
 import FooterVideo from "../../footer/FooterVideo";
 import AccordionFaq from "../Parts/FaqTools";
+
+const flexIcon = {
+  display: "flex",
+  alignItems: "center",
+  alignContent: "center",
+  marginRight: "10px",
+};
+
+const mI = {
+  marginRight: "5px",
+};
 
 export default function Home(props) {
   const { isAuthenticated } = props;
@@ -78,38 +82,29 @@ export default function Home(props) {
                 инструменты для SEO специалистов, маркетологов и бизнеса.
               </Typography>
             </Box>
-
-            <Typography
+            <Grid
+              container
+              direction="row"
+              mb={5}
               sx={{
-                display: "flex",
+                justifyContent: "flex-start",
                 alignItems: "center",
-                justifyContent: "start",
-                marginBottom: 5,
-                color: "#000",
-                textTransform: "uppercase",
+                fontSize: "18px",
               }}
-              variant="h8"
-              component="div"
             >
-              <CheckIcon
-                sx={{ marginRight: "5px" }}
-                fontSize="large"
-                color="primary"
-              />{" "}
-              Уникальность
-              <CheckIcon
-                sx={{ marginRight: "5px", marginLeft: "5px" }}
-                fontSize="large"
-                color="primary"
-              />{" "}
-              Доступная цена
-              <CheckIcon
-                sx={{ marginRight: "5px", marginLeft: "5px" }}
-                fontSize="large"
-                color="primary"
-              />{" "}
-              Точные инструменты
-            </Typography>
+              <Grid sx={flexIcon} item xs={12} sm="auto">
+                <CheckIcon sx={mI} fontSize="large" color="primary" />{" "}
+                Уникальность
+              </Grid>
+              <Grid sx={flexIcon} item xs={12} sm="auto">
+                <CheckIcon sx={mI} fontSize="large" color="primary" /> Доступная
+                цена
+              </Grid>
+              <Grid sx={flexIcon} item xs={12} sm="auto">
+                <CheckIcon sx={mI} fontSize="large" color="primary" /> Точные
+                инструменты
+              </Grid>
+            </Grid>
             <Button
               href={isAuthenticated ? "/app/" : "/login/"}
               component="a"

@@ -107,6 +107,13 @@
     display: inline;
 }
 
+.gridInputPresent {
+    display: grid;
+    grid-template-columns: 500px 200px;
+    grid-gap: 20px;
+    justify-content: center;
+}
+
 /* Стили для мобильных устройств */
 @media screen and (max-width: 768px) {
     .inputBlockForm input {
@@ -124,5 +131,9 @@
 
     .inputBlockForm {
         width: 100%;
+    }
+
+    .gridInputPresent {
+        grid-template-columns: 1fr;
     }
 }

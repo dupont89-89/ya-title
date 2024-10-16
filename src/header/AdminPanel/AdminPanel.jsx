@@ -20,7 +20,7 @@ export default function AdminPanel(props) {
           alignItems="flex-end"
           color="#fff"
           underline="none"
-          href="admin/"
+          href="/admin/"
         >
           <Stack direction="row" alignItems="center" gap={1}>
             <AppsIcon fontSize="small" />
@@ -34,7 +34,7 @@ export default function AdminPanel(props) {
           alignItems="flex-end"
           color="#fff"
           underline="none"
-          href="admin/user/"
+          href="/admin/user/"
         >
           <Stack direction="row" alignItems="center" gap={1}>
             <ManageAccountsIcon fontSize="small" />

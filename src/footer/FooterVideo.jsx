@@ -16,6 +16,84 @@ export default function FooterVideo() {
   const [showPlayPauseButton, setShowPlayPauseButton] = useState(true); // Состояние для управления видимостью кнопки Play/Pause
   const videoRef = useRef(null);
 
+  const s = {
+    isExpandedYesCard: {
+      maxWidth: "100%",
+      height: "600px",
+      boxShadow: "none",
+      "@media (max-width: 600px)": {
+        maxWidth: "100%",
+        height: "500px",
+      },
+    },
+    isExpandedNoCard: {
+      maxWidth: 345,
+      height: 240,
+      boxShadow: 3,
+      "@media (max-width: 600px)": {
+        maxWidth: 200,
+        height: 200,
+      },
+    },
+    isExpandedYes: {
+      height: "600px",
+      width: "auto",
+      maxHeight: "100vh",
+      maxWidth: "100vw",
+      "@media (max-width: 600px)": {
+        height: "500px",
+      },
+    },
+    isExpandedNo: {
+      height: 240,
+      width: "auto",
+      maxHeight: "100vh",
+      maxWidth: "100vw",
+      "@media (max-width: 600px)": {
+        height: 200,
+      },
+    },
+  };
+
+  const sB = {
+    isExpandedYesBox: {
+      position: "fixed",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      width: "auto",
+      height: "auto",
+      zIndex: 1000,
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      // Медиазапросы для мобильных устройств
+      "@media (max-width: 600px)": {
+        top: "40%",
+        left: "40%",
+        transform: "translate(-40%, -40%)",
+      },
+    },
+    isExpandedNoBox: {
+      position: "fixed",
+      bottom: "80px",
+      left: "20px",
+      width: "auto",
+      height: "auto",
+      zIndex: 1000,
+      backgroundColor: "transparent",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      // Медиазапросы для мобильных устройств
+      "@media (max-width: 600px)": {
+        bottom: "5px",
+        left: "10px",
+      },
+    },
+  };
+
   const handleExpandClick = () => {
     if (isExpanded) {
       setIsVisible(false); // Если свернуто и нажата иконка Cancel, скрываем компонент
@@ -54,20 +132,7 @@ export default function FooterVideo() {
   return (
     <Box
       component="div"
-      sx={{
-        position: isExpanded ? "fixed" : "fixed",
-        top: isExpanded ? "50%" : null,
-        bottom: isExpanded ? null : "80px",
-        left: isExpanded ? "50%" : "20px",
-        transform: isExpanded ? "translate(-50%, -50%)" : "none",
-        width: isExpanded ? "auto" : "auto",
-        height: isExpanded ? "auto" : "auto",
-        zIndex: 1000,
-        backgroundColor: isExpanded ? "rgba(0, 0, 0, 0.5)" : "transparent",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
+      sx={isExpanded ? sB.isExpandedYesBox : sB.isExpandedNoBox}
       onMouseEnter={() => setShowPlayPauseButton(true)} // Показываем кнопку при наведении
       onMouseLeave={() => setShowPlayPauseButton(false)} // Скрываем кнопку при уходе курсора
     >
@@ -85,20 +150,9 @@ export default function FooterVideo() {
         <Cancel fontSize="small" />
       </IconButton>
       <Button component="a" onClick={handleExpandClick} sx={{ padding: 0 }}>
-        <Card
-          sx={{
-            maxWidth: isExpanded ? "100%" : 345,
-            height: isExpanded ? "600px" : 240,
-            boxShadow: isExpanded ? "none" : 3,
-          }}
-        >
+        <Card sx={isExpanded ? s.isExpandedYesCard : s.isExpandedNoCard}>
           <CardMedia
-            sx={{
-              height: isExpanded ? "600px" : 240,
-              width: isExpanded ? "auto" : "auto",
-              maxHeight: "100vh", // Ограничиваем высоту, чтобы видео не выходило за пределы экрана
-              maxWidth: "100vw", // Ограничиваем ширину, чтобы видео не выходило за пределы экрана
-            }}
+            sx={isExpanded ? s.isExpandedYes : s.isExpandedNo}
             component="video"
             image={"/video/video-footer_compressed.mp4"}
             autoPlay
