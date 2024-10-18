@@ -3,44 +3,46 @@ import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
 import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
-import CreditCardIcon from "@mui/icons-material/CreditCard";
 import { Link } from "react-router-dom";
 
-export default function MenuToolbar() {
+export default function MenuToolbar(props) {
+  const { openMob } = props;
+
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
 
+  React.useEffect(() => {
+    setOpen(openMob);
+  }, [openMob]);
+
   const tools = [
     {
       name: "Создание Title",
       link: "/app/seo-title/",
-      icon: <CreditCardIcon ontSize="small" />,
+      icon: "/img/icon/free-icon-letter-t-12559033.png",
     },
     {
       name: "Определение типа ключевого запроса",
       link: "/app/commerce-key/",
-      icon: <CreditCardIcon ontSize="small" />,
+      icon: "/img/icon/free-icon-faq-5750288.png",
     },
     {
       name: "Проверка частотности запросов",
       link: "/app/wordstat/",
-      icon: <CreditCardIcon ontSize="small" />,
+      icon: "/img/icon/free-icon-increase-3621024.png",
     },
     {
       name: "Whois проверка домена",
       link: "/app/whois/",
-      icon: <CreditCardIcon ontSize="small" />,
+      icon: "/img/icon/free-icon-domain-name-17009592.png",
     },
   ];
 
@@ -50,7 +52,9 @@ export default function MenuToolbar() {
         {tools.map((tools, index) => (
           <ListItem key={index} disablePadding>
             <ListItemButton to={tools.link} component={Link}>
-              <ListItemIcon>{tools.icon}</ListItemIcon>
+              <ListItemIcon>
+                <Box sx={{ width: "20px" }} src={tools.icon} component="img" />
+              </ListItemIcon>
               <ListItemText primary={tools.name} />
             </ListItemButton>
           </ListItem>

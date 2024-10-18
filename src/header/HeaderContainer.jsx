@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "./Header";
 import { connect } from "react-redux";
 import { logoutUserThunkCreator } from "../redux/user-reducer/user-reducer";
 import HeaderNoAuth from "./HeaderNoAuth";
+import AssessmentIcon from "@mui/icons-material/Assessment";
+import CreditCardIcon from "@mui/icons-material/CreditCard";
 
 function HeaderContainer(props) {
   // Функция для выхода из аккаунта
@@ -12,6 +14,48 @@ function HeaderContainer(props) {
     props.logoutUserThunkCreator();
     // После успешного выхода из аккаунта устанавливаем isAuthenticated в false
   };
+
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [open, setOpen] = React.useState(false);
+
+  const toggleDrawer = (newOpen) => () => {
+    setOpen(newOpen);
+  };
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
+
+  const handleOpenNavMenu = (event) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
+  const settings = [
+    { name: "Профиль", link: "/profile/" },
+    { name: "Рефералы", link: "/referal/" },
+    { name: "История", link: "/history-message/" },
+  ];
+
+  const pages = [
+    {
+      name: "Баланс",
+      link: "/balance/",
+      icon: <CreditCardIcon ontSize="small" />,
+    },
+    {
+      name: "Кабинет",
+      link: "/cabinet/",
+      icon: <AssessmentIcon ontSize="small" />,
+    },
+  ];
 
   return (
     <>
@@ -28,9 +72,27 @@ function HeaderContainer(props) {
           firstName={props.firstName}
           lastName={props.lastName}
           handleLogout={handleLogout}
+          pages={pages}
+          settings={settings}
+          anchorElUser={anchorElUser}
+          toggleDrawer={toggleDrawer}
+          handleOpenUserMenu={handleOpenUserMenu}
+          handleCloseUserMenu={handleCloseUserMenu}
+          handleOpenNavMenu={handleOpenNavMenu}
+          anchorElNav={anchorElNav}
+          handleCloseNavMenu={handleCloseNavMenu}
+          open={open}
         />
       ) : (
-        <HeaderNoAuth />
+        <HeaderNoAuth
+          anchorElNav={anchorElNav}
+          open={open}
+          setOpen={setOpen}
+          setAnchorElNav={setAnchorElNav}
+          handleOpenNavMenu={handleOpenNavMenu}
+          handleCloseNavMenu={handleCloseNavMenu}
+          pages={pages}
+        />
       )}
     </>
   );
