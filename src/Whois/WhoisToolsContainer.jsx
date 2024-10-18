@@ -16,6 +16,7 @@ function WhoisToolsContainer(props) {
       userId={props.userId}
       email={props.email}
       getSubscriptionDomenUser={props.getSubscriptionDomenUser}
+      domenSubscription={props.domenSubscription}
     />
   );
 }
@@ -25,6 +26,7 @@ const mapStateToProps = (state) => {
     isAuthenticated: state.user.isAuthenticated,
     userId: state.user.dataUser.userId,
     email: state.user.dataUser.email,
+    domenSubscription: state.toolsData.whoisDomenSubscription,
   };
 };
 const mapDispatchToProps = {

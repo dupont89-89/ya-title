@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import mir from "./../img/logo/pay-mir.png";
 import visa from "./../img/logo/pay-visa.png";
 import sbp from "./../img/logo/pay-sbp.png";
@@ -10,9 +10,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsUp } from "@fortawesome/free-regular-svg-icons";
 import { Link } from "react-router-dom";
 import RobokassaPaymentForm from "../pay/Robokassa/RobokassaPaymentForm";
-import UniversalModal from "../Modal/UniversalModal";
-import Oferta from "../parts/Oferta";
-import Politika from "../parts/Politika";
 
 const iconPay = [mir, visa, sbp, master, ya];
 
@@ -71,32 +68,8 @@ export default function BalancePay(props) {
         </div>
       </div>
       <div className={s.linkPayKonf}>
-        <span className={s.linkModal}>
-          <UniversalModal
-            nameBtnPopup="*Политика конфиденциальности"
-            content={<Politika />}
-            height="90vh"
-            backgroundBtn="#f5b24d00"
-            colorBtn="#fff"
-            borderBottom="1px solid"
-            paddingBtn="0"
-            fontSizeBtn="13px"
-            width="80%"
-          />
-        </span>
-        <span className={s.linkModal}>
-          <UniversalModal
-            nameBtnPopup="*Договор офёрты"
-            content={<Oferta />}
-            height="90vh"
-            backgroundBtn="#f5b24d00"
-            colorBtn="#fff"
-            borderBottom="1px solid"
-            paddingBtn="0"
-            fontSizeBtn="13px"
-            width="80%"
-          />
-        </span>
+        <Link href="/oferta/">Политика конфиденциальности</Link>
+        <Link href="/policy/">Публичная оферта</Link>
       </div>
     </div>
   );

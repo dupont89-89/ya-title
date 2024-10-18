@@ -18,29 +18,28 @@ import { Chip, Divider, Stack } from "@mui/material";
 import CloudIcon from "@mui/icons-material/Cloud";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import MenuToolbar from "../Sidebar/MenuToolbar";
-import AssessmentIcon from "@mui/icons-material/Assessment";
 import { AccountCircle } from "@mui/icons-material";
-
-const pages = [
-  {
-    name: "Баланс",
-    link: "/balance/",
-    icon: <CreditCardIcon ontSize="small" />,
-  },
-  {
-    name: "Кабинет",
-    link: "/cabinet/",
-    icon: <AssessmentIcon ontSize="small" />,
-  },
-];
-const settings = [
-  { name: "Профиль", link: "/profile/" },
-  { name: "Рефералы", link: "/referal/" },
-  { name: "История", link: "/history-message/" },
-];
+import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 
 function Header(props) {
-  const { avatar, firstName, lastName, money, totalLvt, handleLogout } = props;
+  const {
+    avatar,
+    firstName,
+    lastName,
+    money,
+    totalLvt,
+    handleLogout,
+    pages,
+    settings,
+    anchorElUser,
+    toggleDrawer,
+    handleOpenUserMenu,
+    handleCloseUserMenu,
+    handleOpenNavMenu,
+    anchorElNav,
+    handleCloseNavMenu,
+    open,
+  } = props;
   let config;
 
   if (process.env.NODE_ENV === "development") {
@@ -48,23 +47,6 @@ function Header(props) {
   } else {
     config = require("../config.prod");
   }
-
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
 
   return (
     <AppBar position="static">
@@ -98,7 +80,7 @@ function Header(props) {
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
-              aria-label="account of current user"
+              aria-label="Меню пользователя"
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
@@ -124,6 +106,16 @@ function Header(props) {
                 display: { xs: "block", md: "none" },
               }}
             >
+              <MenuItem>
+                <Button
+                  sx={{ my: 2, color: "white" }}
+                  onClick={toggleDrawer(true)}
+                  startIcon={<MenuOpenIcon />}
+                  variant="outlined"
+                >
+                  Инструменты
+                </Button>
+              </MenuItem>
               {pages.map((page) => (
                 <MenuItem
                   key={page.name}
@@ -136,13 +128,6 @@ function Header(props) {
               ))}
             </Menu>
           </Box>{" "}
-          <Box
-            sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-            component="img"
-            src="/img/logo/white-logo-ptahini.png"
-            alt="Логотип Ptahini"
-            style={{ width: "50px" }}
-          />
           <Typography
             variant="h5"
             noWrap
@@ -162,7 +147,7 @@ function Header(props) {
             PTAHINI
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            <MenuToolbar />
+            <MenuToolbar openMob={open} />
             {pages.map((page) => (
               <Button
                 key={page.name}
@@ -181,30 +166,35 @@ function Header(props) {
           <Box
             sx={{ flexGrow: 0, display: "flex", gap: 2, alignItems: "center" }}
           >
-            <Divider orientation="vertical" flexItem />
-            <Stack direction="row" spacing={1}>
-              <Chip
-                sx={{
-                  backgroundColor: (theme) => theme.palette.mat.main, // Используем кастомный цвет
-                  color: "#fff", // Добавим цвет текста, если нужно
-                  fontWeight: "600",
-                }}
-                icon={<CreditCardIcon color="#fff" ontSize="small" />}
-                label={`${money} руб`}
-              />
-            </Stack>
-            <Divider orientation="vertical" flexItem />
-            <Stack direction="row" spacing={1}>
-              <Chip
-                sx={{
-                  backgroundColor: (theme) => theme.palette.mat.main, // Используем кастомный цвет
-                  color: "#fff", // Добавим цвет текста, если нужно
-                  fontWeight: "600",
-                }}
-                icon={<CloudIcon color="#fff" ontSize="small" />}
-                label={`${totalLvt} баллов`}
-              />
-            </Stack>
+            <Box
+              spacing={2}
+              sx={{ display: { xs: "none", md: "flex" }, gap: "20px" }}
+            >
+              <Divider orientation="vertical" flexItem />
+              <Stack direction="row" spacing={1}>
+                <Chip
+                  sx={{
+                    backgroundColor: (theme) => theme.palette.mat.main, // Используем кастомный цвет
+                    color: "#fff", // Добавим цвет текста, если нужно
+                    fontWeight: "600",
+                  }}
+                  icon={<CreditCardIcon color="#fff" ontSize="small" />}
+                  label={`${money} руб`}
+                />
+              </Stack>
+              <Divider orientation="vertical" flexItem />
+              <Stack direction="row" spacing={1}>
+                <Chip
+                  sx={{
+                    backgroundColor: (theme) => theme.palette.mat.main, // Используем кастомный цвет
+                    color: "#fff", // Добавим цвет текста, если нужно
+                    fontWeight: "600",
+                  }}
+                  icon={<CloudIcon color="#fff" ontSize="small" />}
+                  label={`${totalLvt} баллов`}
+                />
+              </Stack>
+            </Box>
             <Divider orientation="vertical" flexItem />
             <NotificationContainer />
             <Divider orientation="vertical" flexItem />

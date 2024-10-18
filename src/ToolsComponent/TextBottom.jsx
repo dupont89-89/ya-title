@@ -4,7 +4,7 @@ import { Typography } from "@mui/material";
 
 export default function TextBottom(props) {
   return (
-    <Typography variant="p" component="p">
+    <Typography variant="h6" component="p">
       {props.text}
     </Typography>
   );

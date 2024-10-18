@@ -7,21 +7,13 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import { blueGrey } from "@mui/material/colors";
 import { Link } from "react-router-dom";
-import NotificationContainer from "./Notification/NotificationContainer";
-import { Chip, Divider, Stack } from "@mui/material";
-import CloudIcon from "@mui/icons-material/Cloud";
-import CreditCardIcon from "@mui/icons-material/CreditCard";
 import MenuToolbar from "../Sidebar/MenuToolbar";
-import AssessmentIcon from "@mui/icons-material/Assessment";
+import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 
 function HeaderNoAuth(props) {
-  const { avatar, firstName, lastName, money, totalLvt, handleLogout } = props;
   let config;
 
   if (process.env.NODE_ENV === "development") {
@@ -30,15 +22,15 @@ function HeaderNoAuth(props) {
     config = require("../config.prod");
   }
 
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
+  const {
+    pages,
+    handleOpenNavMenu,
+    handleCloseNavMenu,
+    setAnchorElNav,
+    setOpen,
+    open,
+    anchorElNav,
+  } = props;
 
   return (
     <AppBar position="static">
@@ -95,9 +87,33 @@ function HeaderNoAuth(props) {
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: "block", md: "none" },
+                display: { xs: "flex", md: "none" },
               }}
-            ></Menu>
+            >
+              <MenuItem>
+                <Button
+                  sx={{ my: 2, color: "white" }}
+                  onClick={() => {
+                    setOpen(true);
+                    setAnchorElNav(null);
+                  }}
+                  startIcon={<MenuOpenIcon />}
+                  variant="outlined"
+                >
+                  Инструменты
+                </Button>
+              </MenuItem>
+              {pages.map((page) => (
+                <MenuItem
+                  key={page.name}
+                  onClick={handleCloseNavMenu}
+                  component={Link}
+                  to={page.link}
+                >
+                  <Typography textAlign="center">{page.name}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
           </Box>{" "}
           <Box
             sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
@@ -125,7 +141,7 @@ function HeaderNoAuth(props) {
             PTAHINI
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            <MenuToolbar />
+            <MenuToolbar openMob={open} />
           </Box>
           <Box
             sx={{ flexGrow: 0, display: "flex", gap: 2, alignItems: "center" }}

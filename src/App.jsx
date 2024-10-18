@@ -38,6 +38,8 @@ import HomeContainer from "./Page/Home/HomeContainer";
 import SignUpContainer from "./Auth/SignUp/SignUpContainer";
 import ToolsList from "./ToolsComponent/ToolsList";
 import PageAuthVk from "./Auth/ServiseAuth/PageAuthVk";
+import OfertaPage from "./Page/TehPage/OfertaPage";
+import PolitikPage from "./Page/TehPage/PolitikPage";
 
 let config;
 
@@ -149,13 +151,15 @@ function App({
           <Route path="/app/:tools" element={<ToolsContentContainer />} />
           <Route path="/app/" element={<ToolsList />} />
           <Route path="/balance/" element={<BalancePageContainer />} />
+          <Route path="/oferta/" element={<OfertaPage />} />
+          <Route path="/policy/" element={<PolitikPage />} />
           <Route
             path="/history-message"
             element={
               isAuthenticated ? (
                 <NotificationPageContainer />
               ) : (
-                <Navigate to="/login" />
+                <Navigate to="/login/" />
               )
             }
           />

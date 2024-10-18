@@ -231,6 +231,46 @@ export default function ToolsContent(props) {
             </p>
           </>
         );
+      case "whois":
+        return (
+          <Typography variant="subtitle1" component="div">
+            <h2>
+              Проверить домен на доступность, а если занят подпишись на
+              освобождение
+            </h2>
+            <p>
+              <strong>
+                Планируете создать сайт и ищете уникальное доменное имя?
+              </strong>{" "}
+              Наш инструмент для проверки доменов поможет вам узнать, свободен
+              ли интересующий вас домен, или он уже занят. С помощью сервиса
+              Whois вы можете моментально получить информацию о любом домене.
+            </p>
+            <h3>Что предлагает наш инструмент:</h3>
+            <ul>
+              <li>
+                <strong>Проверка домена на занятость.</strong> Узнайте, доступен
+                ли ваш выбранный домен для регистрации.
+              </li>
+              <li>
+                <strong>Информация о текущем владельце.</strong> Если домен
+                занят, вы сможете увидеть данные о владельце и дату окончания
+                регистрации.
+              </li>
+              <li>
+                <strong>Подписка на освобождение домена.</strong> Не хотите
+                упустить идеальное доменное имя? Если домен занят, подпишитесь
+                на уведомления, и мы сообщим вам на email, когда он освободится
+                и станет доступным для регистрации.
+              </li>
+            </ul>
+            <p>
+              Наш сервис предоставляет простой и удобный способ контролировать
+              ситуацию с доменами и своевременно реагировать на их освобождение.
+              Начните проверку доменного имени прямо сейчас!
+            </p>
+          </Typography>
+        );
       case "default":
       default:
         return (
@@ -276,12 +316,17 @@ export default function ToolsContent(props) {
               <RatingTools />
             </Grid>
             <Grid item md={3} xs={6}>
-              <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
+              <Alert
+                sx={{ height: "64px", alignItems: "center" }}
+                icon={<CheckIcon fontSize="inherit" />}
+                severity="success"
+              >
                 <Typography>Работает стабильно</Typography>
               </Alert>
             </Grid>
             <Grid item md={3} xs={6}>
               <Alert
+                sx={{ height: "64px", alignItems: "center" }}
                 action={
                   <Link href="/video/" color="inherit" size="small">
                     Смотреть
@@ -295,6 +340,7 @@ export default function ToolsContent(props) {
             </Grid>
             <Grid item md={3} xs={6}>
               <Alert
+                sx={{ height: "64px", alignItems: "center" }}
                 action={
                   <Link href="/support/" color="inherit" size="small">
                     Оставить обращение
@@ -310,14 +356,12 @@ export default function ToolsContent(props) {
         </Box>
       </Container>
       {getToolsPage(tools)}
-      <Container maxWidth="xl">
-        <Box component="section" sx={{ flexGrow: 1 }}>
-          <Grid container spacing={1}>
-            <Grid item>
-              <TextBottom text={getTextForPage(tools)} />
-            </Grid>
-          </Grid>
-        </Box>
+      <Container maxWidth="100vw" sx={{ background: "#eaf6f5" }}>
+        <Container maxWidth="xl">
+          <Box component="section" pt={6} pb={6}>
+            <TextBottom text={getTextForPage(tools)} />
+          </Box>
+        </Container>
       </Container>
     </>
   );
