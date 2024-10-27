@@ -6,10 +6,15 @@ import {
   setAuthSuccess,
 } from "./../../redux/user-reducer/user-reducer";
 import { getUser, loginUser } from "../../Api/api-user-login";
+import { TitleComponent } from "../../Function/TitleComponent";
 
 function LoginContainer(props) {
   return (
-    <div>
+    <>
+      <TitleComponent
+        description="Пройдите авторизацию в нашем сервисе и используйте все возможности без ограничений."
+        title="Вход с систему сервиса Ptahini"
+      />
       <Login
         getUser={props.getUser}
         setAuthSuccess={props.setAuthSuccess}
@@ -29,7 +34,7 @@ function LoginContainer(props) {
         btnFormMargin="10px"
         btnFormWidth="200px"
       />
-    </div>
+    </>
   );
 }
 

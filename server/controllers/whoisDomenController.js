@@ -23,65 +23,98 @@ exports.whoisDomenController = async (req, res) => {
 
 // Пользователь подписывается на освобождение домена
 exports.whoisDomenSubscriptionController = async (req, res) => {
-  const domen = req.query.domen;
-  const userId = req.query.userId;
-  const freeData = req.query.freeData;
-  const email = req.query.email;
-  try {
-    await Whois.create({
-      userId: userId,
-      email: email,
-      subscriptionFreeDomen: {
-        domen: domen,
-        freeData: freeData,
-      },
-    });
+  const { domen, userId, freeData, email } = req.query;
 
-    // Успешный ответ
+  try {
+    // Преобразуем дату в UTC формат ISO 8601
+    const date = new Date(freeData);
+    const normalizedFreeData = date.toISOString(); // сохраняет в UTC, добавляя Z
+
+    // Проверяем корректность даты после преобразования
+    if (isNaN(date.getTime())) {
+      return res.status(400).send({ message: "Некорректный формат даты" });
+    }
+
+    // Проверяем, существует ли пользователь и его подписка
+    const user = await Whois.findOne({ userId: userId });
+
+    if (user) {
+      // Проверяем, подписан ли пользователь уже на этот домен
+      const existingDomen = user.subscriptionFreeDomen.find(
+        (item) => item.domen === domen
+      );
+
+      if (existingDomen) {
+        return res.status(400).send({
+          message: "Вы уже подписаны на оповещения об этом домене",
+        });
+      }
+
+      // Добавляем новую подписку
+      user.subscriptionFreeDomen.push({ domen, freeData: normalizedFreeData });
+      await user.save();
+    } else {
+      // Создаем новую запись для пользователя
+      await Whois.create({
+        userId,
+        email,
+        subscriptionFreeDomen: [{ domen, freeData: normalizedFreeData }],
+      });
+    }
+
     return res.status(200).send({ message: "Подписка успешно создана" });
   } catch (error) {
-    console.error(
-      "Ошибка в Whois контроллере whoisDomenSubscriptionController:",
-      error
-    );
+    console.error("Ошибка в whoisDomenSubscriptionController:", error);
     return res.status(500).send({
-      message:
-        "Внутренняя ошибка сервера. Ошибка в whoisDomenSubscriptionController",
+      message: "Внутренняя ошибка сервера",
     });
   }
 };
 
-// Получаем домены на которые подписан пользователь
+// Получаем домены, на которые подписан пользователь
 exports.getDomenSubscriptionController = async (req, res) => {
   try {
-    // Находим все записи по userId
-    const subscriptionDomen = await Whois.find({ userId: req.query.userId });
+    const user = await Whois.findOne({ userId: req.query.userId });
 
-    if (subscriptionDomen && subscriptionDomen.length > 0) {
-      // Если записи найдены, проходим по массиву и собираем данные
-      const domenData = subscriptionDomen
-        .map((subscription) => {
-          if (subscription.subscriptionFreeDomen) {
-            return {
-              domen: subscription.subscriptionFreeDomen.domen,
-              freeData: subscription.subscriptionFreeDomen.freeData,
-            };
-          }
-          return null;
-        })
-        .filter(Boolean); // Убираем пустые значения
-      // Отправляем данные в ответе
-      res.status(200).json({ domenData });
-    } else {
-      // Если записей не найдено
-      res.status(404).json({ message: "Подписки на домены не найдены" });
+    if (!user) {
+      return res.status(200).json({ message: "Подписки не найдены" });
     }
+
+    const domenData = user.subscriptionFreeDomen.map(({ domen, freeData }) => ({
+      domen,
+      freeData,
+    }));
+
+    res.status(200).json({ domenData });
   } catch (error) {
-    // Ловим любые ошибки и отправляем ответ с ошибкой 500
-    console.error(
-      "Ошибка при извлечении данных о подписке освобождающегося домена:",
-      error
-    );
+    console.error("Ошибка при получении подписок:", error);
     res.status(500).json({ message: "Внутренняя ошибка сервера" });
+  }
+};
+
+//Удаляем подписку на домен
+exports.deleteWhoisDomenSubscriptionController = async (req, res) => {
+  const { domen, userId } = req.query;
+
+  try {
+    const result = await Whois.updateOne(
+      { userId: userId },
+      { $pull: { subscriptionFreeDomen: { domen: domen } } }
+    );
+
+    if (result.modifiedCount === 0) {
+      return res.status(404).send({
+        message: "Подписка на данный домен у пользователя не найдена",
+      });
+    }
+
+    return res
+      .status(200)
+      .send({ message: "Подписка на домен успешно удалена" });
+  } catch (error) {
+    console.error("Ошибка в deleteWhoisDomenSubscriptionController:", error);
+    return res.status(500).send({
+      message: "Внутренняя ошибка сервера",
+    });
   }
 };

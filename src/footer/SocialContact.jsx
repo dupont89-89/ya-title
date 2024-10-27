@@ -4,7 +4,7 @@ import Grid from "@mui/material/Unstable_Grid2";
 
 export default function SocialContact() {
   return (
-    <Link sx={{ color: "#fff" }} href="https://vk.com/ptahini">
+    <Link variant="body2" sx={{ color: "#fff" }} href="https://vk.com/ptahini">
       <Grid container spacing={2}>
         <Grid xs="auto">
           <Box
@@ -19,14 +19,14 @@ export default function SocialContact() {
         </Grid>
         <Grid xs>
           <Typography
-            variant="body1"
+            variant="body2"
             sx={{ display: "block" }}
             component="span"
           >
             SEO PTAHINI
           </Typography>
           <Typography
-            variant="body1"
+            variant="body2"
             sx={{ display: "block" }}
             component="span"
           >

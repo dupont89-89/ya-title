@@ -40,6 +40,7 @@ import ToolsList from "./ToolsComponent/ToolsList";
 import PageAuthVk from "./Auth/ServiseAuth/PageAuthVk";
 import OfertaPage from "./Page/TehPage/OfertaPage";
 import PolitikPage from "./Page/TehPage/PolitikPage";
+import LoginContainer from "./Auth/Login/LoginContainer";
 
 let config;
 
@@ -179,7 +180,7 @@ function App({
               isAuthenticated ? (
                 <Navigate to="/" />
               ) : (
-                <Login
+                <LoginContainer
                   loginUser={loginUser}
                   inputWidth={modalInputWidth}
                   blockFormHeight="350px"

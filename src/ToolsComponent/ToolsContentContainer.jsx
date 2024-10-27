@@ -1,11 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
 import ToolsContent from "./ToolsContent";
+import { SnackbarProvider } from "notistack";
 
 function ToolsContentContainer(props) {
   return (
     <div>
-      <ToolsContent isAuthenticated={props.isAuthenticated} />
+      <SnackbarProvider maxSnack={3}>
+        <ToolsContent {...props} isAuthenticated={props.isAuthenticated} />
+      </SnackbarProvider>
     </div>
   );
 }
