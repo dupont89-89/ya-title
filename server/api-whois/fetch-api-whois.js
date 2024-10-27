@@ -18,12 +18,14 @@ const fetchApiWhois = async (domain) => {
     },
   };
 
+  console.log(`Домен отправляем: ${axiosConfig.params.domain}`);
+
   try {
     const response = await axios.request(url, axiosConfig);
     console.dir(response.data, { depth: null, colors: true });
     return response.data;
   } catch (err) {
-    console.error("Ошибка в запросе к SEO API", err);
+    console.error("Ошибка в запросе к SEO API Whois", err);
   }
 };
 

@@ -1,13 +1,15 @@
 const mongoose = require("mongoose");
 
 const whoisToolsSchema = new mongoose.Schema({
-  userId: { type: String, required: true },
-  email: { type: String, required: true },
-  dataSubscription: { type: Date, default: Date.now }, // Добавляем поле createdAt
-  subscriptionFreeDomen: {
-    domen: { type: String, required: true },
-    freeData: { type: String, required: true },
-  },
+  userId: { type: String, required: true, unique: true },
+  email: String,
+  subscriptionFreeDomen: [
+    {
+      domen: String,
+      freeData: Date,
+      dataSubscription: { type: Date, default: Date.now },
+    },
+  ],
 });
 
 const Whois = mongoose.model("whois", whoisToolsSchema);

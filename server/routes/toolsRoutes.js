@@ -20,6 +20,10 @@ router.get(
   whoisDomenController.whoisDomenSubscriptionController
 );
 router.get(
+  "/whois-subscription-delete",
+  whoisDomenController.deleteWhoisDomenSubscriptionController
+);
+router.get(
   "/get-domen-subscription",
   whoisDomenController.getDomenSubscriptionController
 );

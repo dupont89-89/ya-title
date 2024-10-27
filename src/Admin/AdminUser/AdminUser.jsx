@@ -8,6 +8,8 @@ import {
   MenuItem,
   FormControl,
   Select,
+  Container,
+  Typography,
 } from "@mui/material";
 import s from "./../Admin.module.css";
 import AdminFormAddLvtUser from "../Parts/Form/AdminFormAddLvtUser";
@@ -38,6 +40,8 @@ export default function AdminUser({
   const handleStatusChange = (userId, newRole) => {
     editAdminUserStatus(userId, newRole);
   };
+
+  const numberRegUser = dataUser.length;
 
   const columns = [
     { field: "userId", headerName: "ID пользователя", flex: 1 },
@@ -136,35 +140,54 @@ export default function AdminUser({
   }));
 
   return (
-    <div
-      className={s.blockPageAdminUser}
-      style={{ height: "100%", width: "100%" }}
-    >
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: { page: 0, pageSize: 10 },
-          },
-        }}
-        pageSizeOptions={[5, 10, 20, 30, 50]}
-        checkboxSelection
-      />
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-        sx={{
-          "& .MuiBackdrop-root": { backgroundColor: "#00000012" },
-        }}
-      >
-        <AdminFormAddLvtUser
-          addLvtAdminUser={addLvtAdminUser}
-          userId={selectedUserId}
+    <Container maxWidth="xl">
+      <Box component="section">
+        <Box
+          sx={{ display: "flex", alignItems: "center", gap: "30px" }}
+          component="div"
+        >
+          <Typography component="h1" variant="h3" gutterBottom>
+            Пользователи
+          </Typography>
+          <Typography
+            variant="h6"
+            gutterBottom
+            sx={{
+              background: "#FFC107",
+              padding: "5px 10px",
+              borderRadius: "8px",
+            }}
+            component="div"
+          >
+            {numberRegUser} человек
+          </Typography>
+        </Box>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          initialState={{
+            pagination: {
+              paginationModel: { page: 0, pageSize: 10 },
+            },
+          }}
+          pageSizeOptions={[5, 10, 20, 30, 50]}
+          checkboxSelection
         />
-      </Modal>
-    </div>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+          sx={{
+            "& .MuiBackdrop-root": { backgroundColor: "#00000012" },
+          }}
+        >
+          <AdminFormAddLvtUser
+            addLvtAdminUser={addLvtAdminUser}
+            userId={selectedUserId}
+          />
+        </Modal>
+      </Box>
+    </Container>
   );
 }

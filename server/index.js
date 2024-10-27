@@ -14,6 +14,7 @@ const { updateBonusLvt } = require("./utils/updateBonusLvt");
 const http = require("http");
 const socketIo = require("socket.io");
 const { fetchApiGptText } = require("./api-gpt/fetch-api-gpt");
+const { checkSubscriptions } = require("./utils/whois/whoisDomenCronUser");
 
 const app = express();
 const server = http.createServer(app);
@@ -94,6 +95,11 @@ io.on("connection", (socket) => {
 // Запуск ежедневной задачи в 00:00 по Москве
 cron.schedule("0 9 * * *", () => {
   updateBonusLvt(io); // Передаем экземпляр socket.io в функцию updateBonusLvt
+});
+
+// // Планируем выполнение проверки каждый день в 00:00:01 UTC
+cron.schedule("1 0 * * *", checkSubscriptions, {
+  timezone: "UTC",
 });
 
 // Запуск сервера

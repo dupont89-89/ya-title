@@ -97,7 +97,7 @@ const Login = (props) => {
           ) : (
             <form className={styles.form_container} onSubmit={handleSubmit}>
               <Box display="flex" gap={3} flexDirection="column">
-                <Typography component="h1" variant="h4">
+                <Typography textAlign="center" component="h1" variant="h4">
                   Войдите в свой аккаунт
                 </Typography>
                 <TextField

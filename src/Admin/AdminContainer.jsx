@@ -5,8 +5,31 @@ import { getAdminUserData } from "../Api/api-admin";
 
 function AdminContainer(props) {
   let countUser = props.dataUser.length;
+
+  const dataPanelAdmin = [
+    {
+      title: "Пользователи",
+      link: "/admin/user/",
+      data: `Пользователей ${countUser}`,
+    },
+    {
+      title: "Счета",
+      link: "/admin/score/",
+      data: "",
+    },
+    {
+      title: "Тестирование",
+      link: "/admin/test/",
+      data: "",
+    },
+  ];
+
   return (
-    <Admin getAdminUserData={props.getAdminUserData} countUser={countUser} />
+    <Admin
+      dataPanelAdmin={dataPanelAdmin}
+      getAdminUserData={props.getAdminUserData}
+      countUser={countUser}
+    />
   );
 }
 

@@ -114,6 +114,10 @@
     justify-content: center;
 }
 
+.MuiSnackbar-root {
+    z-index: 9999 !important;
+}
+
 /* Стили для мобильных устройств */
 @media screen and (max-width: 768px) {
     .inputBlockForm input {

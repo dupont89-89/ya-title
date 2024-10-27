@@ -17,10 +17,10 @@ export default function Footer() {
             md={4}
             xs={12}
           >
-            <Link sx={{ color: "#fff" }} href="/policy/">
+            <Link variant="body2" sx={{ color: "#fff" }} href="/policy/">
               Политика конфиденциальности
             </Link>
-            <Link sx={{ color: "#fff" }} href="/oferta/">
+            <Link variant="body2" sx={{ color: "#fff" }} href="/oferta/">
               Публичная оферта
             </Link>
           </Grid>

@@ -92,17 +92,23 @@ export default function Home(props) {
                 fontSize: "18px",
               }}
             >
-              <Grid sx={flexIcon} item xs={12} sm="auto">
-                <CheckIcon sx={mI} fontSize="large" color="primary" />{" "}
-                Уникальность
+              <Grid item xs={12} sm="auto">
+                <Typography sx={flexIcon} variant="subTitle1" component="span">
+                  <CheckIcon sx={mI} fontSize="large" color="primary" />{" "}
+                  Уникальность
+                </Typography>
               </Grid>
-              <Grid sx={flexIcon} item xs={12} sm="auto">
-                <CheckIcon sx={mI} fontSize="large" color="primary" /> Доступная
-                цена
+              <Grid item xs={12} sm="auto">
+                <Typography sx={flexIcon} variant="subTitle1" component="span">
+                  <CheckIcon sx={mI} fontSize="large" color="primary" />{" "}
+                  Доступная цена
+                </Typography>
               </Grid>
-              <Grid sx={flexIcon} item xs={12} sm="auto">
-                <CheckIcon sx={mI} fontSize="large" color="primary" /> Точные
-                инструменты
+              <Grid item xs={12} sm="auto">
+                <Typography sx={flexIcon} variant="subTitle1" component="span">
+                  <CheckIcon sx={mI} fontSize="large" color="primary" /> Точные
+                  инструменты
+                </Typography>
               </Grid>
             </Grid>
             <Button

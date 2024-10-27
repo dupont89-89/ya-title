@@ -1,139 +1,31 @@
-.notificationMessage ul {
-    padding-left: 0;
-    list-style-type: none;
-}
-
-.notificationMessage ul li p {
-    margin: 0;
-}
-
-.notificationMessage ul li {
-    margin: 10px 0;
-    padding: 7px 5px;
-    background-color: #f7f7f7;
-    border-radius: 5px;
-    -webkit-box-shadow: 0px 0px 8px -4px rgba(34, 60, 80, 0.4);
-    -moz-box-shadow: 0px 0px 8px -4px rgba(34, 60, 80, 0.4);
-    box-shadow: 0px 0px 8px -4px rgba(34, 60, 80, 0.4);
-}
-
-.notificationMessage {
-    background-color: #fff;
-    border-radius: 10px;
-    padding-top: 10px;
-    padding-bottom: 30px;
-    padding-left: 10px;
-    padding-right: 10px;
-    position: absolute;
-    right: 0;
-    top: 40px;
-    height: 180px;
-    overflow-x: auto;
-    border: 2px solid #FF9800;
-    z-index: 1;
-}
-
 :root {
-    --scrollbarBg: #2b5afd;
+    --scrollbarBg: rgb(33 122 205);
     --scrollbarThumb: rgba(255, 255, 255, 0.8);
-    --scrollbarWidth: 12px;
+    --scrollbarWidth: 10px;
     --scrollbarBorder: 3px solid var(--scrollbarBg);
     --scrollbarBorderRadius: calc(var(--scrollbarWidth) / 2);
 }
 
-.notificationMessage {
+.notificationContainer {
     scrollbar-width: var(--scrollbarWidth);
     scrollbar-color: var(--scrollbarThumb) var(--scrollbarBg);
+    max-height: 500px;
+    overflow: auto;
 }
 
-.notificationMessage::-webkit-scrollbar {
+.notificationContainer::-webkit-scrollbar {
     width: var(--scrollbarWidth);
 }
 
-.notificationMessage::-webkit-scrollbar-track {
+.notificationContainer::-webkit-scrollbar-track {
     background: var(--scrollbarBg);
     border-radius: var(--scrollbarBorderRadius);
 }
 
-.notificationMessage::-webkit-scrollbar-thumb {
+.notificationContainer::-webkit-scrollbar-thumb {
     background-color: var(--scrollbarThumb);
     border-radius: var(--scrollbarBorderRadius);
     border: var(--scrollbarBorder);
 }
 
-.messageGridNotification {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    grid-gap: 5px;
-    align-items: center;
-    max-width: 360px;
-}
-
-.notificationMessage h3 {
-    margin: 0;
-    color: brown;
-}
-
-.btnMessage {
-    border: none;
-    background: none;
-    cursor: pointer;
-}
-
-.btnClearMessage {
-    position: absolute;
-    right: 5px;
-    background-color: #2b5afd;
-    color: #f7f7f7;
-    cursor: pointer;
-}
-
-.noMessageNotification {
-    display: flex;
-    flex-direction: column;
-    margin-top: 30px;
-}
-
-.noMessageNotification p {
-    text-align: center;
-    margin-top: 15px;
-}
-
-.NotificationPageBlock {
-    background-color: #ffffff;
-    border-radius: 10px;
-    min-height: 100vh;
-    padding: 15px;
-}
-
-.NotificationPageBlock ol {
-    padding-left: 15px;
-}
-
-.blockMessageNotifPage {
-    padding: 10px;
-    border-radius: 8px;
-    background-color: #f7f7f7;
-    display: inline-block;
-}
-
-.textMessage {
-    display: inline-block;
-    margin-left: 10px;
-}
-
-.dateNotifications {
-    display: block;
-    color: #1c7a23;
-}
-
-@media (max-width: 1024px) {
-
-    .notificationsContainer {
-        display: flex;
-        justify-content: flex-end;
-        flex-direction: row;
-        width: 100%;
-
-    }
-}
+@media (max-width: 1024px) {}

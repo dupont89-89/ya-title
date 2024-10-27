@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import punycode from "punycode";
 import {
   Box,
   Button,
@@ -14,10 +15,14 @@ import {
   TableRow,
   Paper,
   CircularProgress,
+  Alert,
 } from "@mui/material";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import DomenDataUser from "./Parts/DomenDataUser";
+import ListDomenSubcription from "./Parts/ListDomenSubcription";
+import decodePunycode from "./Parts/PunycodeConverter";
+import { useSnackbar } from "notistack";
 
 export default function WhoisTools(props) {
   const {
@@ -28,14 +33,29 @@ export default function WhoisTools(props) {
     email,
     getSubscriptionDomenUser,
     domenSubscription,
+    deleteSubscriptionDomenWhois,
   } = props;
   const [domen, setQuery] = useState("");
   const [dataDomen, setDataDomen] = useState("");
-  const [registeredDomen, setregisteredDomen] = useState(true);
+  const [registeredDomen, setRegisteredDomen] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [freeData, setFreeData] = useState("");
   const [parsedData, setParserData] = useState("");
   const [isLoadingSubscription, setIsLoadingSubscription] = useState(false);
+  const [displayListDomen, setDisplayListDomen] = useState(false);
+  const [getWhoisFail, setGetWhoisFail] = useState(false);
+
+  const { enqueueSnackbar } = useSnackbar(); // Получаем функцию enqueueSnackbar
+
+  const handleSuccessFinishTools = (variant) => {
+    console.log("handleSuccessFinishTools вызвана");
+    enqueueSnackbar("Данные домена успешно получены.", { variant });
+  };
+
+  const handleErrorFinishTools = (variant) => {
+    console.log("handleSuccessFinishTools вызвана");
+    enqueueSnackbar("Ошибка получения данных о домене.", { variant });
+  };
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -46,24 +66,44 @@ export default function WhoisTools(props) {
   const handleChange = (event) => {
     // Получаем введенное значение
     const url = event.target.value;
+    let domenHost;
 
     try {
-      // Используем объект URL для разбора домена
-      const domain = new URL(url).hostname;
-
-      // Устанавливаем только домен
-      setQuery(domain);
+      // Используем объект URL для разбора домена (если введён URL)
+      domenHost = new URL(url).hostname;
+      if (domenHost.startsWith("xn--")) {
+        domenHost = decodePunycode(domenHost); // Преобразуем домен
+      }
     } catch (e) {
-      // Если это не валидный URL, сохраняем как есть (например, если пользователь вводит просто домен)
-      setQuery(url.replace(/(^\w+:|^)\/\//, ""));
+      // Если это не валидный URL, обрабатываем как домен без протокола
+      domenHost = url.replace(/(^\w+:|^)\/\//, "");
     }
+
+    // Убираем любые конечные слеши после домена
+    domenHost = domenHost.replace(/\/+$/, "");
+
+    setQuery(domenHost);
+
+    // Если требуется, можно также обработать кириллические символы
+    // const containsCyrillic = /[а-яё]/i.test(domenHost);
+    // if (containsCyrillic) {
+    //   domenHost = punycode.toASCII(domenHost); // Преобразуем домен в Punycode, если нужно
+    // }
+
+    // Устанавливаем преобразованный (или исходный) домен
   };
 
   const handleClickSubscription = async () => {
     setIsLoadingSubscription(true);
+    let processedDomen = dataDomen.idnName; // Изначально используем исходный домен
+    // Проверяем, является ли домен Punycode
+    if (processedDomen.startsWith("xn--")) {
+      processedDomen = decodePunycode(dataDomen.idnName); // Преобразуем домен
+      setQuery(processedDomen); // Сохраняем преобразованный домен, если нужно
+    }
     try {
-      // Теперь эта функция возвращает промис напрямую
-      await subscriptionDomenWhois(domen, userId, freeData, email);
+      // Теперь отправляем преобразованный или исходный домен
+      await subscriptionDomenWhois(processedDomen, userId, freeData, email);
     } catch (error) {
       console.error("Ошибка при отправке данных:", error);
     } finally {
@@ -73,14 +113,28 @@ export default function WhoisTools(props) {
 
   const handleClick = async () => {
     setIsLoading(true);
+    let domain = domen;
+    let localWhoisFail = false; // Локальная переменная для отслеживания ошибки
 
     try {
-      const resultDomen = await fetchApiWhois(domen);
+      // Проверяем, содержит ли домен русские символы
+      const containsCyrillic = /[а-яё]/i.test(domen);
+      if (containsCyrillic) {
+        domain = punycode.toASCII(domen);
+      }
+      const resultDomen = await fetchApiWhois(domain);
+      debugger;
+      if (resultDomen.status === "fail") {
+        localWhoisFail = true; // Устанавливаем локальную переменную в случае ошибки
+        setGetWhoisFail(true);
+        handleErrorFinishTools("error");
+      }
       setDataDomen(resultDomen);
-      setregisteredDomen(resultDomen.registered);
+      setRegisteredDomen(resultDomen.registered);
       const whoisString = resultDomen.rawdata && resultDomen.rawdata[0];
       const parsedData = whoisString ? parseWhoisData(whoisString) : [];
       setParserData(parsedData);
+
       // Найдем 'free-date' и обновим состояние
       const freeDateEntry = parsedData.find(
         (entry) => entry.key === "Свободно с"
@@ -92,6 +146,11 @@ export default function WhoisTools(props) {
       console.error("Ошибка при отправке данных:", error);
     } finally {
       setIsLoading(false);
+
+      // Используем локальную переменную для проверки состояния ошибки
+      if (!localWhoisFail) {
+        handleSuccessFinishTools("success");
+      }
     }
   };
 
@@ -104,7 +163,7 @@ export default function WhoisTools(props) {
     "Registrar URL": "URL-адрес регистратора",
     "Updated Date": "Дата обновления",
     "Creation Date": "Дата создания",
-    "Registry Expiry Date": "Дата истечения срока действия реестра",
+    "Registry Expiry Date": "Свободно с",
     Registrar: "Регистратор",
     "Registrar IANA ID": "Идентификатор регистратора IANA",
     "Registrar Abuse Contact Email":
@@ -186,7 +245,6 @@ export default function WhoisTools(props) {
               }}
               item
               xs={12}
-              mb={7}
             >
               <Typography variant="h2" component="h1">
                 Whois-сервис проверки домена
@@ -195,6 +253,23 @@ export default function WhoisTools(props) {
                 Информация о домене и проверить занятость доменного имени
               </Typography>
             </Grid>
+            <Grid xs={12} item>
+              <DomenDataUser
+                isAuthenticated={isAuthenticated}
+                domenSubscription={domenSubscription}
+                displayListDomen={displayListDomen}
+                setDisplayListDomen={setDisplayListDomen}
+              />
+            </Grid>
+            {displayListDomen && (
+              <Grid mb={2} xs={12} item>
+                <ListDomenSubcription
+                  deleteSubscriptionDomenWhois={deleteSubscriptionDomenWhois}
+                  domenList={domenSubscription}
+                  userId={userId}
+                />
+              </Grid>
+            )}
             <Grid
               item
               xs={12}
@@ -232,12 +307,35 @@ export default function WhoisTools(props) {
               </Button>
             </Grid>
           </Grid>
-          <DomenDataUser
-            isAuthenticated={isAuthenticated}
-            domenSubscription={domenSubscription}
-          />
         </Box>
-        {(!registeredDomen || parsedData.length > 0) && !dataDomen.expires && (
+        {getWhoisFail & (dataDomen.status === "fail") ? (
+          <Alert
+            sx={{ alignItems: "center", gap: "20px" }}
+            variant="filled"
+            severity="warning"
+          >
+            <Typography gutterBottom variant="h6" color="#fff">
+              Ошибка
+            </Typography>
+            <Typography
+              gutterBottom
+              color="#fff"
+              variant="subtitle1"
+              component="p"
+            >
+              Скорее всего вы допустили ошибку при вводе домена. Обычно это
+              связанно с этим.
+            </Typography>
+            <Typography mt={2} color="#fff" component="p">
+              Правильный вариант:{" "}
+              <Typography variant="subtitle1">
+                exempel.ru или https://exempel.ru
+              </Typography>
+            </Typography>
+          </Alert>
+        ) : null}
+        {(parsedData.length > 0 && !dataDomen.expires) ||
+        dataDomen.expires === null ? (
           <Box
             sx={{ display: "inline-block", borderRadius: "8px", p: 4 }}
             bgcolor="#f9fafc"
@@ -263,68 +361,67 @@ export default function WhoisTools(props) {
               Зарегистрировать
             </Button>
           </Box>
-        )}
+        ) : null}
 
         {parsedData.length > 0 && (
           <Box bgcolor="#f9fafc" sx={{ p: 6 }} component="section">
-            {registeredDomen ||
-              (dataDomen.ips && (
-                <Box
-                  sx={{ display: "inline-block", borderRadius: "8px", mb: 4 }}
-                  bgcolor="#f9fafc"
+            {dataDomen.expires && (
+              <Box
+                sx={{ display: "inline-block", borderRadius: "8px", mb: 4 }}
+                bgcolor="#f9fafc"
+              >
+                <Typography
+                  sx={{ display: "flex", mb: 3 }}
+                  variant="h5"
+                  component="p"
                 >
-                  <Typography
-                    sx={{ display: "flex", mb: 3 }}
-                    variant="h5"
-                    component="p"
+                  <HighlightOffIcon
+                    sx={{ mr: 1, color: "red" }}
+                    color="success"
+                    fontSize="large"
+                  />{" "}
+                  Домен {dataDomen.name} занят
+                </Typography>
+                <Typography variant="h6" component="p" gutterBottom>
+                  как только домен не продлят, мы оповестим
+                </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "start",
+                  }}
+                >
+                  <Button
+                    disabled={!isAuthenticated || isLoadingSubscription}
+                    sx={{ mt: 3 }}
+                    target="_blank"
+                    component="a"
+                    variant="contained"
+                    onClick={handleClickSubscription}
                   >
-                    <HighlightOffIcon
-                      sx={{ mr: 1, color: "red" }}
-                      color="success"
-                      fontSize="large"
-                    />{" "}
-                    Домен {dataDomen.idnName} занят
-                  </Typography>
-                  <Typography variant="h6" component="p" gutterBottom>
-                    как только домен не продлят, мы оповестим
-                  </Typography>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "start",
-                    }}
-                  >
-                    <Button
-                      disabled={!isAuthenticated || isLoadingSubscription}
-                      sx={{ mt: 3 }}
-                      target="_blank"
-                      component="a"
-                      variant="contained"
-                      onClick={handleClickSubscription}
-                    >
-                      {isLoadingSubscription ? (
-                        <span>
-                          Идёт сохранение...{" "}
-                          <CircularProgress size={20} sx={{ color: "#fff" }} />
-                        </span>
-                      ) : (
-                        "Подписаться на обновление"
-                      )}
-                    </Button>
-                    {!isAuthenticated && (
-                      <Button
-                        href="/login/"
-                        component="a"
-                        sx={{ mt: 2 }}
-                        variant="contained"
-                      >
-                        Войти в аккаунт
-                      </Button>
+                    {isLoadingSubscription ? (
+                      <span>
+                        Идёт сохранение...{" "}
+                        <CircularProgress size={20} sx={{ color: "#fff" }} />
+                      </span>
+                    ) : (
+                      "Подписаться на обновление"
                     )}
-                  </Box>
+                  </Button>
+                  {!isAuthenticated && (
+                    <Button
+                      href="/login/"
+                      component="a"
+                      sx={{ mt: 2 }}
+                      variant="contained"
+                    >
+                      Войти в аккаунт
+                    </Button>
+                  )}
                 </Box>
-              ))}
+              </Box>
+            )}
             <Typography variant="h5" component="h2" mb={2}>
               Информация о домене в реестре:
             </Typography>
