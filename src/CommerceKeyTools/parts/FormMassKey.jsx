@@ -1,8 +1,20 @@
 import React, { useEffect, useRef } from "react";
 import s from "../../css/Tools.module.css";
-import iconLoadFile from "../../img/icon/txt-file_9680522.png";
-import iconVopros from "../../img/icon/mark_13709623.png";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ArrowCircleDownIcon from "@mui/icons-material/ArrowCircleDown";
+import AutorenewIcon from "@mui/icons-material/Autorenew";
+import PostAddIcon from "@mui/icons-material/PostAdd";
+import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import HistoryToolsUser from "../../ToolsComponent/PartsComponentTools/HistoryToolsUser";
+import {
+  Box,
+  Button,
+  Chip,
+  Grid,
+  Stack,
+  TextareaAutosize,
+  Typography,
+} from "@mui/material";
 
 export default function FormMassKey(props) {
   const {
@@ -13,6 +25,8 @@ export default function FormMassKey(props) {
     handleFetchKey,
     handleClickMassClear,
     handleFileChange,
+    lvtUserSpend,
+    massKey,
     tools, // Новый пропс для обработки изменения файла
   } = props;
 
@@ -36,127 +50,142 @@ export default function FormMassKey(props) {
     <>
       {!result && (
         <>
-          <div className={s.inputBlockForm}>
-            <div className={s.blockTeaxtArea}>
-              <label className={s.labelTextArea} htmlFor="key-get">
-                Каждый запрос с новой строки
-              </label>
-              <textarea
-                className={s.textareaCustom}
-                placeholder={`ласточки\nвороны\nколибри`}
-                name="key-get"
-                id="key-get"
-                value={queryArray.join("\n")}
-                rows="20"
-                onChange={handleChangeMass}
-              />
-            </div>
-          </div>
+          {queryArray.length > 0 && (
+            <Box mb={2} mt={2}>
+              <Stack mb={1} direction="row" spacing={1}>
+                <Chip
+                  size="medium"
+                  label={`Добавленно: ${queryArray.length} запросов(а)`}
+                />
+                <Chip
+                  size="medium"
+                  label={massKey && "Тариф: 10 баллов / 100 запросов"}
+                />
+                {queryArray && massKey && (
+                  <Chip
+                    size="medium"
+                    label={`К списанию: ${lvtUserSpend} Lvt`}
+                  />
+                )}
+              </Stack>
+            </Box>
+          )}
+          <label htmlFor="key-get">Каждый запрос с новой строки</label>
+          <TextareaAutosize
+            borderRadius="8px"
+            sx={{ borderRadius: "8px" }}
+            name="key-get"
+            id="key-get"
+            value={queryArray.join("\n")}
+            onChange={handleChangeMass}
+            placeholder="Добавьте ключевые запросы..."
+            minRows={7}
+            maxRows={15}
+          />
         </>
       )}
-      <div className={s.btnTextAreaMass}>
-        {queryArray.length > 0 &&
-          queryArray.some((item) => item.trim() !== "") && (
-            <>
-              <button className={s.massStartBtn} onClick={handleFetchKey}>
+      {queryArray.length > 0 &&
+        queryArray.some((item) => item.trim() !== "") && (
+          <Grid alignItems="center" mt={1} container spacing={2}>
+            <Grid item>
+              <Button
+                startIcon={<PlayCircleOutlineIcon />}
+                color="success"
+                variant="contained"
+                onClick={handleFetchKey}
+              >
                 Запустить проверку
-              </button>
-              <button className={s.massClearBtn} onClick={handleClear}>
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                startIcon={<DeleteIcon />}
+                color="error"
+                variant="contained"
+                onClick={handleClear}
+              >
                 Очистить
-              </button>
-            </>
-          )}
-        {result && (
-          <div className={s.fileKey}>
-            <div className={s.input__wrapper}>
-              <input
-                type="file"
-                name="keyFile"
-                id="input__file"
-                accept=".txt" // Указываем что принимаем только .txt файлы
-                onChange={handleFileChange} // Обработчик изменения файла
-                className={`${s.input} ${s.input__file}`}
-                ref={fileInputRef} // Присваиваем реф input файлу
-              />
-              <label htmlFor="input__file" className={s.input__fileButton}>
-                <span className={s.input__fileIconWrapper}>
-                  <img
-                    className={s.input__fileIcon}
-                    src={iconLoadFile}
-                    alt="Выбрать файл"
-                    width="25"
-                  />
-                </span>
-                <span className={s.input__fileButtonText}>
-                  {fileInputRef.current && fileInputRef.current.value
-                    ? "Файл загружен"
-                    : "Загрузить файл"}
-                </span>
-              </label>
-            </div>
-            <span className={s.btnIconVopros}>
-              <img src={iconVopros} alt="" />
-              <div className={s.tooltip}>
-                Формат файла TXT (блокнот).
-                <br /> Каждый ключевой запрос с новой строки.
-              </div>
-            </span>
-          </div>
+              </Button>
+            </Grid>
+          </Grid>
         )}
-      </div>
+      {(!queryArray.length > 0) & !result ? (
+        <Button
+          startIcon={<PostAddIcon />}
+          variant="contained"
+          component="label"
+        >
+          Загрузить файл .txt
+          <input
+            type="file"
+            hidden
+            name="keyFile"
+            id="input__file"
+            accept=".txt" // Указываем что принимаем только .txt файлы
+            onChange={handleFileChange} // Обработчик изменения файла
+            className={`${s.input} ${s.input__file}`}
+            ref={fileInputRef} // Присваиваем реф input файлу
+          />
+        </Button>
+      ) : null}
 
       {Array.isArray(result) && (
-        <div className={s.resultKeyBlock}>
-          <div className={s.blockPad}>
-            <h2>Результат проверки:</h2>
-            <table>
-              <tbody>
-                {result.slice(0, 5).map((item, index) => (
-                  <tr key={index}>
-                    <td>
-                      <span className={s.resultTextKey}>
-                        Запрос: {item.query}
-                      </span>
-                    </td>
-                    <td>
-                      {/* <span
-                        className={s.resultKeyTextMass}
-                        dangerouslySetInnerHTML={{ __html: item.result }}
-                      /> */}
-                      <span className={s.resultKeyTextMass}>{item.result}</span>
-                    </td>
-                  </tr>
-                ))}
-                <tr>
-                  <td>...</td>
-                  <td>...</td>
+        <Box>
+          <Typography variant="h5" component="h2">
+            Результат проверки:
+          </Typography>
+          <table>
+            <tbody>
+              {result.slice(0, 5).map((item, index) => (
+                <tr key={index}>
+                  <td>
+                    <span className={s.resultTextKey}>
+                      Запрос: {item.query}
+                    </span>
+                  </td>
+                  <td>
+                    <span className={s.resultKeyTextMass}>{item.result}</span>
+                  </td>
                 </tr>
-              </tbody>
-            </table>
-            <p>Полный результат проверки в файле. Скачайте результат.</p>
-            {csvDownloadLink && (
-              <>
-                <div>
-                  <a
+              ))}
+              <tr>
+                <td>...</td>
+                <td>...</td>
+              </tr>
+            </tbody>
+          </table>
+          <Typography gutterBottom variant="subtitle2" component="p">
+            Полный результат проверки находится в файле. Скачайте результат.
+          </Typography>
+          {csvDownloadLink && (
+            <>
+              <Grid container spacing={1}>
+                <Grid item>
+                  <Button
+                    startIcon={<ArrowCircleDownIcon />}
+                    variant="contained"
+                    color="success"
+                    component="a"
                     className={s.resultMassFile}
                     href={csvDownloadLink}
                     download="results.csv"
                   >
-                    Скачать файл
-                  </a>
-                </div>
-                <div>
-                  <button
-                    className={s.btnNewSendMassKey}
+                    Скачать результат
+                  </Button>
+                </Grid>
+                <Grid item>
+                  <Button
+                    startIcon={<AutorenewIcon />}
+                    variant="contained"
                     onClick={() => handleClear()}
                   >
                     Новая проверка
-                  </button>
-                </div>
-              </>
-            )}
-          </div>
-        </div>
+                  </Button>
+                </Grid>
+              </Grid>
+            </>
+          )}
+        </Box>
       )}
       <HistoryToolsUser
         tools={tools}
