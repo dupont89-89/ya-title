@@ -41,6 +41,7 @@ import PageAuthVk from "./Auth/ServiseAuth/PageAuthVk";
 import OfertaPage from "./Page/TehPage/OfertaPage";
 import PolitikPage from "./Page/TehPage/PolitikPage";
 import LoginContainer from "./Auth/Login/LoginContainer";
+import PageEditContainer from "./Admin/PageEdit/PageEditContainer";
 
 let config;
 
@@ -256,6 +257,7 @@ function App({
               <Route path="/admin/user" element={<AdminUserContainer />} />
               <Route path="/admin/test" exact element={<TestPay />} />
               <Route path="/admin/score" element={<ScoreUserContainer />} />
+              <Route path="/admin/page-edit" element={<PageEditContainer />} />
             </>
           )}
           <Route path="*" element={<NotFound />} />

@@ -2,6 +2,7 @@ import React from "react";
 import s from "./../../css/Tools.module.css";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
+import { Box } from "@mui/material";
 
 export default function HistoryToolsUser(props) {
   const { tools, nameTools, titleTools } = props;
@@ -17,7 +18,7 @@ export default function HistoryToolsUser(props) {
   return (
     <>
       {wordstatTools && wordstatTools.length > 0 ? (
-        <div className={s.historyBlockLink}>
+        <Box>
           <h2>{titleTools}</h2>
           <table className={s.historyTableLink}>
             <tbody>
@@ -42,7 +43,7 @@ export default function HistoryToolsUser(props) {
               <Link to="/cabinet/">кабинете пользователя</Link>.
             </p>
           )}
-        </div>
+        </Box>
       ) : null}
     </>
   );

@@ -45,7 +45,7 @@ export default function DomenDataUser(props) {
     <>
       {isAuthenticated & (domenSubscription.length > 0) ? (
         <Grid mt={2} mb={2} container spacing={2}>
-          <Grid item xs={4}>
+          <Grid item xs={12} lg={4}>
             <Box sx={styleUserDomenBlock} component="div">
               <Typography sx={{ display: "block" }} component="span">
                 Доменов в отслеживании
@@ -71,7 +71,7 @@ export default function DomenDataUser(props) {
             </Box>
           </Grid>
 
-          <Grid item xs={4}>
+          <Grid item xs={12} lg={4}>
             <Box sx={styleUserDomenBlock} component="div">
               <Typography sx={{ display: "block" }} component="span">
                 Ближайшая дата освобождения
@@ -91,7 +91,7 @@ export default function DomenDataUser(props) {
               </Typography>
             </Box>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} lg={4}>
             <Box sx={styleUserDomenBlock} component="div">
               <Button
                 onClick={(e) => setDisplayListDomen(!displayListDomen)}

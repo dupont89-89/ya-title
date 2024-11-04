@@ -4,6 +4,15 @@ import Loading from "../app-function/Loading";
 import ModalNoLvtContainer from "../Modal/ModalNoLvtContainer";
 import FormOneKey from "./parts/FormOneKey";
 import FormMassKey from "./parts/FormMassKey";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  Chip,
+  Container,
+  Typography,
+} from "@mui/material";
 
 export default function CommerceKeyTools(props) {
   const {
@@ -29,39 +38,46 @@ export default function CommerceKeyTools(props) {
   } = props;
 
   return (
-    <div className={s.sectionGridSK}>
-      <aside>{props.toolsSidebar}</aside>
-      <section className={s.commerceKey}>
-        <div className={s.sectionBlockTools}>
-          <div>
-            {/* Ваш JSX код здесь */}
-            {showModal && (
-              <ModalNoLvtContainer
-                isAuthenticated={props.isAuthenticated}
-                onClose={() => setShowModal(false)}
-                sumLvt={sumLvt}
-              />
-            )}
-          </div>
-          <div className={s.title}>
-            <div className={s.titleTools}>
-              <h1>Определение типа ключевого запроса</h1>
-            </div>
-            <div className={s.tarifBlock}>
-              <span className={s.tarifLvt}>
-                {massKey ? "10 lvt / 100 запросов" : "Бесплатно"}
-              </span>
-              {queryArray && massKey && (
-                <span className={s.spendUserFront}>
-                  К списанию: {lvtUserSpend} Lvt
-                </span>
-              )}
-            </div>
-          </div>
+    <Container maxWidth="md">
+      {showModal && (
+        <ModalNoLvtContainer
+          isAuthenticated={props.isAuthenticated}
+          onClose={() => setShowModal(false)}
+          sumLvt={sumLvt}
+        />
+      )}
+      <Box component="section">
+        <Typography gutterBottom textAlign="center" component="h1" variant="h3">
+          Определение типа ключевого запроса
+        </Typography>
+        <Box mb={3} textAlign="center">
+          <Chip
+            color="success"
+            label={!massKey ? "Бесплатный инструмент" : "Массовая проверка"}
+            variant="outlined"
+          />
+        </Box>
+        <ButtonGroup variant="contained" aria-label="Basic button group">
+          <Button
+            startIcon={<OpenInNewIcon />}
+            disabled={!massKey}
+            onClick={handleClickMass}
+          >
+            Бесплатная проверка
+          </Button>
+          <Button
+            startIcon={<OpenInNewIcon />}
+            disabled={massKey}
+            onClick={handleClickMass}
+          >
+            Массовая проверка
+          </Button>
+        </ButtonGroup>
+        <Box component="div">
           {isLoading ? ( // Показываем "ЗАГРУЗКА" во время загрузки
             <Loading />
           ) : (
-            <div className={s.blockForm}>
+            <Box mt={3} mb={15} component="div">
               {!massKey ? (
                 <FormOneKey
                   handleChange={handleChange}
@@ -82,22 +98,13 @@ export default function CommerceKeyTools(props) {
                   handleFileChange={handleFileChange}
                   lvtUserSpend={lvtUserSpend}
                   tools={tools}
+                  massKey={massKey}
                 />
               )}
-            </div>
+            </Box>
           )}
-          <div className={s.keySum}>
-            <p>
-              {massKey
-                ? "Можете воспользоваться бесплатным инструментом. Он работает одинаково качественно, но не доступна массовая проверка ключевых запросов."
-                : "Если вам требуется проверить много ключей, вы можете воспользоваться массовой проверкой."}
-            </p>
-            <button onClick={handleClickMass}>
-              {massKey ? "Вернуться" : "Массовая проверка"}
-            </button>
-          </div>
-        </div>
-      </section>
-    </div>
+        </Box>
+      </Box>
+    </Container>
   );
 }

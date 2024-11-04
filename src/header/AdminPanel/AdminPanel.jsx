@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Container, Link, Stack, Typography } from "@mui/material";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import AppsIcon from "@mui/icons-material/Apps";
+import PostAddIcon from "@mui/icons-material/PostAdd";
 
 export default function AdminPanel(props) {
   return (
@@ -39,6 +40,19 @@ export default function AdminPanel(props) {
           <Stack direction="row" alignItems="center" gap={1}>
             <ManageAccountsIcon fontSize="small" />
             <Typography component="span">Пользователи</Typography>
+          </Stack>
+        </Link>
+        <Link
+          display="flex"
+          gap={1}
+          alignItems="flex-end"
+          color="#fff"
+          underline="none"
+          href="/admin/page-edit"
+        >
+          <Stack direction="row" alignItems="center" gap={1}>
+            <PostAddIcon fontSize="small" />
+            <Typography component="span">Страницы</Typography>
           </Stack>
         </Link>
       </Box>

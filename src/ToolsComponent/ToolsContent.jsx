@@ -308,14 +308,20 @@ export default function ToolsContent(props) {
       <Container sx={{ marginBottom: 5 }} maxWidth="xl">
         <Box component="section" sx={{ flexGrow: 1 }}>
           <Grid
-            sx={{ alignItems: "center", justifyContent: "flex-start" }}
+            sx={{
+              flexDirection: "row",
+              flexWrap: "nowrap",
+              alignItems: "center",
+              justifyContent: "flex-start",
+              overflow: "auto",
+            }}
             container
             spacing={1}
           >
-            <Grid item sx={{ display: "flex" }} md={3} xs={6}>
+            <Grid item sx={{ display: "flex" }} md={3} xs={12}>
               <RatingTools />
             </Grid>
-            <Grid item md={3} xs={6}>
+            <Grid item md={3} xs={12}>
               <Alert
                 sx={{ height: "64px", alignItems: "center" }}
                 icon={<CheckIcon fontSize="inherit" />}
@@ -324,7 +330,7 @@ export default function ToolsContent(props) {
                 <Typography>Работает стабильно</Typography>
               </Alert>
             </Grid>
-            <Grid item md={3} xs={6}>
+            <Grid item md={3} xs={12}>
               <Alert
                 sx={{ height: "64px", alignItems: "center" }}
                 action={
@@ -338,7 +344,7 @@ export default function ToolsContent(props) {
                 Видео инструкция
               </Alert>
             </Grid>
-            <Grid item md={3} xs={6}>
+            <Grid item md={3} xs={12}>
               <Alert
                 sx={{ height: "64px", alignItems: "center" }}
                 action={

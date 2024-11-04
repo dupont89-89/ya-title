@@ -23,6 +23,8 @@ import DomenDataUser from "./Parts/DomenDataUser";
 import ListDomenSubcription from "./Parts/ListDomenSubcription";
 import decodePunycode from "./Parts/PunycodeConverter";
 import { useSnackbar } from "notistack";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 export default function WhoisTools(props) {
   const {
@@ -44,6 +46,9 @@ export default function WhoisTools(props) {
   const [isLoadingSubscription, setIsLoadingSubscription] = useState(false);
   const [displayListDomen, setDisplayListDomen] = useState(false);
   const [getWhoisFail, setGetWhoisFail] = useState(false);
+
+  const theme = useTheme();
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
 
   const { enqueueSnackbar } = useSnackbar(); // Получаем функцию enqueueSnackbar
 
@@ -246,10 +251,20 @@ export default function WhoisTools(props) {
               item
               xs={12}
             >
-              <Typography variant="h2" component="h1">
+              <Typography
+                textAlign="center"
+                gutterBottom
+                variant={isLargeScreen ? "h2" : "h4"}
+                component="h1"
+              >
                 Whois-сервис проверки домена
               </Typography>
-              <Typography variant="h5" component="p">
+              <Typography
+                textAlign="center"
+                gutterBottom
+                variant="subtitle1"
+                component="p"
+              >
                 Информация о домене и проверить занятость доменного имени
               </Typography>
             </Grid>
