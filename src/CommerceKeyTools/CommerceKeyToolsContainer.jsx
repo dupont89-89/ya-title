@@ -91,6 +91,8 @@ function CommerceKeyToolsContainer(props) {
   };
 
   const handleFileChange = (event) => {
+    setQueryArray([]);
+    debugger;
     const file = event.target.files[0];
     const reader = new FileReader();
     reader.onload = (e) => {

@@ -9,6 +9,9 @@ import { connect } from "react-redux";
 import { spendLvt } from "../Api/api-lvt";
 import Papa from "papaparse";
 import { TitleComponent } from "../Function/TitleComponent";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useSnackbar } from "notistack"; // Импортируем SnackbarProvider и useSnackbar
 
 function CountWordKeyContainer({
   getCountWord,
@@ -34,9 +37,17 @@ function CountWordKeyContainer({
   const [noLvtUser, setNoLvtUserFetching] = useState(false);
   const [exceedsBallDirect, setExceedsBallDirect] = useState(false);
 
+  const theme = useTheme();
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
+  const { enqueueSnackbar } = useSnackbar(); // Получаем функцию enqueueSnackbar
+
   const tarif = 0.1;
   const frontTarif = "10 lvt / 100 запросов";
   const fileInputRef = useRef(null);
+
+  const handleSuccessFinishTools = (variant) => {
+    enqueueSnackbar("Получение частотности запросов завершено.", { variant });
+  };
 
   const handleClear = () => {
     handleClickMassClear();
@@ -105,6 +116,7 @@ function CountWordKeyContainer({
       setQueryArray([]);
       getDirectBall();
       setIsLoading(false);
+      handleSuccessFinishTools("success");
     }
   };
 
@@ -175,6 +187,7 @@ function CountWordKeyContainer({
         region={region}
         ballDirect={ballDirect}
         exceedsBallDirect={exceedsBallDirect}
+        isLargeScreen={isLargeScreen}
       />
     </>
   );

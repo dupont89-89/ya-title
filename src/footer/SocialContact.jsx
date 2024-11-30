@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Link, Typography } from "@mui/material";
-import Grid from "@mui/material/Unstable_Grid2";
+import Grid from "@mui/material/Grid2";
 
 export default function SocialContact() {
   return (

@@ -9,14 +9,38 @@ import { Box, Button, Card, CardMedia, IconButton } from "@mui/material";
 import React, { useState, useRef, useEffect } from "react";
 
 export default function FooterVideo() {
-  const [isExpanded, setIsExpanded] = useState(false); // Состояние для управления разворачиванием
-  const [isPlaying, setIsPlaying] = useState(true); // Состояние для управления воспроизведением
-  const [isMuted, setIsMuted] = useState(true); // Состояние для управления звуком
-  const [isVisible, setIsVisible] = useState(true); // Состояние для управления видимостью компонента
-  const [showPlayPauseButton, setShowPlayPauseButton] = useState(true); // Состояние для управления видимостью кнопки Play/Pause
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isMuted, setIsMuted] = useState(true);
+  const [isVisible, setIsVisible] = useState(true);
+  const [showPlayPauseButton, setShowPlayPauseButton] = useState(true);
+  const [opacity, setOpacity] = useState(1); // Новое состояние для управления прозрачностью
+
   const videoRef = useRef(null);
 
-  const s = {
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const windowHeight = window.innerHeight;
+      const bodyHeight = document.body.scrollHeight;
+
+      // Проверяем, достигнут ли низ страницы
+      if (scrollTop + windowHeight >= bodyHeight) {
+        setOpacity(0); // Устанавливаем прозрачность в 0, чтобы скрыть компонент
+        setTimeout(() => setIsVisible(false), 500); // Через 500 мс полностью скрываем компонент
+      } else {
+        setIsVisible(true);
+        setOpacity(1); // Устанавливаем прозрачность в 1, чтобы показать компонент
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const styles = {
     isExpandedYesCard: {
       maxWidth: "100%",
       height: "600px",
@@ -53,9 +77,6 @@ export default function FooterVideo() {
         height: 200,
       },
     },
-  };
-
-  const sB = {
     isExpandedYesBox: {
       position: "fixed",
       top: "50%",
@@ -68,7 +89,6 @@ export default function FooterVideo() {
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      // Медиазапросы для мобильных устройств
       "@media (max-width: 600px)": {
         top: "40%",
         left: "40%",
@@ -86,7 +106,6 @@ export default function FooterVideo() {
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      // Медиазапросы для мобильных устройств
       "@media (max-width: 600px)": {
         bottom: "5px",
         left: "10px",
@@ -96,9 +115,9 @@ export default function FooterVideo() {
 
   const handleExpandClick = () => {
     if (isExpanded) {
-      setIsVisible(false); // Если свернуто и нажата иконка Cancel, скрываем компонент
+      setIsVisible(false);
     } else {
-      setIsExpanded(true); // Иначе разворачиваем видео
+      setIsExpanded(true);
       setIsMuted(false);
       videoRef.current.muted = false;
       videoRef.current.play();
@@ -114,7 +133,6 @@ export default function FooterVideo() {
     setIsPlaying(!isPlaying);
   };
 
-  // Эффект для скрытия кнопки Play/Pause через 2 секунды
   useEffect(() => {
     let timer;
     if (isExpanded && showPlayPauseButton) {
@@ -122,39 +140,43 @@ export default function FooterVideo() {
         setShowPlayPauseButton(false);
       }, 2000);
     }
-    return () => clearTimeout(timer); // Очистка таймера при размонтировании компонента или изменении состояния
+    return () => clearTimeout(timer);
   }, [isExpanded, showPlayPauseButton]);
 
-  if (!isVisible) {
-    return null; // Если isVisible false, не рендерим компонент
-  }
+  if (!isVisible) return null;
 
   return (
     <Box
       component="div"
-      sx={isExpanded ? sB.isExpandedYesBox : sB.isExpandedNoBox}
-      onMouseEnter={() => setShowPlayPauseButton(true)} // Показываем кнопку при наведении
-      onMouseLeave={() => setShowPlayPauseButton(false)} // Скрываем кнопку при уходе курсора
+      sx={{
+        ...(isExpanded ? styles.isExpandedYesBox : styles.isExpandedNoBox),
+        opacity: opacity, // Применяем значение прозрачности
+        transition: "opacity 0.5s ease", // Плавный переход для прозрачности
+      }}
+      onMouseEnter={() => setShowPlayPauseButton(true)}
+      onMouseLeave={() => setShowPlayPauseButton(false)}
     >
       <IconButton
         sx={{
           position: "absolute",
-          top: isExpanded ? "-22px" : "-22px",
+          top: "-22px",
           right: isExpanded ? "-22px" : "0",
           color: "white",
         }}
         aria-label="delete"
         size="small"
-        onClick={(e) => setIsVisible(false)}
+        onClick={() => setIsVisible(false)}
       >
         <Cancel fontSize="small" />
       </IconButton>
       <Button component="a" onClick={handleExpandClick} sx={{ padding: 0 }}>
-        <Card sx={isExpanded ? s.isExpandedYesCard : s.isExpandedNoCard}>
+        <Card
+          sx={isExpanded ? styles.isExpandedYesCard : styles.isExpandedNoCard}
+        >
           <CardMedia
-            sx={isExpanded ? s.isExpandedYes : s.isExpandedNo}
+            sx={isExpanded ? styles.isExpandedYes : styles.isExpandedNo}
             component="video"
-            image={"/video/video-footer_compressed.mp4"}
+            image="/video/video-footer_compressed.mp4"
             autoPlay
             muted={isMuted}
             loop

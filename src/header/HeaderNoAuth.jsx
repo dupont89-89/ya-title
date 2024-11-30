@@ -12,6 +12,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { Link } from "react-router-dom";
 import MenuToolbar from "../Sidebar/MenuToolbar";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
+import Grid from "@mui/material/Grid2";
 
 function HeaderNoAuth(props) {
   let config;
@@ -33,9 +34,9 @@ function HeaderNoAuth(props) {
   } = props;
 
   return (
-    <AppBar position="static">
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
+    <Container sx={{ backgroundColor: "#1976d3" }} maxWidth>
+      <Grid alignItems="center" container spacing={2}>
+        <Grid size="auto">
           <Box
             sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
             component="img"
@@ -43,6 +44,8 @@ function HeaderNoAuth(props) {
             alt="Логотип Ptahini"
             style={{ width: "50px" }}
           />
+        </Grid>
+        <Grid size="auto">
           <Link to="/">
             <Typography
               variant="h6"
@@ -61,105 +64,28 @@ function HeaderNoAuth(props) {
               PTAHINI
             </Typography>
           </Link>
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "flex", md: "none" },
-              }}
-            >
-              <MenuItem>
-                <Button
-                  sx={{ my: 2, color: "white" }}
-                  onClick={() => {
-                    setOpen(true);
-                    setAnchorElNav(null);
-                  }}
-                  startIcon={<MenuOpenIcon />}
-                  variant="outlined"
-                >
-                  Инструменты
-                </Button>
-              </MenuItem>
-              {pages.map((page) => (
-                <MenuItem
-                  key={page.name}
-                  onClick={handleCloseNavMenu}
-                  component={Link}
-                  to={page.link}
-                >
-                  <Typography textAlign="center">{page.name}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>{" "}
-          <Box
-            sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-            component="img"
-            src="/img/logo/white-logo-ptahini.png"
-            alt="Логотип Ptahini"
-            style={{ width: "50px" }}
-          />
-          <Typography
-            variant="h5"
-            noWrap
+        </Grid>
+        <Grid
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "flex-end",
+          }}
+          size="grow"
+        >
+          <Button
             component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
+            href="/login/"
+            style={{
+              backgroundColor: "#21b6ae",
             }}
+            variant="contained"
           >
-            PTAHINI
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            <MenuToolbar openMob={open} />
-          </Box>
-          <Box
-            sx={{ flexGrow: 0, display: "flex", gap: 2, alignItems: "center" }}
-          >
-            <Button
-              component="a"
-              href="/login/"
-              style={{
-                backgroundColor: "#21b6ae",
-              }}
-              variant="contained"
-            >
-              Войти
-            </Button>
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
+            Войти
+          </Button>
+        </Grid>
+      </Grid>
+    </Container>
   );
 }
 export default HeaderNoAuth;
