@@ -27,7 +27,8 @@ export default function FormMassKey(props) {
     handleFileChange,
     lvtUserSpend,
     massKey,
-    tools, // Новый пропс для обработки изменения файла
+    tools,
+    isLargeScreen, // Новый пропс для обработки изменения файла
   } = props;
 
   const fileInputRef = useRef(null); // Создаем реф для input файла
@@ -50,26 +51,25 @@ export default function FormMassKey(props) {
     <>
       {!result && (
         <>
-          {queryArray.length > 0 && (
-            <Box mb={2} mt={2}>
-              <Stack mb={1} direction="row" spacing={1}>
-                <Chip
-                  size="medium"
-                  label={`Добавленно: ${queryArray.length} запросов(а)`}
-                />
-                <Chip
-                  size="medium"
-                  label={massKey && "Тариф: 10 баллов / 100 запросов"}
-                />
-                {queryArray && massKey && (
-                  <Chip
-                    size="medium"
-                    label={`К списанию: ${lvtUserSpend} Lvt`}
-                  />
-                )}
-              </Stack>
-            </Box>
-          )}
+          <Box mb={2} mt={2}>
+            <Stack
+              mb={1}
+              direction={isLargeScreen ? "row" : "column"}
+              spacing={1}
+            >
+              <Chip
+                size="medium"
+                label={`Добавленно: ${queryArray.length} запросов(а)`}
+              />
+              <Chip
+                size="medium"
+                label={massKey && "Тариф: 10 баллов / 100 запросов"}
+              />
+              {queryArray && massKey && (
+                <Chip size="medium" label={`К списанию: ${lvtUserSpend} Lvt`} />
+              )}
+            </Stack>
+          </Box>
           <label htmlFor="key-get">Каждый запрос с новой строки</label>
           <TextareaAutosize
             borderRadius="8px"
@@ -84,50 +84,49 @@ export default function FormMassKey(props) {
           />
         </>
       )}
-      {queryArray.length > 0 &&
-        queryArray.some((item) => item.trim() !== "") && (
-          <Grid alignItems="center" mt={1} container spacing={2}>
-            <Grid item>
-              <Button
-                startIcon={<PlayCircleOutlineIcon />}
-                color="success"
-                variant="contained"
-                onClick={handleFetchKey}
-              >
-                Запустить проверку
-              </Button>
-            </Grid>
-            <Grid item>
-              <Button
-                startIcon={<DeleteIcon />}
-                color="error"
-                variant="contained"
-                onClick={handleClear}
-              >
-                Очистить
-              </Button>
-            </Grid>
-          </Grid>
-        )}
-      {(!queryArray.length > 0) & !result ? (
-        <Button
-          startIcon={<PostAddIcon />}
-          variant="contained"
-          component="label"
-        >
-          Загрузить файл .txt
-          <input
-            type="file"
-            hidden
-            name="keyFile"
-            id="input__file"
-            accept=".txt" // Указываем что принимаем только .txt файлы
-            onChange={handleFileChange} // Обработчик изменения файла
-            className={`${s.input} ${s.input__file}`}
-            ref={fileInputRef} // Присваиваем реф input файлу
-          />
-        </Button>
-      ) : null}
+      <Grid alignItems="center" mt={1} container spacing={1}>
+        <Grid item>
+          <Button
+            disabled={!queryArray.length > 0}
+            startIcon={<PlayCircleOutlineIcon />}
+            color="success"
+            variant="contained"
+            onClick={handleFetchKey}
+          >
+            Запустить проверку
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button
+            disabled={!queryArray.length > 0}
+            startIcon={<DeleteIcon />}
+            color="error"
+            variant="contained"
+            onClick={handleClear}
+          >
+            Очистить
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button
+            disabled={queryArray.length > 0}
+            startIcon={<PostAddIcon />}
+            variant="contained"
+            component="label"
+          >
+            Загрузить файл .txt
+            <input
+              type="file"
+              hidden
+              name="keyFile"
+              id="input__file"
+              accept=".txt" // Указываем что принимаем только .txt файлы
+              onChange={handleFileChange} // Обработчик изменения файла
+              ref={fileInputRef} // Присваиваем реф input файлу
+            />
+          </Button>
+        </Grid>
+      </Grid>
 
       {Array.isArray(result) && (
         <Box>

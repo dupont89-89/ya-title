@@ -106,7 +106,8 @@ exports.tokenResetUserPasswordController = async (req, res) => {
 
     if (!user) {
       return res.status(400).send({
-        message: "Недействительный или истекший токен сброса пароля.",
+        message:
+          "Недействительный или истекший токен сброса пароля. Повторите сброс пароля.",
       });
     }
 

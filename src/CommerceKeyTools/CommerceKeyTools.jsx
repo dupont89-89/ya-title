@@ -12,7 +12,9 @@ import {
   Chip,
   Container,
   Typography,
+  useMediaQuery,
 } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 export default function CommerceKeyTools(props) {
   const {
@@ -37,8 +39,11 @@ export default function CommerceKeyTools(props) {
     tools,
   } = props;
 
+  const theme = useTheme();
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
+
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="lg">
       {showModal && (
         <ModalNoLvtContainer
           isAuthenticated={props.isAuthenticated}
@@ -47,7 +52,12 @@ export default function CommerceKeyTools(props) {
         />
       )}
       <Box component="section">
-        <Typography gutterBottom textAlign="center" component="h1" variant="h3">
+        <Typography
+          gutterBottom
+          textAlign="center"
+          component="h1"
+          variant={isLargeScreen ? "h3" : "h4"}
+        >
           Определение типа ключевого запроса
         </Typography>
         <Box mb={3} textAlign="center">
@@ -57,7 +67,10 @@ export default function CommerceKeyTools(props) {
             variant="outlined"
           />
         </Box>
-        <ButtonGroup variant="contained" aria-label="Basic button group">
+        <ButtonGroup
+          variant="contained"
+          aria-label="Массовая проверка или по одному ключу"
+        >
           <Button
             startIcon={<OpenInNewIcon />}
             disabled={!massKey}
@@ -89,6 +102,7 @@ export default function CommerceKeyTools(props) {
                 />
               ) : (
                 <FormMassKey
+                  isLargeScreen={isLargeScreen}
                   queryArray={queryArray}
                   handleChangeMass={handleChangeMass}
                   result={result}

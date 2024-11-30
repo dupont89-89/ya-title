@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Box, Container, Typography } from "@mui/material";
 import CardPanelAdmin from "./Parts/Panel/CardPanelAdmin";
-import Grid from "@mui/material/Grid";
+import Grid from "@mui/material/Grid2";
 
 export default function Admin({ getAdminUserData, countUser, dataPanelAdmin }) {
   useEffect(() => {
@@ -10,20 +10,16 @@ export default function Admin({ getAdminUserData, countUser, dataPanelAdmin }) {
 
   return (
     <Container maxWidth="xl">
-      <Typography component="h1" variant="h3">
-        Панель управления
-      </Typography>
-      <Box mt={6} component="section">
-        <Grid container spacing={3}>
+      <Box mt={4} component="section">
+        <Typography component="h1" variant="h4">
+          Панель управления
+        </Typography>
+        <Grid mt={2} container spacing={3}>
           {dataPanelAdmin &&
             dataPanelAdmin.map((item, index) => (
               <Grid
                 sx={{ display: "flex" }}
-                item
-                xs={12}
-                sm={6}
-                md={3}
-                xl={2}
+                size={{ xs: 12, sm: 6, md: 3, xl: 2 }}
                 key={index}
               >
                 <CardPanelAdmin

@@ -27,7 +27,7 @@ exports.mailMessageController = async (req, res) => {
       mailOptions = {
         from: "tools@ptahini.ru",
         to: userMail,
-        subject: "Сброс пароля на вашем сайте",
+        subject: "Сброс пароля к аккаунту tools.ptahini.ru",
         html: `<p>Для сброса пароля перейдите по <a href="${resetUrl}">ссылке</a>.</p> <p>Если вы не отправляли запрос на сброс пароля, просто проигнорируйте это сообщение</p>`,
       };
     } else {

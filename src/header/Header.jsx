@@ -15,11 +15,13 @@ import { blueGrey } from "@mui/material/colors";
 import { Link } from "react-router-dom";
 import NotificationContainer from "./Notification/NotificationContainer";
 import { Chip, Divider, Stack } from "@mui/material";
+import Grid from "@mui/material/Grid2";
 import CloudIcon from "@mui/icons-material/Cloud";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import MenuToolbar from "../Sidebar/MenuToolbar";
 import { AccountCircle } from "@mui/icons-material";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
+import DashboardIcon from "@mui/icons-material/Dashboard";
 
 function Header(props) {
   const {
@@ -49,24 +51,28 @@ function Header(props) {
   }
 
   return (
-    <AppBar position="static">
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <Box
-            sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-            component="img"
-            src="/img/logo/white-logo-ptahini.png"
-            alt="Логотип Ptahini"
-            style={{ width: "50px" }}
-          />
-          <Link to="/">
+    <Container
+      sx={{
+        backgroundColor: "#1976d3",
+      }}
+      maxWidth
+    >
+      <Grid alignItems="center" container spacing={2}>
+        <Grid size="auto">
+          <Link style={{ display: "flex", alignItems: "center" }} to="/">
+            <Box
+              sx={{ mr: 1 }}
+              component="img"
+              src="/img/logo/white-logo-ptahini.png"
+              alt="Логотип Ptahini"
+              style={{ width: "50px" }}
+            />
             <Typography
               variant="h6"
               noWrap
               component="p"
               sx={{
                 mr: 2,
-                display: { xs: "none", md: "flex" },
                 fontFamily: "monospace",
                 fontWeight: 700,
                 letterSpacing: ".3rem",
@@ -77,174 +83,99 @@ function Header(props) {
               PTAHINI
             </Typography>
           </Link>
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="Меню пользователя"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
+        </Grid>
+        <Grid size="auto">
+          <Button
+            href="/dashbord/"
+            sx={{ backgroundColor: "#fff" }}
+            variant="outlined"
+            startIcon={<DashboardIcon />}
+          >
+            Панель инструментов
+          </Button>
+        </Grid>
+        <Grid
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-end",
+            gap: "15px",
+          }}
+          size="grow"
+        >
+          <Divider orientation="vertical" flexItem />
+          <Stack direction="row" spacing={1}>
+            <Chip
               sx={{
-                display: { xs: "block", md: "none" },
+                backgroundColor: (theme) => theme.palette.mat.main, // Используем кастомный цвет
+                color: "#fff", // Добавим цвет текста, если нужно
+                fontWeight: "600",
               }}
-            >
-              <MenuItem>
-                <Button
-                  sx={{ my: 2, color: "white" }}
-                  onClick={toggleDrawer(true)}
-                  startIcon={<MenuOpenIcon />}
-                  variant="outlined"
-                >
-                  Инструменты
-                </Button>
-              </MenuItem>
-              {pages.map((page) => (
-                <MenuItem
-                  key={page.name}
-                  onClick={handleCloseNavMenu}
-                  component={Link}
-                  to={page.link}
-                >
-                  <Typography textAlign="center">{page.name}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>{" "}
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            PTAHINI
+              icon={<CreditCardIcon color="#fff" ontSize="small" />}
+              label={`${money} руб`}
+            />
+          </Stack>
+          <Divider orientation="vertical" flexItem />
+          <Stack direction="row" spacing={1}>
+            <Chip
+              sx={{
+                backgroundColor: (theme) => theme.palette.mat.main, // Используем кастомный цвет
+                color: "#fff", // Добавим цвет текста, если нужно
+                fontWeight: "600",
+              }}
+              icon={<CloudIcon color="#fff" ontSize="small" />}
+              label={`${totalLvt} баллов`}
+            />
+          </Stack>
+          <Divider orientation="vertical" flexItem />
+          <NotificationContainer />
+          <Divider orientation="vertical" flexItem />
+          <Tooltip title="Управление профилем">
+            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              {avatar ? (
+                <Avatar
+                  alt={`${firstName} ${lastName}`}
+                  src={`${config.REACT_APP_SERVER_URL}${avatar}`}
+                  sx={{ bgcolor: blueGrey[50] }}
+                />
+              ) : (
+                <AccountCircle sx={{ color: "#fff" }} fontSize="large" />
+              )}
+            </IconButton>
+          </Tooltip>
+        </Grid>
+      </Grid>
+      <Menu
+        disableScrollLock={true}
+        sx={{ mt: "45px" }}
+        id="menu-appbar"
+        anchorEl={anchorElUser}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        keepMounted
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        open={Boolean(anchorElUser)}
+        onClose={handleCloseUserMenu}
+      >
+        {settings.map((setting) => (
+          <MenuItem key={setting} onClick={handleCloseUserMenu}>
+            <Link to={setting.link}>
+              <Typography textAlign="center">{setting.name}</Typography>
+            </Link>
+          </MenuItem>
+        ))}
+        <MenuItem onClick={handleCloseUserMenu}>
+          <Typography onClick={handleLogout} textAlign="center">
+            Выйти
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            <MenuToolbar openMob={open} />
-            {pages.map((page) => (
-              <Button
-                key={page.name}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "#fff", marginLeft: 2 }}
-                component={Link} // Используем Link из react-router-dom
-                to={page.link} // Используем link из объекта page
-                variant="outlined"
-                color="white"
-                startIcon={page.icon}
-              >
-                {page.name}
-              </Button>
-            ))}
-          </Box>
-          <Box
-            sx={{ flexGrow: 0, display: "flex", gap: 2, alignItems: "center" }}
-          >
-            <Box
-              spacing={2}
-              sx={{ display: { xs: "none", md: "flex" }, gap: "20px" }}
-            >
-              <Divider orientation="vertical" flexItem />
-              <Stack direction="row" spacing={1}>
-                <Chip
-                  sx={{
-                    backgroundColor: (theme) => theme.palette.mat.main, // Используем кастомный цвет
-                    color: "#fff", // Добавим цвет текста, если нужно
-                    fontWeight: "600",
-                  }}
-                  icon={<CreditCardIcon color="#fff" ontSize="small" />}
-                  label={`${money} руб`}
-                />
-              </Stack>
-              <Divider orientation="vertical" flexItem />
-              <Stack direction="row" spacing={1}>
-                <Chip
-                  sx={{
-                    backgroundColor: (theme) => theme.palette.mat.main, // Используем кастомный цвет
-                    color: "#fff", // Добавим цвет текста, если нужно
-                    fontWeight: "600",
-                  }}
-                  icon={<CloudIcon color="#fff" ontSize="small" />}
-                  label={`${totalLvt} баллов`}
-                />
-              </Stack>
-            </Box>
-            <Divider orientation="vertical" flexItem />
-            <NotificationContainer />
-            <Divider orientation="vertical" flexItem />
-            <Tooltip title="Управление профилем">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                {avatar ? (
-                  <Avatar
-                    alt={`${firstName} ${lastName}`}
-                    src={`${config.REACT_APP_SERVER_URL}${avatar}`}
-                    sx={{ bgcolor: blueGrey[50] }}
-                  />
-                ) : (
-                  <AccountCircle sx={{ color: "#fff" }} fontSize="large" />
-                )}
-              </IconButton>
-            </Tooltip>
-            <Menu
-              disableScrollLock={true}
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Link to={setting.link}>
-                    <Typography textAlign="center">{setting.name}</Typography>
-                  </Link>
-                </MenuItem>
-              ))}
-              <MenuItem onClick={handleCloseUserMenu}>
-                <Typography onClick={handleLogout} textAlign="center">
-                  Выйти
-                </Typography>
-              </MenuItem>
-            </Menu>
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
+        </MenuItem>
+      </Menu>
+    </Container>
   );
 }
 export default Header;

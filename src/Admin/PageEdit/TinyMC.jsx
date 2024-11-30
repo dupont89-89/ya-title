@@ -2,12 +2,15 @@ import React from "react";
 import { Editor } from "@tinymce/tinymce-react";
 
 export default function TinyMC(props) {
+  const { setContent, textContent } = props;
   return (
     <Editor
+      onEditorChange={(content, editor) => setContent(content)}
       apiKey="pczt0a0v9fv4c4x5qd9pqzq1var1v24f7q83dy0igb9d4xcp"
       init={{
+        language: "ru",
         plugins: [
-          // Core editing features
+          // Удаляем "tinymcespellchecker" из списка плагинов
           "anchor",
           "autolink",
           "charmap",
@@ -21,8 +24,6 @@ export default function TinyMC(props) {
           "table",
           "visualblocks",
           "wordcount",
-          // Your account includes a free trial of TinyMCE premium features
-          // Try the most popular premium features until Nov 14, 2024:
           "checklist",
           "mediaembed",
           "casechange",
@@ -30,7 +31,6 @@ export default function TinyMC(props) {
           "formatpainter",
           "pageembed",
           "a11ychecker",
-          "tinymcespellchecker",
           "permanentpen",
           "powerpaste",
           "advtable",
@@ -47,13 +47,13 @@ export default function TinyMC(props) {
           "typography",
           "inlinecss",
           "markdown",
-          // Early access to document converters
           "importword",
           "exportword",
           "exportpdf",
         ],
+        // Убираем spellcheckdialog из панели инструментов
         toolbar:
-          "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
+          "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
         tinycomments_mode: "embedded",
         tinycomments_author: "Author name",
         mergetags_list: [
@@ -81,6 +81,7 @@ export default function TinyMC(props) {
         },
       }}
       initialValue="Начнем создавать классный контент"
+      value={textContent}
     />
   );
 }

@@ -4,7 +4,6 @@ import {
   Box,
   Button,
   Container,
-  Grid,
   TextField,
   Typography,
   Table,
@@ -17,6 +16,7 @@ import {
   CircularProgress,
   Alert,
 } from "@mui/material";
+import Grid from "@mui/material/Grid2";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import DomenDataUser from "./Parts/DomenDataUser";
@@ -238,7 +238,7 @@ export default function WhoisTools(props) {
 
   return (
     <React.Fragment>
-      <Container sx={{ mb: 15 }} maxWidth="md">
+      <Container sx={{ mb: 15 }} maxWidth="lg">
         <Box sx={{ marginBottom: "70px" }} component="section">
           <Grid container spacing={2}>
             <Grid
@@ -248,13 +248,12 @@ export default function WhoisTools(props) {
                 display: "flex",
                 flexDirection: "column",
               }}
-              item
-              xs={12}
+              size={12}
             >
               <Typography
                 textAlign="center"
                 gutterBottom
-                variant={isLargeScreen ? "h2" : "h4"}
+                variant={isLargeScreen ? "h3" : "h4"}
                 component="h1"
               >
                 Whois-сервис проверки домена
@@ -268,7 +267,7 @@ export default function WhoisTools(props) {
                 Информация о домене и проверить занятость доменного имени
               </Typography>
             </Grid>
-            <Grid xs={12} item>
+            <Grid size={12}>
               <DomenDataUser
                 isAuthenticated={isAuthenticated}
                 domenSubscription={domenSubscription}
@@ -277,7 +276,7 @@ export default function WhoisTools(props) {
               />
             </Grid>
             {displayListDomen && (
-              <Grid mb={2} xs={12} item>
+              <Grid mb={2} size={12}>
                 <ListDomenSubcription
                   deleteSubscriptionDomenWhois={deleteSubscriptionDomenWhois}
                   domenList={domenSubscription}
@@ -286,8 +285,7 @@ export default function WhoisTools(props) {
               </Grid>
             )}
             <Grid
-              item
-              xs={12}
+              size={12}
               direction="row"
               sx={{
                 justifyContent: "center",

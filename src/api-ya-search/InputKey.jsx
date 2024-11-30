@@ -1,6 +1,7 @@
 import React from "react";
 import s from "./Form.module.css";
-import { Button, CircularProgress, Grid, TextField } from "@mui/material";
+import { Button, CircularProgress, TextField } from "@mui/material";
+import Grid from "@mui/material/Grid2";
 
 export default function InputKey({
   handleChange,
@@ -40,7 +41,7 @@ export default function InputKey({
           Создать Title
         </Button>
       ) : null} */}
-      <Grid xs={6} item>
+      <Grid size={6}>
         <TextField
           sx={{ width: "100%" }}
           id="title"
@@ -49,7 +50,7 @@ export default function InputKey({
           onChange={handleChange}
         />
       </Grid>
-      <Grid xs={3} item>
+      <Grid size={3}>
         <Button
           onClick={handleClick}
           sx={{ width: "100%", height: "100%" }}

@@ -1,92 +1,122 @@
 import React from "react";
-import { useParams } from "react-router-dom";
 import ApiSendYaSearchContainer from "../api-ya-search/ApiSendYaSearchContainer";
 import TextBottom from "./TextBottom";
 import CommerceKeyToolsContainer from "../CommerceKeyTools/CommerceKeyToolsContainer";
 import CountWordKeyContainer from "../countWordkey/CountWordKeyContainer";
-import { Alert, Box, Container, Grid, Link, Typography } from "@mui/material";
-import MessageNoAuth from "../Auth/MessageNoAuth/MessageNoAuth";
-import RatingTools from "./PartsComponentTools/RatingTools";
-import CheckIcon from "@mui/icons-material/Check";
-import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
-import ReviewsTools from "./PartsComponentTools/ReviewsTools";
+import { Typography } from "@mui/material";
 import WhoisToolsContainer from "../Whois/WhoisToolsContainer";
+import { useParams } from "react-router-dom";
 
 export default function ToolsContent(props) {
-  const { tools } = useParams();
-  // const titleSidebar = {
-  //   nameDoc: "Документация по тайтл",
-  //   nameLinkOne: "Справка Яндекса",
-  //   hrefLinkOne:
-  //     "https://yandex.ru/support/webmaster/search-results/title.html",
-  //   iconLinkOne: iconYandex,
-  //   nameLinkTwo: "Справка Google",
-  //   hrefLinkTwo:
-  //     "https://developers.google.cn/search/docs/appearance/title-link?hl=ru",
-  //   iconLinkTwo: iconGoogle,
-  //   nameLinkTri: "HTML спецификация",
-  //   hrefLinkTri:
-  //     "https://html.spec.whatwg.org/multipage/semantics.html#the-title-element",
-  //   iconLinkTri: iconHTML,
-  //   nameLinkFo: "Видео по теме",
-  //   hrefLinkFo:
-  //     "https://rutube.ru/video/35ef2307b6a22542b6b53217abdbbc6c/?r=wd",
-  //   iconLinkFo: iconRuTube,
-  // };
+  const params = useParams();
 
-  // const keyCommerceSidebar = {
-  //   nameDoc: "Документация по ключевым запросам",
-  //   nameLinkOne: "Справка Яндекса.Директ по ключам",
-  //   hrefLinkOne:
-  //     "https://yandex.ru/support/direct/keywords/building-keyword-list.html",
-  //   iconLinkOne: yaDirect,
-  //   nameLinkTwo: "Справка Google",
-  //   hrefLinkTwo: "https://support.google.com/google-ads/answer/2453981?hl=RU",
-  //   iconLinkTwo: iconGoogle,
-  //   nameLinkTri: "Статья Ptahini",
-  //   hrefLinkTri:
-  //     "https://ptahini.ru/seo-prodvizhenie-sajtov/kakie-kljuchevye-zaprosy-byvajut/",
-  //   iconLinkTri: iconPtahini,
-  //   nameLinkFo: "Видео инструкция",
-  //   hrefLinkFo: "https://rutube.ru/video/41b1dac88c6fa9867fd5459ac7e3270e/",
-  //   iconLinkFo: iconRuTube,
-  // };
+  // Получаем pathname из пропсов или из параметров URL
+  const pathname = props.pathname || `/app/${params.tools}/`;
 
-  // const keyCountWordstatSidebar = {
-  //   nameDoc: "Документация по частотности запросов",
-  //   nameLinkOne: "Справка Яндекса.Директ по ключам",
-  //   hrefLinkOne:
-  //     "https://yandex.ru/support/direct/keywords/building-keyword-list.html",
-  //   iconLinkOne: yaDirect,
-  //   nameLinkTwo: "Справка Google",
-  //   hrefLinkTwo: "https://support.google.com/google-ads/answer/2453981?hl=RU",
-  //   iconLinkTwo: iconGoogle,
-  //   nameLinkTri: "Яндекс Wordstat",
-  //   hrefLinkTri: "https://wordstat.yandex.ru/",
-  //   iconLinkTri: iconYandex,
-  //   nameLinkFo: "Google Trends",
-  //   hrefLinkFo: "https://trends.google.com/trends?geo=&hl=ru",
-  //   iconLinkFo: iconGoogle,
-  // };
-
-  const getTextForPage = (tools) => {
-    switch (tools) {
-      case "seo-title":
+  const getTextForPage = (pathname) => {
+    switch (pathname) {
+      case "/app/seo-title/":
         return (
-          <p>
-            <b>Ptahini</b> разработал{" "}
-            <strong>инструмент для создания “правильного тайтла”</strong>,
-            который помогает SEO-специалистам <strong>автоматически</strong>{" "}
-            составлять заголовки Title{" "}
-            <strong>на основе поисковой выдачи</strong>. Этот инструмент
-            подбирает самые релевантные, связанные и тематические LSI слова и
-            фразы, что позволяет создать заголовок, максимально соответствующий
-            поисковым запросам пользователей.
-          </p>
+          <Typography fontSize={15} component="div">
+            <p>
+              Ptahini создал инновационный инструмент для генерации "
+              <b>правильного тайтла</b>", специально разработанный для
+              SEO-специалистов и контент-маркетологов, чтобы автоматизировать
+              процесс создания заголовков Title на основе актуальных данных
+              поисковой выдачи. Этот инструмент помогает подобрать наиболее
+              релевантные и тематически близкие LSI (Latent Semantic Indexing)
+              слова и фразы, что обеспечивает более точное соответствие
+              заголовков запросам пользователей.
+            </p>
+            <h3>Преимущества использования инструмента:</h3>
+            <ol>
+              <li>
+                <p>
+                  <strong>Повышение релевантности</strong>. Благодаря анализу
+                  LSI-слов, инструмент формирует заголовки, которые не только
+                  описывают содержание страницы, но и учитывают скрытые
+                  тематические связи. Это помогает увеличить шансы на попадание
+                  страницы в топ поисковой выдачи.
+                </p>
+              </li>
+              <li>
+                <p>
+                  <strong>Увеличение CTR</strong>. Заголовки, составленные с
+                  учетом ключевых фраз и связанных терминов, становятся более
+                  привлекательными для пользователей, что ведет к росту
+                  показателя кликабельности (CTR). Чем более заголовок
+                  соответствует запросам, тем выше вероятность, что пользователь
+                  кликнет на него.
+                </p>
+              </li>
+              <li>
+                <p>
+                  <strong>Экономия времени и ресурсов</strong>. Для
+                  SEO-специалистов и контент-менеджеров автоматизация подбора
+                  заголовков упрощает рабочий процесс. Вместо ручного анализа
+                  поисковой выдачи и составления заголовков, они могут
+                  сэкономить время и сосредоточиться на других задачах.
+                </p>
+              </li>
+              <li>
+                <p>
+                  <strong>Адаптация под изменяющиеся алгоритмы</strong>. С
+                  учётом регулярных изменений в алгоритмах поисковых систем,
+                  этот инструмент предлагает актуальные и гибкие решения для
+                  оптимизации заголовков, подстраиваясь под текущие тенденции и
+                  улучшая видимость контента.
+                </p>
+              </li>
+            </ol>
+            <h3>Кому будет полезен инструмент:</h3>
+            <ul>
+              <li>
+                <p>
+                  <strong>SEO-специалистам</strong>. Они могут быстро создавать
+                  заголовки, которые не только привлекают внимание
+                  пользователей, но и соответствуют требованиям поисковых
+                  систем.
+                </p>
+              </li>
+              <li>
+                <p>
+                  <strong>Контент-менеджерам</strong>. Инструмент помогает
+                  формировать качественные заголовки, делая контент более
+                  видимым и привлекательным.
+                </p>
+              </li>
+              <li>
+                <p>
+                  <strong>Малому и среднему бизнесу</strong>. Для компаний,
+                  которые не располагают большим бюджетом на SEO, автоматизация
+                  создания заголовков станет выгодным решением, позволяя
+                  улучшить позиционирование сайта без значительных затрат.
+                </p>
+              </li>
+              <li>
+                <p>
+                  <strong>Агентствам цифрового маркетинга</strong>. Возможность
+                  автоматического создания "правильных тайтлов" оптимизирует
+                  процессы, помогает повысить производительность и улучшить
+                  результаты кампаний для клиентов.
+                </p>
+              </li>
+            </ul>
+            <h3>Этот инструмент станет верным помощником</h3>
+            <p>
+              Инструмент от Ptahini &mdash; это мощное средство, которое не
+              только упрощает процесс SEO, но и помогает создавать заголовки,
+              которые работают на достижение конкретных бизнес-целей. С его
+              помощью специалисты могут более эффективно управлять видимостью и
+              привлекательностью контента в поисковой выдаче, что приводит к
+              увеличению трафика и укреплению позиций сайта в поисковых
+              системах.
+            </p>
+          </Typography>
         );
-      case "wordstat":
+      case "/app/wordstat/":
         return (
-          <>
+          <Typography fontSize={15} component="div">
             <h2>
               Ptahini &ndash; Ваш незаменимый помощник в мире SEO и маркетинга
             </h2>
@@ -176,11 +206,11 @@ export default function ToolsContent(props) {
               вам лучше понять своих клиентов, повысить эффективность
               маркетинговых кампаний и достигнуть новых высот.
             </p>
-          </>
+          </Typography>
         );
-      case "commerce-key":
+      case "/app/commerce-key/":
         return (
-          <>
+          <Typography fontSize={15} component="div">
             <h2>Какие бывают типы запросов</h2>
             <ul>
               <li>
@@ -229,11 +259,11 @@ export default function ToolsContent(props) {
               запросов на коммерциализацию. Загрузите списком или файлом ваши
               запросы.
             </p>
-          </>
+          </Typography>
         );
-      case "whois":
+      case "/app/whois/":
         return (
-          <Typography variant="subtitle1" component="div">
+          <Typography fontSize={15} component="div">
             <h2>
               Проверить домен на доступность, а если занят подпишись на
               освобождение
@@ -273,102 +303,44 @@ export default function ToolsContent(props) {
         );
       case "default":
       default:
+        return null;
+    }
+  };
+
+  const getToolsPage = (pathname) => {
+    switch (pathname) {
+      case "/app/seo-title/":
         return (
-          <p>
-            <b>Ptahini</b> разработал{" "}
-            <strong>инструмент для создания “правильного тайтла”</strong>,
-            который помогает SEO-специалистам <strong>автоматически</strong>{" "}
-            составлять заголовки Title{" "}
-            <strong>на основе поисковой выдачи</strong>. Этот инструмент
-            подбирает самые релевантные, связанные и тематические LSI слова и
-            фразы, что позволяет создать заголовок, максимально соответствующий
-            поисковым запросам пользователей.
-          </p>
+          <>
+            <ApiSendYaSearchContainer />
+            <TextBottom text={getTextForPage(pathname)} />
+          </>
         );
-    }
-  };
-
-  const getToolsPage = (tools) => {
-    switch (tools) {
-      case "create-title":
-        return <ApiSendYaSearchContainer />;
-      case "commerce-key":
-        return <CommerceKeyToolsContainer />;
-      case "wordstat":
-        return <CountWordKeyContainer />;
-      case "whois":
-        return <WhoisToolsContainer />;
+      case "/app/commerce-key/":
+        return (
+          <>
+            <CommerceKeyToolsContainer />
+            <TextBottom text={getTextForPage(pathname)} />
+          </>
+        );
+      case "/app/wordstat/":
+        return (
+          <>
+            <CountWordKeyContainer />
+            <TextBottom text={getTextForPage(pathname)} />
+          </>
+        );
+      case "/app/whois/":
+        return (
+          <>
+            <WhoisToolsContainer />{" "}
+            <TextBottom text={getTextForPage(pathname)} />
+          </>
+        );
       default:
-        return <ApiSendYaSearchContainer />;
+        return null;
     }
   };
 
-  return (
-    <>
-      <Container sx={{ marginBottom: 5 }} maxWidth="xl">
-        <Box component="section" sx={{ flexGrow: 1 }}>
-          <Grid
-            sx={{
-              flexDirection: "row",
-              flexWrap: "nowrap",
-              alignItems: "center",
-              justifyContent: "flex-start",
-              overflow: "auto",
-            }}
-            container
-            spacing={1}
-          >
-            <Grid item sx={{ display: "flex" }} md={3} xs={12}>
-              <RatingTools />
-            </Grid>
-            <Grid item md={3} xs={12}>
-              <Alert
-                sx={{ height: "64px", alignItems: "center" }}
-                icon={<CheckIcon fontSize="inherit" />}
-                severity="success"
-              >
-                <Typography>Работает стабильно</Typography>
-              </Alert>
-            </Grid>
-            <Grid item md={3} xs={12}>
-              <Alert
-                sx={{ height: "64px", alignItems: "center" }}
-                action={
-                  <Link href="/video/" color="inherit" size="small">
-                    Смотреть
-                  </Link>
-                }
-                icon={<OndemandVideoIcon fontSize="inherit" />}
-                severity="success"
-              >
-                Видео инструкция
-              </Alert>
-            </Grid>
-            <Grid item md={3} xs={12}>
-              <Alert
-                sx={{ height: "64px", alignItems: "center" }}
-                action={
-                  <Link href="/support/" color="inherit" size="small">
-                    Оставить обращение
-                  </Link>
-                }
-                icon={<OndemandVideoIcon fontSize="inherit" />}
-                severity="success"
-              >
-                Поддержка
-              </Alert>
-            </Grid>
-          </Grid>
-        </Box>
-      </Container>
-      {getToolsPage(tools)}
-      <Container maxWidth="100vw" sx={{ background: "#eaf6f5" }}>
-        <Container maxWidth="xl">
-          <Box component="section" pt={6} pb={6}>
-            <TextBottom text={getTextForPage(tools)} />
-          </Box>
-        </Container>
-      </Container>
-    </>
-  );
+  return <>{getToolsPage(pathname)}</>;
 }

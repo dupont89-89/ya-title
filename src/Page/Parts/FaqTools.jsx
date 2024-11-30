@@ -5,7 +5,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Fade from "@mui/material/Fade";
-import { Container, Link } from "@mui/material";
+import { Box, Container, Link } from "@mui/material";
 
 export default function AccordionFaq() {
   const [expanded, setExpanded] = React.useState(false);
@@ -15,8 +15,8 @@ export default function AccordionFaq() {
   };
 
   return (
-    <div>
-      <Container maxWidth="md">
+    <Container maxWidth>
+      <Box mb={3} component="section">
         <Accordion
           expanded={expanded}
           onChange={handleExpansion}
@@ -47,7 +47,9 @@ export default function AccordionFaq() {
             aria-controls="panel1-content"
             id="panel1-header"
           >
-            <Typography>Как получать партнерскую выплату?</Typography>
+            <Typography sx={{ fontSize: "32px" }}>
+              Как получать партнерскую выплату?
+            </Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Typography>
@@ -65,7 +67,7 @@ export default function AccordionFaq() {
             aria-controls="panel2-content"
             id="panel2-header"
           >
-            <Typography>
+            <Typography sx={{ fontSize: "32px" }}>
               Как получить бонус за рекомендацию или репост в соц.сети?
             </Typography>
           </AccordionSummary>
@@ -85,7 +87,9 @@ export default function AccordionFaq() {
             aria-controls="panel3-content"
             id="panel3-header"
           >
-            <Typography>Как можно получить баллы бесплатно?</Typography>
+            <Typography sx={{ fontSize: "32px" }}>
+              Как можно получить баллы бесплатно?
+            </Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Typography gutterBottom>
@@ -126,7 +130,7 @@ export default function AccordionFaq() {
             </Typography>
           </AccordionDetails>
         </Accordion>
-      </Container>
-    </div>
+      </Box>
+    </Container>
   );
 }

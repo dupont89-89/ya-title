@@ -31,10 +31,6 @@ const Login = (props) => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-  const blockForm = {
-    height: props.blockFormHeight,
-    padding: props.blockFormPadding,
-  };
 
   const resetLink = {
     fontSize: "16px",
@@ -76,98 +72,95 @@ const Login = (props) => {
   };
 
   return (
-    <Container maxWidth="xl">
-      {props.closeButton}
-      <div className={styles.login_form_container}>
-        <div style={blockForm}>
-          <div className={styles.ptahiniLogo}>
-            <Link to="/">
-              <img src={ptahiniLogo} alt="ptahini" />
-            </Link>
-          </div>
-          {loading ? (
-            <Loading />
-          ) : resetPassword ? (
-            <>
-              <SendResetPassword inputWidth={props.inputWidth} />
-              <Link style={resetLink} onClick={(e) => setResetPassword(false)}>
-                Вспомнил пароль
+    <Container maxWidth>
+      <Box
+        mt={2}
+        mb={2}
+        alignContent="center"
+        flexWrap="wrap"
+        display="flex"
+        flexDirection="column"
+      >
+        <Box width={300} component="img" src={ptahiniLogo} alt="ptahini" />
+      </Box>
+      {loading ? (
+        <Loading />
+      ) : resetPassword ? (
+        <SendResetPassword />
+      ) : (
+        <form onSubmit={handleSubmit}>
+          <Box
+            alignContent="center"
+            flexWrap="wrap"
+            display="flex"
+            gap={3}
+            flexDirection="column"
+          >
+            <Typography textAlign="center" component="h1" variant="h4">
+              Войдите в свой аккаунт
+            </Typography>
+            <TextField
+              type="email"
+              label="Электронная почта"
+              name="email"
+              onChange={handleChange}
+              value={data.email}
+              required
+              variant="outlined"
+            />
+            <FormControl variant="outlined">
+              <InputLabel htmlFor="outlined-adornment-password">
+                Пароль
+              </InputLabel>
+              <OutlinedInput
+                value={data.password}
+                required
+                onChange={handleChange}
+                name="password"
+                id="outlined-adornment-password"
+                type={showPassword ? "text" : "password"}
+                autoComplete="new-password"
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="Переключение видимости пароля"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                label="Password"
+              />
+            </FormControl>
+            {error && <div className={styles.error_msg}>{error}</div>}
+            <Button sx={{ height: "43px" }} type="submit" variant="contained">
+              Войти
+            </Button>
+            <SignInVk />
+            {props.presentInfo}
+            <Button onClick={(e) => setResetPassword(true)}>
+              Забыли пароль?
+            </Button>
+            <Box
+              display="flex"
+              gap={1}
+              alignItems="center"
+              justifyContent="center"
+              fontSize={16}
+            >
+              <Typography fontSize="16px" component="span">
+                Нет аккаунта?
+              </Typography>
+              <Link underline="none" href="/signup/">
+                Регистрация
               </Link>
-            </>
-          ) : (
-            <form className={styles.form_container} onSubmit={handleSubmit}>
-              <Box display="flex" gap={3} flexDirection="column">
-                <Typography textAlign="center" component="h1" variant="h4">
-                  Войдите в свой аккаунт
-                </Typography>
-                <TextField
-                  type="email"
-                  label="Электронная почта"
-                  name="email"
-                  onChange={handleChange}
-                  value={data.email}
-                  required
-                  variant="outlined"
-                />
-                <FormControl variant="outlined">
-                  <InputLabel htmlFor="outlined-adornment-password">
-                    Пароль
-                  </InputLabel>
-                  <OutlinedInput
-                    value={data.password}
-                    required
-                    onChange={handleChange}
-                    name="password"
-                    id="outlined-adornment-password"
-                    type={showPassword ? "text" : "password"}
-                    autoComplete="new-password"
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="Переключение видимости пароля"
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
-                          edge="end"
-                        >
-                          {showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                      </InputAdornment>
-                    }
-                    label="Password"
-                  />
-                </FormControl>
-                {error && <div className={styles.error_msg}>{error}</div>}
-                <Button
-                  sx={{ height: "43px" }}
-                  type="submit"
-                  variant="contained"
-                >
-                  Войти
-                </Button>
-                <SignInVk />
-                {props.presentInfo}
-                <Button onClick={(e) => setResetPassword(true)}>
-                  Забыли пароль?
-                </Button>
-                <Box
-                  display="flex"
-                  gap={1}
-                  alignItems="center"
-                  justifyContent="center"
-                  fontSize={16}
-                >
-                  <Typography fontSize="16px" component="span">
-                    Нет аккаунта?
-                  </Typography>
-                  <Link underline="none" href="/signup/">
-                    Регистрация
-                  </Link>
-                </Box>
-              </Box>
-            </form>
-          )}
-        </div>
-      </div>
+            </Box>
+          </Box>
+        </form>
+      )}
     </Container>
   );
 };

@@ -42,6 +42,7 @@ import OfertaPage from "./Page/TehPage/OfertaPage";
 import PolitikPage from "./Page/TehPage/PolitikPage";
 import LoginContainer from "./Auth/Login/LoginContainer";
 import PageEditContainer from "./Admin/PageEdit/PageEditContainer";
+import PageAppContainer from "./Admin/PageEdit/PageAppContainer";
 
 let config;
 
@@ -143,7 +144,7 @@ function App({
   }
 
   return (
-    <div className="App">
+    <div className="containerApp">
       {role === "admin" && <AdminPanelContainer />}
       {isAuthenticated ? null : <TrackingReferalUrl />}
       <HeaderContainer />
@@ -179,7 +180,7 @@ function App({
             path="/login"
             element={
               isAuthenticated ? (
-                <Navigate to="/" />
+                <Navigate to="/dashbord/" />
               ) : (
                 <LoginContainer
                   loginUser={loginUser}
@@ -214,7 +215,7 @@ function App({
             }
           />
           <Route
-            path="/cabinet"
+            path="/dashbord/"
             element={
               isAuthenticated ? (
                 <CabinetUserContainer />
@@ -257,7 +258,11 @@ function App({
               <Route path="/admin/user" element={<AdminUserContainer />} />
               <Route path="/admin/test" exact element={<TestPay />} />
               <Route path="/admin/score" element={<ScoreUserContainer />} />
-              <Route path="/admin/page-edit" element={<PageEditContainer />} />
+              <Route path="/admin/page-app" element={<PageAppContainer />} />
+              <Route
+                path="/admin/page-app/edit/:pageId"
+                element={<PageEditContainer />}
+              />
             </>
           )}
           <Route path="*" element={<NotFound />} />

@@ -1,6 +1,7 @@
 import React from "react";
 
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
+import Grid from "@mui/material/Grid2";
 import AddToPhotosOutlinedIcon from "@mui/icons-material/AddToPhotosOutlined";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -10,7 +11,7 @@ const styleUserDomenBlock = {
   borderRadius: "8px",
   color: "#fff",
   textAlign: "center",
-  height: "60px",
+  height: "100%",
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
@@ -45,13 +46,12 @@ export default function DomenDataUser(props) {
     <>
       {isAuthenticated & (domenSubscription.length > 0) ? (
         <Grid mt={2} mb={2} container spacing={2}>
-          <Grid item xs={12} lg={4}>
+          <Grid size={{ xs: 12, lg: 4 }}>
             <Box sx={styleUserDomenBlock} component="div">
               <Typography sx={{ display: "block" }} component="span">
                 Доменов в отслеживании
               </Typography>
               <Typography
-                p={1}
                 mt={1}
                 sx={{
                   fontSize: "20px",
@@ -71,7 +71,7 @@ export default function DomenDataUser(props) {
             </Box>
           </Grid>
 
-          <Grid item xs={12} lg={4}>
+          <Grid size={{ xs: 12, lg: 4 }}>
             <Box sx={styleUserDomenBlock} component="div">
               <Typography sx={{ display: "block" }} component="span">
                 Ближайшая дата освобождения
@@ -91,7 +91,7 @@ export default function DomenDataUser(props) {
               </Typography>
             </Box>
           </Grid>
-          <Grid item xs={12} lg={4}>
+          <Grid size={{ xs: 12, lg: 4 }}>
             <Box sx={styleUserDomenBlock} component="div">
               <Button
                 onClick={(e) => setDisplayListDomen(!displayListDomen)}

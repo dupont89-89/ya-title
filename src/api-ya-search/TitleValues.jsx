@@ -1,5 +1,9 @@
 import React from "react";
 import t from "./../css/Tools.module.css";
+import { Box, Button, Container, Link, Typography } from "@mui/material";
+import Grid from "@mui/material/Grid2";
+import LinkIcon from "@mui/icons-material/Link";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
 export default function TitleValues({ titleValues = [], urlPage = [] }) {
   const titleValuesDownloads = Array.isArray(titleValues) ? titleValues : [];
@@ -21,49 +25,93 @@ export default function TitleValues({ titleValues = [], urlPage = [] }) {
   const downloadTitle = generateDownloadFileTitle();
 
   return (
-    <>
+    <Container maxWidth="lg">
       {titleValuesDownloads.length > 0 && (
-        <div className={t.resultSearhTitle}>
-          <div className={t.urlBlock}>
-            <h2>Собранные Title из ТОП выдачи</h2>
-            <ul className={t.titleBorderBottom}>
+        <Grid container spacing={3}>
+          <Grid
+            sx={{
+              backgroundColor: "#fbfbfb",
+              borderRadius: "15px",
+              padding: "15px",
+            }}
+            size={12}
+          >
+            <Typography
+              textAlign="center"
+              gutterBottom
+              component="h2"
+              variant="h4"
+            >
+              Собранные Title из ТОП выдачи
+            </Typography>
+            <Box sx={{ listStyleType: "none" }} p={0} component="ul">
               {titleValuesDownloads.map((title, index) => (
-                <li key={index}>{title}</li>
+                <Box mb={1} sx={{ display: "flex" }} component="li" key={index}>
+                  <CheckCircleOutlineIcon />
+                  <Typography ml={1} component="p" variant="body1">
+                    {title}
+                  </Typography>
+                </Box>
               ))}
-            </ul>
-            <a
-              className={t.downloadLink}
+            </Box>
+            <Button
+              variant="contained"
+              component="a"
               href={downloadTitle}
               download="title.txt"
             >
               Скачать
-            </a>
-          </div>
+            </Button>
+          </Grid>
           {urlPageArray.length > 0 && (
-            <div className={t.urlBlock}>
-              <h2>Адреса страниц</h2>
-              <div>
-                <ul className={t.titleBorderBottom}>
-                  {urlPageArray.map((url, index) => (
-                    <li key={index}>
-                      <a target="_blank" rel="noopener noreferrer" href={url}>
-                        {url}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-                <a
-                  className={t.downloadLink}
-                  href={downloadUrl}
-                  download="urls.txt"
-                >
-                  Скачать
-                </a>
-              </div>
-            </div>
+            <Grid
+              sx={{
+                backgroundColor: "#fbfbfb",
+                borderRadius: "15px",
+                padding: "15px",
+              }}
+              size={12}
+            >
+              <Typography
+                textAlign="center"
+                gutterBottom
+                component="h2"
+                variant="h4"
+              >
+                Адреса страниц
+              </Typography>
+              <Box p={0} component="ul">
+                {urlPageArray.map((url, index) => (
+                  <Box
+                    mb={1}
+                    sx={{ display: "flex" }}
+                    component="li"
+                    key={index}
+                  >
+                    <LinkIcon sx={{ color: "#1976d3" }} />
+                    <Link
+                      ml={1}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      href={url}
+                    >
+                      {url}
+                    </Link>
+                  </Box>
+                ))}
+              </Box>
+              <Button
+                variant="contained"
+                component="a"
+                href={downloadUrl}
+                download="urls.txt"
+              >
+                Скачать
+              </Button>
+            </Grid>
           )}
-        </div>
+        </Grid>
       )}
-    </>
+    </Container>
   );
 }

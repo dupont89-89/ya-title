@@ -1,6 +1,7 @@
 import React from "react";
 import PriceTarifCard from "../Parts/PriceTarifCard";
-import { Box, Button, Container, Grid, Typography } from "@mui/material";
+import { Box, Button, Container, Typography } from "@mui/material";
+import Grid from "@mui/material/Grid2";
 import CartToolsBlock from "../Parts/CartToolsBlock";
 import CheckIcon from "@mui/icons-material/Check";
 import GetTitlePresentation from "../../api-ya-search/GetTitlePresentation";
@@ -24,7 +25,7 @@ export default function Home(props) {
     <Container maxWidth="xl">
       <Box sx={{ marginBottom: "70px" }} component="section">
         <Grid sx={{ alignItems: "center" }} container spacing={1}>
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <Box
               sx={{
                 display: "flex",
@@ -92,19 +93,19 @@ export default function Home(props) {
                 fontSize: "18px",
               }}
             >
-              <Grid item xs={12} sm="auto">
+              <Grid size={{ xs: 12, sm: "auto" }}>
                 <Typography sx={flexIcon} variant="subTitle1" component="span">
                   <CheckIcon sx={mI} fontSize="large" color="primary" />{" "}
                   Уникальность
                 </Typography>
               </Grid>
-              <Grid item xs={12} sm="auto">
+              <Grid size={{ xs: 12, sm: "auto" }}>
                 <Typography sx={flexIcon} variant="subTitle1" component="span">
                   <CheckIcon sx={mI} fontSize="large" color="primary" />{" "}
                   Доступная цена
                 </Typography>
               </Grid>
-              <Grid item xs={12} sm="auto">
+              <Grid size={{ xs: 12, sm: "auto" }}>
                 <Typography sx={flexIcon} variant="subTitle1" component="span">
                   <CheckIcon sx={mI} fontSize="large" color="primary" /> Точные
                   инструменты
@@ -112,14 +113,14 @@ export default function Home(props) {
               </Grid>
             </Grid>
             <Button
-              href={isAuthenticated ? "/app/" : "/login/"}
+              href={isAuthenticated ? "/dashbord/" : "/login/"}
               component="a"
               variant="contained"
             >
               {isAuthenticated ? "В инструменты" : "Начать пользоваться"}
             </Button>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <Box component="div">
               <Box
                 component="img"

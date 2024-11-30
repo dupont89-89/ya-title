@@ -6,20 +6,18 @@
   align-content: center;
   flex-direction: column;
   flex-wrap: wrap;
-  background-color: #FFC107;
+  background-color: #81d2f8;
 }
 
-header {
-  margin-bottom: 40px;
+body {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
 
-article {
+.containerApp {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
 }
-
-/* #VkIdSdkOneTap div:not(:first-child) {
-  display: none;
-} */
 
 /* Стили для мобильных устройств */
 @media screen and (max-width: 768px) {

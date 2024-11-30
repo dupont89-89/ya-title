@@ -9,7 +9,7 @@ export const setDataPageApp = (page) => ({
 const initialState = {
   pageApp: [
     {
-      title: "",
+      pageTitle: "",
       slug: "",
       textContent: "",
       metaTitle: "",

@@ -7,7 +7,7 @@ export default function SignInVk() {
   useEffect(() => {
     VKID.Config.init({
       app: 52208411,
-      redirectUrl: "http://localhost/signup/vk/",
+      redirectUrl: "https://tools.ptahini.ru/signup/vk/",
       // Добавьте дополнительные параметры при необходимости
     });
 

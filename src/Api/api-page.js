@@ -17,7 +17,7 @@ export const getPageApp = () => {
   return async (dispatch) => {
     try {
       const response = await instance.get(`/page/get-page-app`);
-      const pageAppData = response.data.pageAppData;
+      const pageAppData = response.data.pages;
       // Dispatch the setDataUser action to update the user data in the Redux store
       dispatch(setDataPageApp(pageAppData));
       return response.data;
@@ -31,6 +31,18 @@ export const getPageApp = () => {
 export const newPageApp = async (pageData) => {
   try {
     const response = await instance.post("/page/new-app", pageData);
+    return response.data;
+  } catch (error) {
+    console.error("Ошибка добавления страницы при отправке на сервер:", error);
+    throw error; // Перебросить ошибку для дальнейшей обработки
+  } finally {
+    getPageApp();
+  }
+};
+export const editPageApp = async (pageData) => {
+  try {
+    const response = await instance.post("/page/edit-page-app", pageData);
+    getPageApp();
     return response.data;
   } catch (error) {
     console.error("Ошибка добавления страницы при отправке на сервер:", error);
