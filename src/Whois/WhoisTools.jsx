@@ -25,6 +25,7 @@ import decodePunycode from "./Parts/PunycodeConverter";
 import { useSnackbar } from "notistack";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import MessageNoAuth from "../Auth/MessageNoAuth/MessageNoAuth";
 
 export default function WhoisTools(props) {
   const {
@@ -239,7 +240,15 @@ export default function WhoisTools(props) {
   return (
     <React.Fragment>
       <Container sx={{ mb: 15 }} maxWidth="lg">
-        <Box sx={{ marginBottom: "70px" }} component="section">
+        <Box
+          p={5}
+          sx={{
+            background: "#c9c9c91a",
+            borderRadius: "15px",
+            marginBottom: "70px",
+          }}
+          component="section"
+        >
           <Grid container spacing={2}>
             <Grid
               sx={{
@@ -265,6 +274,15 @@ export default function WhoisTools(props) {
                 component="p"
               >
                 Информация о домене и проверить занятость доменного имени
+              </Typography>
+              <Typography
+                textAlign="center"
+                gutterBottom
+                variant="h6"
+                component="p"
+              >
+                Если вы хотите отследить когда домен освободится, вы сможете
+                подписаться и мы вам напомним!
               </Typography>
             </Grid>
             <Grid size={12}>
@@ -301,6 +319,7 @@ export default function WhoisTools(props) {
                 onChange={handleChange}
                 sx={{
                   marginRight: "15px",
+                  backgroundColor: "#fff",
                 }}
               />
               <Button
@@ -310,7 +329,7 @@ export default function WhoisTools(props) {
                   width: "250px",
                 }}
                 variant="contained"
-                disabled={!domen || isLoading}
+                disabled={!domen || isLoading || !isAuthenticated}
               >
                 {isLoading ? (
                   <CircularProgress size={20} sx={{ color: "#fff" }} />
@@ -321,6 +340,7 @@ export default function WhoisTools(props) {
             </Grid>
           </Grid>
         </Box>
+        {!isAuthenticated ? <MessageNoAuth /> : null}
         {getWhoisFail & (dataDomen.status === "fail") ? (
           <Alert
             sx={{ alignItems: "center", gap: "20px" }}

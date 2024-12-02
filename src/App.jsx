@@ -148,7 +148,7 @@ function App({
       {role === "admin" && <AdminPanelContainer />}
       {isAuthenticated ? null : <TrackingReferalUrl />}
       <HeaderContainer />
-      <Box component="article">
+      <Box mb={5} component="article">
         <Routes>
           <Route path="/" element={<HomeContainer />} />
           <Route path="/app/:tools" element={<ToolsContentContainer />} />

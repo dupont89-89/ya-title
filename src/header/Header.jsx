@@ -1,11 +1,8 @@
 import * as React from "react";
-import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -18,9 +15,7 @@ import { Chip, Divider, Stack } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import CloudIcon from "@mui/icons-material/Cloud";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
-import MenuToolbar from "../Sidebar/MenuToolbar";
 import { AccountCircle } from "@mui/icons-material";
-import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 
 function Header(props) {
@@ -31,16 +26,10 @@ function Header(props) {
     money,
     totalLvt,
     handleLogout,
-    pages,
     settings,
     anchorElUser,
-    toggleDrawer,
     handleOpenUserMenu,
     handleCloseUserMenu,
-    handleOpenNavMenu,
-    anchorElNav,
-    handleCloseNavMenu,
-    open,
   } = props;
   let config;
 
@@ -54,8 +43,9 @@ function Header(props) {
     <Container
       sx={{
         backgroundColor: "#1976d3",
+        marginBottom: "20px",
       }}
-      maxWidth
+      maxWidth={false}
     >
       <Grid alignItems="center" container spacing={2}>
         <Grid size="auto">
@@ -111,7 +101,7 @@ function Header(props) {
                 color: "#fff", // Добавим цвет текста, если нужно
                 fontWeight: "600",
               }}
-              icon={<CreditCardIcon color="#fff" ontSize="small" />}
+              icon={<CreditCardIcon color="#fff" size="small" />}
               label={`${money} руб`}
             />
           </Stack>
@@ -123,7 +113,7 @@ function Header(props) {
                 color: "#fff", // Добавим цвет текста, если нужно
                 fontWeight: "600",
               }}
-              icon={<CloudIcon color="#fff" ontSize="small" />}
+              icon={<CloudIcon color="#fff" size="small" />}
               label={`${totalLvt} баллов`}
             />
           </Stack>

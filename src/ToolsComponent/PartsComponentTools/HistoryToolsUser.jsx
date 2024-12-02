@@ -39,8 +39,8 @@ export default function HistoryToolsUser(props) {
           </table>
           {wordstatTools.length > 5 && (
             <p className={s.textLinkCabinet}>
-              Результаты прошлых проверок доступны в{" "}
-              <Link to="/cabinet/">кабинете пользователя</Link>.
+              Результаты прошлых проверок доступны в панели управления, раздел
+              истории проверок.
             </p>
           )}
         </Box>

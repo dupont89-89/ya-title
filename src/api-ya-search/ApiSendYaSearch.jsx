@@ -2,14 +2,13 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Box, Button, Container, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import { SnackbarProvider, useSnackbar } from "notistack"; // Импортируем SnackbarProvider и useSnackbar
+import { useSnackbar } from "notistack"; // Импортируем SnackbarProvider и useSnackbar
 import RegionSelectSearch from "../ToolsComponent/PartsComponentTools/RegionSelectSearch";
 import Loading from "../app-function/Loading";
 import TitleValues from "./TitleValues";
 import RepeatWords from "./RepeatWords";
 import InputKey from "./InputKey";
 import MessageNoAuth from "../Auth/MessageNoAuth/MessageNoAuth";
-import s from "./Form.module.css";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
@@ -96,7 +95,15 @@ export default function ApiSendYaSearch(props) {
   return (
     <>
       <Container maxWidth="lg">
-        <Box sx={{ marginBottom: "70px" }} component="section">
+        <Box
+          component="section"
+          p={5}
+          mb={2}
+          sx={{
+            background: "#c9c9c91a",
+            borderRadius: "15px",
+          }}
+        >
           <Grid
             sx={{ alignItems: "center", justifyContent: "center" }}
             container
@@ -122,27 +129,26 @@ export default function ApiSendYaSearch(props) {
                 justifyContent: "center",
               }}
               size={12}
-            >
-              {!props.isAuthenticated ? <MessageNoAuth /> : null}
-            </Grid>
+            ></Grid>
           </Grid>
-        </Box>
-        <Box component="section" sx={{ flexGrow: 1, marginBottom: "70px" }}>
-          <Grid spacing={1} container sx={{ justifyContent: "center" }}>
-            <Grid size={3}>
-              <RegionSelectSearch
-                defaultRegion={selectedCity}
-                onSelect={handleCitySelect}
+          <Box component="section" sx={{ flexGrow: 1, marginBottom: "70px" }}>
+            <Grid spacing={1} container sx={{ justifyContent: "center" }}>
+              <Grid size={3}>
+                <RegionSelectSearch
+                  defaultRegion={selectedCity}
+                  onSelect={handleCitySelect}
+                />
+              </Grid>
+              <InputKey
+                handleChange={handleChange}
+                query={query}
+                handleClick={handleClick}
+                isLoading={isLoading}
+                isAuthenticated={props.isAuthenticated}
               />
             </Grid>
-            <InputKey
-              handleChange={handleChange}
-              query={query}
-              handleClick={handleClick}
-              isLoading={isLoading}
-              isAuthenticated={props.isAuthenticated}
-            />
-          </Grid>
+          </Box>
+          {!props.isAuthenticated ? <MessageNoAuth /> : null}
         </Box>
       </Container>
       {isLoading ? (
@@ -174,7 +180,7 @@ export default function ApiSendYaSearch(props) {
                     spacing={2}
                     container
                   >
-                    <Grid size={"auto"}>
+                    <Grid>
                       <Box
                         width={40}
                         mr={3}
@@ -235,6 +241,19 @@ export default function ApiSendYaSearch(props) {
       )}
       <TitleValues urlPage={urlPage} titleValues={titleValues} />
       <RepeatWords repeatWords={repeatWords} />
+      <Grid mt={2} sx={{ justifyContent: "center" }} container>
+        <Grid>
+          <iframe
+            title="Видео создания Title"
+            src="https://vkvideo.ru/video_ext.php?oid=-113757074&id=456239050&hd=2"
+            width="853"
+            height="480"
+            allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
+            frameborder="0"
+            allowfullscreen
+          ></iframe>
+        </Grid>
+      </Grid>
     </>
   );
 }

@@ -24,27 +24,28 @@ export const AccountPopover = styled(Paper)(() => ({
   position: "absolute",
   zIndex: 2,
   left: 0,
-  top: 17,
+  top: 40,
   width: 250,
   display: "none",
+  // boxShadow: "none",
+  borderRadius: 0,
 }));
 
 export default function AdminPanel(props) {
   return (
-    <Container sx={{ backgroundColor: "#000" }} maxWidth>
+    <Container sx={{ backgroundColor: "#fff" }} maxWidth={false}>
       <Box
         display="flex"
         gap={3}
         alignItems="center"
         justifyContent="start"
         fontSize={15}
-        padding="10px 0"
       >
         <Link
           display="flex"
           gap={1}
           alignItems="flex-end"
-          color="#fff"
+          color="#000"
           underline="none"
           href="/admin/"
         >
@@ -57,7 +58,7 @@ export default function AdminPanel(props) {
           display="flex"
           gap={1}
           alignItems="flex-end"
-          color="#fff"
+          color="#000"
           underline="none"
           href="/admin/user/"
         >
@@ -66,8 +67,14 @@ export default function AdminPanel(props) {
             <Typography component="span">Пользователи</Typography>
           </Stack>
         </Link>
-        <ListItem sx={{ zIndex: "999999" }}>
-          <Link sx={{ color: "#fff" }} href="#">
+        <ListItem
+          direction="row"
+          alignItems="center"
+          gap={1}
+          sx={{ zIndex: "999999", height: "40px" }}
+        >
+          <PostAddIcon fontSize="small" />
+          <Link underline="none" sx={{ color: "#000" }} href="#">
             Страницы
           </Link>
           <AccountPopover elevation={4}>

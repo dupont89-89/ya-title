@@ -47,7 +47,7 @@ export default function AccordionFaq() {
             aria-controls="panel1-content"
             id="panel1-header"
           >
-            <Typography sx={{ fontSize: "32px" }}>
+            <Typography sx={{ fontSize: { xs: "19px", md: "32px" } }}>
               Как получать партнерскую выплату?
             </Typography>
           </AccordionSummary>
@@ -67,7 +67,7 @@ export default function AccordionFaq() {
             aria-controls="panel2-content"
             id="panel2-header"
           >
-            <Typography sx={{ fontSize: "32px" }}>
+            <Typography sx={{ fontSize: { xs: "19px", md: "32px" } }}>
               Как получить бонус за рекомендацию или репост в соц.сети?
             </Typography>
           </AccordionSummary>
@@ -87,7 +87,7 @@ export default function AccordionFaq() {
             aria-controls="panel3-content"
             id="panel3-header"
           >
-            <Typography sx={{ fontSize: "32px" }}>
+            <Typography sx={{ fontSize: { xs: "19px", md: "32px" } }}>
               Как можно получить баллы бесплатно?
             </Typography>
           </AccordionSummary>

@@ -1,17 +1,9 @@
 import * as React from "react";
-import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
-import MenuItem from "@mui/material/MenuItem";
 import { Link } from "react-router-dom";
-import MenuToolbar from "../Sidebar/MenuToolbar";
-import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import Grid from "@mui/material/Grid2";
 
 function HeaderNoAuth(props) {
@@ -23,29 +15,24 @@ function HeaderNoAuth(props) {
     config = require("../config.prod");
   }
 
-  const {
-    pages,
-    handleOpenNavMenu,
-    handleCloseNavMenu,
-    setAnchorElNav,
-    setOpen,
-    open,
-    anchorElNav,
-  } = props;
-
   return (
-    <Container sx={{ backgroundColor: "#1976d3" }} maxWidth>
+    <Container
+      maxWidth={false}
+      sx={{ backgroundColor: "#1976d3", marginBottom: "20px" }}
+    >
       <Grid alignItems="center" container spacing={2}>
-        <Grid size="auto">
-          <Box
-            sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-            component="img"
-            src="/img/logo/white-logo-ptahini.png"
-            alt="Логотип Ptahini"
-            style={{ width: "50px" }}
-          />
+        <Grid>
+          <Link to="/">
+            <Box
+              sx={{ display: { xs: "flex", md: "flex" }, mr: 1 }}
+              component="img"
+              src="/img/logo/white-logo-ptahini.png"
+              alt="Логотип Ptahini"
+              style={{ width: "50px" }}
+            />
+          </Link>
         </Grid>
-        <Grid size="auto">
+        <Grid>
           <Link to="/">
             <Typography
               variant="h6"

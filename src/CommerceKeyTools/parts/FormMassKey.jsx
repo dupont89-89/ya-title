@@ -10,17 +10,18 @@ import {
   Box,
   Button,
   Chip,
-  Grid,
   Stack,
   TextareaAutosize,
   Typography,
 } from "@mui/material";
+import Grid from "@mui/material/Grid2";
 
 export default function FormMassKey(props) {
   const {
     queryArray,
     handleChangeMass,
     result,
+    isAuthenticated,
     csvDownloadLink,
     handleFetchKey,
     handleClickMassClear,
@@ -66,14 +67,16 @@ export default function FormMassKey(props) {
                 label={massKey && "Тариф: 10 баллов / 100 запросов"}
               />
               {queryArray && massKey && (
-                <Chip size="medium" label={`К списанию: ${lvtUserSpend} Lvt`} />
+                <Chip
+                  size="medium"
+                  label={`К списанию: ${lvtUserSpend} баллов`}
+                />
               )}
             </Stack>
           </Box>
           <label htmlFor="key-get">Каждый запрос с новой строки</label>
           <TextareaAutosize
-            borderRadius="8px"
-            sx={{ borderRadius: "8px" }}
+            style={{ borderRadius: "8px", backgroundColor: "#ffffff" }}
             name="key-get"
             id="key-get"
             value={queryArray.join("\n")}
@@ -85,9 +88,9 @@ export default function FormMassKey(props) {
         </>
       )}
       <Grid alignItems="center" mt={1} container spacing={1}>
-        <Grid item>
+        <Grid>
           <Button
-            disabled={!queryArray.length > 0}
+            disabled={!queryArray.length > 0 || !isAuthenticated}
             startIcon={<PlayCircleOutlineIcon />}
             color="success"
             variant="contained"
@@ -96,7 +99,7 @@ export default function FormMassKey(props) {
             Запустить проверку
           </Button>
         </Grid>
-        <Grid item>
+        <Grid>
           <Button
             disabled={!queryArray.length > 0}
             startIcon={<DeleteIcon />}
@@ -107,7 +110,7 @@ export default function FormMassKey(props) {
             Очистить
           </Button>
         </Grid>
-        <Grid item>
+        <Grid>
           <Button
             disabled={queryArray.length > 0}
             startIcon={<PostAddIcon />}
@@ -159,7 +162,7 @@ export default function FormMassKey(props) {
           {csvDownloadLink && (
             <>
               <Grid container spacing={1}>
-                <Grid item>
+                <Grid>
                   <Button
                     startIcon={<ArrowCircleDownIcon />}
                     variant="contained"
@@ -172,7 +175,7 @@ export default function FormMassKey(props) {
                     Скачать результат
                   </Button>
                 </Grid>
-                <Grid item>
+                <Grid>
                   <Button
                     startIcon={<AutorenewIcon />}
                     variant="contained"

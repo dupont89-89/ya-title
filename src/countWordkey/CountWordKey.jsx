@@ -1,5 +1,3 @@
-import s from "./../css/Tools.module.css";
-import ModalNoLvtContainer from "../Modal/ModalNoLvtContainer";
 import CountWordKeyForm from "./parts/CountWordKeyForm";
 import Loading from "../app-function/Loading";
 import CountWordKeyResult from "./parts/CountWordKeyResult";
@@ -14,10 +12,7 @@ export default function CountWordKey(props) {
     queryArray,
     handleFetchKey,
     lvtUserSpend,
-    sumLvt,
     massKey,
-    setShowModal,
-    showModal,
     result,
     csvDownloadLink,
     handleClickMassClear,
@@ -38,18 +33,15 @@ export default function CountWordKey(props) {
 
   return (
     <Container maxWidth="lg">
-      <Box component="section">
+      <Box
+        p={5}
+        sx={{ background: "#c9c9c91a", borderRadius: "15px" }}
+        component="section"
+      >
         {isLoading ? ( // Показываем "ЗАГРУЗКА" во время загрузки
           <Loading height="300px" />
         ) : (
           <>
-            {showModal && (
-              <ModalNoLvtContainer
-                isAuthenticated={props.isAuthenticated}
-                onClose={() => setShowModal(false)}
-                sumLvt={sumLvt}
-              />
-            )}
             <Typography
               gutterBottom
               textAlign="center"

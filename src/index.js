@@ -12,7 +12,11 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+
 const theme = createTheme({
+  typography: {
+    fontFamily: ["Raleway", "Arial", "sans-serif"].join(","),
+  },
   palette: {
     success: {
       main: "#009688",
@@ -25,8 +29,11 @@ const theme = createTheme({
     },
   },
 });
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
 const helmetContext = {};
+
 root.render(
   <React.StrictMode>
     <Provider store={store}>

@@ -55,9 +55,28 @@ export default function PageEdit(props) {
   return (
     <Container maxWidth>
       <Box mt={5}>
-        <Typography gutterBottom component="h1" variant="h4">
-          Редактировать страницу инструмента
-        </Typography>
+        <Grid container>
+          <Grid size={{ xs: 12, md: 6 }}>
+            <Typography gutterBottom component="h1" variant="h4">
+              Редактировать страницу инструмента
+            </Typography>
+          </Grid>
+          <Grid
+            display="flex"
+            alignContent="center"
+            justifyContent="flex-end"
+            flexWrap="wrap"
+            size={{ xs: 12, md: 6 }}
+          >
+            <Button
+              color="success"
+              variant="contained"
+              onClick={(e) => editPageApp(newPageData)}
+            >
+              Обновить страницу
+            </Button>
+          </Grid>
+        </Grid>
         <Box component="section">
           <Grid container spacing={2}>
             <Grid size={12}>
@@ -115,9 +134,6 @@ export default function PageEdit(props) {
           </Typography>
           <TinyMC textContent={textContent} setContent={setContent} />
         </Box>
-        <Button onClick={(e) => editPageApp(newPageData)}>
-          Обновить страницу
-        </Button>
       </Box>
     </Container>
   );
