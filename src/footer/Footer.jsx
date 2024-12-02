@@ -20,13 +20,21 @@ export default function Footer() {
       }}
       component="footer"
     >
-      <Container maxWidth>
+      <Container maxWidth={false}>
         <Grid container rowSpacing={2} columnSpacing={2}>
-          <Grid sx={gridStyles} item size={{ md: 4, xs: 12 }}>
-            <Link variant="body2" sx={{ color: "#fff" }} href="/policy/">
+          <Grid sx={gridStyles} size={{ md: 4, xs: 12 }}>
+            <Link
+              variant="body2"
+              sx={{ color: "#fff", textDecoration: "underline" }}
+              href="/policy/"
+            >
               Политика конфиденциальности
             </Link>
-            <Link variant="body2" sx={{ color: "#fff" }} href="/oferta/">
+            <Link
+              variant="body2"
+              sx={{ color: "#fff", textDecoration: "underline" }}
+              href="/oferta/"
+            >
               Публичная оферта
             </Link>
           </Grid>

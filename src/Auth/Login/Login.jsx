@@ -72,7 +72,7 @@ const Login = (props) => {
   };
 
   return (
-    <Container maxWidth>
+    <Container maxWidth={false}>
       <Box
         mt={2}
         mb={2}

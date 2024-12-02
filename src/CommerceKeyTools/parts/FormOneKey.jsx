@@ -1,14 +1,21 @@
 import React from "react";
-import s from "../../css/Tools.module.css";
-import { Box, Button, Grid, TextField, Typography } from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
+import Grid from "@mui/material/Grid2";
 
 export default function FormOneKey(props) {
-  const { handleChange, handleKeyDown, query, result, text, handleFetchKey } =
-    props;
+  const {
+    handleChange,
+    handleKeyDown,
+    query,
+    result,
+    text,
+    handleFetchKey,
+    isAuthenticated,
+  } = props;
   return (
     <>
       <Grid mt={4} mb={4} spacing={2} container>
-        <Grid item xs={12} md={8}>
+        <Grid size={{ xs: 12, md: 8 }}>
           <TextField
             fullWidth
             label="Введите ключевой запрос"
@@ -19,11 +26,12 @@ export default function FormOneKey(props) {
             value={query}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
+            sx={{ background: "#fff" }}
           />
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid size={{ xs: 12, md: 4 }}>
           <Button
-            disabled={!query}
+            disabled={!query || !isAuthenticated}
             variant="contained"
             onClick={handleFetchKey}
             fullWidth

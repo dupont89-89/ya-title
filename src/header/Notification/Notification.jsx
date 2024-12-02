@@ -74,6 +74,7 @@ export default function PopperPopupState({
         <div>
           <Stack direction="row" spacing={1}>
             <IconButton
+              disabled={!notifications.length > 0}
               {...bindToggle(popupState)}
               aria-label="Оповещения пользователя"
             >
@@ -98,7 +99,10 @@ export default function PopperPopupState({
                     <IconButton
                       {...bindToggle(popupState)}
                       aria-label="Закрыть оповещения"
-                      sx={{ background: "#fff" }}
+                      sx={{
+                        background: "#fff",
+                        display: !notifications.length > 0 && "none",
+                      }}
                     >
                       <HighlightOffIcon />
                     </IconButton>

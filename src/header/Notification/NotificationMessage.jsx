@@ -79,6 +79,7 @@ export default function NotificationMessage(props) {
             ))}
           </Box>
           <Stack
+            mt={2}
             pr={2}
             pb={2}
             justifyContent="flex-end"
@@ -104,24 +105,7 @@ export default function NotificationMessage(props) {
             </Button>
           </Stack>
         </React.Fragment>
-      ) : (
-        <Box sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
-          <Typography p={1}> Оповещений нет.</Typography>
-        </Box>
-      )}
+      ) : null}
     </React.Fragment>
   );
 }
-// {notifications.map((notification) => (
-//   <li key={notification._id}>
-//     <div className={s.messageGridNotification}>
-//       <p>
-//         <span className={s.dateNotifications}>
-//           <FontAwesomeIcon color="#1e811d" icon={faBell} />
-//           {formatDate(notification.dateAdded)}
-//         </span>{" "}
-//         {notification.message}
-//       </p>
-//     </div>
-//   </li>
-// ))}

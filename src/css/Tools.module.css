@@ -1,713 +1,81 @@
-.sectionTools,
-.resultSearhTitle,
-.textBottomTools,
-.resultSearhWord,
-.wordSerhBlock,
-.commerceKey {
-    background-color: #3a1148eb;
-    border-radius: 10px;
-    text-align: left;
-    color: #fff;
-    height: 100%;
+.textApp ul {
+    margin: 0 0 20px 24px;
+    padding: 0;
+    list-style-type: "☑️ ";
 }
 
-.inputBlockForm {
-    width: 100%;
+.textApp ul li {
+    margin: 10px 0;
 }
 
-.wordSerhBlock {
-    padding: 20px;
-}
-
-.resultSearhTitle,
-.textBottomTools {
-    margin-top: 20px;
-    padding: 20px;
-}
-
-.resultSearhWord ul {
-    columns: 3;
-    padding: 30px;
-}
-
-.resultSearhTitle {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 30px;
-}
-
-.resultSearhTitle a {
-    color: #000000;
-    display: block;
-    width: 500px;
-    /* Ширина ссылки */
-    white-space: nowrap;
-    /* Запрет переноса строки */
-    overflow: hidden;
-    /* Скрытие излишка текста */
-    text-overflow: ellipsis;
-    /* Добавление многоточия для обрезанного текста */
-}
-
-.urlBlock,
-.resultSearhWord {
-    background-color: #fbfbfb;
-    padding: 15px;
+.textApp h2 {
+    color: #2172f3;
+    text-decoration: underline;
+    background-color: #fdfdfd;
+    display: inline-block;
+    padding: 5px 20px;
     border-radius: 10px;
 }
 
-.urlBlock h2,
-.resultSearhWord h2,
-.resultSearhWord ul {
-    color: #000000;
-}
-
-.urlBlock ul {
-    padding: 12px 16px;
-    border-radius: 16px;
-    background-color: #fff;
-    box-shadow: 0 4px 12px 0#0d234308;
-    list-style: none;
-    color: #000000;
-}
-
-.titleBorderBottom li {
-    border-bottom: 1px solid;
-    margin: 5px 0;
-    display: inline-block;
-}
-
-.resultSearhWord .listBlockWord {
-    padding: 12px 16px;
-    border-radius: 16px;
-    background-color: #fff;
-    box-shadow: 0 4px 12px 0#0d234308;
-    color: #000000;
-}
-
-.sectionGridSK {
-    display: grid;
-    grid-template-columns: 325px 1fr;
-    grid-gap: 20px;
-    background-color: #3a1148eb;
-    border-radius: 10px;
-    padding: 15px;
-    text-align: left;
-    align-items: stretch;
-}
-
-.sectionGridSK aside {
-    background-color: #3a1148eb;
-    border-radius: 10px;
-}
-
-.sectionGridSK aside nav a {
-    color: #ffffff;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 600;
-    transition: 0.6s;
-    display: block;
-}
-
-.sectionGridSK aside nav li {
-    margin-bottom: 15px;
-}
-
-.sectionGridSK aside nav h2 {
-    border-bottom: 1px solid;
-    display: inline;
-    color: #ffffff;
-}
-
-.sectionGridSK aside nav a:hover {
-    padding-left: 3px;
-    transition: 0.6s;
-}
-
-.sectionGridSK aside nav {
-    padding: 15px;
-    text-align: left;
-}
-
-.sectionGridSK aside nav ul {
-    list-style: none;
-    padding-left: 0;
-}
-
-.wrapperWord {
-    border-radius: 16px;
-    background-color: #fff;
-    box-shadow: 0 4px 12px 0#0d234308;
-}
-
-a.downloadLink {
-    display: inline;
-    margin-right: 10px;
-    padding: 4px 7px;
-    background-color: #381a6d;
-    color: #ffffff;
-    text-decoration: none;
-    border-radius: 3px;
-}
-
-a.downloadLink:hover {
-    background-color: #1e0d3a;
-    transition: 0.3s;
-}
-
-.sectionBlockWord {
-    margin-top: 20px;
-}
-
-.normalButton {
-    padding: 3px 9px;
-    border: none;
-    background-color: #c5a8825c;
-    color: #313030;
-    cursor: pointer;
-    margin: 2px 0;
-    border-radius: 2px;
-}
-
-.selectedButton {
-    padding: 3px 9px;
-    border: none;
-    background-color: #e4ab0f;
-    color: #000;
-    cursor: pointer;
-    margin: 2px 0;
-    border-radius: 2px;
-}
-
-.tarifLvt {
-    display: inline-block;
-    background-color: #f5b24d;
-    border-radius: 4px;
-    font-size: 16px;
-    color: #000;
-    padding: 3px 6px;
-}
-
-.title h1 {
-    font-size: 2rem;
-    color: #3b1147;
-    font-weight: 500;
-    text-align: left;
-    margin: 0px;
-}
-
-.blockForm button {
-    border: none;
-    padding: 5px 15px;
-    font-size: 21px;
-    border-radius: 5px;
-    color: #fff;
-}
-
-.blockForm button.massStartBtn {
-    background-color: #673AB7;
-}
-
-.blockForm button.massClearBtn {
-    background-color: #ca2929;
-}
-
-.blockForm button.massStartBtn:hover {
-    background-color: #492881;
-}
-
-.blockForm button.massClearBtn:hover {
-    background-color: #ac2323;
-}
-
-.btnTextAreaMass {
-    display: grid;
-    grid-gap: 30px;
-    grid-template-columns: auto auto auto;
-    justify-items: start;
-    justify-content: start;
-}
-
-.inputBlockForm input {
-    width: 400px;
-    height: 50px;
-    border-radius: 4px;
-    font-size: 20px;
-    text-align: center;
-    border: none;
-}
-
-.blockForm {
-    display: grid;
-    align-content: center;
-    justify-items: start;
-    align-items: center;
-    justify-content: normal;
-    margin-top: 20px;
-    grid-gap: 20px;
-    margin-bottom: 50px;
-}
-
-.sectionBlockTools {
-    padding: 20px;
-    max-width: 800px;
-}
-
-.keySum button {
-    background-color: #475db2;
-    color: #fff;
-    font-size: 17px;
-    font-weight: 600;
-    padding: 7px;
-}
-
-.keySum button:hover {
-    background-color: #304182;
-    color: #fff;
-    font-size: 17px;
-    font-weight: 600;
-    padding: 7px;
-}
-
-.resultKeyBlock {
-    background-color: white;
-    color: #000;
-    width: 100%;
-    margin-top: 30px;
-    border-radius: 8px;
-}
-
-.resultKeyBlock h2 {
-    margin-top: 0;
-    font-size: 20px;
-}
-
-.resultKeyText {
-    background-color: #f5b24d;
-    padding: 4px 20px;
-    border-radius: 5px;
-    color: #000;
-    display: inline-block;
-    font-size: 18px;
-}
-
-.resultKeyTextMass {
-    background-color: #f5b24d;
-    padding: 4px 12px;
-    border-radius: 5px;
-    color: #000;
-    display: inline-block;
-    font-size: 15px;
-}
-
-.textareaCustom {
-    height: 300px;
-    white-space: pre-wrap;
-    width: 100%;
-    border-radius: 8px;
-}
-
-.textInput {
-    font-size: 18px;
-    margin-right: 10px;
-    display: block;
-}
-
-.inputEditBlock input {
-    font-size: 16px;
-    text-align: center;
-}
-
-.inputEditBlock {
-    margin: 20px 0;
-}
-
-.input__wrapper {
-    position: relative;
-}
-
-.input__file {
-    opacity: 0;
-    visibility: hidden;
-    position: absolute;
-}
-
-.input__fileIconWrapper {
-    height: 40px;
-    width: 40px;
-    margin-right: 10px;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-}
-
-.input__fileButtonText {
-    line-height: 1;
-    margin-top: 1px;
-}
-
-.input__fileButton {
-    background: #d2d2d2;
-    border-radius: 5px;
-    color: #414141;
-    font-size: 21px;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    cursor: pointer;
-    padding: 0 10px;
-}
-
-.textAfterArea {
-    display: block;
-    margin-top: 20px;
-    font-size: 20px;
-}
-
-.btnIconVopros img {
-    width: 24px;
-    position: absolute;
-    top: -36px;
-    left: -8px;
-}
-
-.fileKey {
-    display: flex;
-    align-items: center;
-}
-
-.btnIconVopros {
-    display: inline-block;
-    cursor: pointer;
-}
-
-.fileKey {
-    position: relative;
-}
-
-.btnIconVopros {
-    position: relative;
-}
-
-.tooltip {
-    visibility: hidden;
-    width: 310px;
-    background-color: #f9f9f9;
-    color: #000;
-    text-align: center;
-    border-radius: 5px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    position: absolute;
-    z-index: 1;
-    bottom: 40px;
-    left: 0;
-    transform: translateX(-50%);
-    opacity: 0;
-    transition: opacity 0.3s;
-}
-
-.btnIconVopros:hover .tooltip {
-    visibility: visible;
-    opacity: 1;
-}
-
-.resultMassFile {
-    display: inline-block;
-    padding: 3px 10px;
-    background-color: #FFC107;
-    font-size: 16px;
-    border-radius: 3px;
-    border: 1px solid;
-}
-
-.resultMassFile:hover {
-    background-color: #cf9d06;
-}
-
-.resultKeyBlock ul {
+ol {
     list-style-type: none;
-    padding-left: 0;
+    counter-reset: num;
+    position: relative;
+    margin: 0 0 0 60px;
+    padding: 15px 0 5px 0;
+    font-size: 14px;
 }
 
-.blockPad,
-.paddingBlock {
-    padding: 15px;
+ol li {
+    position: relative;
+    margin: 0 0 0 0;
+    padding: 0 0 10px 0;
+    line-height: 1.4;
 }
 
-.spendUserFront {
+ol li:after {
+    content: counter(num);
+    counter-increment: num;
     display: inline-block;
-    font-size: 16px;
-    background-color: #f5b24d;
-    color: #000;
-    padding: 4px 10px;
-    border-radius: 4px;
-}
-
-button.btnNewSendMassKey {
-    margin-top: 10px;
-    background-color: #3F51B5;
-    padding: 5px 9px;
-    font-size: 17px;
-    height: 100%;
-    border-radius: 5px;
-    width: 176px;
-}
-
-button.btnNewSendMassKey:hover {
-    background-color: #2f3b85;
-}
-
-.resultKeyCount {
-    width: 100%;
-    border: none;
-    margin-bottom: 20px;
-}
-
-.resultKeyCount thead th {
-    font-weight: bold;
-    text-align: left;
-    border: none;
-    padding: 10px 15px;
-    background: #d8d8d8;
-    font-size: 14px;
-}
-
-.resultKeyCount thead tr th:first-child {
-    border-radius: 8px 0 0 8px;
-}
-
-.resultKeyCount thead tr th:last-child {
-    border-radius: 0 8px 8px 0;
-}
-
-.resultKeyCount tbody td {
-    text-align: left;
-    border: none;
-    padding: 10px 15px;
-    font-size: 14px;
-    vertical-align: top;
-}
-
-.resultKeyCount tbody tr:nth-child(even) {
-    background: #f3f3f3;
-}
-
-.resultKeyCount tbody tr td:first-child {
-    border-radius: 8px 0 0 8px;
-}
-
-.resultKeyCount tbody tr td:last-child {
-    border-radius: 0 8px 8px 0;
-}
-
-.historyBlockLink {
-    background-color: #fff;
-    border-radius: 8px;
-    padding: 20px;
-}
-
-.historyBlockLink h2 {
-    color: #000;
-    margin-top: 0;
-}
-
-.historyTableLink {
-    border: 1px solid #eee;
-    table-layout: fixed;
-    width: 100%;
-    margin-bottom: 20px;
-}
-
-.historyTableLink th {
-    font-weight: bold;
-    padding: 5px;
-    background: #efefef;
-    border: 1px solid #dddddd;
-}
-
-.historyTableLink td {
-    padding: 5px 10px;
-    border: 1px solid #eee;
-    text-align: left;
-}
-
-.historyTableLink tbody tr:nth-child(odd) {
+    position: absolute;
+    top: 0;
+    left: -45px;
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
     background: #fff;
-}
-
-.historyTableLink tbody tr:nth-child(even) {
-    background: #F7F7F7;
-}
-
-.historyTableLink a {
-    font-size: 18px;
-}
-
-.historyTableLink a:hover {
-    text-decoration: underline;
-}
-
-textarea {
-    background-color: #fcfcfd;
-    border: 2px solid #ced3de;
-    width: 100%;
-    padding: 5px 12px;
-    font-size: 20px;
-    color: #002b59;
-    line-height: 1.2;
-    font-weight: normal;
-}
-
-.blockTeaxtArea {
-    width: 100%;
-}
-
-.blockTeaxtArea textarea:focus {
-    outline: none !important;
-    border: 2px solid #101010;
-    box-shadow: 0 0 10px #719ECE;
-}
-
-.labelTextArea {
-    margin-bottom: 10px;
-    display: block;
-}
-
-.textLinkCabinet {
     color: #000;
-    font-size: 15px;
-}
-
-.textLinkCabinet a {
-    font-weight: 500;
-    text-decoration: underline;
-}
-
-.titleTools {
-    display: inline-block;
-    background-color: #ffffff;
-    padding: 9px;
-    border-radius: 6px;
-}
-
-.tarifBlock {
-    display: grid;
-    grid-gap: 20px;
-    justify-items: start;
-    align-items: center;
-    align-content: center;
-    justify-content: start;
-    margin-top: 20px;
-    grid-template-columns: auto auto auto;
-}
-
-.noLvtText {
-    background-color: #FFC107;
-    display: block;
-    padding: 10px;
-    border-radius: 10px;
-    color: #000;
-    line-height: 25px;
-    font-size: 18px;
-}
-
-.selectRegion {
-    color: #000;
-}
-
-.selectRegion {
-    width: 220px;
-}
-
-.ballDirect {
-    display: inline-block;
+    text-align: center;
     font-size: 16px;
-    background-color: #f5b24d;
-    color: #000;
-    padding: 4px 10px;
-    border-radius: 4px;
+    border-radius: 50%;
+    border: 1px solid #ef6780;
 }
+
+/* Вертикальная линия */
+ol:before {
+    content: '';
+    position: absolute;
+    top: 15px;
+    bottom: 15px;
+    left: -30px;
+    width: 1px;
+    border-left: 1px solid #ef6780;
+}
+
+/* Скрытие линии у последнего li */
+ol li:last-child:before {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -38px;
+    width: 28px;
+    background: #f9f9f9;
+}
+
 
 /* Стили для мобильных устройств */
-@media screen and (max-width: 768px) {
-    .sectionGridSK {
-        display: grid;
-        grid-template-columns: 1fr;
-        /* Один столбец на мобильных устройствах */
-        grid-gap: 10px;
-        /* Уменьшаем промежуток между элементами */
-    }
+@media screen and (max-width: 768px) {}
 
-    .sectionGridSK aside nav a {
-        max-width: 245px;
-    }
-
-    .tarifBlock {
-        grid-template-columns: 1fr;
-    }
-
-    .resultSearhTitle {
-        display: block;
-    }
-
-    .resultSearhWord ul {
-        columns: 1;
-        padding: 30px;
-    }
-
-    a.downloadLink {
-        display: inline-block;
-        margin-bottom: 10px;
-    }
-
-    .resultSearhTitle a {
-        width: 100%;
-    }
-
-    .inputBlockForm input {
-        width: 100%;
-    }
-
-    .resultKeyText {
-        font-size: 15px;
-    }
-
-    .spendUserFront {
-        margin-left: 0px;
-        margin-top: 10px;
-    }
-
-    .textBottomTools ul {
-        padding-left: 0;
-        list-style-type: none;
-    }
-
-    .textBottomTools ul li {
-        margin-bottom: 15px;
-    }
-
-    .title h1 {
-        font-size: 1.5rem;
-    }
-
-    .blockForm label {
-        font-size: 16px;
-    }
-}
-
-@media (max-width: 1024px) {
-
-    .sectionGridSK {
-        grid-template-columns: 1fr;
-    }
-}
+@media (max-width: 1024px) {}

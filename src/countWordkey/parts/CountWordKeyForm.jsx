@@ -1,24 +1,21 @@
 import React, { useEffect } from "react";
 import s from "./../../css/Tools.module.css";
 import PostAddIcon from "@mui/icons-material/PostAdd";
-import iconVopros from "../../img/icon/mark_13709623.png";
 import MessageNoAuth from "../../Auth/MessageNoAuth/MessageNoAuth";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
-import { Button, Grid, TextareaAutosize } from "@mui/material";
+import { Button, TextareaAutosize } from "@mui/material";
+import Grid from "@mui/material/Grid2";
 
 export default function CountWordKeyForm(props) {
   const {
     queryArray,
     handleChangeQuery,
-    result,
     fileInputRef,
     handleFileChange,
     handleFetchKey,
     handleClear,
     isAuthenticated,
-    noLvtUser,
-    exceedsBallDirect,
   } = props;
 
   useEffect(() => {
@@ -40,11 +37,12 @@ export default function CountWordKeyForm(props) {
         maxRows="15"
         onChange={handleChangeQuery}
         ref={fileInputRef}
+        style={{ borderRadius: "8px", backgroundColor: "#ffffff" }}
       />
-      <Grid spacing={1} container>
-        <Grid item>
+      <Grid mb={2} spacing={1} container>
+        <Grid>
           <Button
-            disabled={!queryArray.length > 0}
+            disabled={!queryArray.length > 0 || !isAuthenticated}
             startIcon={<PlayCircleOutlineIcon />}
             variant="contained"
             color="success"
@@ -53,7 +51,7 @@ export default function CountWordKeyForm(props) {
             Запустить проверку
           </Button>
         </Grid>
-        <Grid item>
+        <Grid>
           <Button
             disabled={!queryArray.length > 0}
             startIcon={<DeleteIcon />}
@@ -64,7 +62,7 @@ export default function CountWordKeyForm(props) {
             Очистить
           </Button>
         </Grid>
-        <Grid item>
+        <Grid>
           <Button
             disabled={queryArray.length > 0}
             startIcon={<PostAddIcon />}

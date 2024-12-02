@@ -130,7 +130,7 @@ exports.tokenResetUserPasswordController = async (req, res) => {
 exports.authVKController = async (req, res) => {
   const code = req.query.code; // Используем req.query для извлечения параметров из URL
   const device_id = req.query.device_id;
-  const client_id = process.env.CLIENT_ID_VK;
+  const client_id = "52208411";
   console.log(`client_id ${client_id}`);
   console.log(`Код ${code}`);
   console.log(`device_id ${device_id}`);

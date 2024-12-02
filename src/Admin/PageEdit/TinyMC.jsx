@@ -3,6 +3,7 @@ import { Editor } from "@tinymce/tinymce-react";
 
 export default function TinyMC(props) {
   const { setContent, textContent } = props;
+  debugger;
   return (
     <Editor
       onEditorChange={(content, editor) => setContent(content)}
@@ -24,32 +25,6 @@ export default function TinyMC(props) {
           "table",
           "visualblocks",
           "wordcount",
-          "checklist",
-          "mediaembed",
-          "casechange",
-          "export",
-          "formatpainter",
-          "pageembed",
-          "a11ychecker",
-          "permanentpen",
-          "powerpaste",
-          "advtable",
-          "advcode",
-          "editimage",
-          "advtemplate",
-          "ai",
-          "mentions",
-          "tinycomments",
-          "tableofcontents",
-          "footnotes",
-          "mergetags",
-          "autocorrect",
-          "typography",
-          "inlinecss",
-          "markdown",
-          "importword",
-          "exportword",
-          "exportpdf",
         ],
         // Убираем spellcheckdialog из панели инструментов
         toolbar:

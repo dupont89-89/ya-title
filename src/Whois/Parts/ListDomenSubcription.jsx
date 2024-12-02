@@ -1,24 +1,3 @@
-// import { Box } from "@mui/material";
-// import React from "react";
-
-// export default function ListDomenSubcription(props) {
-//   const { domenList } = props;
-
-//   return (
-//     <Box component="section">
-//       <Box component="table">
-//         <Box></Box>
-//           <Box component="tr">
-//             {domenList.map((item, index) => (
-//               <Box component="td" key={index}>
-//                 {item.domen}
-//               </Box>
-//             ))}
-//           </Box>
-//       </Box>
-//     </Box>
-//   );
-// }
 import * as React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";

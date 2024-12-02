@@ -1,129 +1,18 @@
-// import React from "react";
-// import s from "./CabinetUser.module.css";
-// import { format } from "date-fns";
-// import CabinetApiUser from "./PartsCabinet/CabinetApiUser";
-// import { Container, Typography } from "@mui/material";
-
-// export default function CabinetUser(props) {
-//   const { tools } = props;
-//   let config;
-
-//   if (process.env.NODE_ENV === "development") {
-//     config = require("../config.dev");
-//   } else {
-//     config = require("../config.prod");
-//   }
-//   const wordstatTools = tools.filter(
-//     (tool) => tool.nameTools === "wordstat-count-key"
-//   );
-//   const tipKeyTools = tools.filter((tool) => tool.nameTools === "tip-key");
-
-//   return (
-//     <Container maxWidth="xl">
-//       <div className={s.wrapper}>
-//         <div className={s.sectionGrid}>
-//           <section className={s.cabinetUser}>
-//             <div className={s.historyBlockCabinet}>
-//               <Typography component="h2" variant="h3">
-//                 История работы с инструментами
-//               </Typography>
-//               <div className={s.sectionContentCabinet}>
-//                 <div className={s.blockTools}>
-//                   <Typography component="h3" variant="h4">
-//                     Определение типа ключевого запроса{" "}
-//                   </Typography>
-//                   {tipKeyTools && tipKeyTools.length > 0 ? (
-//                     <ul>
-//                       {tipKeyTools.map((tool, index) => (
-//                         <li className={s.blockItemResult} key={index}>
-//                           <div className={s.gridList}>
-//                             <span>
-//                               Дата проверки
-//                               <br />
-//                               {format(
-//                                 new Date(tool.dateAdded),
-//                                 "dd-MM-yyyy HH:mm:ss"
-//                               )}
-//                             </span>
-//                             <span>
-//                               Результат:{" "}
-//                               <a
-//                                 href={`${config.REACT_APP_SERVER_URL}${tool.fileTools}`}
-//                               >
-//                                 Скачать
-//                               </a>
-//                             </span>
-//                           </div>
-//                         </li>
-//                       ))}
-//                     </ul>
-//                   ) : (
-//                     <span className={s.noData}>Нет данных</span>
-//                   )}
-//                 </div>
-//                 <div className={s.blockTools}>
-//                   <Typography component="h3" variant="h4">
-//                     Определение частотности запроса
-//                   </Typography>
-//                   {wordstatTools && wordstatTools.length > 0 ? (
-//                     <ul>
-//                       {wordstatTools.map((tool, index) => (
-//                         <li className={s.blockItemResult} key={index}>
-//                           <div className={s.gridList}>
-//                             <span>
-//                               Дата проверки
-//                               <br />
-//                               {format(
-//                                 new Date(tool.dateAdded),
-//                                 "dd-MM-yyyy HH:mm:ss"
-//                               )}
-//                             </span>
-//                             <span>
-//                               Результат:{" "}
-//                               <a
-//                                 href={`${config.REACT_APP_SERVER_URL}${tool.fileTools}`}
-//                               >
-//                                 Скачать
-//                               </a>
-//                             </span>
-//                           </div>
-//                         </li>
-//                       ))}
-//                     </ul>
-//                   ) : (
-//                     <span className={s.noData}>Нет данных</span>
-//                   )}
-//                 </div>
-//               </div>
-//             </div>
-//             <CabinetApiUser />
-//           </section>
-//         </div>
-//       </div>
-//     </Container>
-//   );
-// }
 import * as React from "react";
-import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import { createTheme } from "@mui/material/styles";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import BarChartIcon from "@mui/icons-material/BarChart";
-import DescriptionIcon from "@mui/icons-material/Description";
-import LayersIcon from "@mui/icons-material/Layers";
 import { AppProvider } from "@toolpad/core/AppProvider";
 import { DashboardLayout } from "@toolpad/core/DashboardLayout";
 import { useDemoRouter } from "@toolpad/core/internal";
 import ToolsContentContainer from "../ToolsComponent/ToolsContentContainer";
-import BalancePageContainer from "../BalancePage/BalancePageContainer";
 import PageContainer from "../Page/PageContainer";
 import HistoryIcon from "@mui/icons-material/History";
 import TitleIcon from "@mui/icons-material/Title";
 import LanguageIcon from "@mui/icons-material/Language";
 import VpnKeyIcon from "@mui/icons-material/VpnKey";
 import AppsIcon from "@mui/icons-material/Apps";
+import { Chip, createTheme } from "@mui/material";
 
 const NAVIGATION = [
   {
@@ -137,8 +26,16 @@ const NAVIGATION = [
   },
   {
     segment: "balance/",
-    title: "Управление тарифом",
+    title: "Тариф/Лимиты",
     icon: <ShoppingCartIcon />,
+    action: (
+      <Chip
+        sx={{ borderRadius: "5px", fontWeight: "600" }}
+        label="ТЕСТОВЫЙ"
+        color="success"
+        size="small"
+      />
+    ),
   },
   {
     segment: "dashboard/history-app/",
@@ -170,7 +67,7 @@ const NAVIGATION = [
   },
   {
     segment: "app",
-    title: "Проверка ключей",
+    title: "Анализ ключей",
     icon: <VpnKeyIcon />,
     children: [
       {
@@ -203,30 +100,43 @@ const NAVIGATION = [
   },
 ];
 
-const demoTheme = createTheme({
-  cssVariables: {
-    colorSchemeSelector: "data-toolpad-color-scheme",
-  },
-  colorSchemes: { light: true, dark: true },
-  breakpoints: {
-    values: {
-      xs: 0,
-      sm: 600,
-      md: 600,
-      lg: 1200,
-      xl: 1536,
-    },
-  },
-});
-
 function CabinetUser(props) {
   const { tools } = props;
 
   const router = useDemoRouter("/dashboard");
 
+  const theme = createTheme({
+    typography: {
+      fontFamily: ["Raleway", "Arial", "sans-serif"].join(","),
+    },
+    palette: {
+      success: {
+        main: "#009688",
+      },
+      white: {
+        main: "#fff",
+      },
+      mat: {
+        main: "#21b5ae",
+      },
+    },
+  });
+
   return (
     // preview-start
-    <AppProvider navigation={NAVIGATION} router={router} theme={demoTheme}>
+    <AppProvider
+      branding={{
+        logo: (
+          <span style={{ cursor: "default" }}>
+            <img src="/img/dashboard/seo.png" alt="" />
+          </span>
+        ),
+        title: <span style={{ cursor: "default" }}>ПАНЕЛЬ ИНСТРУМЕНТОВ</span>,
+      }}
+      navigation={NAVIGATION}
+      router={router}
+      theme={theme}
+    >
       <DashboardLayout>
         <Box pt={6}>
           <ToolsContentContainer pathname={router.pathname} />

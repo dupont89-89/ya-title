@@ -6,7 +6,7 @@ export default function SocialContact() {
   return (
     <Link variant="body2" sx={{ color: "#fff" }} href="https://vk.com/ptahini">
       <Grid container spacing={2}>
-        <Grid xs="auto">
+        <Grid size={{ xs: "auto" }}>
           <Box
             component="img"
             sx={{
@@ -17,7 +17,7 @@ export default function SocialContact() {
             src="/img/icon/icon-vk.png"
           />
         </Grid>
-        <Grid xs>
+        <Grid size={{ xs: "auto" }}>
           <Typography
             variant="body2"
             sx={{ display: "block" }}

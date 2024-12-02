@@ -1,7 +1,5 @@
 import React from "react";
-import s from "./../css/Tools.module.css";
 import Loading from "../app-function/Loading";
-import ModalNoLvtContainer from "../Modal/ModalNoLvtContainer";
 import FormOneKey from "./parts/FormOneKey";
 import FormMassKey from "./parts/FormMassKey";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
@@ -15,6 +13,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+import MessageNoAuth from "../Auth/MessageNoAuth/MessageNoAuth";
 
 export default function CommerceKeyTools(props) {
   const {
@@ -29,14 +28,12 @@ export default function CommerceKeyTools(props) {
     queryArray,
     result,
     isLoading,
-    showModal,
     text,
-    sumLvt,
     csvDownloadLink,
     massKey,
-    setShowModal,
     lvtUserSpend,
     tools,
+    isAuthenticated,
   } = props;
 
   const theme = useTheme();
@@ -44,14 +41,11 @@ export default function CommerceKeyTools(props) {
 
   return (
     <Container maxWidth="lg">
-      {showModal && (
-        <ModalNoLvtContainer
-          isAuthenticated={props.isAuthenticated}
-          onClose={() => setShowModal(false)}
-          sumLvt={sumLvt}
-        />
-      )}
-      <Box component="section">
+      <Box
+        p={5}
+        sx={{ background: "#c9c9c91a", borderRadius: "15px" }}
+        component="section"
+      >
         <Typography
           gutterBottom
           textAlign="center"
@@ -99,6 +93,7 @@ export default function CommerceKeyTools(props) {
                   result={result}
                   text={text}
                   handleFetchKey={handleFetchKey}
+                  isAuthenticated={isAuthenticated}
                 />
               ) : (
                 <FormMassKey
@@ -113,11 +108,13 @@ export default function CommerceKeyTools(props) {
                   lvtUserSpend={lvtUserSpend}
                   tools={tools}
                   massKey={massKey}
+                  isAuthenticated={isAuthenticated}
                 />
               )}
             </Box>
           )}
         </Box>
+        {!isAuthenticated ? <MessageNoAuth /> : null}
       </Box>
     </Container>
   );
