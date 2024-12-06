@@ -1,6 +1,5 @@
 const { mailMessageController } = require("../SMTP/mail");
 const { User } = require("../models/UserSchema");
-const VKID = require("@vkid/sdk");
 const uuid = require("uuid");
 const {
   validateUserAuth,
@@ -128,41 +127,112 @@ exports.tokenResetUserPasswordController = async (req, res) => {
 };
 
 exports.authVKController = async (req, res) => {
-  const code = req.query.code; // Используем req.query для извлечения параметров из URL
-  const device_id = req.query.device_id;
-  const client_id = "52208411";
-  console.log(`client_id ${client_id}`);
-  console.log(`Код ${code}`);
-  console.log(`device_id ${device_id}`);
   try {
-    if (!code || !device_id) {
-      return res
-        .status(400)
-        .send({ message: "Ошибка: отсутствует code или device_id." });
+    const { email, first_name, last_name, avatar, user_id } = req.body;
+
+    console.log("Получены данные VK:", req.body);
+    console.log("Ищем пользователя с VK ID:", user_id);
+
+    // Проверяем, есть ли user_id и он валиден
+    if (!user_id || user_id === "null") {
+      return res.status(400).send({ message: "Некорректный VK ID." });
     }
 
-    // Обмен кода на токен
-    const tokenResponse = await VKID.Auth.exchangeCode(
-      code,
-      device_id,
-      client_id
-    );
-    console.log(`tokenResponse ${tokenResponse}`);
-    if (!tokenResponse || !tokenResponse.accessToken) {
-      return res.status(400).send({ message: "Ошибка обмена кода на токен." });
+    // Ищем пользователя по VK ID (используем vkid, а не _id)
+    const user = await User.findOne({ vkid: "67799295" }); // Поиск по полю vkid, а не _id
+
+    if (user) {
+      // Проверяем, что передаваемые данные валидны
+      if (!avatar || !email || !first_name || !last_name) {
+        return res
+          .status(400)
+          .send({ message: "Все поля должны быть заполнены." });
+      }
+
+      // // Обновляем данные существующего пользователя
+      // user.avatar = avatar;
+      // user.email = email;
+      // user.firstName = first_name;
+      // user.lastName = last_name;
+
+      try {
+        // Сохраняем обновления
+        // await user.save();
+
+        // Генерируем новый токен
+        const token = user.generateAuthToken();
+
+        // console.log("Пользователь найден и обновлен:", user);
+
+        return res.status(200).send({
+          message: "Авторизация через VK ID успешна.",
+          dataUser: {
+            userId: user._id,
+          },
+          token,
+        });
+      } catch (error) {
+        console.error("Ошибка при обновлении пользователя:", error);
+        return res.status(500).send({
+          message: "Произошла ошибка при обновлении данных пользователя.",
+        });
+      }
     }
 
-    const accessToken = tokenResponse.accessToken;
+    // Если пользователя нет, создаем нового
+    console.log("Пользователь не найден, создаем нового.");
+    const salt = await bcrypt.genSalt(Number(process.env.SALT));
+    const hashPassword = await bcrypt.hash(user_id, salt); // Для безопасности
+    const bonusLvt = 100;
 
-    // Получение информации о пользователе
-    const userInfo = await VKID.Auth.userInfo(accessToken);
-    console.log(userInfo);
-    return res.status(200).send({
-      message: "Успешно.",
-      user: userInfo,
+    const newUser = new User({
+      firstName: first_name,
+      lastName: last_name,
+      vkid: user_id, // Добавляем VK ID
+      email,
+      avatar,
+      password: hashPassword, // Сохраняем ID VK как хэш пароля
+      referal: [
+        {
+          userId: user_id,
+        },
+      ],
+      notifications: [
+        {
+          message: "Добро пожаловать в систему PTAHINI через VK ID!",
+        },
+        {
+          message: `Вам начислено ${bonusLvt} Lvt за регистрацию`,
+        },
+      ],
+      lvtPresent: {
+        lvtPresentRegistration: bonusLvt,
+      },
+      notificationsHistory: [
+        {
+          message: `Вам начислено ${bonusLvt} Lvt за регистрацию`,
+        },
+        {
+          message: "Добро пожаловать в систему PTAHINI через VK ID!",
+        },
+      ],
+      lvt: bonusLvt,
+    });
+
+    const savedUser = await newUser.save();
+    console.log("Создан новый пользователь:", savedUser);
+
+    const token = savedUser.generateAuthToken();
+
+    return res.status(201).send({
+      message: "Успешная регистрация через VK ID.",
+      dataUser: {
+        userId: savedUser._id,
+      },
+      token,
     });
   } catch (error) {
-    console.error("Ошибка:", error);
+    console.error("Ошибка в контроллере авторизации VK:", error);
     return res.status(500).send({ message: "Внутренняя ошибка сервера." });
   }
 };

@@ -55,6 +55,7 @@ exports.signUpUserController = async (req, res) => {
 
 exports.dataUserController = async (req, res) => {
   try {
+    console.log(`dataUserController пришёл ${req.query.userId}`);
     const user = await User.findOne({ _id: req.query.userId });
     if (user) {
       // User found, send the user data in the response
@@ -75,6 +76,7 @@ exports.dataUserController = async (req, res) => {
         referal: user.referal,
         role: user.role,
         tools: user.tools,
+        currentTariff: user.currentTariff,
       };
       res.status(200).json({ userData }); // Assuming you want to send the user data as JSON
     } else {

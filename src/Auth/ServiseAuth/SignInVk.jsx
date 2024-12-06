@@ -9,6 +9,7 @@ export default function SignInVk() {
     VKID.Config.init({
       app: 52208411, // ID приложения
       redirectUrl: "http://localhost/signup/vk/", // URL для редиректа после авторизации
+      scope: "email",
     });
 
     const oneTap = new VKID.OneTap();

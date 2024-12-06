@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
   lastName: { type: String },
   email: { type: String, required: true },
   password: { type: String, required: true },
+  vkid: { type: String, unique: true },
   avatar: { type: String },
   tools: [
     {
@@ -58,6 +59,25 @@ const userSchema = new mongoose.Schema({
       expiryDate: { type: Date }, // Дата окончания оплаченного периода
     },
   ],
+  currentTariff: {
+    type: String,
+    enum: ["Старт", "PRO", "PRO Бизнес +"],
+    default: "Старт",
+  },
+  tariffEndDate: { type: Date },
+  tariffHistory: [
+    {
+      tariff: { type: String, enum: ["Старт", "PRO", "PRO Бизнес +"] },
+      startDate: { type: Date },
+      endDate: { type: Date },
+    },
+  ],
+  lvtPurchaseHistory: [
+    {
+      points: { type: Number },
+      purchaseDate: { type: Date, default: Date.now },
+    },
+  ],
 });
 
 // Создаем виртуальное поле для суммы lvt и bonusDayLvt
@@ -85,6 +105,11 @@ const validate = (data) => {
     lastName: Joi.string().required().label("Last Name"),
     email: Joi.string().email().required().label("Email"),
     password: passwordComplexity().required().label("Password"),
+    currentTariff: Joi.string()
+      .valid("Старт", "PRO", "PRO Бизнес +")
+      .required()
+      .label("Current Tariff"),
+    tariffEndDate: Joi.date().required().label("Tariff End Date"),
   });
   return schema.validate(data);
 };
