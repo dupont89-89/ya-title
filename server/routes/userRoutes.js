@@ -12,7 +12,7 @@ const router = express.Router();
 router.post("/signup", userController.signUpUserController);
 router.get("/signup/ref", refControllers.authRefAddUser);
 router.post("/auth", authController.authUserController);
-router.get("/auth/vk", authController.authVKController);
+router.post("/auth/vk", authController.authVKController);
 router.post("/reset-password", authController.authResetUserPasswordController);
 router.post(
   "/reset-password/:token",

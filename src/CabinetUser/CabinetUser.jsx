@@ -13,97 +13,137 @@ import LanguageIcon from "@mui/icons-material/Language";
 import VpnKeyIcon from "@mui/icons-material/VpnKey";
 import AppsIcon from "@mui/icons-material/Apps";
 import { Chip, createTheme } from "@mui/material";
-
-const NAVIGATION = [
-  {
-    kind: "header",
-    title: "Управление приложением",
-  },
-  {
-    segment: "dashboard/",
-    title: "Панель управления",
-    icon: <DashboardIcon />,
-  },
-  {
-    segment: "balance/",
-    title: "Тариф/Лимиты",
-    icon: <ShoppingCartIcon />,
-    action: (
-      <Chip
-        sx={{ borderRadius: "5px", fontWeight: "600" }}
-        label="ТЕСТОВЫЙ"
-        color="success"
-        size="small"
-      />
-    ),
-  },
-  {
-    segment: "dashboard/history-app/",
-    title: "История проверок",
-    icon: <HistoryIcon />,
-  },
-  {
-    kind: "divider",
-  },
-  {
-    kind: "header",
-    title: "Техническая часть",
-  },
-  {
-    segment: "app",
-    title: "Работа с мета-тегами",
-    icon: <TitleIcon />,
-    children: [
-      {
-        segment: "seo-title/",
-        title: "Создание Title",
-        icon: <AppsIcon />,
-      },
-    ],
-  },
-  {
-    kind: "header",
-    title: "Ключевые запросы",
-  },
-  {
-    segment: "app",
-    title: "Анализ ключей",
-    icon: <VpnKeyIcon />,
-    children: [
-      {
-        segment: "commerce-key/",
-        title: "Коммерциализация запроса",
-        icon: <AppsIcon />,
-      },
-      {
-        segment: "wordstat/",
-        title: "Частотность запроса Wordstat",
-        icon: <AppsIcon />,
-      },
-    ],
-  },
-  {
-    kind: "header",
-    title: "Дополнительные инструменты",
-  },
-  {
-    segment: "app",
-    title: "Работа с доменами",
-    icon: <LanguageIcon />,
-    children: [
-      {
-        segment: "whois/",
-        title: "Whois проверка",
-        icon: <AppsIcon />,
-      },
-    ],
-  },
-];
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import CurrencyRubleIcon from "@mui/icons-material/CurrencyRuble";
+import WbCloudyIcon from "@mui/icons-material/WbCloudy";
 
 function CabinetUser(props) {
-  const { tools } = props;
+  const { tools, money, lvt, currentTariff } = props;
 
-  const router = useDemoRouter("/dashboard");
+  const NAVIGATION = [
+    {
+      segment: "balance/",
+      title: "Ваш баланс",
+      icon: <CurrencyRubleIcon />,
+      action: (
+        <Chip
+          sx={{
+            borderRadius: "5px",
+            fontWeight: "600",
+            backgroundColor: "#FFC107",
+          }}
+          label={`${money} руб`}
+          size="small"
+        />
+      ),
+    },
+    {
+      segment: "balance/",
+      title: "Остаток баллов",
+      icon: <WbCloudyIcon />,
+      action: (
+        <Chip
+          sx={{
+            borderRadius: "5px",
+            fontWeight: "600",
+            backgroundColor: "#FFC107",
+          }}
+          label={`${lvt} баллов`}
+          size="small"
+        />
+      ),
+    },
+    {
+      segment: "balance/",
+      title: "Тариф",
+      icon: <ShoppingCartIcon />,
+      action: (
+        <Chip
+          sx={{ borderRadius: "5px", fontWeight: "600" }}
+          label={currentTariff}
+          color="success"
+          size="small"
+        />
+      ),
+    },
+    {
+      kind: "header",
+      title: "Управление приложением",
+    },
+    {
+      segment: "dashboard/",
+      title: "Панель управления",
+      icon: <DashboardIcon />,
+    },
+    {
+      segment: "profile/",
+      title: "Мой профиль",
+      icon: <AccountCircleIcon />,
+    },
+    {
+      segment: "dashboard/history-app/",
+      title: "История проверок",
+      icon: <HistoryIcon />,
+    },
+    {
+      kind: "divider",
+    },
+    {
+      kind: "header",
+      title: "Техническая часть",
+    },
+    {
+      segment: "app",
+      title: "Работа с мета-тегами",
+      icon: <TitleIcon />,
+      children: [
+        {
+          segment: "seo-title/",
+          title: "Создание Title",
+          icon: <AppsIcon />,
+        },
+      ],
+    },
+    {
+      kind: "header",
+      title: "Ключевые запросы",
+    },
+    {
+      segment: "app",
+      title: "Анализ ключей",
+      icon: <VpnKeyIcon />,
+      children: [
+        {
+          segment: "commerce-key/",
+          title: "Коммерциализация запроса",
+          icon: <AppsIcon />,
+        },
+        {
+          segment: "wordstat/",
+          title: "Частотность запроса Wordstat",
+          icon: <AppsIcon />,
+        },
+      ],
+    },
+    {
+      kind: "header",
+      title: "Дополнительные инструменты",
+    },
+    {
+      segment: "app",
+      title: "Работа с доменами",
+      icon: <LanguageIcon />,
+      children: [
+        {
+          segment: "whois/",
+          title: "Whois проверка",
+          icon: <AppsIcon />,
+        },
+      ],
+    },
+  ];
+
+  const router = useDemoRouter("dashboard/");
 
   const theme = createTheme({
     typography: {
@@ -123,7 +163,6 @@ function CabinetUser(props) {
   });
 
   return (
-    // preview-start
     <AppProvider
       branding={{
         logo: (
@@ -138,13 +177,12 @@ function CabinetUser(props) {
       theme={theme}
     >
       <DashboardLayout>
-        <Box pt={6}>
+        <Box>
           <ToolsContentContainer pathname={router.pathname} />
           <PageContainer tools={tools} pathname={router.pathname} />
         </Box>
       </DashboardLayout>
     </AppProvider>
-    // preview-end
   );
 }
 

@@ -21,7 +21,6 @@ import AdminContainer from "./Admin/AdminContainer";
 import AdminUserContainer from "./Admin/AdminUser/AdminUserContainer";
 import AdminPanelContainer from "./header/AdminPanel/AdminPanelContainer";
 import ProfileUserContainer from "./ProfileUser/ProfileUserContainer";
-import Login from "./Auth/Login/Login";
 import BalancePageLinkReg from "./BalancePage/BalanceParts/BalancePageLinkReg";
 import NotificationPageContainer from "./header/Notification/NotificationPageContainer";
 import TestPay from "./Admin/Test/TestPay";
@@ -180,7 +179,7 @@ function App({
             path="/login"
             element={
               isAuthenticated ? (
-                <Navigate to="/dashbord/" />
+                <Navigate to="/dashboard/" />
               ) : (
                 <LoginContainer
                   loginUser={loginUser}
@@ -215,7 +214,7 @@ function App({
             }
           />
           <Route
-            path="/dashbord/"
+            path="/dashboard/"
             element={
               isAuthenticated ? (
                 <CabinetUserContainer />

@@ -38,11 +38,12 @@ function Header(props) {
   } else {
     config = require("../config.prod");
   }
-
+  const vkAvatar = "userapi";
   return (
     <Container
       sx={{
-        backgroundColor: "#1976d3",
+        background:
+          "linear-gradient(90deg, rgba(25, 118, 211, 1) 0%, rgba(25, 176, 211, 1) 100%)",
         marginBottom: "20px",
       }}
       maxWidth={false}
@@ -76,7 +77,7 @@ function Header(props) {
         </Grid>
         <Grid size="auto">
           <Button
-            href="/dashbord/"
+            href="/dashboard/"
             sx={{ backgroundColor: "#fff" }}
             variant="outlined"
             startIcon={<DashboardIcon />}
@@ -93,31 +94,33 @@ function Header(props) {
           }}
           size="grow"
         >
-          <Divider orientation="vertical" flexItem />
-          <Stack direction="row" spacing={1}>
-            <Chip
-              sx={{
-                backgroundColor: (theme) => theme.palette.mat.main, // Используем кастомный цвет
-                color: "#fff", // Добавим цвет текста, если нужно
-                fontWeight: "600",
-              }}
-              icon={<CreditCardIcon color="#fff" size="small" />}
-              label={`${money} руб`}
-            />
-          </Stack>
-          <Divider orientation="vertical" flexItem />
-          <Stack direction="row" spacing={1}>
-            <Chip
-              sx={{
-                backgroundColor: (theme) => theme.palette.mat.main, // Используем кастомный цвет
-                color: "#fff", // Добавим цвет текста, если нужно
-                fontWeight: "600",
-              }}
-              icon={<CloudIcon color="#fff" size="small" />}
-              label={`${totalLvt} баллов`}
-            />
-          </Stack>
-          <Divider orientation="vertical" flexItem />
+          <Box sx={{ display: { xs: "none", md: "contents" } }}>
+            <Divider orientation="vertical" flexItem />
+            <Stack direction="row" spacing={1}>
+              <Chip
+                sx={{
+                  backgroundColor: "#4CAF50", // Используем кастомный цвет
+                  color: "#fff", // Добавим цвет текста, если нужно
+                  fontWeight: "600",
+                }}
+                icon={<CreditCardIcon color="#fff" size="small" />}
+                label={`${money} руб`}
+              />
+            </Stack>
+            <Divider orientation="vertical" flexItem />
+            <Stack direction="row" spacing={1}>
+              <Chip
+                sx={{
+                  backgroundColor: "#4CAF50", // Используем кастомный цвет
+                  color: "#fff", // Добавим цвет текста, если нужно
+                  fontWeight: "600",
+                }}
+                icon={<CloudIcon color="#fff" size="small" />}
+                label={`${totalLvt} баллов`}
+              />
+            </Stack>
+            <Divider orientation="vertical" flexItem />
+          </Box>
           <NotificationContainer />
           <Divider orientation="vertical" flexItem />
           <Tooltip title="Управление профилем">
@@ -125,7 +128,11 @@ function Header(props) {
               {avatar ? (
                 <Avatar
                   alt={`${firstName} ${lastName}`}
-                  src={`${config.REACT_APP_SERVER_URL}${avatar}`}
+                  src={
+                    avatar.includes(vkAvatar)
+                      ? `${avatar}`
+                      : `${config.REACT_APP_SERVER_URL}${avatar}`
+                  }
                   sx={{ bgcolor: blueGrey[50] }}
                 />
               ) : (

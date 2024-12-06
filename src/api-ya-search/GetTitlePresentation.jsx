@@ -2,10 +2,10 @@ import {
   Box,
   Button,
   CircularProgress,
-  Grid,
   TextField,
   Typography,
 } from "@mui/material";
+import Grid from "@mui/material/Grid2";
 import axios from "axios";
 import React, { useState } from "react";
 import { Home } from "@mui/icons-material";
@@ -47,13 +47,13 @@ export default function GetTitlePresentation() {
   return (
     <Box component="section" sx={{ mb: 10 }}>
       <Grid container spacing={4}>
-        <Grid item xs={12}>
+        <Grid size={12}>
           <Typography align="center" variant="h3" component="h2">
             Создавай лучшие Title заголовки
           </Typography>
         </Grid>
         {resultString && (
-          <Grid item xs={12}>
+          <Grid size={12}>
             <Typography align="center" variant="h6" component="p">
               <Box
                 sx={{
@@ -82,15 +82,34 @@ export default function GetTitlePresentation() {
             </Typography>
           </Grid>
         )}
-        <Grid spacing={2} item xs={12}>
-          <div className={s.gridInputPresent}>
+        <Grid
+          size={12}
+          alignContent="center"
+          alignItems="center"
+          container
+          spacing={2}
+        >
+          <Grid
+            sx={{ display: "flex", justifyContent: "flex-end" }}
+            size={{ xs: 12, md: 7 }}
+          >
             <TextField
+              sx={{ width: "510px" }}
               id="title"
               label="Ключевой запрос"
               variant="outlined"
               onChange={(e) => setQuery(e.target.value)}
             />
+          </Grid>
+          <Grid
+            sx={{
+              display: "flex",
+              justifyContent: { xs: "center", md: "flex-start" },
+            }}
+            size={{ xs: 12, md: 5 }}
+          >
             <Button
+              sx={{ width: "300px", height: "53px", fontSize: "18px" }}
               onClick={handleClick}
               variant="contained"
               disabled={!query || isLoading}
@@ -101,15 +120,14 @@ export default function GetTitlePresentation() {
                 "Создать Title"
               )}
             </Button>
-          </div>
+          </Grid>
         </Grid>
         <Grid
           spacing={2}
           sx={{ justifyContent: "center", display: "flex" }}
-          item
-          xs={12}
+          size={12}
         >
-          <Typography variant="body1" component="p">
+          <Typography textAlign="center" variant="body1" component="p">
             Загружай список ключевых запросов и массово создавай Title заголовки
             для всего сайта!
           </Typography>

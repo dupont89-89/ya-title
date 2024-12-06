@@ -6,6 +6,7 @@ import CountWordKeyContainer from "../countWordkey/CountWordKeyContainer";
 import { Typography } from "@mui/material";
 import WhoisToolsContainer from "../Whois/WhoisToolsContainer";
 import { useParams } from "react-router-dom";
+import DashboardPanelContainer from "../CabinetUser/DashboardPanel/DashboardPanelContainer";
 
 export default function ToolsContent(props) {
   const params = useParams();

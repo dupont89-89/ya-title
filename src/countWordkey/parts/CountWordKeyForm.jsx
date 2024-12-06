@@ -37,7 +37,14 @@ export default function CountWordKeyForm(props) {
         maxRows="15"
         onChange={handleChangeQuery}
         ref={fileInputRef}
-        style={{ borderRadius: "8px", backgroundColor: "#ffffff" }}
+        style={{
+          borderRadius: "8px",
+          backgroundColor: "#ffffff",
+          width: "100%",
+          fontSize: "18px",
+          maxWidth: "100%",
+          minWidth: "100%",
+        }}
       />
       <Grid mb={2} spacing={1} container>
         <Grid>

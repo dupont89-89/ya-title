@@ -113,7 +113,7 @@ export default function Home(props) {
               </Grid>
             </Grid>
             <Button
-              href={isAuthenticated ? "/dashbord/" : "/login/"}
+              href={isAuthenticated ? "/dashboard/" : "/login/"}
               component="a"
               variant="contained"
             >

@@ -1,6 +1,8 @@
 import React from "react";
 import BalancePageContainer from "../BalancePage/BalancePageContainer";
 import DashboardComponent from "../CabinetUser/DashboardComponent";
+import DashboardPanelContainer from "../CabinetUser/DashboardPanel/DashboardPanelContainer";
+import ProfileUserContainer from "../ProfileUser/ProfileUserContainer";
 
 export default function PageContainer(props) {
   const { pathname, tools } = props;
@@ -11,8 +13,12 @@ export default function PageContainer(props) {
         return <BalancePageContainer />;
       case "/dashboard/history-app/":
         return <DashboardComponent tools={tools} />;
+      case "/dashboard/":
+        return <DashboardPanelContainer tools={tools} />;
+      case "/profile/":
+        return <ProfileUserContainer tools={tools} />;
       default:
-        return "Дашборд";
+        return null;
     }
   };
   return <>{getPage(pathname)}</>;

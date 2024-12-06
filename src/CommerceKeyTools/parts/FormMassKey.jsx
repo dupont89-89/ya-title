@@ -6,15 +6,9 @@ import AutorenewIcon from "@mui/icons-material/Autorenew";
 import PostAddIcon from "@mui/icons-material/PostAdd";
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import HistoryToolsUser from "../../ToolsComponent/PartsComponentTools/HistoryToolsUser";
-import {
-  Box,
-  Button,
-  Chip,
-  Stack,
-  TextareaAutosize,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Chip, Stack, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
+import TextareaAutosize from "@mui/material/TextareaAutosize";
 
 export default function FormMassKey(props) {
   const {
@@ -76,7 +70,14 @@ export default function FormMassKey(props) {
           </Box>
           <label htmlFor="key-get">Каждый запрос с новой строки</label>
           <TextareaAutosize
-            style={{ borderRadius: "8px", backgroundColor: "#ffffff" }}
+            style={{
+              borderRadius: "8px",
+              backgroundColor: "#ffffff",
+              width: "100%",
+              fontSize: "18px",
+              maxWidth: "100%", // Ограничивает максимальную ширину
+              minWidth: "100%", // Ограничивает минимальную ширину
+            }}
             name="key-get"
             id="key-get"
             value={queryArray.join("\n")}

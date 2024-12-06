@@ -40,12 +40,17 @@ export const getUser = (userId) => {
   return async (dispatch) => {
     try {
       const response = await instance.get(`/user/get-user?userId=${userId}`);
-      const userData = response.data.userData;
-      // Dispatch the setDataUser action to update the user data in the Redux store
-      dispatch(setDataUser(userData));
+      console.log("Response from server:", response); // Логируем полный ответ от сервера
+
+      if (response && response.data && response.data.userData) {
+        console.log("User data:", response.data.userData); // Логируем данные о пользователе
+        dispatch(setDataUser(response.data.userData)); // Диспатчим данные в Redux
+      } else {
+        console.error("No user data found in response");
+      }
+
       return response.data;
     } catch (error) {
-      // Handle errors here, e.g., dispatch an error action
       console.error("Error fetching user data:", error);
     }
   };
@@ -65,14 +70,12 @@ export const loginUser = (data) => {
   };
 };
 
-export const authUserVk = async (code, device_id) => {
+export const authUserVk = async (userData) => {
   try {
-    const response = await instance.get(
-      `user/auth/vk?code=${code}&device_id=${device_id}`
-    );
+    const response = await instance.post("user/auth/vk", userData);
     return response.data;
   } catch (error) {
-    console.error("Ошибка получения данных (code vk):", error);
-    throw error;
+    console.error("Error during sign up VK:", error);
+    throw error; // Перебросить ошибку для дальнейшей обработки
   }
 };
