@@ -24,6 +24,7 @@
     "axios": "^1.6.7",
     "crypto-js": "^4.2.0",
     "date-fns": "^3.6.0",
+    "json2mq": "^0.2.0",
     "material-ui-popup-state": "^5.3.1",
     "md5": "^2.3.0",
     "notistack": "^3.0.1",

@@ -1,7 +1,6 @@
 import React from "react";
 import s from "./../../css/Tools.module.css";
 import { format } from "date-fns";
-import { Link } from "react-router-dom";
 import { Box } from "@mui/material";
 
 export default function HistoryToolsUser(props) {

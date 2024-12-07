@@ -6,11 +6,10 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
-import { Box, Button, IconButton, Stack } from "@mui/material";
+import { Box, Button, Stack } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SendIcon from "@mui/icons-material/Send";
 import s from "./Notification.module.css";
-import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
 export default function NotificationMessage(props) {
   const [notifications, setNotifications] = useState(props.notifications);

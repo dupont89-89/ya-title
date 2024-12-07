@@ -4,11 +4,19 @@ import * as VKID from "@vkid/sdk";
 export default function SignInVk() {
   const containerRef = useRef(null);
 
+  let config;
+
+  if (process.env.NODE_ENV === "development") {
+    config = require("../../config.dev");
+  } else {
+    config = require("../../config.prod");
+  }
+
   useEffect(() => {
     // Инициализация SDK
     VKID.Config.init({
       app: 52208411, // ID приложения
-      redirectUrl: "http://localhost/signup/vk/", // URL для редиректа после авторизации
+      redirectUrl: `${config.REACT_APP_FRONT_URL_VKID}/signup/vk/`, // URL для редиректа после авторизации
       scope: "email",
     });
 

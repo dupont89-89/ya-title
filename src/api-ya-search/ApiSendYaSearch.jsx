@@ -97,13 +97,56 @@ export default function ApiSendYaSearch(props) {
       <Container maxWidth="lg">
         <Box
           component="section"
-          p={5}
+          p={{ xs: 1, md: 12 }}
+          pt={{ xs: 10 }}
+          mt={2}
           mb={2}
           sx={{
-            background: "#c9c9c91a",
+            background:
+              "linear-gradient(90deg, rgba(25, 118, 211, 1) 0%, rgba(25, 176, 211, 1) 100%)",
             borderRadius: "15px",
+            position: "relative",
           }}
         >
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              position: "absolute",
+              top: "30px",
+              left: "20px",
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Box
+                mr={1}
+                sx={{ width: "75px" }}
+                src="/img/dashboard/yandex_logo_icon.png"
+                component="img"
+              />
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Box
+                mr={1}
+                sx={{ width: "25px" }}
+                src="/img/dashboard/chat-gpt-fff.png"
+                component="img"
+              />
+              <Typography color="#fff" component="span" variant="h6">
+                Помощь AI
+              </Typography>
+            </Box>
+          </Box>
           <Grid
             sx={{ alignItems: "center", justifyContent: "center" }}
             container
@@ -118,7 +161,12 @@ export default function ApiSendYaSearch(props) {
               }}
               size={12}
             >
-              <Typography variant={isLargeScreen ? "h3" : "h4"} component="h1">
+              <Typography
+                color="#fff"
+                variant={isLargeScreen ? "h3" : "h4"}
+                component="h1"
+                textAlign="center"
+              >
                 Создай правильный Title
               </Typography>
             </Grid>
@@ -133,7 +181,7 @@ export default function ApiSendYaSearch(props) {
           </Grid>
           <Box component="section" sx={{ flexGrow: 1, marginBottom: "70px" }}>
             <Grid spacing={1} container sx={{ justifyContent: "center" }}>
-              <Grid size={3}>
+              <Grid size={{ xs: 12, md: 3 }}>
                 <RegionSelectSearch
                   defaultRegion={selectedCity}
                   onSelect={handleCitySelect}
@@ -241,19 +289,6 @@ export default function ApiSendYaSearch(props) {
       )}
       <TitleValues urlPage={urlPage} titleValues={titleValues} />
       <RepeatWords repeatWords={repeatWords} />
-      <Grid mt={2} sx={{ justifyContent: "center" }} container>
-        <Grid>
-          <iframe
-            title="Видео создания Title"
-            src="https://vkvideo.ru/video_ext.php?oid=-113757074&id=456239050&hd=2"
-            width="853"
-            height="480"
-            allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
-            frameborder="0"
-            allowfullscreen
-          ></iframe>
-        </Grid>
-      </Grid>
     </>
   );
 }

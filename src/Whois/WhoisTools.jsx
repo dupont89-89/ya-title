@@ -40,7 +40,6 @@ export default function WhoisTools(props) {
   } = props;
   const [domen, setQuery] = useState("");
   const [dataDomen, setDataDomen] = useState("");
-  const [registeredDomen, setRegisteredDomen] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [freeData, setFreeData] = useState("");
   const [parsedData, setParserData] = useState("");
@@ -136,7 +135,6 @@ export default function WhoisTools(props) {
         handleErrorFinishTools("error");
       }
       setDataDomen(resultDomen);
-      setRegisteredDomen(resultDomen.registered);
       const whoisString = resultDomen.rawdata && resultDomen.rawdata[0];
       const parsedData = whoisString ? parseWhoisData(whoisString) : [];
       setParserData(parsedData);

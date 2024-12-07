@@ -7,14 +7,6 @@ import { Link } from "react-router-dom";
 import Grid from "@mui/material/Grid2";
 
 function HeaderNoAuth(props) {
-  let config;
-
-  if (process.env.NODE_ENV === "development") {
-    config = require("../config.dev");
-  } else {
-    config = require("../config.prod");
-  }
-
   return (
     <Container
       maxWidth={false}

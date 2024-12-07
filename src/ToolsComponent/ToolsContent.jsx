@@ -6,7 +6,8 @@ import CountWordKeyContainer from "../countWordkey/CountWordKeyContainer";
 import { Typography } from "@mui/material";
 import WhoisToolsContainer from "../Whois/WhoisToolsContainer";
 import { useParams } from "react-router-dom";
-import DashboardPanelContainer from "../CabinetUser/DashboardPanel/DashboardPanelContainer";
+import ToolsPageTabs from "./PartsComponentTools/ToolsPageTabs";
+import ToolsPageVideo from "./PartsComponentTools/ToolsPageVideo";
 
 export default function ToolsContent(props) {
   const params = useParams();
@@ -312,10 +313,16 @@ export default function ToolsContent(props) {
     switch (pathname) {
       case "/app/seo-title/":
         return (
-          <>
-            <ApiSendYaSearchContainer />
-            <TextBottom text={getTextForPage(pathname)} />
-          </>
+          <ToolsPageTabs
+            description={<TextBottom text={getTextForPage(pathname)} />}
+            app={<ApiSendYaSearchContainer />}
+            video={
+              <ToolsPageVideo
+                src="https://vkvideo.ru/video_ext.php?oid=-113757074&id=456239050&hd=2"
+                title="Видео создания Title"
+              />
+            }
+          />
         );
       case "/app/commerce-key/":
         return (

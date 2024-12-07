@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Select, { components } from "react-select";
-import s from "../ToolsComponent.module.css";
 
 const options = [
   { value: 20, label: "Архангельск" },

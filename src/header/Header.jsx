@@ -31,6 +31,7 @@ function Header(props) {
     handleOpenUserMenu,
     handleCloseUserMenu,
   } = props;
+
   let config;
 
   if (process.env.NODE_ENV === "development") {
@@ -159,8 +160,8 @@ function Header(props) {
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
       >
-        {settings.map((setting) => (
-          <MenuItem key={setting} onClick={handleCloseUserMenu}>
+        {settings.map((setting, index) => (
+          <MenuItem key={index} onClick={handleCloseUserMenu}>
             <Link to={setting.link}>
               <Typography textAlign="center">{setting.name}</Typography>
             </Link>

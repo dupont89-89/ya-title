@@ -15,7 +15,7 @@ export default function AccordionFaq() {
   };
 
   return (
-    <Container maxWidth>
+    <Container maxWidth={false}>
       <Box mb={3} component="section">
         <Accordion
           expanded={expanded}
@@ -98,7 +98,7 @@ export default function AccordionFaq() {
               в реферальной программе, вы будете получать 15% от суммы
               пополнений вашего реферала.
             </Typography>
-            <Typography gutterBottom>
+            <Typography component="div" gutterBottom>
               <table>
                 <tbody>
                   <tr>

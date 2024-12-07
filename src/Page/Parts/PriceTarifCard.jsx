@@ -7,7 +7,7 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Container from "@mui/material/Container";
 import Divider from "@mui/material/Divider";
-import Grid from "@mui/material/Grid";
+import Grid from "@mui/material/Grid2";
 import Typography from "@mui/material/Typography";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
@@ -82,7 +82,7 @@ export default function Pricing() {
         >
           Выберите подходящую подписку
         </Typography>
-        <Typography variant="body1" color="text.secondary">
+        <Typography component="div" variant="body1" color="text.secondary">
           Чтобы правильно подобрать подписку, рекомендуем вам посчитать
           примерное кол-во обрабатываемых ключевых запросов. Если у вас в работе
           1 сайт с 300 страницами, вам вполне может хватить и тарифа{" "}
@@ -102,11 +102,8 @@ export default function Pricing() {
       <Grid container spacing={3} alignItems="center" justifyContent="center">
         {tiers.map((tier) => (
           <Grid
-            item
             key={tier.title}
-            xs={12}
-            sm={tier.title === "Enterprise" ? 12 : 6}
-            md={4}
+            size={{ xs: 12, sm: tier.title === "Enterprise" ? 12 : 6, md: 4 }}
           >
             <Card
               sx={{
@@ -193,7 +190,7 @@ export default function Pricing() {
                       }}
                     />
                     <Typography
-                      component="text"
+                      component="span"
                       variant="subtitle2"
                       sx={{
                         color: tier.title === "PRO" ? "grey.200" : undefined,

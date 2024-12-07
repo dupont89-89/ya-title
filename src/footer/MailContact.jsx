@@ -1,5 +1,4 @@
 import React from "react";
-import s from "./Footer.module.css";
 import { Link, Typography } from "@mui/material";
 
 export default function MailContact() {
