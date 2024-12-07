@@ -59,9 +59,13 @@ function CabinetUser(props) {
       icon: <ShoppingCartIcon />,
       action: (
         <Chip
-          sx={{ borderRadius: "5px", fontWeight: "600" }}
+          sx={{
+            borderRadius: "5px",
+            fontWeight: "600",
+            backgroundColor: "#4CAF50",
+            color: "#fff",
+          }}
           label={currentTariff}
-          color="success"
           size="small"
         />
       ),

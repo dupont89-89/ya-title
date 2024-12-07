@@ -11,19 +11,24 @@ export default function InputKey({
 }) {
   return (
     <>
-      <Grid size={6}>
+      <Grid size={{ xs: 12, md: 6 }}>
         <TextField
-          sx={{ width: "100%", backgroundColor: "#fff" }}
+          sx={{ width: "100%", background: "#fff" }}
           id="title"
           label="Ключевой запрос"
-          variant="outlined"
+          variant="filled"
           onChange={handleChange}
         />
       </Grid>
-      <Grid size={3}>
+      <Grid size={{ xs: 12, md: 3 }}>
         <Button
           onClick={handleClick}
-          sx={{ width: "100%", height: "100%" }}
+          sx={{
+            width: "100%",
+            height: "100%",
+            backgroundColor: "#4CAF50",
+            color: "#fff",
+          }}
           variant="contained"
           disabled={!query || isLoading || !isAuthenticated}
         >

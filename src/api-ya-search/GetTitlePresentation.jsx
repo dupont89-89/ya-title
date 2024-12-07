@@ -9,7 +9,6 @@ import Grid from "@mui/material/Grid2";
 import axios from "axios";
 import React, { useState } from "react";
 import { Home } from "@mui/icons-material";
-import s from "./Form.module.css";
 
 let config;
 
@@ -122,11 +121,7 @@ export default function GetTitlePresentation() {
             </Button>
           </Grid>
         </Grid>
-        <Grid
-          spacing={2}
-          sx={{ justifyContent: "center", display: "flex" }}
-          size={12}
-        >
+        <Grid sx={{ justifyContent: "center", display: "flex" }} size={12}>
           <Typography textAlign="center" variant="body1" component="p">
             Загружай список ключевых запросов и массово создавай Title заголовки
             для всего сайта!

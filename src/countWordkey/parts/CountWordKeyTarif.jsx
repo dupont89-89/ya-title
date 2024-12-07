@@ -1,5 +1,4 @@
 import React from "react";
-import s from "./../../css/Tools.module.css";
 import { Box, Chip, Stack } from "@mui/material";
 
 export default function CountWordKeyTarif(props) {

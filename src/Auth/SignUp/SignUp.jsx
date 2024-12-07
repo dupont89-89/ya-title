@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./styles.module.css";
-import { signUpUser, loginUser } from "../../Api/api-user-login";
+import { signUpUser } from "../../Api/api-user-login";
 import ptahiniLogo from "./../../img/logo/PTAHINI-nav.png";
 import Loading from "../../app-function/Loading";
 import { sendMail } from "../../Api/api-admin";
