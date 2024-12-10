@@ -125,6 +125,7 @@ export default function ApiSendYaSearch(props) {
             >
               <Box
                 mr={1}
+                mt={"-9px"}
                 sx={{ width: "75px" }}
                 src="/img/dashboard/yandex_logo_icon.png"
                 component="img"
@@ -203,88 +204,87 @@ export default function ApiSendYaSearch(props) {
         <Loading />
       ) : (
         resultString && (
-          <Container maxWidth="lg">
-            <Box sx={{ marginBottom: "70px" }} component="section">
+          <Box sx={{ marginBottom: "70px" }} component="section">
+            <Grid
+              sx={{ alignItems: "center", justifyContent: "center" }}
+              container
+              spacing={1}
+            >
               <Grid
-                sx={{ alignItems: "center", justifyContent: "center" }}
-                container
-                spacing={1}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginBottom: 5,
+                }}
+                size={12}
               >
                 <Grid
                   sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginBottom: 5,
+                    backgroundColor: "#fbfbfb",
+                    borderRadius: "15px;",
+                    padding: "15px;",
                   }}
-                  size={12}
+                  spacing={2}
+                  container
                 >
+                  <Grid>
+                    <Box
+                      display={{ xs: "none", md: "block" }}
+                      width={40}
+                      mr={3}
+                      src="/img/logo/blue-logo-ptahini.png"
+                      component="img"
+                    />
+                  </Grid>
                   <Grid
                     sx={{
-                      backgroundColor: "#fbfbfb",
+                      backgroundColor: "#fff",
                       borderRadius: "15px;",
                       padding: "15px;",
                     }}
-                    spacing={2}
-                    container
+                    size={12}
                   >
-                    <Grid>
-                      <Box
-                        width={40}
-                        mr={3}
-                        src="/img/logo/blue-logo-ptahini.png"
-                        component="img"
-                      />
-                    </Grid>
-                    <Grid
-                      sx={{
-                        backgroundColor: "#fff",
-                        borderRadius: "15px;",
-                        padding: "15px;",
-                      }}
-                      size="grow"
+                    <Typography gutterBottom variant="h5" component="h2">
+                      {resultString}
+                    </Typography>
+                    <Typography
+                      variant="p"
+                      gutterBottom
+                      sx={{ display: "block", fontWeight: "600" }}
+                      component="span"
                     >
-                      <Typography gutterBottom variant="h5" component="h2">
-                        {resultString}
-                      </Typography>
+                      ptahini.ru›search/{topFriLink}
+                    </Typography>
+                    <Typography gutterBottom>
+                      Это лучший тайтл для твоего SEO продвижения сайта. Приведи
+                      его к читаемому виду. Добавь его в соответствующий раздел
+                      мета-тегов в своей CMS.
+                    </Typography>
+                    <Button onClick={copyTextOnClick} variant="text">
+                      Копировать Title
+                    </Button>
+                    {copySuccess && (
                       <Typography
-                        variant="p"
-                        gutterBottom
-                        sx={{ display: "block", fontWeight: "600" }}
+                        variant="body1"
+                        ml={2}
+                        p={1}
+                        sx={{
+                          color: "#ffffff",
+                          backgroundColor: "#1976d3",
+                          display: "inline",
+                          borderRadius: "5px;",
+                        }}
                         component="span"
                       >
-                        ptahini.ru›search/{topFriLink}
+                        Title скопирован!
                       </Typography>
-                      <Typography gutterBottom>
-                        Это лучший тайтл для твоего SEO продвижения сайта.
-                        Приведи его к читаемому виду. Добавь его в
-                        соответствующий раздел мета-тегов в своей CMS.
-                      </Typography>
-                      <Button onClick={copyTextOnClick} variant="text">
-                        Копировать Title
-                      </Button>
-                      {copySuccess && (
-                        <Typography
-                          variant="body1"
-                          ml={2}
-                          p={1}
-                          sx={{
-                            color: "#ffffff",
-                            backgroundColor: "#1976d3",
-                            display: "inline",
-                            borderRadius: "5px;",
-                          }}
-                          component="span"
-                        >
-                          Title скопирован!
-                        </Typography>
-                      )}
-                    </Grid>
+                    )}
                   </Grid>
                 </Grid>
               </Grid>
-            </Box>
-          </Container>
+            </Grid>
+          </Box>
         )
       )}
       <TitleValues urlPage={urlPage} titleValues={titleValues} />

@@ -39,6 +39,8 @@ export default function AdminPanel(props) {
         gap={3}
         alignItems="center"
         justifyContent="start"
+        flexWrap="nowrap"
+        overflow="auto"
         fontSize={15}
       >
         <Link
@@ -51,7 +53,7 @@ export default function AdminPanel(props) {
         >
           <Stack direction="row" alignItems="center" gap={1}>
             <AppsIcon fontSize="small" />
-            <Typography component="span">Панель управления</Typography>
+            <Typography component="span">Управление</Typography>
           </Stack>
         </Link>
         <Link

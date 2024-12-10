@@ -239,11 +239,15 @@ export default function WhoisTools(props) {
     <React.Fragment>
       <Container sx={{ mb: 15 }} maxWidth="lg">
         <Box
-          p={5}
+          p={{ xs: 1, md: 12 }}
+          pt={{ xs: 10 }}
+          mt={2}
+          mb={2}
           sx={{
-            background: "#c9c9c91a",
+            background:
+              "linear-gradient(90deg, rgba(25, 118, 211, 1) 0%, rgba(25, 176, 211, 1) 100%)",
             borderRadius: "15px",
-            marginBottom: "70px",
+            position: "relative",
           }}
           component="section"
         >
@@ -258,14 +262,16 @@ export default function WhoisTools(props) {
               size={12}
             >
               <Typography
+                color="#fff"
+                variant={isLargeScreen ? "h4" : "h5"}
+                component="h1"
                 textAlign="center"
                 gutterBottom
-                variant={isLargeScreen ? "h3" : "h4"}
-                component="h1"
               >
                 Whois-сервис проверки домена
               </Typography>
               <Typography
+                color="#fff"
                 textAlign="center"
                 gutterBottom
                 variant="subtitle1"
@@ -274,6 +280,7 @@ export default function WhoisTools(props) {
                 Информация о домене и проверить занятость доменного имени
               </Typography>
               <Typography
+                color="#fff"
                 textAlign="center"
                 gutterBottom
                 variant="h6"
@@ -313,7 +320,7 @@ export default function WhoisTools(props) {
                 fullWidth
                 id="domen"
                 label="Введите домен"
-                variant="outlined"
+                variant="filled"
                 onChange={handleChange}
                 sx={{
                   marginRight: "15px",
@@ -325,6 +332,7 @@ export default function WhoisTools(props) {
                 sx={{
                   height: "100%",
                   width: "250px",
+                  backgroundColor: "#4CAF50",
                 }}
                 variant="contained"
                 disabled={!domen || isLoading || !isAuthenticated}

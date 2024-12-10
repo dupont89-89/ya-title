@@ -42,21 +42,58 @@ export default function CommerceKeyTools(props) {
   return (
     <Container maxWidth="lg">
       <Box
-        p={5}
-        sx={{ background: "#c9c9c91a", borderRadius: "15px" }}
+        p={{ xs: 1, md: 12 }}
+        pt={{ xs: 10 }}
+        mt={2}
+        mb={2}
+        sx={{
+          background:
+            "linear-gradient(90deg, rgba(25, 118, 211, 1) 0%, rgba(25, 176, 211, 1) 100%)",
+          borderRadius: "15px",
+          position: "relative",
+        }}
         component="section"
       >
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            position: "absolute",
+            top: "30px",
+            left: "20px",
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <Box
+              mr={1}
+              mt={"-9px"}
+              sx={{ width: "75px" }}
+              src="/img/dashboard/yandex_logo_icon.png"
+              component="img"
+            />
+          </Box>
+        </Box>
         <Typography
-          gutterBottom
-          textAlign="center"
+          color="#fff"
+          variant={isLargeScreen ? "h4" : "h5"}
           component="h1"
-          variant={isLargeScreen ? "h3" : "h4"}
+          textAlign="center"
+          gutterBottom
         >
           Определение типа ключевого запроса
         </Typography>
         <Box mb={3} textAlign="center">
           <Chip
-            color="success"
+            sx={{
+              color: "#fff",
+              backgroundColor: "#4CAF50",
+              border: "1px solid #2283cf",
+            }}
             label={!massKey ? "Бесплатный инструмент" : "Массовая проверка"}
             variant="outlined"
           />

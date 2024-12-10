@@ -19,7 +19,7 @@ export default function FormOneKey(props) {
           <TextField
             fullWidth
             label="Введите ключевой запрос"
-            variant="outlined"
+            variant="filled"
             type="text"
             name="key-get"
             id="key-get"
@@ -35,7 +35,12 @@ export default function FormOneKey(props) {
             variant="contained"
             onClick={handleFetchKey}
             fullWidth
-            sx={{ height: "100%" }}
+            sx={{
+              width: "100%",
+              height: "100%",
+              backgroundColor: "#4CAF50",
+              color: "#fff",
+            }}
           >
             Запустить проверку
           </Button>

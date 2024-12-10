@@ -46,9 +46,15 @@ export default function ToolsPageTabs(props) {
             <Tab label="Описание инструмента" value="3" />
           </TabList>
         </Box>
-        <TabPanel value="1">{app}</TabPanel>
-        <TabPanel value="2">{video}</TabPanel>
-        <TabPanel value="3">{description}</TabPanel>
+        <TabPanel sx={{ padding: { xs: "0", md: "24px" } }} value="1">
+          {app}
+        </TabPanel>
+        <TabPanel sx={{ padding: { xs: "5px", md: "24px" } }} value="2">
+          {video}
+        </TabPanel>
+        <TabPanel sx={{ padding: { xs: "0", md: "24px" } }} value="3">
+          {description}
+        </TabPanel>
       </TabContext>
     </Box>
   );

@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
-import s from "./../../css/Tools.module.css";
 import PostAddIcon from "@mui/icons-material/PostAdd";
 import MessageNoAuth from "../../Auth/MessageNoAuth/MessageNoAuth";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
-import { Button, TextareaAutosize } from "@mui/material";
+import { Box, Button, TextareaAutosize } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 
 export default function CountWordKeyForm(props) {
@@ -27,7 +26,14 @@ export default function CountWordKeyForm(props) {
 
   return (
     <>
-      <label htmlFor="key-get">Каждый запрос с новой строки</label>
+      <Box
+        color="#fff"
+        sx={{ fontSize: "18px" }}
+        component="label"
+        htmlFor="key-get"
+      >
+        Каждый запрос с новой строки
+      </Box>
       <TextareaAutosize
         placeholder="Добавьте ключевые запросы..."
         name="key-get"
@@ -44,6 +50,7 @@ export default function CountWordKeyForm(props) {
           fontSize: "18px",
           maxWidth: "100%",
           minWidth: "100%",
+          padding: "10px",
         }}
       />
       <Grid mb={2} spacing={1} container>
@@ -52,7 +59,7 @@ export default function CountWordKeyForm(props) {
             disabled={!queryArray.length > 0 || !isAuthenticated}
             startIcon={<PlayCircleOutlineIcon />}
             variant="contained"
-            color="success"
+            sx={{ backgroundColor: "#4CAF50" }}
             onClick={handleFetchKey}
           >
             Запустить проверку
@@ -83,7 +90,7 @@ export default function CountWordKeyForm(props) {
               id="input__file"
               accept=".txt"
               onChange={handleFileChange}
-              className={`${s.input} ${s.input__file}`}
+              hidden
               ref={fileInputRef}
             />
           </Button>

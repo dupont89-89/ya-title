@@ -50,7 +50,12 @@ function Header(props) {
       maxWidth={false}
     >
       <Grid alignItems="center" container spacing={2}>
-        <Grid size="auto">
+        <Grid
+          justifyContent="center"
+          display="flex"
+          pt={{ xs: 1, md: 0 }}
+          size={{ xs: 12, md: "auto" }}
+        >
           <Link style={{ display: "flex", alignItems: "center" }} to="/">
             <Box
               sx={{ mr: 1 }}

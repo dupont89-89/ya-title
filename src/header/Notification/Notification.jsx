@@ -69,7 +69,11 @@ export default function PopperPopupState({
   notifications,
 }) {
   return (
-    <PopupState variant="popper" popupId="demo-popup-popper">
+    <PopupState
+      sx={{ zIndex: "9999" }}
+      variant="popper"
+      popupId="demo-popup-popper"
+    >
       {(popupState) => (
         <div>
           <Stack direction="row" spacing={1}>
