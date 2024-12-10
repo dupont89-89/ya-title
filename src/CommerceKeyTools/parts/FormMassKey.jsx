@@ -46,29 +46,39 @@ export default function FormMassKey(props) {
     <>
       {!result && (
         <>
-          <Box mb={2} mt={2}>
+          <Box mb={4} mt={2}>
             <Stack
               mb={1}
               direction={isLargeScreen ? "row" : "column"}
               spacing={1}
             >
               <Chip
+                sx={{ backgroundColor: "#fff", fontSize: "15px" }}
                 size="medium"
                 label={`Добавленно: ${queryArray.length} запросов(а)`}
               />
               <Chip
+                sx={{ backgroundColor: "#fff", fontSize: "15px" }}
                 size="medium"
                 label={massKey && "Тариф: 10 баллов / 100 запросов"}
               />
               {queryArray && massKey && (
                 <Chip
+                  sx={{ backgroundColor: "#fff", fontSize: "15px" }}
                   size="medium"
                   label={`К списанию: ${lvtUserSpend} баллов`}
                 />
               )}
             </Stack>
           </Box>
-          <label htmlFor="key-get">Каждый запрос с новой строки</label>
+          <Box
+            color="#fff"
+            sx={{ fontSize: "18px" }}
+            component="label"
+            htmlFor="key-get"
+          >
+            Каждый запрос с новой строки
+          </Box>
           <TextareaAutosize
             style={{
               borderRadius: "8px",
@@ -77,6 +87,7 @@ export default function FormMassKey(props) {
               fontSize: "18px",
               maxWidth: "100%", // Ограничивает максимальную ширину
               minWidth: "100%", // Ограничивает минимальную ширину
+              padding: "10px",
             }}
             name="key-get"
             id="key-get"
@@ -88,76 +99,92 @@ export default function FormMassKey(props) {
           />
         </>
       )}
-      <Grid alignItems="center" mt={1} container spacing={1}>
-        <Grid>
-          <Button
-            disabled={!queryArray.length > 0 || !isAuthenticated}
-            startIcon={<PlayCircleOutlineIcon />}
-            color="success"
-            variant="contained"
-            onClick={handleFetchKey}
-          >
-            Запустить проверку
-          </Button>
+      {!Array.isArray(result) && (
+        <Grid alignItems="center" mt={1} container spacing={1}>
+          <Grid>
+            <Button
+              disabled={!queryArray.length > 0 || !isAuthenticated}
+              startIcon={<PlayCircleOutlineIcon />}
+              sx={{ backgroundColor: "#4CAF50", color: "#fff" }}
+              variant="contained"
+              onClick={handleFetchKey}
+            >
+              Запустить проверку
+            </Button>
+          </Grid>
+          <Grid>
+            <Button
+              disabled={!queryArray.length > 0}
+              startIcon={<DeleteIcon />}
+              color="error"
+              variant="contained"
+              onClick={handleClear}
+            >
+              Очистить
+            </Button>
+          </Grid>
+          <Grid>
+            <Button
+              disabled={queryArray.length > 0}
+              startIcon={<PostAddIcon />}
+              variant="contained"
+              component="label"
+            >
+              Загрузить файл .txt
+              <input
+                type="file"
+                hidden
+                name="keyFile"
+                id="input__file"
+                accept=".txt" // Указываем что принимаем только .txt файлы
+                onChange={handleFileChange} // Обработчик изменения файла
+                ref={fileInputRef} // Присваиваем реф input файлу
+              />
+            </Button>
+          </Grid>
         </Grid>
-        <Grid>
-          <Button
-            disabled={!queryArray.length > 0}
-            startIcon={<DeleteIcon />}
-            color="error"
-            variant="contained"
-            onClick={handleClear}
-          >
-            Очистить
-          </Button>
-        </Grid>
-        <Grid>
-          <Button
-            disabled={queryArray.length > 0}
-            startIcon={<PostAddIcon />}
-            variant="contained"
-            component="label"
-          >
-            Загрузить файл .txt
-            <input
-              type="file"
-              hidden
-              name="keyFile"
-              id="input__file"
-              accept=".txt" // Указываем что принимаем только .txt файлы
-              onChange={handleFileChange} // Обработчик изменения файла
-              ref={fileInputRef} // Присваиваем реф input файлу
-            />
-          </Button>
-        </Grid>
-      </Grid>
+      )}
 
       {Array.isArray(result) && (
-        <Box>
-          <Typography variant="h5" component="h2">
+        <Box mt={3}>
+          <Typography color="#fff" gutterBottom variant="h5" component="h2">
             Результат проверки:
           </Typography>
-          <table>
-            <tbody>
+          <Box component="table">
+            <Box component="tbody">
               {result.slice(0, 5).map((item, index) => (
-                <tr key={index}>
-                  <td>
-                    <span className={s.resultTextKey}>
+                <Box component="tr" key={index}>
+                  <Box backgroundColor="#fff" component="td">
+                    <Typography component="span">
                       Запрос: {item.query}
-                    </span>
-                  </td>
-                  <td>
-                    <span className={s.resultKeyTextMass}>{item.result}</span>
-                  </td>
-                </tr>
+                    </Typography>
+                  </Box>
+                  <Box backgroundColor="#fff" component="td">
+                    <Typography
+                      component="span"
+                      className={s.resultKeyTextMass}
+                    >
+                      {item.result}
+                    </Typography>
+                  </Box>
+                </Box>
               ))}
-              <tr>
-                <td>...</td>
-                <td>...</td>
-              </tr>
-            </tbody>
-          </table>
-          <Typography gutterBottom variant="subtitle2" component="p">
+              <Box component="tr">
+                <Box backgroundColor="#fff" component="td">
+                  ...
+                </Box>
+                <Box backgroundColor="#fff" component="td">
+                  ...
+                </Box>
+              </Box>
+            </Box>
+          </Box>
+          <Typography
+            color="#fff"
+            gutterBottom
+            variant="subtitle2"
+            component="p"
+          >
             Полный результат проверки находится в файле. Скачайте результат.
           </Typography>
           {csvDownloadLink && (
@@ -167,7 +194,7 @@ export default function FormMassKey(props) {
                   <Button
                     startIcon={<ArrowCircleDownIcon />}
                     variant="contained"
-                    color="success"
+                    sx={{ backgroundColor: "#4CAF50" }}
                     component="a"
                     className={s.resultMassFile}
                     href={csvDownloadLink}

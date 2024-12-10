@@ -1,7 +1,7 @@
 import React from "react";
 import s from "./../../css/Tools.module.css";
 import { format } from "date-fns";
-import { Box } from "@mui/material";
+import { Box, Link, Typography } from "@mui/material";
 
 export default function HistoryToolsUser(props) {
   const { tools, nameTools, titleTools } = props;
@@ -17,30 +17,34 @@ export default function HistoryToolsUser(props) {
   return (
     <>
       {wordstatTools && wordstatTools.length > 0 ? (
-        <Box>
-          <h2>{titleTools}</h2>
-          <table className={s.historyTableLink}>
-            <tbody>
+        <Box mt={5}>
+          <Typography color="#fff" gutterBottom variant="h6" component="h2">
+            {titleTools}
+          </Typography>
+          <Box component="table" className={s.historyTableLink}>
+            <Box component="tbody">
               {reverseWordstatTools.slice(0, 5).map((tool, index) => (
-                <tr key={index}>
-                  <td>
-                    <a href={`${config.REACT_APP_SERVER_URL}${tool.fileTools}`}>
+                <Box component="tr" key={index}>
+                  <Box sx={{ backgroundColor: "#fff" }} component="td">
+                    <Link
+                      href={`${config.REACT_APP_SERVER_URL}${tool.fileTools}`}
+                    >
                       {" "}
                       {format(
                         new Date(tool.dateAdded),
                         "dd-MM-yyyy / HH:mm:ss"
                       )}
-                    </a>
-                  </td>
-                </tr>
+                    </Link>
+                  </Box>
+                </Box>
               ))}
-            </tbody>
-          </table>
+            </Box>
+          </Box>
           {wordstatTools.length > 5 && (
-            <p className={s.textLinkCabinet}>
+            <Typography color="#fff" variant="subtitle1">
               Результаты прошлых проверок доступны в панели управления, раздел
               истории проверок.
-            </p>
+            </Typography>
           )}
         </Box>
       ) : null}

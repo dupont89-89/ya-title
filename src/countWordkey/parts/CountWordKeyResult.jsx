@@ -1,9 +1,8 @@
 import React from "react";
-import s from "./../../css/Tools.module.css";
 import { Box, Button, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import DownloadIcon from "@mui/icons-material/Download";
-import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
+import ArrowCircleDownIcon from "@mui/icons-material/ArrowCircleDown";
+import AutorenewIcon from "@mui/icons-material/Autorenew";
 
 export default function CountWordKeyResult(props) {
   const { result, csvDownloadLink, handleClear } = props;
@@ -12,12 +11,12 @@ export default function CountWordKeyResult(props) {
       {Array.isArray(result) && (
         <Grid mt={2} container spacing={2}>
           <Grid size={12}>
-            <Typography variant="h4" component="h2">
+            <Typography color="#fff" gutterBottom component="h2" variant="h5">
               Результат проверки:
             </Typography>
           </Grid>
           <Grid size={12}>
-            <Box component="table" className={s.resultKeyCount}>
+            <Box component="table">
               <Box component="thead">
                 <Box component="tr">
                   <Box component="th">Ключевой запрос</Box>
@@ -27,38 +26,46 @@ export default function CountWordKeyResult(props) {
               <Box component="tbody">
                 {result.slice(0, 5).map((item, index) => (
                   <Box component="tr" key={index}>
-                    <Box component="td">{item.phrase}</Box>
-                    <Box component="td">{item.shows}</Box>
+                    <Box backgroundColor="#fff" component="td">
+                      {item.phrase}
+                    </Box>
+                    <Box backgroundColor="#fff" component="td">
+                      {item.shows}
+                    </Box>
                   </Box>
                 ))}
                 <Box component="tr">
-                  <Box component="td">...</Box>
-                  <Box component="td">...</Box>
+                  <Box backgroundColor="#fff" component="td">
+                    ...
+                  </Box>
+                  <Box backgroundColor="#fff" component="td">
+                    ...
+                  </Box>
                 </Box>
               </Box>
             </Box>
           </Grid>
           <Grid size={12}>
-            <Typography variant="body1" component="p">
+            <Typography gutterBottom color="#fff" variant="body1" component="p">
               Полный результат проверки в файле. Скачайте результат.
             </Typography>
             {csvDownloadLink && (
               <Grid container spacing={2}>
                 <Grid size={"auto"}>
                   <Button
-                    startIcon={<DownloadIcon />}
+                    sx={{ backgroundColor: "#4CAF50" }}
+                    startIcon={<ArrowCircleDownIcon />}
                     variant="contained"
                     component="a"
                     href={csvDownloadLink}
                     download="results.csv"
                   >
-                    Скачать файл
+                    Скачать результат
                   </Button>
                 </Grid>
                 <Grid size={"auto"}>
                   <Button
-                    color="success"
-                    startIcon={<PlayCircleOutlineIcon />}
+                    startIcon={<AutorenewIcon />}
                     variant="contained"
                     onClick={() => handleClear()}
                   >

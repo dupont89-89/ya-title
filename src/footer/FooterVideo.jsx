@@ -15,6 +15,7 @@ export default function FooterVideo() {
   const [isVisible, setIsVisible] = useState(true);
   const [showPlayPauseButton, setShowPlayPauseButton] = useState(true);
   const [opacity, setOpacity] = useState(1); // Новое состояние для управления прозрачностью
+  const [manuallyClosed, setManuallyClosed] = useState(false); // Новое состояние для отслеживания ручного закрытия
 
   const videoRef = useRef(null);
 
@@ -29,8 +30,10 @@ export default function FooterVideo() {
         setOpacity(0); // Устанавливаем прозрачность в 0, чтобы скрыть компонент
         setTimeout(() => setIsVisible(false), 500); // Через 500 мс полностью скрываем компонент
       } else {
-        setIsVisible(true);
-        setOpacity(1); // Устанавливаем прозрачность в 1, чтобы показать компонент
+        if (!manuallyClosed) {
+          setIsVisible(true);
+          setOpacity(1); // Устанавливаем прозрачность в 1, чтобы показать компонент
+        }
       }
     };
 
@@ -38,7 +41,7 @@ export default function FooterVideo() {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [isVisible, manuallyClosed]);
 
   const styles = {
     isExpandedYesCard: {
@@ -116,6 +119,7 @@ export default function FooterVideo() {
   const handleExpandClick = () => {
     if (isExpanded) {
       setIsVisible(false);
+      setManuallyClosed(true); // Устанавливаем флаг ручного закрытия
     } else {
       setIsExpanded(true);
       setIsMuted(false);
@@ -165,7 +169,10 @@ export default function FooterVideo() {
         }}
         aria-label="delete"
         size="small"
-        onClick={() => setIsVisible(false)}
+        onClick={() => {
+          setIsVisible(false);
+          setManuallyClosed(true); // Устанавливаем флаг ручного закрытия
+        }}
       >
         <Cancel fontSize="small" />
       </IconButton>

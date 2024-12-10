@@ -42,7 +42,7 @@ function CountWordKeyContainer({
   const { enqueueSnackbar } = useSnackbar(); // Получаем функцию enqueueSnackbar
 
   const tarif = 0.1;
-  const frontTarif = "10 lvt / 100 запросов";
+  const frontTarif = "10 баллов / 100 запросов";
   const fileInputRef = useRef(null);
 
   const handleSuccessFinishTools = (variant) => {

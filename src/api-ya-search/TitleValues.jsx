@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button, Container, Link, Typography } from "@mui/material";
+import { Box, Button, Link, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import LinkIcon from "@mui/icons-material/Link";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
@@ -24,7 +24,7 @@ export default function TitleValues({ titleValues = [], urlPage = [] }) {
   const downloadTitle = generateDownloadFileTitle();
 
   return (
-    <Container maxWidth="lg">
+    <>
       {titleValuesDownloads.length > 0 && (
         <Grid container spacing={3}>
           <Grid
@@ -39,7 +39,7 @@ export default function TitleValues({ titleValues = [], urlPage = [] }) {
               textAlign="center"
               gutterBottom
               component="h2"
-              variant="h4"
+              variant={{ xs: "h5", md: "6" }}
             >
               Собранные Title из ТОП выдачи
             </Typography>
@@ -47,7 +47,12 @@ export default function TitleValues({ titleValues = [], urlPage = [] }) {
               {titleValuesDownloads.map((title, index) => (
                 <Box mb={1} sx={{ display: "flex" }} component="li" key={index}>
                   <CheckCircleOutlineIcon />
-                  <Typography ml={1} component="p" variant="body1">
+                  <Typography
+                    fontSize={{ xs: "12px", md: "16px" }}
+                    ml={1}
+                    component="p"
+                    variant="body1"
+                  >
                     {title}
                   </Typography>
                 </Box>
@@ -75,15 +80,19 @@ export default function TitleValues({ titleValues = [], urlPage = [] }) {
                 textAlign="center"
                 gutterBottom
                 component="h2"
-                variant="h4"
+                variant={{ xs: "h5", md: "h4" }}
               >
                 Адреса страниц
               </Typography>
-              <Box p={0} component="ul">
+              <Box
+                p={0}
+                component="ul"
+                sx={{ width: "100%", overflow: "hidden" }}
+              >
                 {urlPageArray.map((url, index) => (
                   <Box
                     mb={1}
-                    sx={{ display: "flex" }}
+                    sx={{ display: "flex", flexWrap: "wrap", width: "100%" }}
                     component="li"
                     key={index}
                   >
@@ -93,6 +102,12 @@ export default function TitleValues({ titleValues = [], urlPage = [] }) {
                       target="_blank"
                       rel="noopener noreferrer"
                       href={url}
+                      fontSize={{ xs: "12px", md: "16px" }}
+                      sx={{
+                        wordBreak: "break-all",
+                        overflowWrap: "break-word",
+                        flex: 1,
+                      }}
                     >
                       {url}
                     </Link>
@@ -111,6 +126,6 @@ export default function TitleValues({ titleValues = [], urlPage = [] }) {
           )}
         </Grid>
       )}
-    </Container>
+    </>
   );
 }

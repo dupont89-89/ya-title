@@ -6,10 +6,10 @@ import AddToPhotosOutlinedIcon from "@mui/icons-material/AddToPhotosOutlined";
 import CloseIcon from "@mui/icons-material/Close";
 
 const styleUserDomenBlock = {
-  background: "#0288d2",
+  background: "#fff",
   padding: "25px 15px",
   borderRadius: "8px",
-  color: "#fff",
+  color: "#000",
   textAlign: "center",
   height: "100%",
   display: "flex",
@@ -56,8 +56,8 @@ export default function DomenDataUser(props) {
                 sx={{
                   fontSize: "20px",
                   fontWeight: "600",
-                  color: "#0288d2",
-                  backgroundColor: "#fff",
+                  color: "#fff",
+                  backgroundColor: "#0288d2",
                   minWidth: "40px", // Минимальная ширина контейнера
                   minHeight: "40px",
                   textAlign: "center", // Выравнивание текста по центру

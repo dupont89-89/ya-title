@@ -326,24 +326,42 @@ export default function ToolsContent(props) {
         );
       case "/app/commerce-key/":
         return (
-          <>
-            <CommerceKeyToolsContainer />
-            <TextBottom text={getTextForPage(pathname)} />
-          </>
+          <ToolsPageTabs
+            description={<TextBottom text={getTextForPage(pathname)} />}
+            app={<CommerceKeyToolsContainer />}
+            video={
+              <ToolsPageVideo
+                src="https://vkvideo.ru/video_ext.php?oid=-113757074&id=456239051&hd=2"
+                title="Видео определение типа ключевого запроса"
+              />
+            }
+          />
         );
       case "/app/wordstat/":
         return (
-          <>
-            <CountWordKeyContainer />
-            <TextBottom text={getTextForPage(pathname)} />
-          </>
+          <ToolsPageTabs
+            description={<TextBottom text={getTextForPage(pathname)} />}
+            app={<CountWordKeyContainer />}
+            video={
+              <ToolsPageVideo
+                src="https://vkvideo.ru/video_ext.php?oid=-113757074&id=456239051&hd=2"
+                title="Видео определение частотность запросов"
+              />
+            }
+          />
         );
       case "/app/whois/":
         return (
-          <>
-            <WhoisToolsContainer />{" "}
-            <TextBottom text={getTextForPage(pathname)} />
-          </>
+          <ToolsPageTabs
+            description={<TextBottom text={getTextForPage(pathname)} />}
+            app={<WhoisToolsContainer />}
+            video={
+              <ToolsPageVideo
+                src="https://vkvideo.ru/video_ext.php?oid=-113757074&id=456239051&hd=2"
+                title="Видео подписки на домен"
+              />
+            }
+          />
         );
       default:
         return null;
