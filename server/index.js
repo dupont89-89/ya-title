@@ -8,7 +8,8 @@ const adminRoutes = require("./routes/adminRoutes");
 const payRoutes = require("./routes/payRoutes");
 const toolsRoutes = require("./routes/toolsRoutes");
 const gptRoutes = require("./routes/gptRoutes");
-const pageRoutes = require("./routes/pageRoutes");
+const pageRoutes = require("./routes/pageRoutes"); 
+const supportRoutes = require("./routes/supportRoutes");
 const getTitleRoute = require("./routes/getTitleRoute"); // Импортируем маршрут
 const cron = require("node-cron");
 const { updateBonusLvt } = require("./utils/updateBonusLvt");
@@ -71,7 +72,8 @@ app.use("/api/pay", payRoutes);
 app.use("/api/tools", toolsRoutes);
 app.post("/api/get-title", getTitleRoute);
 app.use("/api/gpt", gptRoutes);
-app.use("/api/page", pageRoutes);
+app.use("/api/page", pageRoutes); 
+app.use("/api/support", supportRoutes);
 
 // Обслуживание статических файлов из папки uploads
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
