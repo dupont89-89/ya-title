@@ -49,7 +49,7 @@ function Header(props) {
       }}
       maxWidth={false}
     >
-      <Grid alignItems="center" container spacing={2}>
+      <Grid sx={{height: { xs: "100%", md: "75px"}}} alignItems="center" container spacing={2}>
         <Grid
           justifyContent="center"
           display="flex"
