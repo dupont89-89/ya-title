@@ -106,6 +106,10 @@ export default function TitleValues({ titleValues = [], urlPage = [] }) {
                       sx={{
                         wordBreak: "break-all",
                         overflowWrap: "break-word",
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        maxWidth: "760px",
                         flex: 1,
                       }}
                     >

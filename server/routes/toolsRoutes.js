@@ -3,6 +3,8 @@ const toolsFileSaveController = require("../controllers/toolsFileSaveController"
 const apiDirectController = require("../controllers/apiDirectController");
 const titleController = require("../controllers/titleController");
 const whoisDomenController = require("../controllers/whoisDomenController");
+const yandexIksController = require("../controllers/yandexIksController");
+const domenGetDeleteController = require("../controllers/domenGetDeleteController");
 
 const router = express.Router();
 
@@ -12,9 +14,11 @@ router.post(
 );
 
 router.post("/fetch-key", toolsFileSaveController.keyCommerceToolsController);
+router.post("/get-iks", yandexIksController.getIksContController);
 router.post("/count-word", apiDirectController.apiDirectWordContController);
 router.get("/get-direct-ball", apiDirectController.apiDirectBallContController);
 router.get("/whois", whoisDomenController.whoisDomenController);
+router.get("/get-domen-delete-ru", domenGetDeleteController.getDomainListRu);
 router.get(
   "/whois-subscription",
   whoisDomenController.whoisDomenSubscriptionController

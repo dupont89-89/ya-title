@@ -16,6 +16,8 @@ import { Chip, createTheme } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import CurrencyRubleIcon from "@mui/icons-material/CurrencyRuble";
 import WbCloudyIcon from "@mui/icons-material/WbCloudy";
+import QueryStatsIcon from "@mui/icons-material/QueryStats";
+import { ruRU } from "@mui/x-data-grid/locales";
 
 function CabinetUser(props) {
   const { tools, money, lvt, currentTariff } = props;
@@ -94,6 +96,25 @@ function CabinetUser(props) {
     },
     {
       kind: "header",
+      title: "Аналитика",
+    },
+    {
+      segment: "app",
+      title: "Анализ сайта",
+      icon: <QueryStatsIcon />,
+      children: [
+        {
+          segment: "yandex-iks/",
+          title: "Проверка Яндекс ИКС",
+          icon: <AppsIcon />,
+        },
+      ],
+    },
+    {
+      kind: "divider",
+    },
+    {
+      kind: "header",
       title: "Техническая часть",
     },
     {
@@ -107,6 +128,9 @@ function CabinetUser(props) {
           icon: <AppsIcon />,
         },
       ],
+    },
+    {
+      kind: "divider",
     },
     {
       kind: "header",
@@ -130,6 +154,9 @@ function CabinetUser(props) {
       ],
     },
     {
+      kind: "divider",
+    },
+    {
       kind: "header",
       title: "Дополнительные инструменты",
     },
@@ -141,6 +168,11 @@ function CabinetUser(props) {
         {
           segment: "whois/",
           title: "Whois проверка",
+          icon: <AppsIcon />,
+        },
+        {
+          segment: "del-list/",
+          title: "Освобождающиеся домены",
           icon: <AppsIcon />,
         },
       ],
@@ -164,6 +196,7 @@ function CabinetUser(props) {
         main: "#21b5ae",
       },
     },
+    ruRU,
   });
 
   return (

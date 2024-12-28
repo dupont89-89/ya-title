@@ -8,7 +8,7 @@ const adminRoutes = require("./routes/adminRoutes");
 const payRoutes = require("./routes/payRoutes");
 const toolsRoutes = require("./routes/toolsRoutes");
 const gptRoutes = require("./routes/gptRoutes");
-const pageRoutes = require("./routes/pageRoutes"); 
+const pageRoutes = require("./routes/pageRoutes");
 const supportRoutes = require("./routes/supportRoutes");
 const getTitleRoute = require("./routes/getTitleRoute"); // Импортируем маршрут
 const cron = require("node-cron");
@@ -72,7 +72,7 @@ app.use("/api/pay", payRoutes);
 app.use("/api/tools", toolsRoutes);
 app.post("/api/get-title", getTitleRoute);
 app.use("/api/gpt", gptRoutes);
-app.use("/api/page", pageRoutes); 
+app.use("/api/page", pageRoutes);
 app.use("/api/support", supportRoutes);
 
 // Обслуживание статических файлов из папки uploads
@@ -80,6 +80,10 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Поддержка статических файлов из папки build
 app.use(express.static(path.join(__dirname, "..", "build")));
+
+// Установим лимит на размер тела запроса (например, 20 MB)
+app.use(express.json({ limit: "20mb" }));
+app.use(express.urlencoded({ limit: "20mb", extended: true }));
 
 // Обработка всех маршрутов через index.html
 app.get("*", (req, res) => {

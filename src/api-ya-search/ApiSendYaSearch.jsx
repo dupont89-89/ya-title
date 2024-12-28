@@ -94,13 +94,12 @@ export default function ApiSendYaSearch(props) {
 
   return (
     <>
-      <Container maxWidth="lg">
         <Box
           component="section"
           p={{ xs: 1, md: 12 }}
           pt={{ xs: 10 }}
           mt={2}
-          mb={2}
+          mb={10}
           sx={{
             background:
               "linear-gradient(90deg, rgba(25, 118, 211, 1) 0%, rgba(25, 176, 211, 1) 100%)",
@@ -125,8 +124,8 @@ export default function ApiSendYaSearch(props) {
             >
               <Box
                 mr={1}
-                mt={"-9px"}
-                sx={{ width: "75px" }}
+                mt={"-5px"}
+                sx={{ width: "72px" }}
                 src="/img/dashboard/yandex_logo_icon.png"
                 component="img"
               />
@@ -139,7 +138,7 @@ export default function ApiSendYaSearch(props) {
             >
               <Box
                 mr={1}
-                sx={{ width: "25px" }}
+                sx={{ width: "21px" }}
                 src="/img/dashboard/chat-gpt-fff.png"
                 component="img"
               />
@@ -199,7 +198,6 @@ export default function ApiSendYaSearch(props) {
           </Box>
           {!props.isAuthenticated ? <MessageNoAuth /> : null}
         </Box>
-      </Container>
       {isLoading ? (
         <Loading />
       ) : (

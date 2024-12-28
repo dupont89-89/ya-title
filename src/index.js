@@ -12,6 +12,7 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { ruRU } from "@mui/x-data-grid/locales";
 
 const theme = createTheme({
   typography: {
@@ -28,6 +29,7 @@ const theme = createTheme({
       main: "#21b5ae",
     },
   },
+  ruRU,
 });
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -37,7 +39,11 @@ const helmetContext = {};
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
+      <BrowserRouter
+        future={{
+          v7_startTransition: true,
+        }}
+      >
         <HelmetProvider context={helmetContext}>
           <ThemeProvider theme={theme}>
             <App />

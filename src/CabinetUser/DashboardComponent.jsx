@@ -11,7 +11,7 @@ export default function DashboardComponent(props) {
   ];
 
   return (
-    <Container maxWidth>
+    <Container maxWidth="lg">
       <Grid mt={3} spacing={3} container>
         {blockHistory.map((item, index) => (
           <Grid key={index} size={{ lg: 3, md: 6, sm: 6, xs: 12 }}>

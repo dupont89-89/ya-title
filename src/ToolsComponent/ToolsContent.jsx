@@ -8,6 +8,8 @@ import WhoisToolsContainer from "../Whois/WhoisToolsContainer";
 import { useParams } from "react-router-dom";
 import ToolsPageTabs from "./PartsComponentTools/ToolsPageTabs";
 import ToolsPageVideo from "./PartsComponentTools/ToolsPageVideo";
+import YaIksContainer from "../YaIks/YaIksContainer";
+import DomenDeleteContainer from "../DomenDelete/DomenDeleteContainer";
 
 export default function ToolsContent(props) {
   const params = useParams();
@@ -303,6 +305,20 @@ export default function ToolsContent(props) {
             </p>
           </Typography>
         );
+      case "/app/yandex-iks/":
+        return (
+          <Typography fontSize={15} component="div">
+            <h2>Массовая проверка Индекса Качества Сайта Яндекса</h2>
+            <p>Удобный сервис проверки</p>
+          </Typography>
+        );
+      case "/app/del-list/":
+        return (
+          <Typography fontSize={15} component="div">
+            <h2>Найди качественный особождающийся сегодня домен</h2>
+            <p>Отправляй заявку на регистрацию.</p>
+          </Typography>
+        );
       case "default":
       default:
         return null;
@@ -359,6 +375,32 @@ export default function ToolsContent(props) {
               <ToolsPageVideo
                 src="https://vkvideo.ru/video_ext.php?oid=-113757074&id=456239051&hd=2"
                 title="Видео подписки на домен"
+              />
+            }
+          />
+        );
+      case "/app/yandex-iks/":
+        return (
+          <ToolsPageTabs
+            description={<TextBottom text={getTextForPage(pathname)} />}
+            app={<YaIksContainer />}
+            video={
+              <ToolsPageVideo
+                src="https://vkvideo.ru/video_ext.php?oid=-113757074&id=456239051&hd=2"
+                title="Видео проверки ИКС сайта"
+              />
+            }
+          />
+        );
+      case "/app/del-list/":
+        return (
+          <ToolsPageTabs
+            description={<TextBottom text={getTextForPage(pathname)} />}
+            app={<DomenDeleteContainer />}
+            video={
+              <ToolsPageVideo
+                src="https://vkvideo.ru/video_ext.php?oid=-113757074&id=456239051&hd=2"
+                title="Видео покупки освобождающихся доменов"
               />
             }
           />
