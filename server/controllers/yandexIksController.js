@@ -86,7 +86,7 @@ async function fetchSiteInfo(site, proxy, browser) {
     } else {
       return {
         site,
-        sqi: null,
+        sqi: "Ошибка",
         message: "Ошибка при решении капчи или отсутствии SQI элемента",
       };
     }
@@ -101,7 +101,7 @@ async function fetchSiteInfo(site, proxy, browser) {
         saveError
       );
     }
-    return { site, sqi: null, message: "Ошибка при выполнении запроса" };
+    return { site, sqi: "Ошибка", message: "Ошибка при выполнении запроса" };
   } finally {
     await page.close();
   }
