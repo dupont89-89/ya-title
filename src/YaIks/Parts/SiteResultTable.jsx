@@ -45,7 +45,7 @@ export default function SiteResultTable(props) {
       field: "sqi",
       headerName: "ИКС",
       width: 800,
-      sortComparator: sortByNumber, // Добавил пользовательскую функцию сортировки
+      // sortComparator: sortByNumber, // Добавил пользовательскую функцию сортировки
     },
   ];
 

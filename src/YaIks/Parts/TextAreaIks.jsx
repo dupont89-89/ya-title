@@ -1,15 +1,21 @@
-import { TextareaAutosize } from "@mui/material";
 import React, { useEffect } from "react";
+import { TextareaAutosize } from "@mui/material";
+import decodePunycode from "../../Whois/Parts/PunycodeConverter"; // Укажите правильный путь до файла с decodePunycode
 
 export default function TextAreaIks(props) {
   const { siteArray, handleChange, handleClear } = props;
 
   useEffect(() => {
-    // Проверяем, если queryArray определен и не пустой
-    if (siteArray && siteArray.length > 0 && siteArray[0].trim() === "") {
-      handleClear(); // Вызываем очистку, если textarea была очищена
+    if (siteArray && siteArray.length > 0) {
+      // Преобразуем сайты в человеко-читаемый формат
+      const transformedSites = siteArray.map(
+        (site) => decodePunycode(site.trim()) || site.trim()
+      );
+
+      // Передаем преобразованный массив через handleChange
+      handleChange({ target: { value: transformedSites.join("\n") } });
     }
-  }, [siteArray, handleClear]);
+  }, [siteArray, handleChange]);
 
   return (
     <TextareaAutosize
@@ -18,8 +24,8 @@ export default function TextAreaIks(props) {
         backgroundColor: "#ffffff",
         width: "100%",
         fontSize: "18px",
-        maxWidth: "100%", // Ограничивает максимальную ширину
-        minWidth: "100%", // Ограничивает минимальную ширину
+        maxWidth: "100%",
+        minWidth: "100%",
         padding: "10px",
       }}
       name="iks-get"
