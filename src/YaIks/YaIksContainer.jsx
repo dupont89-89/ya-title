@@ -18,10 +18,14 @@ function YaIksContainer(props) {
 
   const handleClick = async () => {
     try {
+      setIsLoading(true);
       const results = await getIksSite(siteArray);
       setSiteResult(results);
+      debugger;
     } catch (error) {
       console.error("Ошибка при получении данных:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
   const handleClickMassClear = () => {
@@ -45,6 +49,7 @@ function YaIksContainer(props) {
         siteArray={siteArray}
         handleClick={handleClick}
         siteResult={siteResult}
+        isLoading={isLoading}
       />
     </>
   );

@@ -3,17 +3,19 @@ import { TextareaAutosize } from "@mui/material";
 import decodePunycode from "../../Whois/Parts/PunycodeConverter"; // Укажите правильный путь до файла с decodePunycode
 
 export default function TextAreaIks(props) {
-  const { siteArray, handleChange, handleClear } = props;
+  const { siteArray, handleChange } = props;
 
   useEffect(() => {
     if (siteArray && siteArray.length > 0) {
-      // Преобразуем сайты в человеко-читаемый формат
       const transformedSites = siteArray.map(
         (site) => decodePunycode(site.trim()) || site.trim()
       );
 
-      // Передаем преобразованный массив через handleChange
-      handleChange({ target: { value: transformedSites.join("\n") } });
+      // Проверяем, отличаются ли преобразованные данные от текущих
+      const joinedTransformedSites = transformedSites.join("\n");
+      if (joinedTransformedSites !== siteArray.join("\n")) {
+        handleChange({ target: { value: joinedTransformedSites } });
+      }
     }
   }, [siteArray, handleChange]);
 
