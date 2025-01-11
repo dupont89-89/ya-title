@@ -1,6 +1,6 @@
-const { User } = require("../models/UserSchema");
+import { User } from "../models/UserSchema.js";
 
-exports.adminDataUserController = async (req, res) => {
+export const adminDataUserController = async (req, res) => {
   try {
     const users = await User.find({}); // Найти всех пользователей
 
@@ -37,7 +37,7 @@ exports.adminDataUserController = async (req, res) => {
   }
 };
 
-exports.adminEditStatusUserController = async (req, res) => {
+export const adminEditStatusUserController = async (req, res) => {
   try {
     const userId = req.query.userId;
     const role = req.query.role;
@@ -46,7 +46,7 @@ exports.adminEditStatusUserController = async (req, res) => {
       return res.status(404).send({ message: "Пользователь не найден" });
     }
 
-    // Обновляем поле notifications в базе данных
+    // Обновляем поле role в базе данных
     user.role = role;
     await user.save();
 

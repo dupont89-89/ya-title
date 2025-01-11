@@ -3,11 +3,26 @@ import { connect } from "react-redux";
 import DomenDelete from "./DomenDelete";
 import { getDomenDelete } from "../Api/api-tools-domen";
 import { TitleComponent } from "../Function/TitleComponent";
+import { getDomenChekRegRu } from "../Api/api-reg-ru";
 
 function DomenDeleteContainer(props) {
+  const { getDomenChekRegRu } = props;
+
   const [domenResult, setDomenResult] = useState([]);
   const [domenResultData, setDomenResultData] = useState();
   const [isLoading, setIsLoading] = useState(false);
+
+  const handleClickChekDomen = async () => {
+    setIsLoading(true);
+    try {
+      const results = await props.getDomenChekRegRu();
+      console.log(results);
+    } catch (error) {
+      console.error("Ошибка при получении данных:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleClick = async () => {
     setIsLoading(true);
@@ -32,6 +47,7 @@ function DomenDeleteContainer(props) {
         domenResultData={domenResultData}
         domenResult={domenResult}
         handleClick={handleClick}
+        handleClickChekDomen={handleClickChekDomen}
       />
     </>
   );
@@ -43,6 +59,7 @@ let mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   getDomenDelete,
+  getDomenChekRegRu,
 };
 
 export default connect(

@@ -1,18 +1,19 @@
-const mongoose = require("mongoose");
+import { model } from "mongoose"; // Подключение модели
 
 const updateBonusLvt = async (io) => {
-  const currentDate = new Date();
-  // Применяем смещение к текущей дате и времени
-  const moscowTime = new Date(currentDate.getTime());
-  // Форматируем дату и время в строку
-  const formattedDate = moscowTime.toISOString();
   try {
-    const User = mongoose.model("user"); // Используем mongoose.model для получения модели пользователя
+    const currentDate = new Date();
+    const moscowTime = new Date(currentDate.getTime());
+    const formattedDate = moscowTime.toISOString(); // Форматируем дату и время
+
+    const User = model("user"); // Получаем модель пользователя
     const bonusLvt = 3;
     const notification = {
-      message: `Обновлен ежедневный бонус. На баланс востановленно ${bonusLvt} Lvt.`,
+      message: `Обновлен ежедневный бонус. На баланс восстановлено ${bonusLvt} Lvt.`,
       dateAdded: formattedDate,
     };
+
+    // Обновляем всех пользователей
     await User.updateMany(
       {},
       {
@@ -23,6 +24,7 @@ const updateBonusLvt = async (io) => {
         },
       }
     );
+
     console.log("Ежедневное начисление бонусов выполнено.");
     io.emit("dailyUpdate");
   } catch (error) {
@@ -33,4 +35,4 @@ const updateBonusLvt = async (io) => {
   }
 };
 
-module.exports = { updateBonusLvt };
+export { updateBonusLvt };

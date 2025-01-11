@@ -1,4 +1,4 @@
-const { createProxyMiddleware } = require("http-proxy-middleware");
+import { createProxyMiddleware } from "http-proxy-middleware"; // Заменяем require на import
 
 const getTitleRoute = createProxyMiddleware({
   target: "https://yandex.ru",
@@ -15,4 +15,4 @@ const getTitleRoute = createProxyMiddleware({
   },
 });
 
-module.exports = getTitleRoute;
+export default getTitleRoute; // Заменяем module.exports на export default

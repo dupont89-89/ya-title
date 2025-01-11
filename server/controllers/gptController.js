@@ -1,6 +1,6 @@
-const { fetchApiGptText } = require("../api-gpt/fetch-api-gpt");
+import { fetchApiGptText } from "../api-gpt/fetch-api-gpt.js";
 
-exports.apiGptTitleOneController = async (req, res) => {
+export const apiGptTitleOneController = async (req, res) => {
   const text = `Создай из этих слов заголовок Title для поисковых систем: ${req.query.text}`;
   try {
     const result = await fetchApiGptText(text);

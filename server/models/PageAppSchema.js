@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose"; // Заменяем require на import
 
 const pageAppSchema = new mongoose.Schema({
   pageTitle: { type: String, required: true },
@@ -10,4 +10,4 @@ const pageAppSchema = new mongoose.Schema({
 
 const PageApp = mongoose.model("pageApp", pageAppSchema);
 
-module.exports = { PageApp };
+export { PageApp }; // Экспортируем модель с помощью ES-модулей

@@ -1,14 +1,12 @@
-// Функция для обработки словоформ
-function wordFormsHandler(dict) {
+const wordFormsHandler = (dict) => {
   // Вспомогательная функция для получения проблемных корней
-  const getUnbreakableRoots = function (word) {
+  const getUnbreakableRoots = (word) => {
     const unbreakableWordRoots = [];
     let unbreakableRootMaxLength = 0;
 
     for (let i = dict.unbreakableRoots.length - 1; i >= 0; --i) {
-      if (word.length < dict.unbreakableRoots[i].length) {
-        continue;
-      }
+      if (word.length < dict.unbreakableRoots[i].length) continue;
+
       if (word.includes(dict.unbreakableRoots[i])) {
         if (unbreakableRootMaxLength < dict.unbreakableRoots[i].length) {
           unbreakableRootMaxLength = dict.unbreakableRoots[i].length;
@@ -17,38 +15,23 @@ function wordFormsHandler(dict) {
       }
     }
 
-    for (let j = unbreakableWordRoots.length - 1; j >= 0; --j) {
-      if (unbreakableWordRoots[j].length < unbreakableRootMaxLength) {
-        unbreakableWordRoots.splice(j, 1);
-      }
-    }
-
-    return unbreakableWordRoots;
+    return unbreakableWordRoots.filter(
+      (root) => root.length === unbreakableRootMaxLength
+    );
   };
 
   // Вспомогательная функция для проверки наличия проблемных корней
-  const hasUnbreakableRoots = function (wordChunk, unbreakableWordRoots) {
-    for (let i = 0; i < unbreakableWordRoots.length; ++i) {
-      if (wordChunk.includes(unbreakableWordRoots[i])) {
-        return true;
-      }
-    }
-    return false;
-  };
+  const hasUnbreakableRoots = (wordChunk, unbreakableWordRoots) =>
+    unbreakableWordRoots.some((root) => wordChunk.includes(root));
 
   // Вспомогательная функция для получения альтернативного корня
-  const getAlternateRoot = function (wordRoot) {
-    if (wordRoot.slice(-1) === "ж") {
-      return wordRoot.slice(0, -1) + "г";
-    }
-    return null;
-  };
+  const getAlternateRoot = (wordRoot) =>
+    wordRoot.slice(-1) === "ж" ? wordRoot.slice(0, -1) + "г" : null;
 
   // Функция обработки слова
-  const handler = function (word) {
-    if (dict.exceptions.includes(word)) {
-      return [];
-    }
+  const handler = (word) => {
+    if (dict.exceptions.includes(word)) return [];
+
     if (
       dict.immutableRoots.includes(word) ||
       dict.unbreakableRoots.includes(word)
@@ -76,22 +59,19 @@ function wordFormsHandler(dict) {
     }
 
     for (let p = 0; p < parseSequence.length; ++p) {
-      // отсечение аффиксов от слова
-      const affixes = parseSequence[p][0];
-      const minRootSize = parseSequence[p][1];
+      const [affixes, minRootSize] = parseSequence[p];
       const possibleAffixLength = wordRoot.length - Math.abs(minRootSize);
       let wordChunk = "";
 
       for (let i = affixes.length - 1; i >= 0; --i) {
-        if (affixes[i].length > possibleAffixLength) {
-          continue;
-        }
+        if (affixes[i].length > possibleAffixLength) continue;
+
         if (
           minRootSize > 0 &&
-          affixes[i] === wordRoot.slice(affixes[i].length * -1)
+          affixes[i] === wordRoot.slice(-affixes[i].length)
         ) {
           // отсечение суффиксов и окончаний
-          wordChunk = wordRoot.slice(0, affixes[i].length * -1); // возвращает корень без аффикса
+          wordChunk = wordRoot.slice(0, -affixes[i].length); // возвращает корень без аффикса
 
           if (
             unbreakableWordRoots.length > 0 &&
@@ -125,9 +105,7 @@ function wordFormsHandler(dict) {
         }
       }
 
-      if (dict.unbreakableRoots.includes(wordRoot)) {
-        break;
-      }
+      if (dict.unbreakableRoots.includes(wordRoot)) break;
     }
 
     // для корней с чередующимися согласными
@@ -140,6 +118,6 @@ function wordFormsHandler(dict) {
   };
 
   return handler;
-}
+};
 
-module.exports = wordFormsHandler;
+export default wordFormsHandler;

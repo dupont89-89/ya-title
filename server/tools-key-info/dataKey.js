@@ -1092,7 +1092,7 @@ const domenCommerce = [
   "www.sravni.ru",
 ];
 
-module.exports = {
+export {
   commerceMarker,
   infoMarker,
   navigationMarker,

@@ -1,7 +1,6 @@
-const { User } = require("../models/UserSchema");
-const fs = require("fs");
-const path = require("path");
-const multer = require("multer");
+import { User } from "../models/UserSchema.js";
+import path from "path";
+import multer from "multer";
 
 // Настройка места сохранения файлов
 const storage = multer.diskStorage({
@@ -17,7 +16,7 @@ const storage = multer.diskStorage({
 // Опции загрузки
 const upload = multer({ storage: storage }).single("avatar");
 
-exports.uploadAvatarUserController = async (req, res) => {
+export const uploadAvatarUserController = async (req, res) => {
   try {
     upload(req, res, async (err) => {
       if (err instanceof multer.MulterError) {
@@ -62,7 +61,7 @@ exports.uploadAvatarUserController = async (req, res) => {
   }
 };
 
-exports.editDataUserController = async (req, res) => {
+export const editDataUserController = async (req, res) => {
   try {
     const userId = req.query.userId;
     const firstName = req.query.firstName;

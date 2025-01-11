@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
-const jwt = require("jsonwebtoken");
-const Joi = require("joi");
-const passwordComplexity = require("joi-password-complexity");
+import mongoose from "mongoose"; // Заменяем require на import
+import jwt from "jsonwebtoken";
+import Joi from "joi";
+import passwordComplexity from "joi-password-complexity";
 
 const userSchema = new mongoose.Schema({
   firstName: { type: String },
@@ -82,11 +82,10 @@ const userSchema = new mongoose.Schema({
 
 // Создаем виртуальное поле для суммы lvt и bonusDayLvt
 userSchema.virtual("totalLvt").get(function () {
-  // Сложение чисел с ограничением количества знаков после запятой до 1
   return Number((this.lvt + this.bonusDayLvt).toFixed(1));
 });
 
-// Гарантируем, что виртуальное поле totalLvt включается в результаты toJSON и toObject
+// Включение виртуального поля в JSON и объектное представление
 userSchema.set("toJSON", { virtuals: true });
 userSchema.set("toObject", { virtuals: true });
 
@@ -114,4 +113,4 @@ const validate = (data) => {
   return schema.validate(data);
 };
 
-module.exports = { User, validate };
+export { User, validate }; // Экспорт для ES-модулей

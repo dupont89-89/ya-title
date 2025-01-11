@@ -1,8 +1,8 @@
-const { User } = require("../models/UserSchema");
-const path = require("path");
-const multer = require("multer");
-const fs = require("fs");
-const { fetchYandexKey } = require("../tools-key-info/yandex-xml");
+import { User } from "../models/UserSchema.js";
+import path from "path";
+import multer from "multer";
+import fs from "fs";
+import { fetchYandexKey } from "../tools-key-info/yandex-xml.js";
 
 // Функция для проверки и создания директорий
 const ensureDirectoryExistence = (dirPath) => {
@@ -15,10 +15,9 @@ const ensureDirectoryExistence = (dirPath) => {
 // Настройка места сохранения файлов
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const userId = req.query.userId;
-    const tools = req.query.tools;
+    const { userId, tools } = req.query;
 
-    // Переместим сюда вычисление даты
+    // Перемещаем сюда вычисление даты
     const currentDate = new Date();
     const moscowTime = new Date(currentDate.getTime());
     const formattedDate = moscowTime.toISOString();
@@ -40,9 +39,9 @@ const storage = multer.diskStorage({
 });
 
 // Опции загрузки
-const upload = multer({ storage: storage }).single("toolFile");
+const upload = multer({ storage }).single("toolFile");
 
-exports.uploadFileToolsUserController = async (req, res) => {
+export const uploadFileToolsUserController = async (req, res) => {
   try {
     upload(req, res, async (err) => {
       if (err instanceof multer.MulterError) {
@@ -55,8 +54,7 @@ exports.uploadFileToolsUserController = async (req, res) => {
         return res.status(500).send({ message: "Internal Server Error" });
       }
 
-      const userId = req.query.userId;
-      const tools = req.query.tools;
+      const { userId, tools } = req.query;
 
       if (!userId) {
         return res.status(400).send({ message: "User ID is required" });
@@ -66,7 +64,7 @@ exports.uploadFileToolsUserController = async (req, res) => {
         return res.status(400).send({ message: "File is required" });
       }
 
-      // Переместим сюда вычисление даты
+      // Перемещаем сюда вычисление даты
       const currentDate = new Date();
       const moscowTime = new Date(currentDate.getTime());
       const formattedDate = moscowTime.toISOString();
@@ -103,7 +101,7 @@ exports.uploadFileToolsUserController = async (req, res) => {
   }
 };
 
-exports.keyCommerceToolsController = async (req, res) => {
+export const keyCommerceToolsController = async (req, res) => {
   const { query } = req.body;
 
   try {

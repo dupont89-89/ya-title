@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose"; // Заменяем require на import
 
 const iksToolsSchema = new mongoose.Schema({
   domen: { type: String, required: true }, // Имя домена
@@ -14,4 +14,4 @@ const iksToolsSchema = new mongoose.Schema({
 // Создание модели
 const Iks = mongoose.model("Iks", iksToolsSchema);
 
-module.exports = { Iks };
+export { Iks }; // Заменяем module.exports на export

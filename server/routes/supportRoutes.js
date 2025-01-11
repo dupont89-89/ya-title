@@ -1,11 +1,9 @@
-const express = require("express");
-const supportController = require("../controllers/supportController");
+import express from "express"; // Импортируем express
+import { newAppealSupportController } from "../controllers/supportController.js"; // Исправляем на именованный экспорт
 
 const router = express.Router();
 
-router.post(
-  "/new-appeal",
-  supportController.newAppealSupportController
-);
+// Настраиваем маршрут
+router.post("/new-appeal", newAppealSupportController);
 
-module.exports = router;
+export default router; // Экспортируем маршрутизатор

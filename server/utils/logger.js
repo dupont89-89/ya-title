@@ -1,7 +1,7 @@
-const fs = require("fs");
+import fs from "fs"; // Используем import для ES6
 
 // Функция для записи логов в файл
-function writeToLog(message) {
+const writeToLog = (message) => {
   const logFilePath = "app.log"; // Путь к файлу логов
   const logMessage = `${new Date().toISOString()} - ${message}\n`;
 
@@ -10,9 +10,9 @@ function writeToLog(message) {
       console.error("Ошибка при записи в файл логов:", err);
     }
   });
-}
+};
 
 // Пример использования функции для логирования
 writeToLog("Начало работы сервера");
 
-module.exports.writeToLog = writeToLog;
+export { writeToLog }; // Используем export для ES6

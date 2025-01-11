@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose"; // Заменяем require на import
 
 const whoisToolsSchema = new mongoose.Schema({
   userId: { type: String, required: true, unique: true },
@@ -14,4 +14,4 @@ const whoisToolsSchema = new mongoose.Schema({
 
 const Whois = mongoose.model("whois", whoisToolsSchema);
 
-module.exports = { Whois };
+export { Whois }; // Заменяем module.exports на export

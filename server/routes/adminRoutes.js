@@ -1,16 +1,17 @@
-const express = require("express");
-const adminUserControllers = require("../controllers/adminUserControllers");
-const lvtUserController = require("../controllers/lvtUserController");
-const mail = require("./../SMTP/mail");
+import express from "express"; // Заменяем require на import
+import {
+  adminDataUserController,
+  adminEditStatusUserController,
+} from "../controllers/adminUserControllers.js";
+// Добавляем расширение файлов
+import { adminAddLvtUserController } from "../controllers/lvtUserController.js"; // Добавляем расширение файлов
+import { mailMessageController } from "../SMTP/mail.js"; // Добавляем расширение файлов
 
 const router = express.Router();
 
-router.get("/admin-get-user", adminUserControllers.adminDataUserController);
-router.get(
-  "/admin-edit-user-status",
-  adminUserControllers.adminEditStatusUserController
-);
-router.get("/admin-add-lvt-user", lvtUserController.adminAddLvtUserController);
-router.post("/send-email", mail.mailMessageController);
+router.get("/admin-get-user", adminDataUserController);
+router.get("/admin-edit-user-status", adminEditStatusUserController);
+router.get("/admin-add-lvt-user", adminAddLvtUserController);
+router.post("/send-email", mailMessageController);
 
-module.exports = router;
+export default router; // Заменяем module.exports на export default

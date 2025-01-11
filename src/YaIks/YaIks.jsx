@@ -24,6 +24,7 @@ export default function YaIks(props) {
     handleClick,
     handleClear,
     isLoading,
+    chekSiteResult,
   } = props;
 
   const theme = useTheme();
@@ -85,7 +86,10 @@ export default function YaIks(props) {
       )}
       {siteResult.length > 0 && (
         <Box>
-          <SiteResultTable siteResult={siteResult} />
+          <SiteResultTable
+            chekSiteResult={chekSiteResult}
+            siteResult={siteResult}
+          />
         </Box>
       )}
     </Box>

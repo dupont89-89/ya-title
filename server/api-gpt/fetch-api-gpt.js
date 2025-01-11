@@ -1,4 +1,4 @@
-const axios = require("axios");
+import axios from "axios";
 
 const url = process.env.API_GPT_URL;
 const token = process.env.API_GPT_TOKEN;
@@ -10,7 +10,7 @@ const axiosConfig = {
   },
 };
 
-const fetchApiGptText = async (text) => {
+export const fetchApiGptText = async (text) => {
   const body = {
     model: "gpt-3.5-turbo",
     messages: [{ role: "user", content: `${text}` }],
@@ -24,8 +24,4 @@ const fetchApiGptText = async (text) => {
   } catch (err) {
     console.error("Ошибка в ответе API GPT", err);
   }
-};
-
-module.exports = {
-  fetchApiGptText,
 };

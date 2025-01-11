@@ -1,25 +1,35 @@
-require("dotenv").config();
+import dotenv from "dotenv";
+dotenv.config();
+import express from "express";
+import mongoose from "mongoose";
+import path from "path";
+import cron from "node-cron";
+import { Server as socketIo } from "socket.io"; // Исправленный импорт
+import http from "http";
+import { fileURLToPath } from "url"; // Для преобразования import.meta.url в путь к файлу
 
-const express = require("express");
-const mongoose = require("mongoose");
-const path = require("path");
-const userRoutes = require("./routes/userRoutes");
-const adminRoutes = require("./routes/adminRoutes");
-const payRoutes = require("./routes/payRoutes");
-const toolsRoutes = require("./routes/toolsRoutes");
-const gptRoutes = require("./routes/gptRoutes");
-const pageRoutes = require("./routes/pageRoutes");
-const supportRoutes = require("./routes/supportRoutes");
-const getTitleRoute = require("./routes/getTitleRoute"); // Импортируем маршрут
-const cron = require("node-cron");
-const { updateBonusLvt } = require("./utils/updateBonusLvt");
-const http = require("http");
-const socketIo = require("socket.io");
-const { checkSubscriptions } = require("./utils/whois/whoisDomenCronUser");
+// Импорт маршрутов
+import userRoutes from "./routes/userRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
+import payRoutes from "./routes/payRoutes.js";
+import toolsRoutes from "./routes/toolsRoutes.js";
+import gptRoutes from "./routes/gptRoutes.js";
+import pageRoutes from "./routes/pageRoutes.js";
+import supportRoutes from "./routes/supportRoutes.js";
+import getTitleRoute from "./routes/getTitleRoute.js";
+import regruRoutes from "./routes/regruRoutes.js";
+
+import { updateBonusLvt } from "./utils/updateBonusLvt.js";
+import { checkSubscriptions } from "./utils/whois/whoisDomenCronUser.js";
+
+// Получаем текущую директорию с помощью import.meta.url
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename); // Получаем путь к текущей директории
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIo(server, {
+
+const io = new socketIo(server, {
   cors: {
     origin: process.env.REACT_APP_URL_FRONTEND,
     methods: ["GET", "POST"],
@@ -74,6 +84,7 @@ app.post("/api/get-title", getTitleRoute);
 app.use("/api/gpt", gptRoutes);
 app.use("/api/page", pageRoutes);
 app.use("/api/support", supportRoutes);
+app.use("/api/reg-ru", regruRoutes);
 
 // Обслуживание статических файлов из папки uploads
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
@@ -104,7 +115,7 @@ cron.schedule("0 9 * * *", () => {
   updateBonusLvt(io); // Передаем экземпляр socket.io в функцию updateBonusLvt
 });
 
-// // Планируем выполнение проверки каждый день в 00:00:01 UTC
+// Планируем выполнение проверки каждый день в 00:00:01 UTC
 cron.schedule("1 0 * * *", checkSubscriptions, {
   timezone: "UTC",
 });

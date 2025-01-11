@@ -1,7 +1,7 @@
-const { User } = require("../models/UserSchema");
-const Decimal = require("decimal.js");
+import { User } from "../models/UserSchema.js";
+import Decimal from "decimal.js";
 
-exports.spendLvtUserController = async (req, res) => {
+export const spendLvtUserController = async (req, res) => {
   try {
     const userId = req.query.userId;
     const sumLvt = parseFloat(req.query.sumLvt);
@@ -57,7 +57,7 @@ exports.spendLvtUserController = async (req, res) => {
   }
 };
 
-exports.adminAddLvtUserController = async (req, res) => {
+export const adminAddLvtUserController = async (req, res) => {
   try {
     const userId = req.query.userId;
     const lvt = req.query.lvt;
@@ -105,7 +105,7 @@ exports.adminAddLvtUserController = async (req, res) => {
   }
 };
 
-exports.userAddLvtUserController = async (req, res) => {
+export const userAddLvtUserController = async (req, res) => {
   try {
     const userId = req.query.userId;
     const lvt = req.query.lvt;

@@ -1,11 +1,13 @@
-const nodemailer = require("nodemailer");
-require("dotenv").config();
+import nodemailer from "nodemailer";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const login = process.env.USER_MAIL_SMTP;
 const password = process.env.PASSWORD_MAIL_SMTP;
 const frontend = process.env.REACT_APP_URL_FRONTEND;
 
-exports.mailMessageController = async (req, res) => {
+export const mailMessageController = async (req, res) => {
   try {
     const { textMail, userMail, subjectMail, resetPasswordToken } = req.body;
 

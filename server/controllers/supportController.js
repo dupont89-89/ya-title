@@ -1,10 +1,11 @@
-const { SupportTicket } = require("../models/SupportTicketSchema");
+import { SupportTicket } from "../models/SupportTicketSchema.js";
 
-exports.newAppealSupportController = async (req, res) => {
+export const newAppealSupportController = async (req, res) => {
   try {
-
-
-    return res.status(200).send({ message: "Создано новое обращение в поддержку" });
+    // Создание нового обращения в поддержку может быть добавлено здесь
+    return res
+      .status(200)
+      .send({ message: "Создано новое обращение в поддержку" });
   } catch (error) {
     console.error("Ошибка при обращении в поддержку:", error);
     return res.status(500).send({ message: "Ошибка сервера" });

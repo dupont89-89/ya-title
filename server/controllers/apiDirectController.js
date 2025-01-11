@@ -1,7 +1,4 @@
-const {
-  getData,
-  getClientsUnits,
-} = require("./../api-direct/fetch-api-direct");
+import { getData, getClientsUnits } from "./../api-direct/fetch-api-direct.js";
 
 // Функция для разбивки массива на части по n элементов
 function chunkArray(array, chunkSize) {
@@ -12,7 +9,7 @@ function chunkArray(array, chunkSize) {
   return chunks;
 }
 
-exports.apiDirectWordContController = async (req, res) => {
+export const apiDirectWordContController = async (req, res) => {
   try {
     const geoId = req.query.region;
     const phrases = req.body;
@@ -40,7 +37,7 @@ exports.apiDirectWordContController = async (req, res) => {
   }
 };
 
-exports.apiDirectBallContController = async (req, res) => {
+export const apiDirectBallContController = async (req, res) => {
   try {
     const result = await getClientsUnits();
     console.log(`Результат в контроллере: ${JSON.stringify(result)}`);

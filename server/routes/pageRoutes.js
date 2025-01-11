@@ -1,10 +1,15 @@
-const express = require("express");
-const pageAppController = require("../controllers/page/pageAppController");
+import express from "express"; // Импортируем express
+import {
+  newPageAppController,
+  editPageAppController,
+  getPageAppController,
+} from "../controllers/page/pageAppController.js"; // Исправляем на именованные экспорты
 
 const router = express.Router();
 
-router.post("/new-app", pageAppController.newPageAppController);
-router.post("/edit-page-app", pageAppController.editPageAppController);
-router.get("/get-page-app", pageAppController.getPageAppController);
+// Настраиваем маршруты
+router.post("/new-app", newPageAppController);
+router.post("/edit-page-app", editPageAppController);
+router.get("/get-page-app", getPageAppController);
 
-module.exports = router;
+export default router; // Экспортируем маршрутизатор

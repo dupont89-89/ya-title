@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose"; // Заменяем require на import
 
 const paySchema = new mongoose.Schema({
   OutSum: { type: Number, required: true },
@@ -10,4 +10,4 @@ const paySchema = new mongoose.Schema({
 
 const Pay = mongoose.model("pay", paySchema);
 
-module.exports = { Pay };
+export { Pay }; // Экспортируем модель с помощью ES-модулей

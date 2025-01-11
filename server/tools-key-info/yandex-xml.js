@@ -1,15 +1,17 @@
-const axios = require("axios");
-const { DOMParser } = require("xmldom");
-require("dotenv").config();
-const levenshtein = require("fast-levenshtein");
-const {
+import axios from "axios";
+import { DOMParser } from "xmldom";
+import dotenv from "dotenv";
+import levenshtein from "fast-levenshtein";
+import {
   commerceMarker,
   infoMarker,
   navigationMarker,
   mediaMarker,
   domenInfo,
   domenCommerce,
-} = require("./dataKey");
+} from "./dataKey.js";
+
+dotenv.config();
 
 const serverUrl = process.env.SERVER_URL;
 const selectedCity = "213";
@@ -166,4 +168,4 @@ const fetchYandexKey = async (query) => {
   }
 };
 
-module.exports = { fetchYandexKey };
+export { fetchYandexKey };

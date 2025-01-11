@@ -4,19 +4,23 @@ import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import { ruRU } from "@mui/x-data-grid/locales";
 import * as XLSX from "xlsx";
+import decodePunycode from "../../Whois/Parts/PunycodeConverter";
 
 export default function SiteResultTable(props) {
-  const { siteResult } = props;
+  const { siteResult, chekSiteResult } = props;
   const [selectedRows, setSelectedRows] = React.useState([]);
 
   // Функция для экспорта данных в Excel
   const handleExportExcel = (rows) => {
     // Преобразуем данные и добавляем заголовки вручную
-    const formattedData = rows.map((row) => ({
-      ID: row.id,
-      Домены: row.site,
-      ИКС: row.sqi,
-    }));
+    const formattedData = rows.map((row) => {
+      const decodedSite = decodePunycode(row.site);
+      return {
+        ID: row.id,
+        Домены: decodedSite,
+        ИКС: row.sqi,
+      };
+    });
 
     // Создаем таблицу с данными
     const worksheet = XLSX.utils.json_to_sheet(formattedData);
@@ -44,6 +48,7 @@ export default function SiteResultTable(props) {
   };
 
   const paginationModel = { page: 0, pageSize: 100 };
+
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
     {
@@ -51,17 +56,44 @@ export default function SiteResultTable(props) {
       headerName: "Домены",
       width: 300,
       sortComparator: sortByLength,
+      valueFormatter: (params) => decodePunycode(params), // Декодируем домен для отображения
     },
+    { field: "sqi", headerName: "ИКС" },
     {
-      field: "sqi",
-      headerName: "ИКС",
+      field: "result",
+      headerName: "Статус домена",
+      width: 300,
+      renderCell: (params) => {
+        // Если статус "Available", отображаем ссылку "Купить домен"
+        if (params.value === "Available") {
+          const buyLink = `https://www.reg.ru/buy/domains/?query=${params.row.site}&rlink=reflink-28428623`;
+          return (
+            <a
+              target="_blank"
+              href={buyLink}
+              style={{ color: "blue", textDecoration: "underline" }}
+            >
+              Купить домен
+            </a>
+          );
+        }
+        // Если статус "DOMAIN_ALREADY_EXISTS", отображаем "Домен занят"
+        if (params.value === "DOMAIN_ALREADY_EXISTS") {
+          return <span style={{ color: "red" }}>Домен занят</span>;
+        }
+        // Для всех остальных статусов отображаем значение как есть
+        return params.value;
+      },
     },
   ];
 
   const rows = siteResult.map((data, index) => ({
     id: index + 1, // Индексация начинается с 1
-    ...data,
+    site: data.site, // Домен (Punycode)
+    sqi: data.sqi, // ИКС
+    result: data.result, // Статус
   }));
+  34;
 
   return (
     <Paper sx={{ width: "100%" }}>

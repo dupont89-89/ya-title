@@ -1,10 +1,12 @@
-const axios = require("axios");
-const { DOMParser } = require("xmldom");
-require("dotenv").config();
-const findDuplicateWords = require("./../utils/PovtorWords/PovtorWords");
-const { fetchApiGptText } = require("../api-gpt/fetch-api-gpt");
+import axios from "axios";
+import { DOMParser } from "xmldom";
+import dotenv from "dotenv";
+import findDuplicateWords from "./../utils/PovtorWords/PovtorWords.js";
+import { fetchApiGptText } from "../api-gpt/fetch-api-gpt.js";
 
-const serverUrl = process.env.SERVER_URL;
+dotenv.config();
+
+const { SERVER_URL } = process.env;
 
 const filterUniqueWords = (words) => {
   const seen = {};
@@ -29,7 +31,7 @@ const capitalizeFirstWord = (words) => {
     .join(" ");
 };
 
-exports.getTitle = async (req, res) => {
+export const getTitle = async (req, res) => {
   const { query, selectedCity } = req.body;
 
   const xmlData = `<?xml version="1.0" encoding="utf-8"?>
@@ -44,7 +46,7 @@ exports.getTitle = async (req, res) => {
         </request>`;
 
   try {
-    const response = await axios.post(`${serverUrl}/api/get-title`, xmlData, {
+    const response = await axios.post(`${SERVER_URL}/api/get-title`, xmlData, {
       params: { selectedCity },
     });
     const xmlResponse = response.data;
@@ -133,11 +135,10 @@ exports.getTitle = async (req, res) => {
     const topWordsString = capitalizeFirstWord(topWords);
     const topWordsLinkString = capitalizeFirstWord(topWordsLink);
 
-    //Отправляем запрос к GPT для нормализации Тайтл
+    // Отправляем запрос к GPT для нормализации Тайтл
     const textTitle = `Создай из этих слов заголовок Title для поисковых систем: ${topWordsString}`;
     const gptTitle = await fetchApiGptText(textTitle);
 
-    // const title = gptTitle.choices[0].message.content;
     const title = gptTitle.choices[0].message.content.replace(/^"|"$/g, "");
 
     // Обработка urls для исключения циклических ссылок
@@ -147,7 +148,7 @@ exports.getTitle = async (req, res) => {
     }
 
     res.json({
-      title: title,
+      title,
       topWordsLink: topWordsLinkString,
       titleValues: newTitleValues,
       repeatWords: sortedWords,
@@ -159,7 +160,7 @@ exports.getTitle = async (req, res) => {
   }
 };
 
-function getTextContentWithTags(node) {
+const getTextContentWithTags = (node) => {
   let text = "";
   if (!node || !node.childNodes) {
     return text;
@@ -180,4 +181,4 @@ function getTextContentWithTags(node) {
     }
   }
   return text;
-}
+};

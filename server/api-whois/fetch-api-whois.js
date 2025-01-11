@@ -1,6 +1,6 @@
-const axios = require("axios");
+import axios from "axios";
 
-const fetchApiWhois = async (domain) => {
+export const fetchApiWhois = async (domain) => {
   const url = process.env.URL_WHOIS;
   const apiKey = process.env.API_WHOIS_KEY;
   const apiHost = process.env.API_WHOIS_HOST;
@@ -27,8 +27,4 @@ const fetchApiWhois = async (domain) => {
   } catch (err) {
     console.error("Ошибка в запросе к SEO API Whois", err);
   }
-};
-
-module.exports = {
-  fetchApiWhois,
 };

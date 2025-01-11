@@ -1,8 +1,8 @@
-const { User } = require("../models/UserSchema");
-const bcrypt = require("bcrypt");
-const { validateUser } = require("../utils/validation");
+import { User } from "../models/UserSchema.js";
+import bcrypt from "bcrypt";
+import { validateUser } from "../utils/validation.js";
 
-exports.signUpUserController = async (req, res) => {
+export const signUpUserController = async (req, res) => {
   try {
     // Валидация данных пользователя
     const { error } = validateUser(req.body);
@@ -21,14 +21,14 @@ exports.signUpUserController = async (req, res) => {
     const salt = await bcrypt.genSalt(Number(process.env.SALT));
     const hashPassword = await bcrypt.hash(req.body.password, salt);
     const bonusLvt = 100;
-    const firstName = req.body.firstName;
-    const lastName = req.body.lastName;
-    // Создание нового пользователя с начислением 20 в поле lvtPresent
+    const { firstName, lastName } = req.body;
+
+    // Создание нового пользователя с начислением 100 в поле lvtPresent
     console.log(`Имя ${firstName}, Фамилия ${lastName}`);
     await User.create({
       ...req.body,
-      firstName: firstName,
-      lastName: lastName,
+      firstName,
+      lastName,
       password: hashPassword,
       lvtPresent: {
         lvtPresentRegistration: bonusLvt,
@@ -53,7 +53,7 @@ exports.signUpUserController = async (req, res) => {
   }
 };
 
-exports.dataUserController = async (req, res) => {
+export const dataUserController = async (req, res) => {
   try {
     console.log(`dataUserController пришёл ${req.query.userId}`);
     const user = await User.findOne({ _id: req.query.userId });

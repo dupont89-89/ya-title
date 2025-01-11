@@ -1,4 +1,4 @@
-const Joi = require("joi");
+import Joi from "joi";
 
 const validateUser = (data) => {
   const schema = Joi.object({
@@ -26,4 +26,4 @@ const validateResetPassword = (data) => {
   return schema.validate(data);
 };
 
-module.exports = { validateUser, validateResetPassword, validateUserAuth };
+export { validateUser, validateResetPassword, validateUserAuth };

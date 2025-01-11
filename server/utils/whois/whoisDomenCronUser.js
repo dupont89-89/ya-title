@@ -1,14 +1,15 @@
-const cron = require("node-cron");
-const nodemailer = require("nodemailer");
-const { Whois } = require("../../models/WhoisToolsSchema");
-const moment = require("moment-timezone"); // Для работы с временными зонами
-const mongoose = require("mongoose");
+import cron from "node-cron";
+import nodemailer from "nodemailer";
+import { Whois } from "../../models/WhoisToolsSchema.js";
+import moment from "moment-timezone"; // Для работы с временными зонами
+import mongoose from "mongoose";
 
 // Настройка сервиса для отправки email через Nodemailer
-
-const login = process.env.USER_MAIL_SMTP;
-const password = process.env.PASSWORD_MAIL_SMTP;
-const frontend = process.env.REACT_APP_URL_FRONTEND;
+const {
+  USER_MAIL_SMTP: login,
+  PASSWORD_MAIL_SMTP: password,
+  REACT_APP_URL_FRONTEND: frontend,
+} = process.env;
 
 const transporter = nodemailer.createTransport({
   host: "mail.hosting.reg.ru",
@@ -27,7 +28,7 @@ const sendEmailNotification = async (email, domen) => {
       from: "tools@ptahini.ru",
       to: email,
       subject: "Оповещение от Ptahini. Доменное имя освободилось.",
-      html: `Домен ${domen} освободился. Успейте его зарегистрировать. Перейти в инструмент <a style={border-bottom: 1px solid;} href="${frontend}/app/whois/">проверки домена</a>.`,
+      html: `Домен ${domen} освободился. Успейте его зарегистрировать. Перейти в инструмент <a style="border-bottom: 1px solid;" href="${frontend}/app/whois/">проверки домена</a>.`,
     });
     console.log(`Email отправлен пользователю: ${email}`);
   } catch (error) {
@@ -61,39 +62,4 @@ const checkSubscriptions = async () => {
   }
 };
 
-module.exports = {
-  checkSubscriptions,
-};
-
-// Запуск каждый 10 секунд для тестирования
-
-// Проверка подписок
-// const checkSubscriptions = async () => {
-//   try {
-//     // Пример получения текущей даты в формате ISO
-//     const today = new Date().toISOString();
-
-//     // Находим все подписки, где freeData совпадает с текущей датой
-//     const subscriptions = await Whois.find({
-//       "subscriptionFreeDomen.freeData": today,
-//     });
-
-//     console.log(`Найдено подписок: ${subscriptions.length}`);
-//     for (const user of subscriptions) {
-//       const email = user.email;
-//       for (const domenSubscription of user.subscriptionFreeDomen) {
-//         if (domenSubscription.freeData === today) {
-//           console.log(
-//             `Отправляем email на адрес пользователю ${email} по домену ${domenSubscription.domen}`
-//           );
-//           await sendEmailNotification(email, domenSubscription.domen);
-//         }
-//       }
-//     }
-//   } catch (error) {
-//     console.error("Ошибка при проверке подписок:", error);
-//   }
-// };
-
-// // Вызываем функцию проверки подписок
-// checkSubscriptions();
+export { checkSubscriptions }; // Используем экспорт в ES6

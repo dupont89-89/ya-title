@@ -1,13 +1,15 @@
-const express = require("express");
-const payControllers = require("../controllers/payControllers");
+import express from "express"; // Импортируем express
+import {
+  payScoreRobokassaController,
+  payRobokassaController,
+  getScoreController,
+} from "../controllers/payControllers.js"; // Исправляем на именованные экспорты
 
 const router = express.Router();
 
-router.get(
-  "/success-payment-score",
-  payControllers.payScoreRobokassaController
-);
-router.get("/success-payment", payControllers.payRobokassaController);
-router.get("/get-payment-score", payControllers.getScoreController);
+// Настраиваем маршруты
+router.get("/success-payment-score", payScoreRobokassaController);
+router.get("/success-payment", payRobokassaController);
+router.get("/get-payment-score", getScoreController);
 
-module.exports = router;
+export default router; // Экспортируем маршрутизатор

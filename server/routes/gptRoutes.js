@@ -1,8 +1,9 @@
-const express = require("express");
-const gptController = require("../controllers/gptController");
+import express from "express"; // Импортируем express
+import { apiGptTitleOneController } from "../controllers/gptController.js"; // Исправляем на именованный экспорт
 
 const router = express.Router();
 
-router.get("/title", gptController.apiGptTitleOneController);
+// Настраиваем маршруты
+router.get("/title", apiGptTitleOneController);
 
-module.exports = router;
+export default router; // Экспортируем маршрутизатор

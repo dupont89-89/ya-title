@@ -1,4 +1,4 @@
-const { User } = require("../models/UserSchema");
+import { User } from "../models/UserSchema.js";
 
 // Функция для форматирования даты
 const formatDate = (date) => {
@@ -8,18 +8,19 @@ const formatDate = (date) => {
 
 // Добавить пользователя в рефералы
 const addUserToReferrals = (user, userNew, refUserId, userId) => {
-  user.referal.push({ userId: userId, dateAdded: Date.now() });
+  user.referal.push({ userId, dateAdded: Date.now() });
   userNew.referalPay = { userId: refUserId, dateAdded: Date.now() };
 };
 
-exports.authRefAddUser = async (req, res) => {
+export const authRefAddUser = async (req, res) => {
   try {
-    const refUserId = req.query.refUserId;
-    const userId = req.query.userId;
+    const { refUserId, userId } = req.query;
     console.log(refUserId);
     console.log(userId);
+
     const currentDate = new Date();
     const formattedDate = formatDate(currentDate);
+
     const [user, userNew] = await Promise.all([
       User.findOne({ _id: refUserId }),
       User.findOne({ _id: userId }),
@@ -38,6 +39,7 @@ exports.authRefAddUser = async (req, res) => {
       message: `У вас появился реферал, теперь вы получаете 15% на баланс в виде денежного вознагрождения от его пополнений`,
       dateAdded: formattedDate,
     };
+
     user.notifications.push(notification);
     user.notificationsHistory.push(notification);
 

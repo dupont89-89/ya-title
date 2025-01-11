@@ -1,13 +1,16 @@
-const { Pay } = require("../models/PaySchema");
-const { User } = require("../models/UserSchema");
-const md5 = require("md5");
-require("dotenv").config();
-const logger = require("../utils/logger");
+import { Pay } from "../models/PaySchema.js";
+import { User } from "../models/UserSchema.js";
+import md5 from "md5";
+import dotenv from "dotenv";
+import { writeToLog } from "../utils/logger.js"; // Измененный импорт
+
+// Загрузка переменных окружения
+dotenv.config();
 
 const merchant_login = process.env.ROBOKASSA_SHOP_NAME;
 const password_1 = process.env.ROBOKASSA_PASSWORD_1;
 
-exports.payRobokassaController = async (req, res) => {
+export const payRobokassaController = async (req, res) => {
   try {
     const InvId = req.query.InvId; // Номер счёта
     const signatureValueRobokassa = req.query.SignatureValue;
@@ -17,49 +20,33 @@ exports.payRobokassaController = async (req, res) => {
     // Форматируем дату и время в строку
     const formattedDate = moscowTime.toISOString();
 
-    // logger.writeToLog("Incoming request data:");
-    // logger.writeToLog(`InvId: ${InvId}`);
-    // logger.writeToLog(`Хеш который пришёл: ${signatureValueRobokassa}`);
-    // logger.writeToLog(`Пароль: ${password_1}`);
-    // logger.writeToLog(`Название магазина: ${merchant_login}`);
-
     // Проверяем, есть ли номер счёта
     if (InvId) {
       // Находим запись в базе данных по номеру счёта
       const score = await Pay.findOne({ InvId: InvId });
       // Если запись найдена, отправляем данные обратно
       if (score) {
-        // logger.writeToLog(`Счёт: ${score}`);
+        writeToLog(`Начинаем проверку для счета: ${score.InvId}`);
 
         const { OutSum, userId, InvId, paymentStatus } = score; // Получаем нужные значения из найденной записи
 
         const signatureValue = md5(
           `${OutSum.toFixed(2)}:${InvId.toString()}:${password_1}`
         );
-        logger.writeToLog(
-          `Начинаем проверять merchant_login: ${merchant_login}`
-        );
-        // logger.writeToLog(`paymentAmount: ${OutSum}`);
-        // logger.writeToLog(`invoiceId: ${InvId}`);
-        // logger.writeToLog(`password_2: ${password_1}`);
-        // logger.writeToLog(`Хеш сформированный: ${signatureValue}`);
+        writeToLog(`Проверка подписи для merchant_login: ${merchant_login}`);
 
         if (signatureValue === signatureValueRobokassa) {
-          logger.writeToLog("Хеш совпадает");
+          writeToLog("Хеш совпадает");
           if (!paymentStatus) {
-            // Найти пользователя по userId
             const user = await User.findOne({ _id: userId });
             // Если пользователь найден, обновить его счет
             if (user) {
-              // logger.writeToLog(`Найденный пользователь: ${user}`);
               // Добавить сумму к существующему балансу пользователя
               user.money += parseFloat(OutSum);
               user.moneyHistory += parseFloat(OutSum);
 
-              // Проверяем, существует ли значение user.referalPay.userId
               const referalPayUserId =
                 user.referalPay && user.referalPay.userId;
-              // logger.writeToLog(`Баланс пользователя обновлен: ${user}`);
               const notification = {
                 message: `Баланс пополнен на ${OutSum} рублей.`,
                 dateAdded: formattedDate,
@@ -72,7 +59,6 @@ exports.payRobokassaController = async (req, res) => {
                 const userPayRef = await User.findOne({
                   _id: referalPayUserId,
                 });
-                // Проверяем, найден ли пользователь-реферал
                 if (userPayRef) {
                   userPayRef.money += parseFloat(commission);
                   userPayRef.moneyHistory += parseFloat(commission);
@@ -82,28 +68,21 @@ exports.payRobokassaController = async (req, res) => {
                     message: `Бонус за реферала. Баланс пополнен на ${commission} рублей.`,
                     dateAdded: formattedDate,
                   };
-                  // Добавить уведомление пользователю-рефералу
                   userPayRef.notifications.push(notificationRef);
                   userPayRef.notificationsHistory.push(notificationRef);
-                  // Сохранить данные пользователя-реферала
                   await userPayRef.save();
-                } else {
-                  // logger.writeToLog("Пользователь-реферал не найден");
                 }
               }
-              // Добавить уведомление пользователю
               user.notifications.push(notification);
               user.notificationsHistory.push(notification);
               score.paymentStatus = true;
-              // Сохранить данные пользователя
               await user.save();
               await score.save();
             }
           } else {
-            logger.writeToLog("Счёт уже оплачен!");
+            writeToLog("Счёт уже оплачен!");
           }
         } else {
-          // logger.writeToLog("Хеш НЕ совпадает");
           return res
             .status(400)
             .json({ message: "Ошибка верификации подписи" });
@@ -113,21 +92,18 @@ exports.payRobokassaController = async (req, res) => {
           message: `Оплата на сумму ${OutSum} успешно произведена.`,
         });
       } else {
-        // Если запись не найдена, возвращаем соответствующее сообщение об ошибке
         return res.status(404).json({ message: "Счёт не найден" });
       }
     } else {
-      // Если номер счёта не передан, возвращаем сообщение об ошибке
       res.status(400).json({ message: "Не передан номер счёта" });
     }
   } catch (error) {
-    // Обрабатываем любые ошибки, возникающие во время запроса
     console.error("Ошибка при поиске счёта:", error);
     res.status(500).json({ message: "Внутренняя ошибка сервера" });
   }
 };
 
-exports.payScoreRobokassaController = async (req, res) => {
+export const payScoreRobokassaController = async (req, res) => {
   try {
     const OutSum = req.query.OutSum; // Сумма счёта
     const InvId = req.query.InvId; // Номер счёта
@@ -169,7 +145,7 @@ exports.payScoreRobokassaController = async (req, res) => {
   }
 };
 
-exports.getScoreController = async (req, res) => {
+export const getScoreController = async (req, res) => {
   try {
     const score = await Pay.find({}); // Найти всех пользователей
 

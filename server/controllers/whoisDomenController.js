@@ -1,9 +1,9 @@
-const { fetchApiWhois } = require("../api-whois/fetch-api-whois");
-const { Whois } = require("../models/WhoisToolsSchema");
+import { fetchApiWhois } from "../api-whois/fetch-api-whois.js";
+import { Whois } from "../models/WhoisToolsSchema.js";
 
 // Запрос к API whois сервиса
-exports.whoisDomenController = async (req, res) => {
-  const domen = req.query.domen;
+export const whoisDomenController = async (req, res) => {
+  const { domen } = req.query;
   try {
     const result = await fetchApiWhois(domen);
 
@@ -22,7 +22,7 @@ exports.whoisDomenController = async (req, res) => {
 };
 
 // Пользователь подписывается на освобождение домена
-exports.whoisDomenSubscriptionController = async (req, res) => {
+export const whoisDomenSubscriptionController = async (req, res) => {
   const { domen, userId, freeData, email } = req.query;
 
   try {
@@ -36,7 +36,7 @@ exports.whoisDomenSubscriptionController = async (req, res) => {
     }
 
     // Проверяем, существует ли пользователь и его подписка
-    const user = await Whois.findOne({ userId: userId });
+    const user = await Whois.findOne({ userId });
 
     if (user) {
       // Проверяем, подписан ли пользователь уже на этот домен
@@ -72,7 +72,7 @@ exports.whoisDomenSubscriptionController = async (req, res) => {
 };
 
 // Получаем домены, на которые подписан пользователь
-exports.getDomenSubscriptionController = async (req, res) => {
+export const getDomenSubscriptionController = async (req, res) => {
   try {
     const user = await Whois.findOne({ userId: req.query.userId });
 
@@ -92,14 +92,14 @@ exports.getDomenSubscriptionController = async (req, res) => {
   }
 };
 
-//Удаляем подписку на домен
-exports.deleteWhoisDomenSubscriptionController = async (req, res) => {
+// Удаляем подписку на домен
+export const deleteWhoisDomenSubscriptionController = async (req, res) => {
   const { domen, userId } = req.query;
 
   try {
     const result = await Whois.updateOne(
-      { userId: userId },
-      { $pull: { subscriptionFreeDomen: { domen: domen } } }
+      { userId },
+      { $pull: { subscriptionFreeDomen: { domen } } }
     );
 
     if (result.modifiedCount === 0) {

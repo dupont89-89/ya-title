@@ -1,6 +1,6 @@
-const { PageApp } = require("../../models/PageAppSchema");
+import { PageApp } from "../../models/PageAppSchema.js";
 
-exports.newPageAppController = async (req, res) => {
+export const newPageAppController = async (req, res) => {
   try {
     const pageNewSlug = await PageApp.findOne({ slug: req.body.slug });
     if (pageNewSlug) {
@@ -9,19 +9,16 @@ exports.newPageAppController = async (req, res) => {
       });
     }
     console.log(req.body);
-    const pageTitle = req.body.pageTitle;
-    const slug = req.body.slug;
-    const textContent = req.body.textContent;
-    const metaTitle = req.body.metaTitle;
-    const metaDescription = req.body.metaDescription;
+    const { pageTitle, slug, textContent, metaTitle, metaDescription } =
+      req.body;
 
     await PageApp.create({
       ...req.body,
-      pageTitle: pageTitle,
-      slug: slug,
-      textContent: textContent,
-      metaTitle: metaTitle,
-      metaDescription: metaDescription,
+      pageTitle,
+      slug,
+      textContent,
+      metaTitle,
+      metaDescription,
     });
 
     res.status(201).send({ message: "Страница успешно создана" });
@@ -33,12 +30,11 @@ exports.newPageAppController = async (req, res) => {
   }
 };
 
-exports.getPageAppController = async (req, res) => {
+export const getPageAppController = async (req, res) => {
   try {
     const pages = await PageApp.find({});
 
     if (pages.length > 0) {
-      // Преобразовать данные каждого пользователя в нужный формат
       const pageData = pages.map((page) => ({
         pageId: page._id,
         pageTitle: page.pageTitle,
@@ -48,51 +44,41 @@ exports.getPageAppController = async (req, res) => {
         metaDescription: page.metaDescription,
       }));
 
-      // Отправить данные пользователей в ответе
       res.status(200).json({ pages: pageData });
     } else {
-      // Если пользователи не найдены, отправить соответствующее сообщение об ошибке
       res.status(404).json({ message: "Страницы инструментов не найдены" });
     }
   } catch (error) {
-    // Обработать ошибку, возникшую во время запроса к базе данных
     console.error("Ошибка при извлечении страниц инструментов:", error);
     res.status(500).json({ message: "Внутренняя ошибка сервера" });
   }
 };
 
-exports.editPageAppController = async (req, res) => {
+export const editPageAppController = async (req, res) => {
   try {
-    const pageId = req.body.pageId;
-    const pageTitle = req.body.pageTitle;
-    const slug = req.body.slug;
-    const textContent = req.body.textContent;
-    const metaTitle = req.body.metaTitle;
-    const metaDescription = req.body.metaDescription;
+    const { pageId, pageTitle, slug, textContent, metaTitle, metaDescription } =
+      req.body;
 
     const updatedPageApp = await PageApp.findOneAndUpdate(
       { _id: pageId },
       {
         $set: {
-          pageTitle: pageTitle,
-          slug: slug,
-          textContent: textContent,
-          metaTitle: metaTitle,
-          metaDescription: metaDescription,
+          pageTitle,
+          slug,
+          textContent,
+          metaTitle,
+          metaDescription,
         },
       },
-      { new: true } // Устанавливаем опцию new в true, чтобы получить обновленный объект пользователя
+      { new: true }
     );
 
     if (updatedPageApp) {
-      // Если пользователь успешно обновлен, отправляем обновленные данные в ответе
       res.status(200).json({ message: "Страница успешно обновлена" });
     } else {
-      // Если пользователь не найден, отправляем ответ с ошибкой 404 Not Found
       res.status(404).json({ message: "Страница не найдена" });
     }
   } catch (error) {
-    // Обрабатываем любые ошибки, возникающие во время запроса
     console.error("Ошибка при обновлении страницы инструмента:", error);
     res.status(500).json({ message: "Внутренняя ошибка сервера" });
   }

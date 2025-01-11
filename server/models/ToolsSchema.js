@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose"; // Заменяем require на import
 
 const toolsSchema = new mongoose.Schema({
   name: { type: String, required: true, unique: true },
@@ -27,4 +27,4 @@ toolsSchema.methods.getAverageEvaluation = function () {
 
 const Tools = mongoose.model("Tools", toolsSchema);
 
-module.exports = { Tools };
+export { Tools }; // Экспорт для ES-модулей

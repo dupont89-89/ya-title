@@ -1,7 +1,7 @@
-const axios = require("axios");
-const AdmZip = require("adm-zip");
+import axios from "axios";
+import AdmZip from "adm-zip";
 
-exports.getDomainListRu = async (req, res) => {
+export const getDomainListRu = async (req, res) => {
   try {
     const now = new Date();
     console.log("Текущее время UTC:", now.toISOString());

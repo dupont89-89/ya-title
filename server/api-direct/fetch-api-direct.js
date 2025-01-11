@@ -1,5 +1,8 @@
-const axios = require("axios");
-require("dotenv").config();
+import axios from "axios";
+import https from "https";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const url = "https://api-sandbox.direct.yandex.ru/v4/json/";
 const token = process.env.API_DIRECT_TOKEN;
@@ -10,10 +13,10 @@ const axiosConfig = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${token}`,
   },
-  httpsAgent: new (require("https").Agent)({ rejectUnauthorized: false }),
+  httpsAgent: new https.Agent({ rejectUnauthorized: false }),
 };
 
-const createNewWordstatReport = async (phrases, geoId) => {
+export const createNewWordstatReport = async (phrases, geoId) => {
   console.log(
     "Creating new wordstat report with phrases:",
     phrases,
@@ -24,7 +27,7 @@ const createNewWordstatReport = async (phrases, geoId) => {
     method: "CreateNewWordstatReport",
     param: {
       Phrases: phrases,
-      GeoID: geoId, // Убедитесь, что geoId передается как массив
+      GeoID: geoId, // Ensure geoId is passed as an array
     },
     token: token,
   };
@@ -38,7 +41,7 @@ const createNewWordstatReport = async (phrases, geoId) => {
   }
 };
 
-const getWordstatReportList = async () => {
+export const getWordstatReportList = async () => {
   console.log("Getting wordstat report list");
   const body = {
     method: "GetWordstatReportList",
@@ -54,7 +57,7 @@ const getWordstatReportList = async () => {
   }
 };
 
-const deleteWordstatReport = async (reportId) => {
+export const deleteWordstatReport = async (reportId) => {
   console.log("Deleting wordstat report with reportId:", reportId);
   const body = {
     method: "DeleteWordstatReport",
@@ -77,7 +80,7 @@ const deleteWordstatReport = async (reportId) => {
   }
 };
 
-const getWordstatReport = async (reportId) => {
+export const getWordstatReport = async (reportId) => {
   console.log("Getting wordstat report with reportId:", reportId);
   const body = {
     method: "GetWordstatReport",
@@ -94,7 +97,7 @@ const getWordstatReport = async (reportId) => {
   }
 };
 
-const getClientsUnits = async () => {
+export const getClientsUnits = async () => {
   console.log("Getting client's units");
   const body = {
     method: "GetClientsUnits",
@@ -118,7 +121,7 @@ const getClientsUnits = async () => {
   }
 };
 
-const deleteAllReports = async () => {
+export const deleteAllReports = async () => {
   console.log("Deleting all reports");
   const reportList = await getWordstatReportList();
   if (!reportList || !reportList.data) return;
@@ -128,7 +131,7 @@ const deleteAllReports = async () => {
   }
 };
 
-const waitForReport = async (reportId) => {
+export const waitForReport = async (reportId) => {
   console.log("Waiting for report with reportId:", reportId);
   let isReady = false;
   while (!isReady) {
@@ -148,7 +151,7 @@ const waitForReport = async (reportId) => {
   }
 };
 
-const dataRequest = async (reportId) => {
+export const dataRequest = async (reportId) => {
   console.log("Requesting data for reportId:", reportId);
   const result = await getWordstatReport(reportId);
   if (!result || !result.data) return;
@@ -163,7 +166,7 @@ const dataRequest = async (reportId) => {
   return resultData;
 };
 
-const getData = async (phrases, geoId) => {
+export const getData = async (phrases, geoId) => {
   console.log("getData called with phrases:", phrases, "and geoId:", geoId);
   await deleteAllReports();
 
@@ -182,16 +185,4 @@ const getData = async (phrases, geoId) => {
   const data = await dataRequest(newReport.data);
   console.log("Final data:", data);
   return data;
-};
-
-module.exports = {
-  createNewWordstatReport,
-  getWordstatReportList,
-  deleteWordstatReport,
-  getWordstatReport,
-  getClientsUnits,
-  deleteAllReports,
-  waitForReport,
-  dataRequest,
-  getData,
 };

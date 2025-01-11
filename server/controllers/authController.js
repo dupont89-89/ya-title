@@ -1,14 +1,16 @@
-const { mailMessageController } = require("../SMTP/mail");
-const { User } = require("../models/UserSchema");
-const uuid = require("uuid");
-const {
+import { mailMessageController } from "../SMTP/mail.js";
+import { User } from "../models/UserSchema.js";
+import { v4 as uuidv4 } from "uuid";
+import {
   validateUserAuth,
   validateResetPassword,
-} = require("../utils/validation");
-const bcrypt = require("bcrypt");
-require("dotenv").config();
+} from "../utils/validation.js";
+import bcrypt from "bcrypt";
+import dotenv from "dotenv";
 
-exports.authUserController = async (req, res) => {
+dotenv.config();
+
+export const authUserController = async (req, res) => {
   try {
     const { error } = validateUserAuth(req.body);
     if (error) {
@@ -51,7 +53,7 @@ exports.authUserController = async (req, res) => {
   }
 };
 
-exports.authResetUserPasswordController = async (req, res) => {
+export const authResetUserPasswordController = async (req, res) => {
   try {
     console.log("Request body:", req.body); // Выводим тело запроса в консоль
 
@@ -93,7 +95,7 @@ exports.authResetUserPasswordController = async (req, res) => {
   }
 };
 
-exports.tokenResetUserPasswordController = async (req, res) => {
+export const tokenResetUserPasswordController = async (req, res) => {
   const { token } = req.params;
 
   try {
@@ -126,7 +128,7 @@ exports.tokenResetUserPasswordController = async (req, res) => {
   }
 };
 
-exports.authVKController = async (req, res) => {
+export const authVKController = async (req, res) => {
   try {
     const { email, first_name, last_name, avatar, user_id } = req.body;
 
@@ -149,16 +151,7 @@ exports.authVKController = async (req, res) => {
           .send({ message: "Все поля должны быть заполнены." });
       }
 
-      // // Обновляем данные существующего пользователя
-      // user.avatar = avatar;
-      // user.email = email;
-      // user.firstName = first_name;
-      // user.lastName = last_name;
-
       try {
-        // Сохраняем обновления
-        // await user.save();
-
         // Генерируем новый токен
         const token = user.generateAuthToken();
 

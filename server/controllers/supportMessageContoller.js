@@ -1,8 +1,8 @@
-const { User } = require("../models/UserSchema");
+import { User } from "../models/UserSchema.js";
 
-exports.supportMessageContoller = async (req, res) => {
+export const supportMessageContoller = async (req, res) => {
   try {
-    const userId = req.query.userId;
+    const { userId } = req.query;
 
     // Проверяем, что userId не равен undefined
     if (!userId) {
@@ -16,21 +16,21 @@ exports.supportMessageContoller = async (req, res) => {
       return res.status(404).send({ message: "Пользователь не найден" });
     }
 
-    const notifications = user.notifications; // Получаем уведомления от пользователя
+    const { notifications } = user; // Получаем уведомления от пользователя
 
     // Возвращаем ответ с уведомлениями
     return res
       .status(200)
-      .send({ message: "Отправленны оповещения пользователя", notifications });
+      .send({ message: "Отправлены оповещения пользователя", notifications });
   } catch (error) {
     console.error("Ошибка в контроллере supportMessageContoller:", error);
     return res.status(500).send({ message: "Внутренняя ошибка сервера" });
   }
 };
 
-exports.clearSupportMessageContoller = async (req, res) => {
+export const clearSupportMessageContoller = async (req, res) => {
   try {
-    const userId = req.query.userId;
+    const { userId } = req.query;
     const user = await User.findOne({ _id: userId });
     if (!user) {
       return res.status(404).send({ message: "Пользователь не найден" });

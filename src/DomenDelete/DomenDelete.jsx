@@ -6,7 +6,8 @@ import DomenDeleteResultTable from "./Parts/DomenDeleteResultTable";
 // import SiteResultTable from "./Parts/SiteResultTable";
 
 export default function DomenDelete(props) {
-  const { handleClick, domenResult, domenResultData } = props;
+  const { handleClick, domenResult, domenResultData, handleClickChekDomen } =
+    props;
 
   const theme = useTheme();
   const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
@@ -45,6 +46,14 @@ export default function DomenDelete(props) {
               onClick={handleClick}
             >
               Получить список
+            </Button>
+            <Button
+              startIcon={<PlayCircleOutlineIcon />}
+              variant="contained"
+              sx={{ backgroundColor: "#4CAF50" }}
+              onClick={handleClickChekDomen}
+            >
+              Тестируем сбодные
             </Button>
           </Box>
         </Box>

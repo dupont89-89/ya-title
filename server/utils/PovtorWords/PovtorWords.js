@@ -1,6 +1,6 @@
-const DictionaryModule = require("./DictionaryModule");
-const wordFormsHandler = require("./WordFormsModule");
-const DuplicatesFinderModule = require("./DuplicatesFinderModule");
+import DictionaryModule from "./DictionaryModule.js";
+import wordFormsHandler from "./WordFormsModule.js";
+import DuplicatesFinderModule from "./DuplicatesFinderModule.js";
 
 const dict = DictionaryModule("ru");
 const wordFormsHandlerInstance = wordFormsHandler(dict);
@@ -11,12 +11,14 @@ const findDuplicateWords = (text, distance) => {
   const duplicatesChains = wordMatrix.getRepetitions(distance);
   let chainsCount = 0;
   let duplicatesCount = 0;
+
   duplicatesChains.forEach((chain) => {
     if (chain !== null) {
       chainsCount++;
       duplicatesCount += chain.length;
     }
   });
+
   return {
     chains: chainsCount,
     duplicates: duplicatesCount,
@@ -24,4 +26,4 @@ const findDuplicateWords = (text, distance) => {
   };
 };
 
-module.exports = findDuplicateWords;
+export default findDuplicateWords;

@@ -1,6 +1,6 @@
-const { Tools } = require("../../models/ToolsSchema");
+import { Tools } from "../../models/ToolsSchema.js";
 
-exports.toolsDataController = async (req, res) => {
+export const toolsDataController = async (req, res) => {
   try {
     const userExists = await Tools.findOne({ email: req.body.email });
     if (userExists) {
@@ -10,9 +10,7 @@ exports.toolsDataController = async (req, res) => {
       });
     }
 
-    const userId = req.body.userId;
-    const evaluation = req.body.evaluation;
-    const name = req.body.name;
+    const { userId, evaluation, name } = req.body;
 
     await Tools.create({
       ...req.body,
