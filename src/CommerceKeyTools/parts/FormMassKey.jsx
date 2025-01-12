@@ -198,7 +198,7 @@ export default function FormMassKey(props) {
                     component="a"
                     className={s.resultMassFile}
                     href={csvDownloadLink}
-                    download="results.csv"
+                    download="result.xlsx"
                   >
                     Скачать результат
                   </Button>

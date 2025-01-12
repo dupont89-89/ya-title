@@ -2,6 +2,7 @@ import axios from "axios";
 import { DOMParser } from "xmldom";
 import dotenv from "dotenv";
 import levenshtein from "fast-levenshtein";
+import pLimit from "p-limit";
 import {
   commerceMarker,
   infoMarker,
@@ -15,6 +16,7 @@ dotenv.config();
 
 const serverUrl = process.env.SERVER_URL;
 const selectedCity = "213";
+const limit = pLimit(10); // Ограничиваем количество одновременных запросов до 10
 
 // Функция для вычисления процента совпадения
 const similarityPercentage = (str1, str2) => {
@@ -25,15 +27,12 @@ const similarityPercentage = (str1, str2) => {
 
 // Функция для проверки совпадения с порогом
 const isMatch = (query, markers, threshold = 83) => {
-  const words = query.split(" "); // Разбиваем запрос на слова
+  const words = query.split(" ");
   for (let i = 0; i < words.length; i++) {
     const queryWord = words[i];
     for (let j = 0; j < markers.length; j++) {
       const markerWord = markers[j];
       const similarity = similarityPercentage(queryWord, markerWord);
-      console.log(
-        `Сравнение "${queryWord}" с "${markerWord}" дает ${similarity}% совпадения`
-      );
       if (similarity >= threshold) {
         return true;
       }
@@ -56,116 +55,110 @@ const checkDomains = (domains, markers) => {
   return matchCount;
 };
 
-const fetchYandexKey = async (query) => {
+export const fetchYandexKey = async (query) => {
+  console.log(`Пришел запрос: ${JSON.stringify(query)}`);
+
   const processQuery = async (q) => {
-    // Приводим query к нижнему регистру
     const lowerCaseQuery = q.toLowerCase();
     console.log(`Запрос в нижнем регистре: ${lowerCaseQuery}`);
 
-    // Проверка на совпадение с query из слов из массивов
     const matchInfo = isMatch(lowerCaseQuery, infoMarker);
     const matchCommerce = isMatch(lowerCaseQuery, commerceMarker);
     const matchNavigation = isMatch(lowerCaseQuery, navigationMarker);
     const matchMedia = isMatch(lowerCaseQuery, mediaMarker);
 
-    // Если совпадение найдено, возвращаем ответ на фронтенд
+    let result;
+
     if (matchInfo || matchCommerce || matchNavigation || matchMedia) {
-      if (matchMedia) {
-        console.log("Совпадение в массиве Мультимедиа запрос");
-        return "Мультимедиа запрос";
-      }
-      if (matchNavigation) {
-        console.log("Совпадение в массиве Навигационный запрос");
-        return "Навигационный запрос";
-      }
-      if (matchInfo) {
-        console.log("Совпадение в массиве Информационный запрос");
-        return "Информационный запрос";
-      }
-      if (matchCommerce) {
-        console.log("Совпадение в массиве Коммерческий запрос");
-        return "Коммерческий запрос";
-      }
-    }
+      if (matchMedia) result = "Мультимедиа запрос";
+      else if (matchNavigation) result = "Навигационный запрос";
+      else if (matchInfo) result = "Информационный запрос";
+      else if (matchCommerce) result = "Коммерческий запрос";
+      console.log(`Проверка по базам: ${result}`);
+    } else {
+      const xmlData = `<?xml version="1.0" encoding="utf-8"?>
+          <request>
+            <query>${lowerCaseQuery}</query>
+            <sortby>rlv</sortby>
+            <groupings>
+              <groupby attr="d" mode="deep" groups-on-page="10" docs-in-group="1" />
+            </groupings>
+            <maxpassages>5</maxpassages>
+            <page>1</page>
+          </request>`;
 
-    console.log("Совпадений не найдено, отправка запроса на сервер.");
+      console.log(`Отправка XML-запроса: ${xmlData}`);
 
-    // Выполнить запрос, если совпадений нет
-    const xmlData = `<?xml version="1.0" encoding="utf-8"?>
-        <request>
-          <query>${lowerCaseQuery}</query>
-          <sortby>rlv</sortby>
-          <groupings>
-            <groupby attr="d" mode="deep" groups-on-page="10" docs-in-group="1" />
-          </groupings>
-          <maxpassages>5</maxpassages>
-          <page>1</page>
-        </request>`;
-
-    try {
-      const response = await axios.post(`${serverUrl}/api/get-title`, xmlData, {
-        params: { selectedCity: selectedCity },
-      });
-      const xmlResponse = response.data;
-      const parser = new DOMParser();
-      const xmlDoc = parser.parseFromString(xmlResponse, "text/xml");
-
-      // Получаем все элементы <domain>
-      const domains = xmlDoc.getElementsByTagName("domain");
-      const domainValues = [];
-      for (let i = 0; i < domains.length; i++) {
-        domainValues.push(domains[i].textContent);
-      }
-
-      console.log(domainValues);
-
-      // Проверка доменов
-      const matchDomenInfo = checkDomains(domainValues, domenInfo);
-      const matchDomenCommerce = checkDomains(domainValues, domenCommerce);
-
-      const totalMatches = matchDomenInfo + matchDomenCommerce;
-
-      if (totalMatches > 0) {
-        const infoPercentage = ((matchDomenInfo / totalMatches) * 100).toFixed(
-          2
+      try {
+        const response = await axios.post(
+          `${serverUrl}/api/get-title`,
+          xmlData,
+          {
+            params: { selectedCity: selectedCity },
+            timeout: 30000,
+          }
         );
-        const commercePercentage = (
-          (matchDomenCommerce / totalMatches) *
-          100
-        ).toFixed(2);
+        console.log(`Ответ от сервера: ${JSON.stringify(response.data)}`);
 
-        if (matchDomenInfo && matchDomenCommerce) {
-          console.log("Совпадение в обоих массивах domenInfo и domenCommerce");
-          return `Смешанная выдача:\n ${infoPercentage}% информационных\n ${commercePercentage}% коммерческих`;
-        } else if (matchDomenCommerce) {
-          console.log("Совпадение в массиве domenCommerce");
-          return "Коммерческий запрос";
-        } else if (matchDomenInfo) {
-          console.log("Совпадение в массиве domenInfo");
-          return "Информационный запрос";
+        const xmlResponse = response.data;
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlResponse, "text/xml");
+
+        const domains = xmlDoc.getElementsByTagName("domain");
+        const domainValues = [];
+        for (let i = 0; i < domains.length; i++) {
+          domainValues.push(domains[i].textContent);
         }
-      } else {
-        console.log("Совпадений не найдено в доменах");
-        return "Общий запрос";
+        console.log(`Найденные домены: ${domainValues.join(", ")}`);
+
+        const matchDomenInfo = checkDomains(domainValues, domenInfo);
+        const matchDomenCommerce = checkDomains(domainValues, domenCommerce);
+
+        const totalMatches = matchDomenInfo + matchDomenCommerce;
+
+        if (totalMatches > 0) {
+          const infoPercentage = (
+            (matchDomenInfo / totalMatches) *
+            100
+          ).toFixed(2);
+          const commercePercentage = (
+            (matchDomenCommerce / totalMatches) *
+            100
+          ).toFixed(2);
+
+          if (matchDomenInfo && matchDomenCommerce) {
+            result = `Смешанная выдача:\n ${infoPercentage}% информационных\n ${commercePercentage}% коммерческих`;
+          } else if (matchDomenCommerce) {
+            result = "Коммерческий запрос";
+          } else if (matchDomenInfo) {
+            result = "Информационный запрос";
+          }
+        } else {
+          result = "Общий запрос";
+        }
+        console.log(`Результат обработки запроса: ${result}`);
+      } catch (error) {
+        console.error("Ошибка при выполнении запроса:", error);
+        throw error;
       }
-    } catch (error) {
-      console.error("Ошибка при выполнении запроса:", error);
-      throw error;
     }
+
+    return { query: q, result }; // Возвращаем объект с ключами query и result
   };
 
-  // Проверка, является ли query массивом
   if (Array.isArray(query)) {
+    // Если query — массив, обрабатываем каждый элемент параллельно
+    console.log("Обработка массива запросов");
     const results = await Promise.all(
-      query.map(async (q) => {
-        const result = await processQuery(q);
-        return { query: q, result };
-      })
+      query.map((q) => limit(() => processQuery(q)))
     );
-    return results;
+    console.log("Результаты обработки массива запросов:", results);
+    return results; // Возвращаем массив объектов
   } else {
-    return await processQuery(query);
+    // Если query — строка, обрабатываем как единичный запрос
+    console.log("Обработка единичного запроса");
+    const result = await limit(() => processQuery(query));
+    console.log("Результат обработки единичного запроса:", result);
+    return result; // Возвращаем один объект
   }
 };
-
-export { fetchYandexKey };

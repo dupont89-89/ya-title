@@ -48,6 +48,12 @@ const commerceMarker = [
 
 const infoMarker = [
   "каков",
+  "идеи",
+  "что лучше",
+  "шрифт",
+  "вакансии",
+  "вид",
+  "виды",
   "каковой",
   "какой",
   "который",
@@ -659,6 +665,13 @@ const mediaMarker = [
 
 const domenInfo = [
   "journal.tinkoff.ru",
+  "maket.laserbiz.ru",
+  "cnchub.ru",
+  "models.rsbis.com",
+  "1laser.ru",
+  "laserweb.ru",
+  "rezkalaser.ru",
+  "cutme.info",
   "www.tiktok.com",
   "dzen.ru",
   "youtube.com",
@@ -754,6 +767,21 @@ const domenInfo = [
 
 const domenCommerce = [
   "market.yandex.ru",
+  "bertech.ru",
+  "amur-stan.ru",
+  "opti-cut.ru",
+  "3dtool.ru",
+  "senfeng.ru",
+  "lasercut.ru",
+  "unimatic.ru",
+  "www.stanki.ru",
+  "laserstore.ru",
+  "резка-лазером.москва",
+  "mnitek.ru",
+  "www.claser.ru",
+  "gmzistra.ru",
+  "rezka.elit-metal.ru",
+  "lazrez.ru",
   "www.ozon.ru",
   "www.wildberries.ru",
   "www.wildberries.by",

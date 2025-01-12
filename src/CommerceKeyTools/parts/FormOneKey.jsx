@@ -46,7 +46,7 @@ export default function FormOneKey(props) {
           </Button>
         </Grid>
       </Grid>
-      {result && !Array.isArray(result) && (
+      {result && (
         <Box borderRadius={2} p={3} sx={{ background: "#f7f7f7" }} mt={2}>
           <Typography gutterBottom component="h2" variant="h5">
             Результат проверки:{" "}
@@ -56,7 +56,7 @@ export default function FormOneKey(props) {
               component="span"
               color="#3e8d41"
             >
-              {result}
+              {result[0].result}
             </Typography>
           </Typography>
           <Typography gutterBottom variant="body1">

@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import CommerceKeyTools from "./CommerceKeyTools";
 import { getFetchkey } from "../Api/api-tools-search";
-import Papa from "papaparse";
+import * as XLSX from "xlsx";
 import { spendLvt } from "../Api/api-lvt";
 import { loadFileUserTools } from "../Api/api-tools";
 import { TitleComponent } from "../Function/TitleComponent";
 
 function CommerceKeyToolsContainer(props) {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState([]);
   const [queryArray, setQueryArray] = useState([]);
   const [result, setResult] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -80,7 +80,8 @@ function CommerceKeyToolsContainer(props) {
       const response = query
         ? await getFetchkey(query)
         : await getFetchkey(queryArray);
-      setResult(response.result);
+      setResult(response);
+      debugger;
     } catch (error) {
       console.error("Ошибка при выполнении запроса:", error);
     } finally {
@@ -92,7 +93,6 @@ function CommerceKeyToolsContainer(props) {
 
   const handleFileChange = (event) => {
     setQueryArray([]);
-    debugger;
     const file = event.target.files[0];
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -106,28 +106,56 @@ function CommerceKeyToolsContainer(props) {
   useEffect(() => {
     if (result) {
       if (Array.isArray(result)) {
-        // Предполагаем, что result представляет собой массив объектов с ключом query
-        const data = result.map((item) => [item.query, item.result]);
+        // Если result — массив с одним объектом
+        if (result.length === 1) {
+          const singleResult = result[0].result; // Извлекаем result из объекта
+          if (singleResult.includes("Коммерческий запрос")) {
+            setText(texts.textCommerce);
+          } else if (singleResult.includes("Мультимедиа запрос")) {
+            setText(texts.textMedia);
+          } else if (singleResult.includes("Навигационный запрос")) {
+            setText(texts.textNavi);
+          } else if (singleResult.includes("Информационный запрос")) {
+            setText(texts.textInfo);
+          } else if (singleResult.includes("Смешанная выдача")) {
+            setText(texts.textInfoCommerc);
+          } else if (singleResult === "Общий запрос") {
+            setText(texts.textNoKey);
+          }
+        } else if (result.length > 1) {
+          // Если result — массив с несколькими объектами
+          if (result.length > 2) {
+            // Создаем файл, если в массиве больше 2 строк
+            const data = result.map((item) => [item.query, item.result]);
+            data.unshift(["Ключевой запрос", "Тип запроса"]);
 
-        // Вставляем русские заголовки как первый элемент массива данных
-        data.unshift(["Ключевой запрос", "Тип запроса"]);
+            const ws = XLSX.utils.aoa_to_sheet(data);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Результаты");
 
-        // Преобразуем данные в CSV с помощью PapaParse
-        const csv = Papa.unparse(data);
-        const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-        const url = URL.createObjectURL(blob);
-        setCsvDownloadLink(url);
+            const wbout = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+            const blob = new Blob([wbout], {
+              type: "application/octet-stream",
+            });
+            const url = URL.createObjectURL(blob);
+            setCsvDownloadLink(url);
 
-        // Создаем объект FormData и добавляем blob файл
-        const formData = new FormData();
-        formData.append("toolFile", blob, "result.csv");
+            const formData = new FormData();
+            formData.append("toolFile", blob, "result.xlsx");
+            props.loadFileUserTools(formData, props.userId, "tip-key");
 
-        // Отправляем файл на сервер
-        props.loadFileUserTools(formData, props.userId, "tip-key");
-
-        setText("Результаты обработки доступны для скачивания в CSV файле.");
-      } else {
-        // Обработка результата как одиночного объекта
+            setText(
+              "Результаты обработки доступны для скачивания в Excel файле."
+            );
+          } else {
+            // Если в массиве 2 или меньше строк, отображаем результаты в текстовом виде
+            setText(
+              result.map((item) => `${item.query}: ${item.result}`).join("\n")
+            );
+          }
+        }
+      } else if (typeof result === "string") {
+        // Обработка результата как строки (для обратной совместимости)
         if (result.includes("Коммерческий запрос")) {
           setText(texts.textCommerce);
         } else if (result.includes("Мультимедиа запрос")) {
@@ -141,11 +169,11 @@ function CommerceKeyToolsContainer(props) {
         } else if (result === "Общий запрос") {
           setText(texts.textNoKey);
         }
+      } else {
+        setText(
+          "Какая-то ошибка при определении запроса. Попробуйте другой ключевой запрос. Если ошибка повторяется, напишите нам, пожалуйста."
+        );
       }
-    } else {
-      setText(
-        "Какая-то ошибка при определении запроса. Попробуйте другой ключевой запрос. Если ошибка повторяется, напишите нам, пожалуйста."
-      );
     }
   }, [result]);
 
