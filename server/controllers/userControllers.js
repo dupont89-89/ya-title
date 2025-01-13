@@ -1,5 +1,5 @@
 import { User } from "../models/UserSchema.js";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { validateUser } from "../utils/validation.js";
 
 export const signUpUserController = async (req, res) => {

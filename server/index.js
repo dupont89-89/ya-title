@@ -7,6 +7,7 @@ import cron from "node-cron";
 import { Server as socketIo } from "socket.io"; // Исправленный импорт
 import http from "http";
 import { fileURLToPath } from "url"; // Для преобразования import.meta.url в путь к файлу
+import { promises as fsPromises } from "fs";
 
 // Импорт маршрутов
 import userRoutes from "./routes/userRoutes.js";
@@ -88,6 +89,35 @@ app.use("/api/reg-ru", regruRoutes);
 
 // Обслуживание статических файлов из папки uploads
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+// Эндпоинт для отдачи файла
+// Этот маршрут будет использоваться для предоставления файлов
+app.get("/uploads/*", async (req, res) => {
+  const filePath = path.join(__dirname, req.url);
+
+  try {
+    // Проверяем, существует ли файл с помощью fs.promises.access
+    await fsPromises.access(filePath, fs.constants.F_OK);
+    // Если файл существует, отправляем его
+    res.setHeader(
+      "Content-Type",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    );
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="${path.basename(filePath)}"`
+    );
+    res.sendFile(filePath, (err) => {
+      if (err) {
+        console.error("Ошибка при отправке файла:", err);
+        return res.status(500).send("Ошибка сервера");
+      }
+    });
+  } catch (err) {
+    console.error("Файл не найден:", filePath);
+    return res.status(404).send("Файл не найден");
+  }
+});
 
 // Поддержка статических файлов из папки build
 app.use(express.static(path.join(__dirname, "..", "build")));

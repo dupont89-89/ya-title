@@ -93,7 +93,6 @@ export default function SiteResultTable(props) {
     sqi: data.sqi, // ИКС
     result: data.result, // Статус
   }));
-  34;
 
   return (
     <Paper sx={{ width: "100%" }}>

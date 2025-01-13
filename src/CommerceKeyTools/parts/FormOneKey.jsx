@@ -7,11 +7,14 @@ export default function FormOneKey(props) {
     handleChange,
     handleKeyDown,
     query,
-    result,
+    result, // Инициализация как пустой массив
     text,
     handleFetchKey,
     isAuthenticated,
   } = props;
+
+  console.log("Result:", result);
+  debugger;
   return (
     <>
       <Grid mt={4} mb={4} spacing={2} container>
@@ -46,24 +49,32 @@ export default function FormOneKey(props) {
           </Button>
         </Grid>
       </Grid>
-      {result && (
-        <Box borderRadius={2} p={3} sx={{ background: "#f7f7f7" }} mt={2}>
-          <Typography gutterBottom component="h2" variant="h5">
-            Результат проверки:{" "}
-            <Typography
-              sx={{ textTransform: "uppercase" }}
-              variant="h5"
-              component="span"
-              color="#3e8d41"
-            >
-              {result[0].result}
-            </Typography>
-          </Typography>
-          <Typography gutterBottom variant="body1">
-            {text}
-          </Typography>
-        </Box>
-      )}
+      <Grid container>
+        <Grid item xs={12} md={12}>
+          {result.length > 0 && (
+            <Box p={3} sx={{ backgroundColor: "#fff" }}>
+              {result.map((item, index) => (
+                <Box key={index} mb={3}>
+                  <Typography gutterBottom component="h2" variant="h5">
+                    Результат проверки{" "}
+                    <Typography
+                      sx={{ textTransform: "uppercase" }}
+                      variant="h5"
+                      component="span"
+                      color="#3e8d41"
+                    >
+                      {item.result}
+                    </Typography>
+                  </Typography>
+                  <Typography gutterBottom variant="body1">
+                    {text}
+                  </Typography>
+                </Box>
+              ))}
+            </Box>
+          )}
+        </Grid>
+      </Grid>
     </>
   );
 }

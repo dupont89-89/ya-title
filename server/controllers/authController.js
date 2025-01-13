@@ -5,7 +5,7 @@ import {
   validateUserAuth,
   validateResetPassword,
 } from "../utils/validation.js";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs"; // Заменяем bcrypt на bcryptjs
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -72,7 +72,7 @@ export const authResetUserPasswordController = async (req, res) => {
         message: "Пользователь с указанным адресом электронной почты не найден",
       });
     }
-    const token = uuid.v4();
+    const token = uuidv4(); // Исправлено: используем uuidv4 вместо uuid.v4
     // Обновляем токен для сброса пароля у пользователя в базе данных
     user.resetPasswordToken = token;
     user.resetPasswordExpires = Date.now() + 3600000; // Токен будет действителен 1 час
@@ -112,7 +112,7 @@ export const tokenResetUserPasswordController = async (req, res) => {
       });
     }
 
-    // Устанавливаем новый пароль пользователя (вы должны реализовать validateResetPassword для проверки пароля)
+    // Устанавливаем новый пароль пользователя
     const salt = await bcrypt.genSalt(Number(process.env.SALT));
     const hashPassword = await bcrypt.hash(req.body.password, salt);
     user.password = hashPassword;

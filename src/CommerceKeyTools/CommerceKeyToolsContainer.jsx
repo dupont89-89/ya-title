@@ -8,9 +8,9 @@ import { loadFileUserTools } from "../Api/api-tools";
 import { TitleComponent } from "../Function/TitleComponent";
 
 function CommerceKeyToolsContainer(props) {
-  const [query, setQuery] = useState([]);
+  const [query, setQuery] = useState("");
   const [queryArray, setQueryArray] = useState([]);
-  const [result, setResult] = useState(null);
+  const [result, setResult] = useState([]); // Инициализация как пустой массив
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [text, setText] = useState("");
@@ -38,19 +38,18 @@ function CommerceKeyToolsContainer(props) {
   };
 
   const handleChange = (event) => {
-    setQuery(event.target.value); // Обновляем значение состояния при изменении ввода
+    setQuery(event.target.value);
   };
 
   const handleChangeMass = (event) => {
     const text = event.target.value;
-    const words = text.split("\n"); // Разбиваем текст на строки
-    setQueryArray(words); // Обновляем состояние с массивом строк
-    console.log("handleChangeMass:", words);
+    const words = text.split("\n");
+    setQueryArray(words);
   };
 
   const handleClickMass = () => {
     setMass((prevMass) => !prevMass);
-    setResult(null);
+    setResult([]);
     setQuery("");
     setQueryArray([]);
   };
@@ -63,31 +62,32 @@ function CommerceKeyToolsContainer(props) {
 
   const handleClickMassClear = () => {
     setQueryArray([]);
-    setResult(null);
+    setResult([]);
   };
 
   const handleFetchKey = async () => {
     try {
-      setIsLoading(true); // Устанавливаем состояние загрузки в true при отправке запроса
+      setIsLoading(true);
 
       if (props.totalLvt < sumKeyLvt) {
         console.log("Баланс равен 0");
-        setIsLoading(false); // Если баланс равен 0, не отправляем запрос и завершаем выполнение функции
-        setShowModal(true); // Устанавливаем showModal в true, чтобы показать модальное окно
-        return; // Возвращаемся из функции
+        setIsLoading(false);
+        setShowModal(true);
+        return;
       }
 
       const response = query
         ? await getFetchkey(query)
         : await getFetchkey(queryArray);
+
+      console.log("Response from getFetchkey:", response); // Логируем ответ
       setResult(response);
-      debugger;
     } catch (error) {
       console.error("Ошибка при выполнении запроса:", error);
     } finally {
       props.spendLvt(props.userId, lvtUserSpend);
       setQueryArray([]);
-      setIsLoading(false); // Устанавливаем состояние загрузки в false после получения ответа
+      setIsLoading(false);
     }
   };
 
@@ -104,96 +104,72 @@ function CommerceKeyToolsContainer(props) {
   };
 
   useEffect(() => {
-    if (result) {
-      if (Array.isArray(result)) {
-        // Если result — массив с одним объектом
-        if (result.length === 1) {
-          const singleResult = result[0].result; // Извлекаем result из объекта
-          if (singleResult.includes("Коммерческий запрос")) {
-            setText(texts.textCommerce);
-          } else if (singleResult.includes("Мультимедиа запрос")) {
-            setText(texts.textMedia);
-          } else if (singleResult.includes("Навигационный запрос")) {
-            setText(texts.textNavi);
-          } else if (singleResult.includes("Информационный запрос")) {
-            setText(texts.textInfo);
-          } else if (singleResult.includes("Смешанная выдача")) {
-            setText(texts.textInfoCommerc);
-          } else if (singleResult === "Общий запрос") {
-            setText(texts.textNoKey);
-          }
-        } else if (result.length > 1) {
-          // Если result — массив с несколькими объектами
-          if (result.length > 2) {
-            // Создаем файл, если в массиве больше 2 строк
-            const data = result.map((item) => [item.query, item.result]);
-            data.unshift(["Ключевой запрос", "Тип запроса"]);
+    if (result && Array.isArray(result)) {
+      const resultsText = result.map((item) => {
+        const { query, result: itemResult } = item;
 
-            const ws = XLSX.utils.aoa_to_sheet(data);
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, "Результаты");
-
-            const wbout = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-            const blob = new Blob([wbout], {
-              type: "application/octet-stream",
-            });
-            const url = URL.createObjectURL(blob);
-            setCsvDownloadLink(url);
-
-            const formData = new FormData();
-            formData.append("toolFile", blob, "result.xlsx");
-            props.loadFileUserTools(formData, props.userId, "tip-key");
-
-            setText(
-              "Результаты обработки доступны для скачивания в Excel файле."
-            );
-          } else {
-            // Если в массиве 2 или меньше строк, отображаем результаты в текстовом виде
-            setText(
-              result.map((item) => `${item.query}: ${item.result}`).join("\n")
-            );
-          }
+        if (itemResult.includes("Коммерческий запрос")) {
+          return `${query}: ${texts.textCommerce}`;
+        } else if (itemResult.includes("Мультимедиа запрос")) {
+          return `${query}: ${texts.textMedia}`;
+        } else if (itemResult.includes("Навигационный запрос")) {
+          return `${query}: ${texts.textNavi}`;
+        } else if (itemResult.includes("Информационный запрос")) {
+          return `${query}: ${texts.textInfo}`;
+        } else if (itemResult.includes("Смешанная выдача")) {
+          return `${query}: ${texts.textInfoCommerc}`;
+        } else if (itemResult === "Общий запрос") {
+          return `${query}: ${texts.textNoKey}`;
+        } else {
+          return `${query}: Не удалось определить тип запроса.`;
         }
-      } else if (typeof result === "string") {
-        // Обработка результата как строки (для обратной совместимости)
-        if (result.includes("Коммерческий запрос")) {
-          setText(texts.textCommerce);
-        } else if (result.includes("Мультимедиа запрос")) {
-          setText(texts.textMedia);
-        } else if (result.includes("Навигационный запрос")) {
-          setText(texts.textNavi);
-        } else if (result.includes("Информационный запрос")) {
-          setText(texts.textInfo);
-        } else if (result.includes("Смешанная выдача")) {
-          setText(texts.textInfoCommerc);
-        } else if (result === "Общий запрос") {
-          setText(texts.textNoKey);
-        }
+      });
+
+      if (result.length > 2) {
+        const data = result.map((item) => [item.query, item.result]);
+        data.unshift(["Ключевой запрос", "Тип запроса"]);
+
+        const ws = XLSX.utils.aoa_to_sheet(data);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Результаты");
+
+        const wbout = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+        const blob = new Blob([wbout], {
+          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        });
+        const url = URL.createObjectURL(blob);
+        setCsvDownloadLink(url);
+
+        const formData = new FormData();
+        formData.append("toolFile", blob, "result.xlsx");
+        props.loadFileUserTools(formData, props.userId, "tip-key");
+
+        setText("Результаты обработки доступны для скачивания в Excel файле.");
       } else {
-        setText(
-          "Какая-то ошибка при определении запроса. Попробуйте другой ключевой запрос. Если ошибка повторяется, напишите нам, пожалуйста."
-        );
+        setText(resultsText.join("\n"));
       }
+    } else {
+      setText(
+        "Какая-то ошибка при определении запроса. Попробуйте другой ключевой запрос. Если ошибка повторяется, напишите нам, пожалуйста."
+      );
     }
   }, [result]);
 
   useEffect(() => {
-    const filteredQueryArray = queryArray.filter((word) => word.trim() !== ""); // Фильтруем пустые строки перед вычислением
+    const filteredQueryArray = queryArray.filter((word) => word.trim() !== "");
     if (filteredQueryArray.length > 0) {
       const sumLvtToolsKey = tarifKey * filteredQueryArray.length;
       setLvtUserSpend(sumLvtToolsKey.toFixed(1));
       if (props.totalLvt < sumLvtToolsKey) {
         setShowModal(true);
-        const sumLvt = Math.abs(props.totalLvt - sumLvtToolsKey); // Применяем Math.abs для получения положительного значения
+        const sumLvt = Math.abs(props.totalLvt - sumLvtToolsKey);
         setSumLvt(sumLvt.toFixed(1));
       } else {
-        setShowModal(false); // Закрываем модальное окно, если больше нет необходимости
+        setShowModal(false);
         setSumLvt(0);
       }
       setSumKeyLvt(sumLvtToolsKey.toFixed(1));
-      console.log("sumKeyLvt:", sumLvtToolsKey.toFixed(1)); // Применяем toFixed для округления и обрезки десятичных разрядов
     } else {
-      // Обнуляем состояния, когда массив пуст
       setLvtUserSpend(0);
       setSumLvt(0);
       setSumKeyLvt(0);

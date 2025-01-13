@@ -44,7 +44,7 @@ export default function FormMassKey(props) {
 
   return (
     <>
-      {!result && (
+      {!result.length > 0 && (
         <>
           <Box mb={4} mt={2}>
             <Stack
@@ -99,7 +99,7 @@ export default function FormMassKey(props) {
           />
         </>
       )}
-      {!Array.isArray(result) && (
+      {!result.length > 0 && (
         <Grid alignItems="center" mt={1} container spacing={1}>
           <Grid>
             <Button
@@ -145,7 +145,7 @@ export default function FormMassKey(props) {
         </Grid>
       )}
 
-      {Array.isArray(result) && (
+      {result.length > 0 && (
         <Box mt={3}>
           <Typography color="#fff" gutterBottom variant="h5" component="h2">
             Результат проверки:

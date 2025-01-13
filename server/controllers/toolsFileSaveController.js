@@ -34,18 +34,13 @@ const storage = multer.diskStorage({
       return cb(new Error("User ID and tools are required"));
     }
 
-    // Перемещаем сюда вычисление даты
-    const currentDate = new Date();
-    const moscowTime = new Date(currentDate.getTime());
-    const formattedDate = moscowTime.toISOString();
-
-    // Очищаем tools и formattedDate от недопустимых символов
+    // Очищаем tools от недопустимых символов
     const safeTools = tools.replace(/[^a-zA-Z0-9-_]/g, "-");
-    const safeFormattedDate = formattedDate.replace(/[:]/g, "-");
 
+    // Формируем директорию без использования даты
     const dir = path.join(
       __dirname,
-      `../uploads/tools/file-user/${userId}/${safeTools}/${safeFormattedDate}`
+      `../uploads/tools/file-user/${userId}/${safeTools}`
     );
 
     console.log("Директория для сохранения файла:", dir); // Логируем путь
@@ -64,6 +59,7 @@ const storage = multer.diskStorage({
 // Опции загрузки
 const upload = multer({ storage }).single("toolFile");
 
+// Контроллер загрузки файла
 export const uploadFileToolsUserController = async (req, res) => {
   try {
     upload(req, res, async (err) => {
@@ -87,22 +83,18 @@ export const uploadFileToolsUserController = async (req, res) => {
         return res.status(400).send({ message: "File is required" });
       }
 
-      // Перемещаем сюда вычисление даты
-      const currentDate = new Date();
-      const moscowTime = new Date(currentDate.getTime());
-      const formattedDate = moscowTime.toISOString();
+      // Формируем путь без даты
+      const filePath = `/uploads/tools/file-user/${userId}/${tools}/${req.file.filename}`;
 
-      const filePath = `/uploads/tools/file-user/${userId}/${tools}/${formattedDate}/${req.file.filename}`;
-
-      // Обновляем информацию о пользователе
+      // Обновляем информацию о пользователе в базе данных
       const updatedUser = await User.findOneAndUpdate(
         { _id: userId },
         {
           $push: {
             tools: {
               nameTools: tools,
-              fileTools: filePath,
-              dateAdded: formattedDate,
+              fileTools: filePath, // Путь к файлу
+              dateAdded: new Date().toISOString(), // Сохраняем дату добавления
             },
           },
         },

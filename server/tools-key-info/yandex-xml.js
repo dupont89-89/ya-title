@@ -155,10 +155,10 @@ export const fetchYandexKey = async (query) => {
     console.log("Результаты обработки массива запросов:", results);
     return results; // Возвращаем массив объектов
   } else {
-    // Если query — строка, обрабатываем как единичный запрос
+    // Если query — строка, обрабатываем как единичный запрос, но возвращаем массив
     console.log("Обработка единичного запроса");
     const result = await limit(() => processQuery(query));
     console.log("Результат обработки единичного запроса:", result);
-    return result; // Возвращаем один объект
+    return [result]; // Возвращаем массив с одним объектом
   }
 };
