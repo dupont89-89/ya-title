@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import YaIks from "./YaIks";
 import { TitleComponent } from "../Function/TitleComponent";
@@ -12,6 +12,20 @@ function YaIksContainer(props) {
   const [siteResult, setSiteResult] = useState([]);
   const [chekSiteResult, setChekSiteResult] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [stateChek, setStateChek] = useState(false);
+  const [stateNumberIks, setStateNumberIks] = useState(null);
+
+  useEffect(() => {
+    setStateNumberIks(stateChek ? 0 : null);
+  }, [stateChek]);
+
+  const handleChangeChek = (event) => {
+    setStateChek(event.target.checked);
+  };
+
+  const handleChangeNumber = (event) => {
+    setStateNumberIks(event.target.value);
+  };
 
   const handleChange = (event) => {
     const newValue = event.target.value;
@@ -46,7 +60,6 @@ function YaIksContainer(props) {
       // Отправляем данные на сервер
       const results = await getIksSite(siteArray); // Ответ в формате { site: 'ererrtrtr122.ru', sqi: 0 }
       const resultsChek = await getDomenChekRegRu(domainsForRegRu); // Ответ в формате { domains: [{ dname: 'ererrtrtr122.ru', result: 'Available' }] }
-
       // Приводим данные к единому формату
       const formattedResultsChek = resultsChek.domains.map((item) => ({
         site: decodePunycode(item.dname), // Декодируем домен
@@ -94,6 +107,10 @@ function YaIksContainer(props) {
         siteResult={siteResult}
         isLoading={isLoading}
         chekSiteResult={chekSiteResult}
+        handleChangeChek={handleChangeChek}
+        handleChangeNumber={handleChangeNumber}
+        stateChek={stateChek}
+        stateNumberIks={stateNumberIks}
       />
     </>
   );

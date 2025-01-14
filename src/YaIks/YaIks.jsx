@@ -15,6 +15,7 @@ import TextAreaIks from "./Parts/TextAreaIks";
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import SiteResultTable from "./Parts/SiteResultTable";
 import YaIksTarif from "./Parts/YaIksTarif";
+import CheckedNullIks from "./Parts/CheckedNullIks";
 
 export default function YaIks(props) {
   const {
@@ -25,6 +26,10 @@ export default function YaIks(props) {
     handleClear,
     isLoading,
     chekSiteResult,
+    handleChangeChek,
+    handleChangeNumber,
+    stateChek,
+    stateNumberIks,
   } = props;
 
   const theme = useTheme();
@@ -63,20 +68,37 @@ export default function YaIks(props) {
             handleChange={handleChange}
           />
         </Box>
-        <Box>
-          <Button
-            disabled={!siteArray.length || isLoading} // Проверка на пустоту массива
-            startIcon={!isLoading && <PlayCircleOutlineIcon />}
-            variant="contained"
-            sx={{ backgroundColor: "#4CAF50", minWidth: "200px" }}
-            onClick={handleClick}
-          >
-            {isLoading ? (
-              <CircularProgress size={20} sx={{ color: "#fff" }} />
-            ) : (
-              "Собрать данные"
-            )}
-          </Button>
+        <Box
+          sx={{
+            display: "flex",
+            gap: "30px",
+            justifyContent: "space-between",
+            alignItems: "flex-start",
+          }}
+        >
+          <Box>
+            <Button
+              disabled={!siteArray.length || isLoading} // Проверка на пустоту массива
+              startIcon={!isLoading && <PlayCircleOutlineIcon />}
+              variant="contained"
+              sx={{ backgroundColor: "#4CAF50", minWidth: "200px" }}
+              onClick={handleClick}
+            >
+              {isLoading ? (
+                <CircularProgress size={20} sx={{ color: "#fff" }} />
+              ) : (
+                "Собрать данные"
+              )}
+            </Button>
+          </Box>
+          <Box>
+            <CheckedNullIks
+              handleChangeChek={handleChangeChek}
+              handleChangeNumber={handleChangeNumber}
+              stateChek={stateChek}
+              stateNumberIks={stateNumberIks}
+            />
+          </Box>
         </Box>
       </Box>
       {isLoading && (
@@ -89,6 +111,8 @@ export default function YaIks(props) {
           <SiteResultTable
             chekSiteResult={chekSiteResult}
             siteResult={siteResult}
+            stateChek={stateChek}
+            stateNumberIks={stateNumberIks}
           />
         </Box>
       )}
