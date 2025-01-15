@@ -4,13 +4,20 @@ import FormControl from "@mui/material/FormControl";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
-import { Box, InputLabel, MenuItem, Select, Typography } from "@mui/material";
+import { Box, MenuItem, Select, Typography } from "@mui/material";
 
 export default function CheckedNullIks(props) {
   const { handleChangeChek, handleChangeNumber, stateChek, stateNumberIks } =
     props;
   return (
-    <Box p={2} sx={{ background: "#4caf50", borderRadius: "10px" }}>
+    <Box
+      p={2}
+      sx={{
+        background: "#42aaeb",
+        borderRadius: "10px",
+        border: "2px solid #198cd3",
+      }}
+    >
       <FormControl>
         <FormLabel component="legend">
           <Typography sx={{ fontWeight: 500, color: "#fff" }}>
@@ -22,7 +29,7 @@ export default function CheckedNullIks(props) {
             sx={{ minWidth: "150px" }}
             control={
               <Switch
-                color="default"
+                color={!stateChek ? "default" : "primary"}
                 checked={stateChek}
                 onChange={handleChangeChek}
               />
@@ -32,9 +39,6 @@ export default function CheckedNullIks(props) {
         </FormGroup>
       </FormControl>
       <FormControl default disabled={!stateChek} sx={{ m: 1, minWidth: 100 }}>
-        <InputLabel sx={{ fontSize: "16px" }} id="number-iks-label">
-          ИКС
-        </InputLabel>
         <Select
           labelId="number-iks-label"
           id="number-iks-label"

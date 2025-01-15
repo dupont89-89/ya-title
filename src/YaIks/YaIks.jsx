@@ -2,10 +2,7 @@ import React from "react";
 import {
   Box,
   Button,
-  ButtonGroup,
-  Chip,
   CircularProgress,
-  Container,
   LinearProgress,
   Typography,
   useMediaQuery,
@@ -25,11 +22,11 @@ export default function YaIks(props) {
     handleClick,
     handleClear,
     isLoading,
-    chekSiteResult,
     handleChangeChek,
     handleChangeNumber,
     stateChek,
     stateNumberIks,
+    handleRegistrationDomen,
   } = props;
 
   const theme = useTheme();
@@ -109,10 +106,10 @@ export default function YaIks(props) {
       {siteResult.length > 0 && (
         <Box>
           <SiteResultTable
-            chekSiteResult={chekSiteResult}
             siteResult={siteResult}
             stateChek={stateChek}
             stateNumberIks={stateNumberIks}
+            handleRegistrationDomen={handleRegistrationDomen}
           />
         </Box>
       )}
